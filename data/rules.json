@@ -1,0 +1,258 @@
+{
+  "_meta": {
+    "description": "Motor de regras da Fase 2. A lógica está em src/core/rules/reaction-rules.js; aqui ficam os textos (com marcadores {assim}), as fontes e os padrões de segurança. Uma reação gerada por regra é sempre balanceada automaticamente e conferida pelos mesmos testes das curadas. O motor só afirma 'reage' ou 'não reage' quando a regra é sólida; fora disso devolve 'unknown' explicando o porquê.",
+    "acidos": "strongAcids: Tabela J.1 (Atkins & Jones, p. F75). oxidizingAcids: atacam metais pelo ânion, não só pelo H⁺, e saem da regra 'metal + ácido'. weakAcidSkip: ácidos que a regra não usa com metais e carbonatos.",
+    "waterReactiveBelow": "metais com E° abaixo deste valor reagem com a água fria (grupo 1, Ca, Sr, Ba): numa solução, eles atacam a água antes de deslocar outro metal",
+    "passivated": "metais protegidos por uma película de óxido que ácidos fracos não removem",
+    "depositMinE0": "um metal com E° abaixo deste valor não se deposita a partir de solução aquosa: a água é reduzida antes (por isso Al e Mg não são 'deslocados' de seus sais em água)"
+  },
+  "strongAcids": ["HCl", "HNO3", "H2SO4"],
+  "oxidizingAcids": ["HNO3"],
+  "weakAcidSkip": ["H2CO3"],
+  "waterReactiveBelow": -2.5,
+  "passivated": ["Al", "Be"],
+  "weakAcidMaxE0": -0.4,
+  "depositMinE0": -0.8,
+  "carbonateDecomposition": ["Mg^2+", "Ca^2+"],
+  "amphotericMetals": ["Al", "Zn", "Be"],
+  "netIonicNote": "Os íons espectadores (iguais dos dois lados) foram cancelados; ácidos fortes e compostos iônicos solúveis aparecem separados em íons.",
+
+  "stateText": {
+    "soluble": ", que fica dissolvido na água",
+    "slightly": ", que é pouco solúvel",
+    "insoluble": ", que é insolúvel e aparece como um sólido"
+  },
+
+  "rules": {
+    "neutralizacao": {
+      "types": ["acido_base"], "tags": ["neutralizacao", "exotermica"],
+      "name": "Neutralização: {acid} + {base}",
+      "explanation": "O {acid} doa íons H⁺ e o {base} fornece íons OH⁻: eles se juntam formando água. Os íons que sobram formam {salt}{saltState}.",
+      "why": "Ácido + hidróxido → sal + água. O cátion do sal ({cation}) vem da base e o ânion ({anion}) vem do ácido. Os coeficientes saem do balanceamento: cada H⁺ cedido precisa encontrar um OH⁻.",
+      "source": { "ref": "atkins-jones", "topic": "Seção J.3: neutralização (ácido + hidróxido metálico → sal + água)", "pages": "F75–F76", "justification": "Reação geral de neutralização de um ácido por um hidróxido; o sal combina o cátion da base com o ânion do ácido." },
+      "safety": { "level": "cuidado", "why": "Ácidos e bases fortes são corrosivos, e a neutralização libera calor.", "home": "Não misture ácidos e bases de laboratório em casa." }
+    },
+    "neutralizacao-amonia": {
+      "types": ["acido_base"], "tags": ["neutralizacao"],
+      "name": "Amônia + {acid}",
+      "explanation": "A amônia recebe o H⁺ do {acid} e vira o íon amônio, NH₄⁺. Forma-se {salt}{saltState}, sem água.",
+      "why": "A amônia é uma base de Brønsted: aceita um próton usando o par de elétrons livre do nitrogênio. Como ela não tem OH⁻, o único produto é o sal de amônio.",
+      "source": { "ref": "atkins-jones", "topic": "Seção J.1: ácidos e bases de Brønsted; a amônia aceita prótons", "pages": "F73–F74", "justification": "NH3 + H⁺ → NH4⁺: a amônia é base porque aceita prótons." },
+      "safety": { "level": "cuidado", "why": "A amônia é irritante e tóxica por inalação; os ácidos são corrosivos.", "home": "Não misture produtos de limpeza com amônia e ácidos." }
+    },
+    "acido-oxido": {
+      "types": ["acido_base"], "tags": ["neutralizacao"],
+      "name": "{oxide} + {acid}",
+      "explanation": "O {oxide} é um óxido básico: seus íons O²⁻ recebem dois H⁺ do {acid} e viram água. Sobra {salt}{saltState}.",
+      "why": "Metais formam óxidos básicos, que reagem com ácidos formando sal e água (como o MgO com o ácido clorídrico). O O²⁻ é uma base forte.",
+      "source": { "ref": "atkins-jones", "topic": "Seção 11.3: óxidos ácidos, básicos e anfóteros", "pages": "428–429", "justification": "Óxidos básicos (e anfóteros) reagem com ácidos formando sal e água." },
+      "safety": { "level": "cuidado", "why": "O ácido é corrosivo.", "home": "Não faça em casa com ácidos de laboratório." }
+    },
+    "acido-carbonato": {
+      "types": ["acido_base"], "tags": ["efervescencia"],
+      "name": "{carbonate} + {acid}",
+      "explanation": "Borbulha! O carbonato recebe H⁺ do {acid} e vira ácido carbônico, que se desfaz em água e gás carbônico. Sobra {salt}{saltState}.",
+      "why": "Carbonatos e bicarbonatos são bases: aceitam prótons. O H2CO3 formado é instável e se decompõe em H2O e CO2 — é a mesma química do fermento e do 'vulcão' de bicarbonato com vinagre.",
+      "source": { "ref": "atkins-jones", "topic": "Seção 15.6: reação de ácidos com o íon hidrogenocarbonato liberando CO2", "pages": "623", "justification": "HCO3⁻ (e CO3²⁻) + ácido → H2O + CO2; o gás liberado é o que faz a massa crescer." },
+      "safety": { "level": "cuidado", "why": "Libera gás rapidamente: em recipiente fechado a pressão pode estourá-lo. O ácido pode ser corrosivo.", "home": "Com bicarbonato e vinagre pode, em recipiente aberto. Com ácidos de laboratório, não." }
+    },
+    "precipitacao": {
+      "types": ["dupla_troca"], "tags": ["precipitacao"],
+      "name": "Precipitação: {a} + {b}",
+      "explanation": "Na água, os dois compostos se separam em íons. {ppt} é insolúvel, então esses íons se juntam e formam um sólido que turva a solução. Os outros íons continuam dissolvidos: são íons espectadores.",
+      "why": "Regra de solubilidade (Tabela I.1): {rule}. A equação iônica mostra só o que muda de verdade: os íons que formam o precipitado.",
+      "source": { "ref": "atkins-jones", "topic": "Seções I.2–I.4 e Tabela I.1: reações de precipitação e regras de solubilidade", "pages": "F67–F69", "justification": "Misturando soluções de dois eletrólitos, forma-se precipitado quando a combinação de um cátion com um ânion é insolúvel." },
+      "safety": { "level": "cuidado", "why": "Sais de laboratório podem ser tóxicos ou irritantes.", "home": "Não faça em casa: os sais de laboratório não são para uso doméstico." }
+    },
+    "metal-acido": {
+      "types": ["simples_troca"], "tags": ["redox"],
+      "name": "{metal} + {acid}",
+      "explanation": "O {metal} entrega elétrons aos íons H⁺ do {acid}: forma-se gás hidrogênio, e o metal vira o íon {cation}, que forma {salt}{saltState}.",
+      "why": "Na série eletroquímica, o {metal} tem potencial-padrão negativo (E° = {E0}). Só um metal com E° negativo tem tendência a reduzir os íons H⁺ a H2.",
+      "source": { "ref": "atkins-jones", "topic": "Seção 13.7: a série eletroquímica (metais com E° < 0 reduzem H⁺)", "pages": "534", "justification": "Um metal cujo par Mⁿ⁺/M tem potencial-padrão negativo desloca hidrogênio de um ácido não oxidante." },
+      "safety": { "level": "cuidado", "why": "Libera hidrogênio, que é inflamável, e o ácido é corrosivo.", "home": "Não faça em casa." },
+      "dangerWhy": "O {metal} reage violentamente até com a água; num ácido a reação é ainda mais rápida, pode pegar fogo e espirrar ácido."
+    },
+    "metal-sal": {
+      "types": ["simples_troca"], "tags": ["redox"],
+      "name": "{metal} + {salt0}",
+      "explanation": "O {metal} entrega elétrons aos íons {otherCation} do {salt0}: eles viram {otherMetal} metálico, que se deposita, e o {metal} passa para a solução como {cation}, formando {salt}.",
+      "why": "O {metal} (E° = {E0}) é mais reativo que o {otherMetal} (E° = {E0b}): o íon de potencial mais alto oxida o metal de potencial mais baixo.",
+      "source": { "ref": "atkins-jones", "topic": "Seção 13.7: a série eletroquímica (ex.: Cu²⁺ oxida o zinco; Mg desloca Cu²⁺)", "pages": "534, F84", "justification": "Um metal de potencial-padrão mais baixo reduz os cátions de um metal de potencial mais alto." },
+      "safety": { "level": "cuidado", "why": "Sais de metais pesados são tóxicos ou irritantes.", "home": "Não faça em casa." }
+    },
+    "combustao": {
+      "types": ["combustao"], "tags": ["redox", "exotermica"],
+      "name": "Combustão de {fuel}",
+      "conditions": [["calor", "faisca"]],
+      "conditionNote": "Precisa de uma chama ou faísca para começar. Com pouco oxigênio a combustão é incompleta e forma também monóxido de carbono e fuligem.",
+      "explanation": "{Fuel} queima no oxigênio: todo o carbono vira CO₂ e todo o hidrogênio vira água, liberando calor.",
+      "why": "Combustão completa de um composto de carbono e hidrogênio (e oxigênio): os produtos são sempre CO2 e H2O. O balanceamento automático conta quantos O2 são necessários.",
+      "source": { "ref": "atkins-jones", "topic": "Seções H (combustão completa) e M (combustão incompleta)", "pages": "F64, F95", "justification": "A combustão completa de um composto de C, H (e O) em oxigênio produz CO2 e H2O." },
+      "safety": { "level": "perigo", "why": "Substância inflamável: vapores com ar podem explodir.", "home": "Não faça em casa." }
+    },
+    "oxido-agua": {
+      "types": ["sintese"], "tags": ["exotermica"],
+      "name": "{oxide} + água",
+      "explanation": "O íon óxido, O²⁻, é uma base forte: recebe H⁺ da água e vira OH⁻. O {oxide} vira {hydroxide}{saltState}.",
+      "why": "Óxidos dos metais dos grupos 1 e 2 são óxidos básicos: reagem com a água formando o hidróxido (O²⁻ + H2O → 2 OH⁻).",
+      "source": { "ref": "atkins-jones", "topic": "Seção 11.3 (óxidos básicos) e Tabela J.1 (óxidos dos grupos 1 e 2 são bases fortes)", "pages": "428, F75", "justification": "Óxidos básicos reagem com água formando hidróxidos, como CaO + H2O → Ca(OH)2." },
+      "safety": { "level": "cuidado", "why": "Libera calor e forma uma base forte, corrosiva.", "home": "Não faça em casa." }
+    },
+    "co2-base": {
+      "types": ["acido_base"], "tags": ["neutralizacao"],
+      "name": "Gás carbônico + {base}",
+      "explanation": "O CO₂ é um óxido ácido: reage com o {base} formando {salt}{saltState} e água.",
+      "why": "Óxidos de ametais são ácidos: o CO2 equivale ao ácido carbônico sem a água, e é neutralizado pelos íons OH⁻.",
+      "source": { "ref": "atkins-jones", "topic": "Seção 11.3: o CO2 é um óxido ácido (2 NaOH + CO2 → Na2CO3 + H2O)", "pages": "428", "justification": "Óxidos ácidos reagem com bases formando sal e água." },
+      "safety": { "level": "cuidado", "why": "Hidróxidos fortes são corrosivos.", "home": "Não faça em casa com hidróxidos de laboratório." }
+    },
+    "bicarbonato-base": {
+      "types": ["acido_base"], "tags": ["neutralizacao"],
+      "name": "{a} + {b}",
+      "explanation": "O íon bicarbonato, HCO₃⁻, ainda tem um H⁺ para doar: o OH⁻ do {b} o recebe e vira água, e o bicarbonato vira carbonato. Forma-se {salt}{saltState}.",
+      "why": "O HCO3⁻ é anfiprótico: aceita prótons de ácidos e doa prótons a bases. Com OH⁻: HCO3⁻ + OH⁻ → CO3²⁻ + H2O.",
+      "source": { "ref": "atkins-jones", "topic": "Seção 15.8: o OH⁻ converte HCO3⁻ em CO3²⁻ (amaciamento da água com cal)", "pages": "627", "justification": "HCO3⁻(aq) + OH⁻(aq) → CO3²⁻(aq) + H2O(l)." },
+      "safety": { "level": "cuidado", "why": "O hidróxido é corrosivo.", "home": "Não faça em casa com hidróxidos de laboratório." }
+    },
+    "decomposicao-carbonato": {
+      "types": ["decomposicao"], "tags": ["endotermica"],
+      "name": "Aquecendo {carbonate}",
+      "conditions": [["calor"]],
+      "explanation": "Aquecido, {carbonate} se decompõe em {oxide} e gás carbônico.",
+      "why": "A decomposição dos carbonatos absorve energia (é endotérmica), por isso só acontece com aquecimento forte. É assim que se faz cal virgem a partir de calcário.",
+      "source": { "ref": "atkins-jones", "topic": "Seções 15.7–15.8: carbonatos de magnésio e cálcio se decompõem no aquecimento", "pages": "624, 627, F51", "justification": "MCO3(s) → MO(s) + CO2(g) sob aquecimento, para M = Mg, Ca." },
+      "safety": { "level": "cuidado", "why": "Exige temperaturas muito altas (forno), e o óxido formado é cáustico.", "home": "Não faça em casa." }
+    }
+  },
+
+  "outcomes": {
+    "sem-precipitado": {
+      "kind": "no-reaction",
+      "title": "Nenhum precipitado: os íons só se misturam",
+      "reason": "Na água, {a} e {b} se separam em íons. Trocando os parceiros, as combinações possíveis ({p1} e {p2}) também são solúveis, então nenhum sólido se forma, nem gás, nem água: os íons continuam soltos na solução. É só uma mistura.",
+      "source": { "ref": "atkins-jones", "topic": "Tabela I.1: regras de solubilidade", "pages": "F69", "justification": "Sem combinação insolúvel, não há reação de precipitação." }
+    },
+    "mesmo-ion": {
+      "kind": "no-reaction",
+      "title": "Íons em comum: nada a trocar",
+      "reason": "{a} e {b} têm um íon em comum. Trocar os parceiros só daria os mesmos compostos de volta: é apenas uma mistura dos íons.",
+      "source": { "ref": "atkins-jones", "topic": "Seção I.2: reações de precipitação", "pages": "F67", "justification": "Sem nova combinação de cátion e ânion, não há troca." }
+    },
+    "dois-acidos": {
+      "kind": "no-reaction",
+      "title": "Dois ácidos: ninguém recebe o próton",
+      "reason": "{a} e {b} são dois doadores de prótons (H⁺). Para haver reação ácido-base, alguém precisa ACEITAR o próton, e nenhum dos dois é uma base. Em água, os dois só liberam H⁺ e a solução fica mais ácida.",
+      "source": { "ref": "atkins-jones", "topic": "Seção J.1: ácidos doam e bases aceitam prótons", "pages": "F73", "justification": "Reação ácido-base exige um doador e um aceitador de prótons." }
+    },
+    "duas-bases": {
+      "kind": "no-reaction",
+      "title": "Duas bases: ninguém doa o próton",
+      "reason": "{a} e {b} são duas bases (aceitadores de prótons). Sem um ácido para doar H⁺, não há reação ácido-base: a mistura só fica mais básica.",
+      "source": { "ref": "atkins-jones", "topic": "Seção J.1: ácidos doam e bases aceitam prótons", "pages": "F73", "justification": "Reação ácido-base exige um doador e um aceitador de prótons." }
+    },
+    "oxido-insoluvel": {
+      "kind": "no-reaction",
+      "title": "{a} não reage com água",
+      "reason": "{a} é um óxido insolúvel em água (só os óxidos do grupo 1 e do grupo 2 abaixo do período 2 se dissolvem, reagindo). Ele não forma hidróxido: fica como um pó no fundo.",
+      "source": { "ref": "atkins-jones", "topic": "Tabela I.1: hidróxidos e óxidos são insolúveis, exceto grupo 1 e grupo 2 abaixo do período 2", "pages": "F69", "justification": "Óxidos insolúveis não reagem com a água." }
+    },
+    "metal-nobre-agua": {
+      "kind": "no-reaction",
+      "title": "{a} não reage com água",
+      "reason": "O {a} tem potencial-padrão positivo (E° = {E0}): ele nem consegue reduzir os íons H⁺ de um ácido, muito menos a água. Por isso não enferruja na água e é usado em encanamentos, joias e moedas.",
+      "source": { "ref": "atkins-jones", "topic": "Seção 13.7: só pares com E° negativo reduzem H⁺", "pages": "534", "justification": "Metais com E° > 0 não liberam hidrogênio da água nem de ácidos não oxidantes." }
+    },
+    "acido-oxidante": {
+      "kind": "unknown",
+      "title": "Ácido oxidante: outra reação",
+      "reason": "O {acid} é um ácido OXIDANTE: o íon nitrato rouba elétrons dos metais, e os produtos costumam ser óxidos de nitrogênio (NO, NO2) em vez de hidrogênio. Por exemplo, o cobre se dissolve em ácido nítrico diluído liberando NO. Os produtos dependem da concentração, por isso o motor de regras não monta essa equação; ela precisa ser curada."
+    },
+    "agua-regia": {
+      "kind": "unknown",
+      "title": "Ácido nítrico + ácido clorídrico: água régia",
+      "reason": "Misturados (concentrados), os ácidos nítrico e clorídrico formam a 'água régia', que reage entre si e dissolve até o ouro (formando o íon [AuCl4]⁻). Não é uma simples mistura de dois ácidos, e os produtos não estão na base."
+    },
+    "mistura-acidos-oxidante": {
+      "kind": "unknown",
+      "title": "Ácido oxidante na mistura",
+      "reason": "O {a} é um ácido oxidante. Misturado com outro ácido forte e concentrado (como na 'mistura sulfonítrica', usada para fabricar explosivos e corantes), ele forma espécies novas e muito reativas. Não é uma simples mistura de dois ácidos, e o motor não monta essa equação."
+    },
+    "metal-anfotero-base": {
+      "kind": "unknown",
+      "title": "{metal} reage com base forte",
+      "reason": "O {metal} é anfótero: além de reagir com ácidos, dissolve-se em soluções de bases fortes como o {b}, liberando hidrogênio e formando um íon complexo (para o berílio, Be(OH)4²⁻; para o alumínio, Al(OH)4⁻). Por isso a série de reatividade sozinha não decide aqui, e a equação não está na base.",
+      "source": { "ref": "atkins-jones", "topic": "Seções 11.3 e 15.8: metais e óxidos anfóteros (Be + 2 OH⁻ + 2 H2O → Be(OH)4²⁻ + H2)", "pages": "429, 626", "justification": "Be e Al são anfóteros e reagem com bases fortes." }
+    },
+    "reage-com-agua": {
+      "kind": "unknown",
+      "title": "O {metal} ataca a água primeiro",
+      "reason": "O {metal} reage com a água fria (E° = {E0}). Numa solução de {salt0}, ele reage antes com a água, formando hidróxido e hidrogênio, e o hidróxido pode precipitar com os íons do sal. Não é um simples deslocamento de metal, por isso o motor de regras não monta essa equação."
+    },
+    "acido-fraco-metal": {
+      "kind": "unknown",
+      "title": "Ácido fraco: reação lenta ou bloqueada",
+      "reason": "O {acid} é um ácido fraco: tem poucos íons H⁺ livres. Com o {metal}, a reação é lenta ou fica bloqueada por uma película de óxido na superfície do metal. A série eletroquímica diz que ela poderia acontecer, mas não diz se acontece na prática."
+    },
+    "anomalia": {
+      "kind": "unknown",
+      "title": "Não forma o composto esperado",
+      "reason": "Pela troca de íons, esperaríamos {expected}. Mas: {why}"
+    },
+    "nao-deposita": {
+      "kind": "unknown",
+      "title": "O {otherMetal} não se deposita em água",
+      "reason": "Pela série eletroquímica o {metal} é mais reativo, mas o {otherMetal} (E° = {E0b}) é tão reativo que não se forma como metal dentro da água: antes disso a própria água é reduzida, liberando hidrogênio, e pode precipitar um hidróxido. O motor não monta essa equação."
+    },
+    "reagente-pouco-soluvel": {
+      "kind": "unknown",
+      "title": "{a} é pouco solúvel",
+      "reason": "{a} é pouco solúvel em água: a solução tem poucos íons, e se algo precipita depende das concentrações. O motor só afirma a precipitação de carbonato a partir da água de cal, que é o caso clássico (é assim que se amacia a água dura)."
+    },
+    "pouco-soluvel": {
+      "kind": "unknown",
+      "title": "Talvez precipite: {p} é pouco solúvel",
+      "reason": "Trocando os íons, forma-se {p}, que é POUCO solúvel ({rule}). Com soluções concentradas, ele precipita; com soluções diluídas, pode ficar dissolvido. Depende das quantidades, então o motor não afirma nada."
+    },
+    "reagente-insoluvel": {
+      "kind": "unknown",
+      "title": "{a} é insolúvel",
+      "reason": "{a} é insolúvel em água: quase não libera íons para trocar de parceiro. Às vezes um sólido se transforma em outro ainda mais insolúvel, mas a regra de precipitação vale para soluções, então o motor não afirma nada aqui."
+    },
+    "anfotero": {
+      "kind": "unknown",
+      "title": "{a} é anfótero",
+      "reason": "{a} é anfótero: reage tanto com ácidos quanto com bases fortes. Com o {b}, ele se dissolve formando um íon complexo (como o aluminato, Al(OH)4⁻). Essa reação não está na base."
+    },
+    "oxido-acido-fraco": {
+      "kind": "unknown",
+      "title": "Óxido de metal + ácido fraco",
+      "reason": "{oxide} é um óxido de metal de transição ou anfótero. Com ácidos fortes ele reage formando sal e água, mas com um ácido fraco como o {acid} a reação é lenta e incompleta. O motor só afirma a reação com ácidos fortes."
+    },
+    "bicarbonato-base": {
+      "kind": "unknown",
+      "title": "Bicarbonato + base: depende das quantidades",
+      "reason": "O OH⁻ do {b} transforma o bicarbonato do {a} em carbonato (HCO3⁻ + OH⁻ → CO3²⁻ + H2O). Com dois cátions diferentes, porém, o carbonato pode precipitar com um deles, e o resultado depende das proporções: o motor não monta uma única equação."
+    },
+    "decomposicao-alta": {
+      "kind": "unknown",
+      "title": "Decomposição de {a}: não conferida",
+      "reason": "Muitos carbonatos se decompõem em óxido e CO2 quando aquecidos, mas a temperatura necessária varia muito (os do grupo 1 e os de Sr e Ba exigem temperaturas bem acima de um forno comum). O jogo só afirma essa decomposição para os carbonatos de magnésio e cálcio."
+    },
+    "co2-base-insoluvel": {
+      "kind": "unknown",
+      "title": "Base insolúvel: reação lenta",
+      "reason": "{b} é insolúvel em água, então quase não fornece íons OH⁻ para reagir com o CO2. A regra do óxido ácido vale para hidróxidos solúveis."
+    },
+    "peroxido-agua": {
+      "kind": "unknown",
+      "title": "Peróxido + água: outra reação",
+      "reason": "O {a} contém o íon peróxido (O2²⁻), não o óxido (O²⁻). Com água ele forma hidróxido e água oxigenada, que libera oxigênio. Essa reação não está na base."
+    },
+    "mgo-agua": {
+      "kind": "unknown",
+      "title": "MgO + água: muito pouco",
+      "reason": "O óxido de magnésio se dissolve só muito ligeiramente em água (é tão estável que é usado como isolante em resistências). Uma pequena parte vira Mg(OH)2, mas o jogo não afirma uma reação completa."
+    }
+  }
+}

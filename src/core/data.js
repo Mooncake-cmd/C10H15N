@@ -1,9 +1,15 @@
 // Índices em memória sobre os JSON de data/. Puro: recebe os objetos já carregados
 // (o navegador usa fetch em src/loader.js; os testes usam fs).
 
+import { deriveSubstances, buildIonCatalog } from './ions.js';
+
 export function buildGameData(raw) {
   const elements = raw.elements.elements;
-  const substances = raw.substances.substances;
+  const baseStructures = raw.structures ?? { ions: {}, substances: {} };
+  // Fase 2: compostos iônicos que o motor de regras pode formar e que ainda não são curados.
+  const derived = raw.ions ? deriveSubstances(raw.substances.substances, baseStructures, raw.ions) : { substances: [], structures: {} };
+  const substances = [...raw.substances.substances, ...derived.substances];
+  const structures = { ...baseStructures, substances: { ...baseStructures.substances, ...derived.structures } };
   const items = raw.items.items;
   const reactions = raw.reactions.reactions;
   const nonReactions = raw.nonReactions.nonReactions;
@@ -20,7 +26,9 @@ export function buildGameData(raw) {
     reactions,
     nonReactions,
     progression: raw.progression,
-    structures: raw.structures ?? { ions: {}, substances: {} },
+    structures,
+    ions: raw.ions ? buildIonCatalog(raw.ions) : null,
+    rules: raw.rules ?? null,
     sources: raw.sources.sources,
     complementarySources: raw.sources._meta.complementaryOnly ?? [],
     reactivitySeries: raw.reactivitySeries.series,

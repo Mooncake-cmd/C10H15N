@@ -114,6 +114,17 @@ export function formatFormulaHTML(formula) {
 
 const SUB = { 0: '₀', 1: '₁', 2: '₂', 3: '₃', 4: '₄', 5: '₅', 6: '₆', 7: '₇', 8: '₈', 9: '₉' };
 /** Versão em texto puro com dígitos subscritos (útil para títulos/alt). */
+const SUP = { 0: '⁰', 1: '¹', 2: '²', 3: '³', 4: '⁴', 5: '⁵', 6: '⁶', 7: '⁷', 8: '⁸', 9: '⁹' };
+
+/** Texto Unicode: índices subscritos e carga sobrescrita (Ba^2+ → Ba²⁺, SO4^2- → SO₄²⁻). */
 export function formatFormulaText(formula) {
-  return formula.replace(/\^(\d*)([+-])$/, (_, d, s) => `${d}${s}`).replace(/([A-Za-z)\]])(\d+)/g, (_, a, d) => a + [...d].map((x) => SUB[x]).join(''));
+  let body = formula;
+  let charge = '';
+  const m = body.match(CHARGE_RE);
+  if (m) {
+    const n = m[1] && m[1] !== '1' ? [...m[1]].map((x) => SUP[x]).join('') : '';
+    charge = n + ((m[2] || m[3]) === '+' ? '⁺' : '⁻');
+    body = body.slice(0, m.index);
+  }
+  return body.replace(/([A-Za-z)\]])(\d+)/g, (_, a, d) => a + [...d].map((x) => SUB[x]).join('')) + charge;
 }

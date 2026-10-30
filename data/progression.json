@@ -7,12 +7,14 @@
       "produceCategory": "{ category } — obter como produto qualquer substância daquela categoria",
       "reactionType": "{ reactionType, withReactant? } — fazer uma reação daquele tipo (opcionalmente usando um reagente específico)",
       "nonReaction": "{ reasonId } — tentar uma combinação que não reage e ver o porquê. reasonId é o id em non-reactions.json ou 'rule:<id>' de uma regra genérica",
-      "reaction": "{ reaction } — fazer uma reação específica (id de reactions.json); útil quando o produto já pode ter sido obtido por outro caminho"
+      "reaction": "{ reaction } — fazer uma reação específica (id de reactions.json, ou 'gen:A+B' de uma reação gerada por regra); útil quando o produto já pode ter sido obtido por outro caminho",
+      "stoich": "{ reaction, given: { idDoReagente: gramas }, ask: idDoProduto | 'limiting' } — pergunta de estequiometria; a resposta certa é calculada (tolerância de 2%)"
     }
   },
   "levels": [
     {
       "id": "n1",
+      "phase": 1,
       "title": "Elementos e compostos",
       "intro": "Tudo à sua volta é feito de elementos químicos — os quadradinhos da tabela periódica. Quando elementos se combinam, formam compostos com propriedades novas. Comece com quatro: hidrogênio, oxigênio, sódio e cloro. Clique para colocar na bancada e aperte 'Reagir'.",
       "unlocks": { "elements": ["H", "O", "Na", "Cl"], "items": ["calor", "faisca"] },
@@ -26,6 +28,7 @@
     },
     {
       "id": "n2",
+      "phase": 1,
       "title": "Fogo: combustão",
       "intro": "Combustão é uma reação rápida com oxigênio que libera energia como calor e luz. Novos elementos: carbono, enxofre, magnésio, ferro e cobre — e o gás natural (metano).",
       "unlocks": { "elements": ["C", "S", "Mg", "Fe", "Cu"], "substances": ["CH4"] },
@@ -41,6 +44,7 @@
     },
     {
       "id": "n3",
+      "phase": 1,
       "title": "Famílias: metais alcalinos",
       "intro": "Elementos da mesma coluna (grupo ou família) da tabela periódica se comportam de forma parecida, porque têm o mesmo número de elétrons na última camada. O sódio você já conhece; agora vêm seus vizinhos do grupo 1: lítio, potássio, rubídio e césio. Nenhum deles existe puro na natureza: reagem com o ar e com a água.",
       "unlocks": { "elements": ["Li", "K", "Rb", "Cs"], "items": ["luz"] },
@@ -59,6 +63,7 @@
     },
     {
       "id": "g2",
+      "phase": 1,
       "title": "Família 2: metais alcalino-terrosos",
       "intro": "Na coluna ao lado ficam os metais alcalino-terrosos: berílio, magnésio, cálcio, estrôncio, bário e rádio. Eles têm 2 elétrons na última camada. O nome vem das 'terras' (óxidos) alcalinas de onde foram extraídos. Novos: berílio, cálcio, estrôncio e bário. O rádio fica de fora: é radioativo.",
       "unlocks": { "elements": ["Be", "Ca", "Sr", "Ba"] },
@@ -74,6 +79,7 @@
     },
     {
       "id": "n4",
+      "phase": 1,
       "title": "Ácidos e bases",
       "intro": "Ácidos liberam H⁺ na água; bases liberam OH⁻. Juntos, eles se neutralizam. Novos reagentes do cotidiano: calcário (CaCO3), bicarbonato de sódio, vinagre e leite de magnésia.",
       "unlocks": { "substances": ["CaCO3", "NaHCO3", "CH3COOH", "Mg(OH)2"] },
@@ -92,6 +98,7 @@
     },
     {
       "id": "n5",
+      "phase": 1,
       "title": "Série de reatividade",
       "intro": "Alguns metais 'empurram' outros (ou o hidrogênio) para fora de seus compostos; outros não conseguem. Quem decide é a série de reatividade. Novos: zinco e sulfato de cobre.",
       "unlocks": { "elements": ["Zn"], "substances": ["CuSO4"] },
@@ -105,6 +112,7 @@
     },
     {
       "id": "n6",
+      "phase": 1,
       "title": "Os nobres",
       "intro": "Gases nobres quase não reagem; metais nobres resistem à corrosão. Por quê? Novos: hélio, neônio, argônio, prata, ouro e nitrato de prata.",
       "unlocks": { "elements": ["He", "Ne", "Ar", "Ag", "Au"], "substances": ["AgNO3"] },
@@ -118,6 +126,7 @@
     },
     {
       "id": "n7",
+      "phase": 1,
       "title": "Laboratório avançado",
       "intro": "Energia e catalisadores: algumas reações só acontecem com eletricidade, outras precisam de um catalisador. Novos: nitrogênio, alumínio, água oxigenada, eletricidade e catalisador.",
       "unlocks": { "elements": ["N", "Al"], "substances": ["H2O2"], "items": ["eletricidade", "catalisador"] },
@@ -128,7 +137,58 @@
         { "id": "n7-termita", "type": "produce", "substance": "Al2O3", "text": "Faça a reação termita (com muito cuidado... no jogo!)",
           "hint": "Alumínio + ferrugem (Fe2O3). Como se obtém ferrugem?" }
       ],
-      "lesson": "Catalisadores aceleram reações sem serem consumidos; eletricidade pode forçar reações 'morro acima'. Você concluiu a Fase 1! Continue explorando no modo livre."
+      "lesson": "Catalisadores aceleram reações sem serem consumidos; eletricidade pode forçar reações 'morro acima'. Você concluiu a Fase 1! Na Fase 2, o jogo passa a usar regras gerais da química: combinações que não estão na lista de reações são previstas e balanceadas automaticamente."
+    },
+    {
+      "id": "n8",
+      "phase": 2,
+      "title": "Solubilidade e precipitação",
+      "intro": "Fase 2: agora o jogo também usa REGRAS GERAIS. Quando você mistura duas soluções de sais, os íons trocam de parceiro — e, se uma das novas combinações for insolúvel, aparece um sólido (precipitado). Quem decide é a tabela de regras de solubilidade. Novos: cloreto de bário, sulfato de sódio, carbonato de sódio e nitrato de potássio.",
+      "unlocks": { "substances": ["BaCl2", "Na2SO4", "Na2CO3", "KNO3"] },
+      "objectives": [
+        { "id": "n8-baso4", "type": "produce", "substance": "BaSO4", "text": "Forme o sulfato de bário, o 'contraste' dos exames de raio X",
+          "hint": "Os íons Ba²⁺ e SO₄²⁻ juntos formam um sólido insolúvel." },
+        { "id": "n8-cuoh2", "type": "produce", "substance": "Cu(OH)2", "text": "Precipite um hidróxido azul",
+          "hint": "Hidróxidos de metais de transição são insolúveis. Que base forte você já tem?" },
+        { "id": "n8-sem", "type": "nonReaction", "reasonId": "rule:sem-precipitado", "text": "Misture dois sais que NÃO formam precipitado",
+          "hint": "Compostos do grupo 1 e nitratos são sempre solúveis." }
+      ],
+      "lesson": "Regras de solubilidade: compostos do grupo 1 e de amônio, nitratos e acetatos são solúveis; cloretos também, menos o de prata; sulfatos também, menos os de Ca, Sr, Ba; carbonatos, hidróxidos e óxidos são insolúveis, menos os do grupo 1 (e alguns do grupo 2). A equação iônica mostra só os íons que formam o sólido."
+    },
+    {
+      "id": "n9",
+      "phase": 2,
+      "title": "Ácidos fortes",
+      "intro": "Ácidos fortes se separam totalmente em íons na água: clorídrico, nítrico e sulfúrico. O ácido nítrico também é OXIDANTE e ataca metais de um jeito diferente. Novos: ácido nítrico e ácido sulfúrico.",
+      "unlocks": { "substances": ["HNO3", "H2SO4"] },
+      "objectives": [
+        { "id": "n9-neutra", "type": "reactionType", "reactionType": "acido_base", "withReactant": "H2SO4", "text": "Neutralize o ácido sulfúrico",
+          "hint": "Ácido + base → sal + água. Quantos OH⁻ são necessários para os dois H⁺ do H2SO4?" },
+        { "id": "n9-h2", "type": "reactionType", "reactionType": "simples_troca", "withReactant": "H2SO4", "text": "Libere hidrogênio com ácido sulfúrico",
+          "hint": "Um metal acima do hidrogênio na série de reatividade." },
+        { "id": "n9-fert", "type": "produce", "substance": "(NH4)2SO4", "text": "Fabrique um fertilizante: sulfato de amônio",
+          "hint": "A amônia é uma base: ela aceita o H⁺ do ácido." },
+        { "id": "n9-dois", "type": "nonReaction", "reasonId": "rule:dois-acidos", "text": "Misture dois ácidos e descubra o que (não) acontece" }
+      ],
+      "lesson": "Os ácidos fortes da tabela são HCl, HNO3 e H2SO4 (além de HBr, HI, HClO4 e HClO3); quase todos os outros são fracos. Um metal com potencial-padrão negativo libera H2 de um ácido NÃO oxidante; com o ácido nítrico, que é oxidante, sai outro gás."
+    },
+    {
+      "id": "n10",
+      "phase": 2,
+      "title": "Estequiometria",
+      "intro": "Quanto de produto sai de uma certa massa de reagente? Converta gramas em mol (massa molar), use a razão da equação balanceada e volte para gramas. A calculadora no painel de cada reação ajuda a conferir.",
+      "objectives": [
+        { "id": "n10-co2", "type": "stoich", "reaction": "ch4-o2", "given": { "CH4": 16.0 }, "ask": "CO2",
+          "text": "Queimando 16,0 g de metano, quantos gramas de CO₂ se formam?",
+          "hint": "A massa molar do CH4 é cerca de 16 g/mol: 16,0 g ≈ 1 mol. Pela equação, 1 mol de CH4 dá 1 mol de CO2 (44 g/mol)." },
+        { "id": "n10-agua", "type": "stoich", "reaction": "h2-o2", "given": { "O2": 8.0 }, "ask": "H2O",
+          "text": "Com 8,0 g de oxigênio (e hidrogênio de sobra), quantos gramas de água se formam?",
+          "hint": "8,0 g de O2 = 0,25 mol (32 g/mol). A equação diz 1 O2 → 2 H2O." },
+        { "id": "n10-limite", "type": "stoich", "reaction": "h2-o2", "given": { "H2": 4.0, "O2": 16.0 }, "ask": "limiting",
+          "text": "Com 4,0 g de H₂ e 16,0 g de O₂, qual reagente acaba primeiro?",
+          "hint": "Calcule quantos mol de cada um você tem e compare com a proporção 2 H2 : 1 O2." }
+      ],
+      "lesson": "Estequiometria em três passos: gramas → mol (÷ massa molar), mol → mol (razão dos coeficientes), mol → gramas (× massa molar). Com dois reagentes, o que acaba primeiro é o LIMITANTE: ele decide quanto produto sai, e o outro sobra. Você concluiu a Fase 2!"
     }
   ]
 }

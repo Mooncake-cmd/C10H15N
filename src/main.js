@@ -3,7 +3,8 @@
 
 import { loadGameData } from './loader.js';
 import { createEngine } from './core/engine.js';
-import { initialState, applyResult, inventory, restoreState, unlockLevelMap, isObjectiveDone } from './core/progression.js';
+import { initialState, applyResult, inventory, restoreState, unlockLevelMap, isObjectiveDone, answerObjective } from './core/progression.js';
+import { lookupReaction } from './core/engine.js';
 import { formatFormulaHTML } from './core/formula.js';
 import { renderPeriodicTable } from './ui/periodic-table.js';
 import { renderResult, renderWelcome } from './ui/result-panel.js';
@@ -92,9 +93,11 @@ async function main() {
       .map((id) => data.itemsById.get(id))
       .map((it) => html`<button class="chip chip-item${raw(bench.includes(it.id) ? ' is-on-bench' : '')}" data-id="${it.id}" draggable="true" title="${it.description}"><span class="chip-formula">${it.icon}</span><span class="chip-name">${it.name}</span></button>`)
       .join('');
-    const total = data.substances.filter((s) => !s.elementOf).length;
-    const found = data.substances.filter((s) => !s.elementOf && inv.substances.includes(s.id)).length;
-    $('#inv-count').textContent = `${found}/${total} compostos`;
+    // A coleção conta os compostos curados; os gerados pelas regras (Fase 2) aparecem como extras.
+    const collection = data.substances.filter((s) => !s.elementOf && !s.derived);
+    const found = collection.filter((s) => inv.substances.includes(s.id)).length;
+    const extras = inv.substances.filter((id) => data.substancesById.get(id).derived).length;
+    $('#inv-count').textContent = `${found}/${collection.length} compostos${extras ? ` · +${extras} extras` : ''}`;
   }
 
   // ---------- Bancada ----------
@@ -161,15 +164,15 @@ async function main() {
     const levels = data.progression.levels;
     const level = levels[state.levelIndex];
     const done = level.objectives.filter((o) => state.completedObjectives.includes(o.id)).length;
-    $('#level-name').textContent = state.finished ? 'Fase 1 concluída — modo livre' : `Nível ${state.levelIndex + 1}/${levels.length}: ${level.title}`;
+    $('#level-name').textContent = state.finished ? 'Todas as fases concluídas — modo livre' : `Fase ${level.phase ?? 1} · Nível ${state.levelIndex + 1}/${levels.length}: ${level.title}`;
     const overall = levels.flatMap((l) => l.objectives);
     const pct = Math.round((100 * state.completedObjectives.length) / overall.length);
     $('#progress-bar').style.width = `${pct}%`;
     $('#progress-bar').parentElement.setAttribute('aria-valuenow', String(pct));
 
     $('#objectives').innerHTML = html`
-      <h2>${state.finished ? '🏆 Fase 1 concluída!' : level.title}</h2>
-      <p class="small">${state.finished ? 'Você completou todos os níveis. Continue explorando combinações: ainda há reações e "não-reações" para descobrir.' : level.intro}</p>
+      <h2>${state.finished ? '🏆 Todas as fases concluídas!' : level.title}</h2>
+      <p class="small">${state.finished ? 'Você completou todos os níveis. Continue explorando combinações: com as regras da Fase 2, há centenas de reações e "não-reações" para descobrir.' : level.intro}</p>
       ${raw(
         state.finished
           ? ''
@@ -180,7 +183,7 @@ async function main() {
               .map((o) => {
                 const ok = state.completedObjectives.includes(o.id) || isObjectiveDone(o, state, data);
                 return html`<li class="${ok ? 'is-done' : ''}"><span class="check" aria-hidden="true">${ok ? '✔' : '○'}</span>
-                  <div><span>${o.text}</span>${raw(!ok && o.hint ? `<details class="hint"><summary>Dica</summary>${esc(o.hint)}</details>` : '')}</div></li>`;
+                  <div><span>${o.text}</span>${raw(!ok && o.type === 'stoich' ? stoichForm(o) : '')}${raw(!ok && o.hint ? `<details class="hint"><summary>Dica</summary>${esc(o.hint)}</details>` : '')}</div></li>`;
               })
               .join(''),
           )}
@@ -192,6 +195,36 @@ async function main() {
           .map((l) => `<details class="past-lesson"><summary>✔ ${esc(l.title)}</summary><p class="small">${esc(l.lesson)}</p></details>`)
           .join(''),
       )}`;
+  }
+
+  /** Pergunta de estequiometria: campo numérico (gramas) ou escolha do reagente limitante. */
+  function stoichForm(o) {
+    const r = lookupReaction(data, o.reaction);
+    if (o.ask === 'limiting') {
+      const opts = Object.keys(o.given)
+        .map((id) => html`<button type="button" class="btn btn-ghost stoich-choice" data-answer="${id}">${raw(formatFormulaHTML(data.substancesById.get(id).formula))}</button>`)
+        .join('');
+      return html`<form class="stoich-form" data-objective="${o.id}"><span class="small muted">Equação: ${r.name}</span><div class="stoich-row">${raw(opts)}</div></form>`;
+    }
+    const unit = data.substancesById.get(o.ask).formula;
+    return html`<form class="stoich-form" data-objective="${o.id}"><span class="small muted">Equação: ${r.name}</span>
+      <div class="stoich-row"><input name="answer" inputmode="decimal" autocomplete="off" aria-label="Resposta em gramas de ${unit}" placeholder="gramas"><span class="small">g de ${raw(formatFormulaHTML(unit))}</span>
+      <button class="btn btn-primary" type="submit">Conferir</button></div></form>`;
+  }
+
+  function submitStoich(objectiveId, answer) {
+    const prevLevel = state.levelIndex;
+    const { state: next, events, correct } = answerObjective(state, objectiveId, answer, data);
+    if (!correct) {
+      toast('Ainda não. Confira a conversão gramas → mol → gramas (a dica ajuda).');
+      return;
+    }
+    state = next;
+    storage.save(state);
+    for (const e of events) if (e.type === 'objective') toast(`🎯 Objetivo concluído: ${e.objective.text}`, 'good');
+    const completed = events.filter((e) => e.type === 'level-complete').map((e) => e.level);
+    if (completed.length) showLevelDialog(completed, state.levelIndex !== prevLevel ? data.progression.levels[state.levelIndex] : null);
+    renderAll();
   }
 
   function showLevelDialog(completedLevels, nextLevel) {
@@ -211,7 +244,7 @@ async function main() {
         nextLevel
           ? html`<hr><h3>Próximo: ${nextLevel.title}</h3><p>${nextLevel.intro}</p>
             ${raw(unlockedNames.length ? `<p class="small"><strong>Desbloqueado:</strong> ${unlockedNames.map(esc).join(', ')}</p>` : '')}`
-          : '<hr><h3>🏆 Você concluiu todos os níveis da Fase 1!</h3>',
+          : '<hr><h3>🏆 Você concluiu todos os níveis!</h3>',
       )}`;
     if (typeof dlg.showModal === 'function') dlg.showModal();
     else dlg.setAttribute('open', '');
@@ -258,6 +291,16 @@ async function main() {
   $('#bench-slots').addEventListener('click', (ev) => {
     const b = ev.target.closest('[data-remove]');
     if (b) removeFromBench(b.dataset.remove);
+  });
+  $('#objectives').addEventListener('submit', (ev) => {
+    const form = ev.target.closest('.stoich-form');
+    if (!form) return;
+    ev.preventDefault();
+    submitStoich(form.dataset.objective, form.elements.answer?.value ?? '');
+  });
+  $('#objectives').addEventListener('click', (ev) => {
+    const b = ev.target.closest('.stoich-choice');
+    if (b) submitStoich(b.closest('.stoich-form').dataset.objective, b.dataset.answer);
   });
   $('#btn-react').addEventListener('click', react);
   $('#btn-clear').addEventListener('click', () => {

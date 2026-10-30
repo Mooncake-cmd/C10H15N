@@ -9,13 +9,32 @@
 //   { kind: 'unknown',         title, reason, prediction? }         fora da base; não afirmamos nada
 //   { kind: 'invalid',         title, reason }      bancada vazia etc.
 //
-// Extensão (Fase 2): `resolvers` e `explainers` são listas. Um resolver procura reações
-// (a Fase 1 só tem o da base curada; um motor de regras com balanceamento automático entra como
-// um resolver novo, DEPOIS do curado, de modo que conteúdo curado sempre tem prioridade).
+// `resolvers` e `explainers` são listas. Um resolver procura reações: o da base curada vem
+// primeiro e o motor de regras da Fase 2 (rules/reaction-rules.js) depois, de modo que conteúdo
+// curado sempre tem prioridade.
 // Um explainer explica por que não houve reação (base curada de não-reações + regras genéricas).
 
 import { setKey } from './data.js';
 import { defaultExplainers } from './rules/non-reaction-rules.js';
+import { createRules } from './rules/reaction-rules.js';
+
+const rulesCache = new WeakMap();
+/** Motor de regras de um conjunto de dados (criado uma vez e reaproveitado). */
+export function rulesFor(data) {
+  if (!rulesCache.has(data)) rulesCache.set(data, createRules(data));
+  return rulesCache.get(data);
+}
+
+/**
+ * Reação por id: curada (data.reactionsById) ou gerada por regra ("gen:A+B"), que é recalculada
+ * a partir dos reagentes — por isso ids gerados podem ser salvos no progresso do jogador.
+ */
+export function lookupReaction(data, id) {
+  const curated = data.reactionsById.get(id);
+  if (curated || !id?.startsWith('gen:')) return curated;
+  const found = rulesFor(data).resolver.find(id.slice(4).split('+'), ['calor', 'faisca', 'luz', 'eletricidade', 'catalisador']);
+  return found.find((r) => r.id === id);
+}
 
 /** Resolver da base curada: casa pelo conjunto exato de substâncias. */
 export function curatedResolver(data) {
@@ -39,7 +58,7 @@ export function missingConditions(reaction, itemIds) {
   return (reaction.conditions ?? []).filter((anyOf) => !anyOf.some((id) => have.has(id)));
 }
 
-export function createEngine(data, { resolvers = [curatedResolver(data)], explainers = defaultExplainers(data) } = {}) {
+export function createEngine(data, { resolvers = [curatedResolver(data), rulesFor(data).resolver], explainers = defaultExplainers(data, rulesFor(data).explainer) } = {}) {
   function split(selection) {
     const substanceIds = [];
     const itemIds = [];
@@ -64,7 +83,12 @@ export function createEngine(data, { resolvers = [curatedResolver(data)], explai
       };
     }
 
-    const candidates = resolvers.flatMap((r) => r.find(substanceIds, itemIds, ctx));
+    // Prioridade: o primeiro resolver que achar algo decide (curado antes das regras).
+    let candidates = [];
+    for (const r of resolvers) {
+      candidates = r.find(substanceIds, itemIds, ctx);
+      if (candidates.length) break;
+    }
     const ready = candidates.find((r) => missingConditions(r, itemIds).length === 0);
     if (ready) return { kind: 'reaction', reaction: ready, ...ctx };
     if (candidates.length) {

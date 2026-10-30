@@ -61,10 +61,17 @@ test('regra: série de reatividade — menos reativo não desloca (confiante)', 
   assert.equal(combine(['Cu', 'CH3COOH']).reasonId, 'rule:reatividade');
 });
 
-test('regra: série de reatividade — mais reativo mas não curado vira previsão, não afirmação', () => {
+test('Fase 2: metal mais reativo desloca o do sal — equação gerada e balanceada', () => {
   const r = combine(['Zn', 'CuSO4']);
+  assert.equal(r.kind, 'reaction');
+  assert.ok(r.reaction.generated);
+  assert.deepEqual(r.reaction.products.map((p) => [p.id, p.coef]), [['ZnSO4', 1], ['Cu', 1]]);
+});
+
+test('Fase 2: metal que ataca a água não "desloca" o do sal — fica como desconhecido', () => {
+  const r = combine(['Na', 'CuSO4']);
   assert.equal(r.kind, 'unknown');
-  assert.equal(r.prediction.type, 'simples_troca');
+  assert.equal(r.reasonId, 'rule:reage-com-agua');
 });
 
 test('mesmo metal', () => {

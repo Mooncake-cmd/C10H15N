@@ -183,7 +183,7 @@
         "why": "A reação é violenta, pode espirrar soda cáustica (corrosiva) e o hidrogênio liberado pode pegar fogo ou explodir.",
         "home": "Não faça em casa. Mesmo em laboratório usa-se um pedaço do tamanho de um grão de arroz, atrás de uma proteção."
       },
-      "source": { "ref": "brown", "topic": "Metais alcalinos: reação com água", "justification": "2 Na(s) + 2 H2O(l) → 2 NaOH(aq) + H2(g) é a reação característica do grupo 1." }
+      "source": { "ref": "brown", "topic": "Metais alcalinos: reação com água", "justification": "2 Na(s) + 2 H2O(l) → 2 NaOH(aq) + H2(g) é a reação característica do grupo 1.", "seeAlso": [{ "ref": "atkins-jones", "topic": "Seção 15.5: metais alcalinos + água; vigor cresce descendo o grupo", "pages": "621" }] }
     },
     {
       "id": "li-h2o",
@@ -217,7 +217,7 @@
         "why": "Reação violenta, com fogo e respingos de base corrosiva; pode explodir.",
         "home": "Não faça em casa em nenhuma hipótese."
       },
-      "source": { "ref": "brown", "topic": "Metais alcalinos: tendência de reatividade no grupo", "justification": "2 K(s) + 2 H2O(l) → 2 KOH(aq) + H2(g); o K reage mais vigorosamente que o Na, com ignição do H2 (chama lilás pela emissão do potássio)." }
+      "source": { "ref": "brown", "topic": "Metais alcalinos: tendência de reatividade no grupo", "justification": "2 K(s) + 2 H2O(l) → 2 KOH(aq) + H2(g); o K reage mais vigorosamente que o Na, com ignição do H2 (chama lilás pela emissão do potássio).", "seeAlso": [{ "ref": "atkins-jones", "topic": "Seção 15.5: metais alcalinos + água; vigor cresce descendo o grupo", "pages": "621" }] }
     },
     {
       "id": "ca-h2o",
@@ -234,7 +234,7 @@
         "why": "Libera hidrogênio inflamável e forma solução básica irritante.",
         "home": "Não faça em casa; o cálcio metálico é material de laboratório."
       },
-      "source": { "ref": "kotz", "topic": "Metais alcalino-terrosos: reação com água", "justification": "Ca(s) + 2 H2O(l) → Ca(OH)2(aq) + H2(g); o hidróxido de cálcio é pouco solúvel, por isso a turvação." }
+      "source": { "ref": "kotz", "topic": "Metais alcalino-terrosos: reação com água", "justification": "Ca(s) + 2 H2O(l) → Ca(OH)2(aq) + H2(g); o hidróxido de cálcio é pouco solúvel, por isso a turvação.", "seeAlso": [{ "ref": "atkins-jones", "topic": "Seção 15.7: o cálcio reage com água fria", "pages": "625" }] }
     },
     {
       "id": "h2-cl2",
@@ -273,7 +273,7 @@
         "why": "Antes de reagir, os dois são corrosivos (queimam pele e olhos). A reação libera calor e, com soluções concentradas, pode espirrar.",
         "home": "Não faça com ácido muriático e soda cáustica em casa. Para ver neutralização com segurança, use vinagre + bicarbonato, ou repolho roxo como indicador."
       },
-      "source": { "ref": "brown", "topic": "Reações ácido-base e neutralização; equações iônicas líquidas", "justification": "HCl(aq) + NaOH(aq) → NaCl(aq) + H2O(l), com equação iônica líquida H⁺(aq) + OH⁻(aq) → H2O(l), é o exemplo-padrão de neutralização." }
+      "source": { "ref": "brown", "topic": "Reações ácido-base e neutralização; equações iônicas líquidas", "justification": "HCl(aq) + NaOH(aq) → NaCl(aq) + H2O(l), com equação iônica líquida H⁺(aq) + OH⁻(aq) → H2O(l), é o exemplo-padrão de neutralização.", "seeAlso": [{ "ref": "atkins-jones", "topic": "Seção J.3: neutralização", "pages": "F75" }] }
     },
     {
       "id": "zn-hcl",
@@ -360,7 +360,7 @@
         "why": "O nitrato de prata é corrosivo e mancha a pele de preto por dias.",
         "home": "Não é um reagente doméstico. Em laboratório escolar: luvas e óculos."
       },
-      "source": { "ref": "brown", "topic": "Reações de precipitação; regras de solubilidade", "justification": "AgNO3(aq) + NaCl(aq) → AgCl(s) + NaNO3(aq), com iônica líquida Ag⁺ + Cl⁻ → AgCl(s), é exemplo padrão das regras de solubilidade." }
+      "source": { "ref": "brown", "topic": "Reações de precipitação; regras de solubilidade", "justification": "AgNO3(aq) + NaCl(aq) → AgCl(s) + NaNO3(aq), com iônica líquida Ag⁺ + Cl⁻ → AgCl(s), é exemplo padrão das regras de solubilidade.", "seeAlso": [{ "ref": "atkins-jones", "topic": "Seções I.2–I.3: precipitação do AgCl e equação iônica líquida", "pages": "F67–F68" }] }
     },
     {
       "id": "caco3-calor",
@@ -378,7 +378,7 @@
         "why": "Temperaturas de forno industrial, e o produto (cal virgem) é cáustico.",
         "home": "Não dá para fazer em casa: um fogão não atinge a temperatura necessária."
       },
-      "source": { "ref": "kotz", "topic": "Reações de decomposição; produção de cal", "justification": "CaCO3(s) → CaO(s) + CO2(g) por aquecimento é o exemplo industrial clássico de decomposição térmica." }
+      "source": { "ref": "kotz", "topic": "Reações de decomposição; produção de cal", "justification": "CaCO3(s) → CaO(s) + CO2(g) por aquecimento é o exemplo industrial clássico de decomposição térmica.", "seeAlso": [{ "ref": "atkins-jones", "topic": "Seção 15.8: o carbonato de cálcio se decompõe em cal virgem", "pages": "627" }] }
     },
     {
       "id": "cao-h2o",
@@ -395,7 +395,7 @@
         "why": "Libera muito calor e o produto é cáustico; pode espirrar e queimar pele e olhos.",
         "home": "Pedreiros fazem isso em obra, com luvas e óculos. Não faça por diversão."
       },
-      "source": { "ref": "kotz", "topic": "Óxidos básicos; cal virgem e cal hidratada", "justification": "CaO(s) + H2O(l) → Ca(OH)2(s), fortemente exotérmica, é a 'extinção' ou hidratação da cal." }
+      "source": { "ref": "kotz", "topic": "Óxidos básicos; cal virgem e cal hidratada", "justification": "CaO(s) + H2O(l) → Ca(OH)2(s), fortemente exotérmica, é a 'extinção' ou hidratação da cal.", "seeAlso": [{ "ref": "atkins-jones", "topic": "Seção 15.8: a cal virgem reage com água", "pages": "627" }] }
     },
     {
       "id": "caoh2-co2",
@@ -412,7 +412,7 @@
         "why": "A água de cal diluída é levemente irritante; evite contato com os olhos.",
         "home": "Pode ser feito com supervisão (água de cal é vendida em farmácias). Sopre — nunca aspire — pelo canudo."
       },
-      "source": { "ref": "brown", "topic": "Óxidos ácidos; carbonatos; teste da água de cal", "justification": "Ca(OH)2(aq) + CO2(g) → CaCO3(s) + H2O(l) é o teste qualitativo tradicional para CO2." }
+      "source": { "ref": "brown", "topic": "Óxidos ácidos; carbonatos; teste da água de cal", "justification": "Ca(OH)2(aq) + CO2(g) → CaCO3(s) + H2O(l) é o teste qualitativo tradicional para CO2.", "seeAlso": [{ "ref": "atkins-jones", "topic": "Seção 15.8: água de cal como teste do CO2", "pages": "627" }] }
     },
     {
       "id": "co2-h2o",
@@ -474,7 +474,7 @@
         "why": "Os dois ingredientes são de cozinha. O único cuidado é não fechar a mistura em recipiente tampado (a pressão do gás pode estourá-lo).",
         "home": "Pode fazer em casa! Use um copo aberto, de preferência dentro de uma bandeja."
       },
-      "source": { "ref": "kotz", "topic": "Reações ácido-base com formação de gás", "justification": "NaHCO3(s) + CH3COOH(aq) → CH3COONa(aq) + H2O(l) + CO2(g); demonstração usual de reação ácido-base com efervescência." }
+      "source": { "ref": "kotz", "topic": "Reações ácido-base com formação de gás", "justification": "NaHCO3(s) + CH3COOH(aq) → CH3COONa(aq) + H2O(l) + CO2(g); demonstração usual de reação ácido-base com efervescência.", "seeAlso": [{ "ref": "atkins-jones", "topic": "Seção 15.6: ácidos fracos + hidrogenocarbonato liberam CO2", "pages": "623" }] }
     },
     {
       "id": "haber",
@@ -549,7 +549,7 @@
         "ref": "greenwood",
         "topic": "Metais alcalinos: reação com oxigênio (Li forma o óxido, Na o peróxido, K/Rb/Cs o superóxido)",
         "justification": "4 Li(s) + O2(g) → 2 Li2O(s) é a combustão característica do lítio, único metal alcalino cujo produto principal é o óxido normal.",
-        "seeAlso": [{ "ref": "dk-elements", "topic": "Introdução: 'Reactions and uses' (lítio queimando ao ar)", "pages": "16–17" }]
+        "seeAlso": [{ "ref": "atkins-jones", "topic": "Seção 15.5: o lítio forma principalmente o óxido, Li2O", "pages": "621–622" }, { "ref": "dk-elements", "topic": "Introdução: 'Reactions and uses' (lítio queimando ao ar)", "pages": "16–17" }]
       }
     },
     {
@@ -571,7 +571,7 @@
       "source": {
         "ref": "greenwood",
         "topic": "Metais alcalinos: reação com oxigênio; peróxido de sódio",
-        "justification": "Na queimado em excesso de ar forma principalmente Na2O2: 2 Na(s) + O2(g) → Na2O2(s)."
+        "justification": "Na queimado em excesso de ar forma principalmente Na2O2: 2 Na(s) + O2(g) → Na2O2(s).", "seeAlso": [{ "ref": "atkins-jones", "topic": "Seção 15.5: o sódio forma principalmente o peróxido, Na2O2", "pages": "621–622" }]
       }
     },
     {
@@ -593,7 +593,7 @@
         "ref": "greenwood",
         "topic": "Metais alcalinos: reatividade com água; tendências no grupo 1",
         "justification": "2 Rb(s) + 2 H2O(l) → 2 RbOH(aq) + H2(g); a reatividade com a água aumenta de Li para Cs.",
-        "seeAlso": [{ "ref": "dk-elements", "topic": "Rubídio", "pages": "32" }]
+        "seeAlso": [{ "ref": "atkins-jones", "topic": "Seção 15.5: rubídio e césio reagem de forma perigosamente explosiva", "pages": "621" }, { "ref": "dk-elements", "topic": "Rubídio", "pages": "32" }]
       }
     },
     {
@@ -615,7 +615,7 @@
         "ref": "greenwood",
         "topic": "Metais alcalinos: reatividade com água; tendências no grupo 1",
         "justification": "2 Cs(s) + 2 H2O(l) → 2 CsOH(aq) + H2(g); o Cs reage explosivamente com água, mesmo com gelo a −116 °C.",
-        "seeAlso": [{ "ref": "dk-elements", "topic": "Césio", "pages": "34" }]
+        "seeAlso": [{ "ref": "atkins-jones", "topic": "Seção 15.5: rubídio e césio reagem de forma perigosamente explosiva", "pages": "621" }, { "ref": "dk-elements", "topic": "Césio", "pages": "34" }]
       }
     },
     {
@@ -680,7 +680,7 @@
         "ref": "kotz",
         "topic": "Metais alcalino-terrosos: reação com água e com vapor",
         "justification": "Mg(s) + H2O(g) → MgO(s) + H2(g), com o metal aquecido; com água fria a reação é desprezível.",
-        "seeAlso": [{ "ref": "dk-elements", "topic": "Metais alcalino-terrosos: abertura do grupo ('react with hot water or steam')", "pages": "37" }]
+        "seeAlso": [{ "ref": "atkins-jones", "topic": "Seção 15.7: o magnésio reage com água quente", "pages": "625" }, { "ref": "dk-elements", "topic": "Metais alcalino-terrosos: abertura do grupo ('react with hot water or steam')", "pages": "37" }]
       }
     },
     {
@@ -702,7 +702,7 @@
         "ref": "greenwood",
         "topic": "Lítio: compostos; LiOH como absorvedor de CO2 em naves e submarinos",
         "justification": "2 LiOH(s) + CO2(g) → Li2CO3(s) + H2O(l); a baixa massa molar do LiOH o torna o absorvedor preferido em veículos espaciais.",
-        "seeAlso": [{ "ref": "dk-elements", "topic": "Lítio: usos (air scrubber da Apollo 13)", "pages": "25" }]
+        "seeAlso": [{ "ref": "atkins-jones", "topic": "Seção 11.3: o CO2 é um óxido ácido e reage com hidróxidos", "pages": "428" }, { "ref": "dk-elements", "topic": "Lítio: usos (air scrubber da Apollo 13)", "pages": "25" }]
       }
     },
     {
@@ -728,7 +728,7 @@
       "source": {
         "ref": "brown",
         "topic": "Reações ácido-base; antiácidos",
-        "justification": "Mg(OH)2(s) + 2 HCl(aq) → MgCl2(aq) + 2 H2O(l) é o exemplo usual de antiácido de hidróxido metálico pouco solúvel."
+        "justification": "Mg(OH)2(s) + 2 HCl(aq) → MgCl2(aq) + 2 H2O(l) é o exemplo usual de antiácido de hidróxido metálico pouco solúvel.", "seeAlso": [{ "ref": "atkins-jones", "topic": "Seção 15.8: leite de magnésia, Mg(OH)2, como antiácido", "pages": "626" }]
       }
     },
     {

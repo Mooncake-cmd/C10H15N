@@ -4,6 +4,9 @@
 // Extensão: novos tipos de objetivo entram em OBJECTIVE_CHECKS (ex.: Fase 2 — "produza 10 g de
 // NaCl" com estequiometria; Fase 3 — missões com várias etapas).
 
+import { lookupReaction } from './engine.js';
+import { stoichiometry } from './stoichiometry.js';
+
 export const STATE_VERSION = 2;
 // v1 → v2: um nível novo (metais alcalino-terrosos) entrou no meio da Fase 1, então o
 // levelIndex salvo deixou de valer. A migração refaz o caminho a partir do histórico.
@@ -20,6 +23,7 @@ export function initialState(data) {
     reactionsDone: [],
     nonReactionsSeen: [],
     completedObjectives: [],
+    stoichSolved: [], // objetivos de estequiometria respondidos corretamente
   };
   return applyUnlocks(state, data.progression.levels[0]);
 }
@@ -52,11 +56,12 @@ const OBJECTIVE_CHECKS = {
   produceCategory: (o, h, data) => [...h.produced].some((id) => data.substancesById.get(id)?.categories.includes(o.category)),
   reactionType: (o, h, data) =>
     [...h.reactionsDone].some((rid) => {
-      const r = data.reactionsById.get(rid);
-      return r.types.includes(o.reactionType) && (!o.withReactant || r.reactants.some((e) => e.id === o.withReactant));
+      const r = lookupReaction(data, rid);
+      return !!r && r.types.includes(o.reactionType) && (!o.withReactant || r.reactants.some((e) => e.id === o.withReactant));
     }),
   nonReaction: (o, h) => h.nonReactionsSeen.has(o.reasonId),
   reaction: (o, h) => h.reactionsDone.has(o.reaction),
+  stoich: (o, h) => h.stoichSolved.has(o.id),
 };
 
 export function isObjectiveDone(objective, state, data) {
@@ -66,6 +71,7 @@ export function isObjectiveDone(objective, state, data) {
     produced: new Set(state.produced),
     reactionsDone: new Set(state.reactionsDone),
     nonReactionsSeen: new Set(state.nonReactionsSeen),
+    stoichSolved: new Set(state.stoichSolved ?? []),
   };
   return check(objective, history, data);
 }
@@ -96,8 +102,15 @@ export function applyResult(state, result, data) {
     s.nonReactionsSeen = [...s.nonReactionsSeen, result.reasonId];
   }
 
-  // Confere objetivos; ao completar um nível, desbloqueia o próximo (e reconfere, pois o
-  // histórico pode já cumprir objetivos do nível novo).
+  s = advance(s, data, events);
+  return { state: s, events };
+}
+
+/**
+ * Confere objetivos; ao completar um nível, desbloqueia o próximo (e reconfere, pois o histórico
+ * pode já cumprir objetivos do nível novo).
+ */
+function advance(s, data, events) {
   const levels = data.progression.levels;
   while (!s.finished) {
     const level = levels[s.levelIndex];
@@ -118,7 +131,36 @@ export function applyResult(state, result, data) {
     s = applyUnlocks(s, levels[s.levelIndex]);
     events.push({ type: 'level-start', level: levels[s.levelIndex] });
   }
-  return { state: s, events };
+  return s;
+}
+
+/** Resposta certa de um objetivo de estequiometria: gramas do produto pedido ou o id do reagente limitante. */
+export function stoichAnswer(objective, data) {
+  const res = stoichiometry(lookupReaction(data, objective.reaction), data, objective.given);
+  if (objective.ask === 'limiting') return res.limiting;
+  return res.products.find((p) => p.id === objective.ask).grams;
+}
+
+/** Tolerância de 2% (arredondamentos de massa molar), e no mínimo 0,05 g. */
+export function isStoichAnswerRight(objective, answer, data) {
+  const expected = stoichAnswer(objective, data);
+  if (objective.ask === 'limiting') return answer === expected;
+  const x = Number(String(answer).replace(',', '.'));
+  return Number.isFinite(x) && Math.abs(x - expected) <= Math.max(0.02 * expected, 0.05);
+}
+
+/** O jogador respondeu a um objetivo de estequiometria. */
+export function answerObjective(state, objectiveId, answer, data) {
+  const events = [];
+  const objective = data.progression.levels.flatMap((l) => l.objectives).find((o) => o.id === objectiveId);
+  if (!objective || objective.type !== 'stoich') return { state, events, correct: false };
+  const correct = isStoichAnswerRight(objective, answer, data);
+  let s = state;
+  if (correct && !(s.stoichSolved ?? []).includes(objectiveId)) {
+    s = { ...s, stoichSolved: [...(s.stoichSolved ?? []), objectiveId] };
+    s = advance(s, data, events);
+  }
+  return { state: s, events, correct };
 }
 
 /** Em qual nível cada elemento/substância/ferramenta é desbloqueado (para dicas na UI). */
@@ -138,13 +180,19 @@ export function restoreState(saved, data) {
   const known = (arr, has) => (Array.isArray(arr) ? arr.filter(has) : []);
   const history = {
     produced: known(saved.produced, (id) => data.substancesById.has(id)),
-    reactionsDone: known(saved.reactionsDone, (id) => data.reactionsById.has(id)),
+    reactionsDone: known(saved.reactionsDone, (id) => !!lookupReaction(data, id)),
     nonReactionsSeen: known(saved.nonReactionsSeen, () => true),
     completedObjectives: known(saved.completedObjectives, () => true),
+    stoichSolved: known(saved.stoichSolved, () => true),
   };
   if (saved.version === STATE_VERSION) {
     if (saved.levelIndex >= data.progression.levels.length) return null;
-    return { ...initialState(data), ...saved, ...history };
+    const restored = { ...initialState(data), ...saved, ...history };
+    // Quem terminou antes de existirem níveis novos (ex.: a Fase 2) continua de onde parou.
+    if (restored.finished && restored.levelIndex < data.progression.levels.length - 1) {
+      return advance({ ...restored, finished: false }, data, []);
+    }
+    return restored;
   }
   return replayHistory(history, data);
 }

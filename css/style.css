@@ -267,6 +267,20 @@ sub, sup { font-size: 0.7em; line-height: 0; }
 .fx-precip span:nth-child(13) { left: 83.0%; animation-delay: 0.42s !important; --drop: 146px; }
 .fx-precip span:nth-child(14) { left: 89.5%; animation-delay: 0.53s !important; --drop: 139px; }
 
+/* ---------- Fase 2: selo de regra, calculadora e perguntas ---------- */
+.badge-rule { border-color: var(--accent); color: var(--accent); }
+.rule-note { border-left: 3px solid var(--accent); padding-left: 0.6rem; }
+.stoich-calc { margin: 0.6rem 0; }
+.stoich-calc summary { cursor: pointer; font-weight: 600; }
+.calc-inputs { display: flex; flex-wrap: wrap; gap: 0.5rem 1rem; margin: 0.4rem 0; }
+.calc-in { display: inline-flex; align-items: center; gap: 0.35rem; }
+.calc-in input, .stoich-row input { width: 6.5rem; font: inherit; padding: 0.3rem 0.45rem; border: 1px solid var(--border); border-radius: 6px; background: var(--panel-2); color: var(--text); }
+.calc-table { border-collapse: collapse; margin: 0.3rem 0; font-size: 0.88rem; color: var(--text); }
+.calc-table th, .calc-table td { border-bottom: 1px solid var(--border); padding: 0.2rem 0.7rem 0.2rem 0; text-align: left; }
+.stoich-form { margin: 0.35rem 0; display: flex; flex-direction: column; gap: 0.3rem; }
+.stoich-row { display: flex; flex-wrap: wrap; gap: 0.4rem; align-items: center; }
+.stoich-row .btn { padding: 0.3rem 0.7rem; }
+
 /* ---------- Objetivos ---------- */
 .objective-list { list-style: none; padding: 0; margin: 0.5rem 0; display: flex; flex-direction: column; gap: 0.5rem; }
 .objective-list li { display: flex; gap: 0.5rem; align-items: flex-start; }

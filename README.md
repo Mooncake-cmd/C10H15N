@@ -5,9 +5,11 @@ faísca, luz, eletricidade, catalisador) e vê **reações químicas reais**, co
 o porquê, a conservação de átomos e massa, os riscos de segurança e a fonte para conferir num
 livro-texto. Quando não há reação, o jogo diz isso e explica o motivo.
 
-Esta é a **Fase 1 (protótipo)**: 25 elementos jogáveis (os 118 aparecem na tabela), 39 compostos,
-38 reações curadas, 17 "não-reações" curadas, regras genéricas de explicação e 8 níveis de
-progressão.
+**Fases 1 e 2 concluídas.** 25 elementos jogáveis (os 118 aparecem na tabela), 41 compostos
+curados e mais 81 gerados a partir de íons, 38 reações curadas, 17 "não-reações" curadas e um
+**motor de regras** que monta e balanceia sozinho cerca de 750 reações a partir de regras gerais
+(solubilidade, ácido-base, série eletroquímica, combustão, decomposição), com explicação, fonte e
+segurança. Há também uma calculadora de estequiometria e 11 níveis de progressão em duas fases.
 
 ## Como rodar
 
@@ -29,7 +31,7 @@ Requer Node 18 ou mais recente; não há pacotes para instalar.
 npm test
 ```
 
-O que os testes garantem (são ~250 verificações):
+O que os testes garantem (são ~530 verificações):
 
 - **Toda reação conserva átomos e carga** — tanto a equação completa quanto a equação iônica
   líquida, quando existe. Se você errar um coeficiente, o teste diz qual elemento não fecha
@@ -46,7 +48,16 @@ O que os testes garantem (são ~250 verificações):
   Compostos iônicos aparecem como íons separados, com carga, nunca como molécula. Em toda reação,
   cada átomo dos reagentes casa com um átomo dos produtos (é o que a animação mostra).
 - **O jogo pode ser concluído**: um jogador simulado passa por todos os níveis usando só o que
-  já está desbloqueado em cada um.
+  já está desbloqueado em cada um (testando todos os pares de substâncias e respondendo às
+  perguntas de estequiometria).
+- **Balanceamento automático** reproduz os coeficientes de todas as 38 reações curadas e recusa
+  equações impossíveis ou ambíguas.
+- **Motor de regras**: onde uma regra se aplica a uma reação curada, ela dá exatamente os mesmos
+  produtos e coeficientes; nunca contradiz uma não-reação curada; e uma varredura de TODOS os
+  pares de substâncias confere cada equação gerada com os mesmos critérios das curadas (átomos,
+  carga, coeficientes mínimos, estados, equação iônica, segurança, fonte e desenho).
+- Regras de solubilidade conferidas caso a caso com a Tabela I.1 de Atkins & Jones; série de
+  reatividade conferida com o Apêndice 2B do mesmo livro.
 
 ## Estrutura
 
@@ -58,6 +69,8 @@ data/                       TODO o conteúdo (JSON) — dá para editar sem mexe
   substances.json           substâncias jogáveis (fórmula, estado, categorias, íons, perigos)
   reactions.json            reações curadas, com fonte e segurança
   non-reactions.json        combinações que não reagem, com o motivo
+  ions.json                 íons, regras de solubilidade (Tabela I.1), compostos que não existem
+  rules.json                textos, fontes e segurança das regras da Fase 2
   items.json                ferramentas (calor, faísca, luz, eletricidade, catalisador)
   reactivity-series.json    série de reatividade (E°), usada pelas regras
   progression.json          níveis, desbloqueios e objetivos
@@ -69,6 +82,10 @@ src/core/                   química e regras do jogo — sem DOM, testável no 
   engine.js                 motor de combinação (resolvers + explainers)
   rules/                    explicações de "não reage" (gás nobre, só metais, série de reatividade...)
   progression.js            estado do jogador, objetivos, níveis
+  balancer.js               balanceamento automático (espaço nulo com frações exatas)
+  ions.js                   solubilidade, fórmula e nome de compostos iônicos, compostos derivados
+  stoichiometry.js          massas, mol e reagente limitante
+  rules/reaction-rules.js   motor de regras da Fase 2
   structure.js              estruturas 2D: desenho, unidade-fórmula, montagem dos lados da equação,
                             pareamento de átomos para a animação e verificações
 src/ui/, src/main.js        interface
@@ -86,10 +103,33 @@ tests/                      testes (node:test)
 | `reaction` | há reação curada com esses reagentes e as condições foram atendidas |
 | `needs-condition` | os reagentes batem, mas falta uma ferramenta (o jogo explica energia de ativação/catálise) |
 | `no-reaction` | **certeza** de que não reage: não-reação curada ou regra química sólida |
-| `unknown` | não está na base. O jogo **não inventa**: pode sugerir uma previsão (ex.: pela série de reatividade, "deve haver simples troca"), mas avisa que ela ainda não foi conferida |
+| `unknown` | nem a base nem uma regra sólida decidem. O jogo **não inventa**: explica por que a regra simples não vale (anfóteros, ácidos oxidantes, metais que atacam a água, compostos que não existem...) |
 
-Essa separação entre "não reage" e "não sei" é o que mantém a correção química enquanto a base
-ainda é pequena.
+A ordem é: **base curada** (reações e não-reações conferidas uma a uma) → **motor de regras**
+(Fase 2) → explicações genéricas. Uma reação gerada por regra aparece com o selo "Prevista por
+regra" e tem id `gen:A+B`, recalculado a partir dos reagentes (por isso pode ser salva no
+progresso). As regras de `src/core/rules/reaction-rules.js`:
+
+| regra | exemplo | fonte (Atkins & Jones, 5. ed.) |
+|---|---|---|
+| ácido + hidróxido → sal + água | H2SO4 + 2 NaOH | J.3, p. F75 |
+| ácido + óxido básico/anfótero | Al2O3 + 6 HCl | 11.3, p. 428–429 |
+| ácido + carbonato → sal + água + CO2 | Na2CO3 + 2 HCl | 15.6, p. 623 |
+| amônia + ácido → sal de amônio | 2 NH3 + H2SO4 | J.1, p. F73 |
+| precipitação (dupla troca) | BaCl2 + Na2SO4 | I.2–I.4 e Tabela I.1, p. F67–F69 |
+| metal + ácido não oxidante → sal + H2 | 2 Al + 6 HCl | 13.7, p. 534 |
+| metal + sal de metal menos reativo | Mg + CuSO4 | 13.7, p. 534; p. F84 |
+| óxido básico + água → hidróxido | BaO + H2O | 11.3, p. 428 |
+| CO2 + hidróxido → carbonato + água | 2 NaOH + CO2 | 11.3, p. 428 |
+| bicarbonato + hidróxido → carbonato | NaHCO3 + NaOH | 15.8, p. 627 |
+| decomposição de carbonatos de Mg e Ca | MgCO3 → MgO + CO2 | 15.7–15.8, p. 624–627 |
+| combustão completa de compostos de C, H (e O) | (para combustíveis futuros) | H e M, p. F64 e F95 |
+
+E as exceções que viram `unknown` em vez de uma equação errada: Ag⁺ + OH⁻ (forma Ag2O), NH4⁺ +
+OH⁻ (forma NH3), carbonatos de Cu²⁺, Fe³⁺ e Al³⁺ (não existem), metais anfóteros (Al, Zn, Be) em
+base forte, ácido nítrico com metais (oxidante: forma NO/NO2), metais do grupo 1 e Ca/Sr/Ba em
+soluções de sais (atacam a água primeiro), Al e Mg que não se depositam a partir de água,
+compostos pouco solúveis, misturas de ácidos com o nítrico (água régia, mistura sulfonítrica).
 
 ## Como adicionar conteúdo
 
@@ -114,8 +154,15 @@ um desenho ou se ele não fechar com a fórmula.
 **Novo elemento jogável**: crie a forma elementar em `substances.json` (campo `elementOf`) e
 desbloqueie-o em algum nível de `progression.json`. Os dados físicos já estão em `elements.json`.
 
-**Novo nível/objetivo**: em `progression.json`. Tipos de objetivo: `produce`, `produceCategory`,
-`reactionType`, `nonReaction` e `reaction`. O teste de progressão avisa se um objetivo ficar
+**Nova regra ou novo íon**: íons e solubilidade em `data/ions.json` (pares que não formam o
+composto esperado vão em `anomalies`); textos, fontes e segurança das regras em
+`data/rules.json`; a lógica em `src/core/rules/reaction-rules.js`. A varredura de todos os pares
+em `tests/rules.test.js` confere tudo o que a regra nova passar a gerar — antes de confiar,
+revise uma amostra das equações geradas.
+
+**Novo nível/objetivo**: em `progression.json` (cada nível tem `phase`). Tipos de objetivo:
+`produce`, `produceCategory`, `reactionType`, `nonReaction`, `reaction` e `stoich` (pergunta de
+estequiometria; a resposta certa é calculada). O teste de progressão avisa se um objetivo ficar
 impossível. Inserir um nível no meio muda os índices dos saves: suba `STATE_VERSION` em
 `src/core/progression.js`; saves antigos são migrados refazendo o caminho pelo histórico.
 
@@ -127,31 +174,25 @@ impossível. Inserir um nível no meio muda os índices dos saves: suba `STATE_V
 As reações citam livros-texto de química geral (Brown et al., *Química: a ciência central*;
 Atkins & Jones, *Princípios de Química*; Kotz et al., *Química Geral e Reações Químicas*;
 Greenwood & Earnshaw, *Chemistry of the Elements*) e o *CRC Handbook* para os potenciais-padrão.
-Cada reação indica o **tópico**, e não o número da página, porque os capítulos mudam de uma
-edição para outra. Para conferir, procure o tópico no índice remissivo da edição que você tiver.
+Essas citações indicam o **tópico**, sem página. As regras da Fase 2 e as confirmações em
+`seeAlso` citam **seção e página** de Atkins & Jones, *Chemical Principles*, 5. ed. (2010),
+conferidas no livro.
 
 Dados dos elementos: [Periodic-Table-JSON](https://github.com/Bowserinator/Periodic-Table-JSON),
 compilado da Wikipédia (CC BY-SA). As massas atômicas são arredondadas a 5 algarismos
 significativos e conferidas com a IUPAC nos testes.
 
-## Roteiro: como as próximas fases se encaixam
+## Roteiro: como a Fase 3 se encaixa
 
-Nada da Fase 1 precisa ser reescrito. Os pontos de extensão já estão separados:
-
-**Fase 2 — motor de regras**
-- *Balanceamento automático*: um novo módulo em `src/core/` (por exemplo, `balancer.js`, que
-  resolve o espaço nulo da matriz elemento × espécie com frações exatas) e devolve o mesmo formato
-  `{ formula, coef }[]`. A verificação de `equation.js` e os testes continuam valendo.
-- *Motor de regras*: um novo **resolver** passado a `createEngine(data, { resolvers: [curated, regras] })`.
-  O curado continua tendo prioridade. As regras de tipo de reação (simples/dupla troca,
-  combustão, ácido-base) usam `ions`, `categories` e `reactivity-series.json`, que já existem.
-- *Solubilidade*: um `data/solubility.json` e um explainer novo em `src/core/rules/`.
-- *Estequiometria*: `molarMass` e `sideMass` já existem; falta a interface (um "quanto de produto
-  sai de X gramas?") e objetivos novos em `OBJECTIVE_CHECKS`.
+A Fase 2 entrou sem reescrever a Fase 1: o motor de regras é um resolver e um explainer a mais
+em `createEngine`, o balanceamento devolve o mesmo formato de equação, e a estequiometria usa as
+massas molares que já existiam. A Fase 3 segue o mesmo caminho:
 
 **Fase 3 — conteúdo avançado**
 - Termodinâmica/cinética/equilíbrio: campos opcionais nas reações (`deltaH`, `Ea`, `K`) e painéis
-  novos em `src/ui/`. Os testes de conservação não mudam.
+  novos em `src/ui/`. Os testes de conservação não mudam. As tabelas de dados do Atkins de
+  físico-química (12. ed., p. 884–909) já foram conferidas e cobrem ΔfH° de 22 das 38 reações
+  curadas; o Apêndice 2A de Atkins & Jones completa o resto.
 - Moléculas 3D: um componente de UI à parte (ex.: 3Dmol.js) alimentado por um `data/structures/`.
 - Química orgânica: novas substâncias/reações nos mesmos JSON (o leitor de fórmulas já aceita
   `CH3COOH` e similares).

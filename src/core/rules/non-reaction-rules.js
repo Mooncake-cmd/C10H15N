@@ -109,7 +109,7 @@ export const reactivitySeriesRule = (data) => {
         reason:
           `Pela série de reatividade, ${metal.name.toLowerCase()} (E° = ${fmtV(m.E0)}) é mais reativo que ${isAcid ? 'o hidrogênio' : c.metal} (${fmtV(c.E0)}), ` +
           `então esperaríamos uma reação de simples troca em que ${metal.name.toLowerCase()} desloca ${alvo}. ` +
-          'Essa reação ainda não foi curada (conferida com fonte) para o jogo; o motor de regras da Fase 2 vai montar e balancear equações assim automaticamente.',
+          'Essa reação ainda não foi curada (conferida com fonte) para o jogo, e as regras gerais não cobrem este caso.',
         prediction: { type: 'simples_troca' },
       };
     },
@@ -147,15 +147,16 @@ export const fallbackExplainer = () => ({
       reasonId: 'rule:desconhecida',
       title: 'Nada conhecido para essa combinação',
       reason:
-        'Essa combinação não está na base de reações da Fase 1, e nenhuma regra geral se aplica. Isso NÃO prova que essas substâncias nunca reagem — só que o jogo ainda não tem uma reação conferida para elas. Dica: as reações mais comuns aqui envolvem oxigênio (combustão), água, ácidos ou bases.',
+        'Essa combinação não está na base de reações, e nenhuma regra geral se aplica. Isso NÃO prova que essas substâncias nunca reagem — só que o jogo ainda não tem uma reação conferida para elas. Dica: as reações mais comuns aqui envolvem oxigênio (combustão), água, ácidos ou bases.',
     };
   },
 });
 
-export function defaultExplainers(data) {
+export function defaultExplainers(data, rulesExplainer = null) {
   return [
     curatedNonReactionExplainer(data),
     nobleGasRule(data),
+    ...(rulesExplainer ? [rulesExplainer] : []),
     singleSubstanceRule(data),
     metalsOnlyRule(data),
     reactivitySeriesRule(data),
