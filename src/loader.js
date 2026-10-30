@@ -13,6 +13,7 @@ const FILES = {
   structures: 'structures.json',
   ions: 'ions.json',
   rules: 'rules.json',
+  glossary: 'glossary.json',
 };
 
 export async function loadGameData(base = './data/') {

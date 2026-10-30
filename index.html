@@ -15,6 +15,7 @@
       <span id="level-name">Carregando…</span>
       <div class="progress" role="progressbar" aria-label="Progresso no jogo" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div id="progress-bar"></div></div>
     </div>
+    <button class="btn btn-ghost" type="button" data-glossary-open="" title="O que significa cada palavra da química">📖 <span class="hide-narrow">Glossário</span></button>
     <button id="btn-reset" class="btn btn-ghost" type="button" title="Apagar progresso">Recomeçar</button>
   </header>
 
@@ -68,6 +69,17 @@
   <dialog id="level-dialog" class="level-dialog">
     <div id="level-dialog-body"></div>
     <div class="dialog-actions"><button id="level-dialog-close" class="btn btn-primary" type="button">Continuar</button></div>
+  </dialog>
+
+  <dialog id="glossary-dialog" class="level-dialog glossary-dialog" aria-labelledby="glossary-title">
+    <div class="glossary-head">
+      <h2 id="glossary-title">📖 Glossário</h2>
+      <button class="btn btn-ghost glossary-close" type="button" aria-label="Fechar glossário">×</button>
+    </div>
+    <input id="glossary-search" type="search" placeholder="Buscar uma palavra (ex.: íon, mol, ácido)" aria-label="Buscar no glossário">
+    <p class="glossary-count small muted"></p>
+    <div class="glossary-list"></div>
+    <p class="small muted">Definições escritas para o jogo, com base no glossário de Atkins &amp; Jones, <em>Chemical Principles</em>, 5. ed. Nos textos do jogo, as palavras <button type="button" class="term" data-term="ion" tabindex="-1">sublinhadas</button> abrem a definição.</p>
   </dialog>
 
   <div id="toasts" class="toasts" aria-live="polite"></div>

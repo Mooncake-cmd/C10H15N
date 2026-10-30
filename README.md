@@ -9,7 +9,9 @@ livro-texto. Quando não há reação, o jogo diz isso e explica o motivo.
 curados e mais 81 gerados a partir de íons, 38 reações curadas, 17 "não-reações" curadas e um
 **motor de regras** que monta e balanceia sozinho cerca de 750 reações a partir de regras gerais
 (solubilidade, ácido-base, série eletroquímica, combustão, decomposição), com explicação, fonte e
-segurança. Há também uma calculadora de estequiometria e 11 níveis de progressão em duas fases.
+segurança. Há também uma calculadora de estequiometria, 11 níveis de progressão em duas fases e um
+**glossário** com mais de 100 termos: nos textos, as palavras de química ficam sublinhadas e mostram a
+definição ao toque.
 
 ## Como rodar
 
@@ -71,6 +73,7 @@ data/                       TODO o conteúdo (JSON) — dá para editar sem mexe
   non-reactions.json        combinações que não reagem, com o motivo
   ions.json                 íons, regras de solubilidade (Tabela I.1), compostos que não existem
   rules.json                textos, fontes e segurança das regras da Fase 2
+  glossary.json             glossário (definição, exemplo, relacionados, página do glossário do livro)
   items.json                ferramentas (calor, faísca, luz, eletricidade, catalisador)
   reactivity-series.json    série de reatividade (E°), usada pelas regras
   progression.json          níveis, desbloqueios e objetivos
@@ -86,11 +89,13 @@ src/core/                   química e regras do jogo — sem DOM, testável no 
   ions.js                   solubilidade, fórmula e nome de compostos iônicos, compostos derivados
   stoichiometry.js          massas, mol e reagente limitante
   rules/reaction-rules.js   motor de regras da Fase 2
+  glossary.js               acha os termos do glossário num texto (forma mais longa, palavra inteira)
   structure.js              estruturas 2D: desenho, unidade-fórmula, montagem dos lados da equação,
                             pareamento de átomos para a animação e verificações
 src/ui/, src/main.js        interface
   structure-svg.js          desenha as estruturas em SVG (cores CPK)
   reaction-stage.js         animação: rearranjo dos átomos, efeitos e "não reage"
+  glossary-ui.js            termos clicáveis nos textos, balão com a definição e o diálogo do glossário
 tests/                      testes (node:test)
 ```
 
@@ -150,6 +155,12 @@ são montados sozinhos a partir dos íons; metais e gases nobres também. `npm t
 um desenho ou se ele não fechar com a fórmula.
 
 **Nova não-reação**: em `data/non-reactions.json`, com motivo e fonte.
+
+**Novo termo no glossário**: em `data/glossary.json`. Escreva a definição com suas palavras,
+em linguagem simples, com um exemplo do jogo e a página do glossário de Atkins & Jones (B1–B30).
+Em `aliases` vão as formas que aparecem nos textos (plural, gênero); em `exclude`, expressões em
+que a palavra não tem sentido químico. Nenhuma forma pode pertencer a dois termos (o teste
+avisa). Os links nos textos são automáticos: não é preciso marcar nada.
 
 **Novo elemento jogável**: crie a forma elementar em `substances.json` (campo `elementOf`) e
 desbloqueie-o em algum nível de `progression.json`. Os dados físicos já estão em `elements.json`.

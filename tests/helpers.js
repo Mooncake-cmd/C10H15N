@@ -19,6 +19,7 @@ export function loadRaw() {
     structures: read('structures.json'),
     ions: read('ions.json'),
     rules: read('rules.json'),
+    glossary: read('glossary.json'),
   };
 }
 
