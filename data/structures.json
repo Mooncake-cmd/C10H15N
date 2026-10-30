@@ -1,0 +1,99 @@
+{
+  "_meta": {
+    "description": "Representação 2D das substâncias, usada nos ícones, na bancada e na animação das reações. Coordenadas em 'comprimentos de ligação' (≈ 1 = uma ligação), com y para baixo. Os testes conferem: átomos iguais aos da fórmula, carga total, número de ligações de cada átomo (valência) e distâncias plausíveis (ligados entre 0,7 e 1,4; não ligados ≥ 0,75).",
+    "atoms": "[símbolo, x, y, cargaFormal?]",
+    "bonds": "[índiceA, índiceB, ordem (1, 2 ou 3)]",
+    "kinds": {
+      "molecule": "molécula: átomos e ligações explícitos; a fórmula é exatamente a molécula",
+      "ionic": "composto iônico: { cation, anion } como em substances.json ('ions'). Não é molécula: o desenho mostra a unidade-fórmula, com os íons separados e suas cargas. Substâncias com 'ions' que não são ácidos não precisam de entrada aqui",
+      "network": "sólido covalente (grafite) ou forma real diferente da fórmula simplificada (S8): o desenho é um trecho da estrutura; na animação conta a fórmula do jogo",
+      "lattice": "metal (gerado automaticamente): átomos empacotados, sem ligações localizadas",
+      "atom": "gás nobre (gerado automaticamente): átomos soltos"
+    },
+    "ions": "íons poliatômicos, desenhados com cargas formais em uma das estruturas de ressonância. Íons monoatômicos (Na+, O^2-...) são gerados a partir da fórmula"
+  },
+  "ions": {
+    "OH-": { "atoms": [["O", 0, 0, -1], ["H", 0.95, 0]], "bonds": [[0, 1, 1]] },
+    "O2^2-": { "atoms": [["O", -0.65, 0, -1], ["O", 0.65, 0, -1]], "bonds": [[0, 1, 1]] },
+    "SO4^2-": {
+      "atoms": [["S", 0, 0], ["O", 0, -1.15], ["O", 0, 1.15], ["O", -1.15, 0, -1], ["O", 1.15, 0, -1]],
+      "bonds": [[0, 1, 2], [0, 2, 2], [0, 3, 1], [0, 4, 1]]
+    },
+    "NO3-": {
+      "atoms": [["N", 0, 0, 1], ["O", 0, -1.1], ["O", -0.95, 0.55, -1], ["O", 0.95, 0.55, -1]],
+      "bonds": [[0, 1, 2], [0, 2, 1], [0, 3, 1]]
+    },
+    "CO3^2-": {
+      "atoms": [["C", 0, 0], ["O", 0, -1.1], ["O", -0.95, 0.55, -1], ["O", 0.95, 0.55, -1]],
+      "bonds": [[0, 1, 2], [0, 2, 1], [0, 3, 1]]
+    },
+    "HCO3-": {
+      "atoms": [["C", 0, 0], ["O", 0, -1.1], ["O", -0.95, 0.55, -1], ["O", 0.95, 0.55], ["H", 1.85, 0.15]],
+      "bonds": [[0, 1, 2], [0, 2, 1], [0, 3, 1], [3, 4, 1]]
+    },
+    "NH4+": {
+      "atoms": [["N", 0, 0, 1], ["H", -1, 0], ["H", 1, 0], ["H", 0, -1], ["H", 0, 1]],
+      "bonds": [[0, 1, 1], [0, 2, 1], [0, 3, 1], [0, 4, 1]]
+    },
+    "CH3COO-": {
+      "atoms": [["C", -0.6, 0], ["H", -1.6, 0], ["H", -0.6, -1], ["H", -0.6, 1], ["C", 0.6, 0], ["O", 1.1, -0.87], ["O", 1.1, 0.87, -1]],
+      "bonds": [[0, 1, 1], [0, 2, 1], [0, 3, 1], [0, 4, 1], [4, 5, 2], [4, 6, 1]]
+    }
+  },
+  "substances": {
+    "H2": { "kind": "molecule", "atoms": [["H", -0.4, 0], ["H", 0.4, 0]], "bonds": [[0, 1, 1]] },
+    "N2": { "kind": "molecule", "atoms": [["N", -0.55, 0], ["N", 0.55, 0]], "bonds": [[0, 1, 3]] },
+    "O2": { "kind": "molecule", "atoms": [["O", -0.55, 0], ["O", 0.55, 0]], "bonds": [[0, 1, 2]] },
+    "Cl2": { "kind": "molecule", "atoms": [["Cl", -0.6, 0], ["Cl", 0.6, 0]], "bonds": [[0, 1, 1]] },
+    "C": {
+      "kind": "network",
+      "note": "Um anel de uma camada de grafite: na grafite cada carbono se liga a outros três, em folhas de hexágonos empilhadas.",
+      "atoms": [["C", 0.866, -0.5], ["C", 0.866, 0.5], ["C", 0, 1], ["C", -0.866, 0.5], ["C", -0.866, -0.5], ["C", 0, -1]],
+      "bonds": [[0, 1, 1], [1, 2, 1], [2, 3, 1], [3, 4, 1], [4, 5, 1], [5, 0, 1]]
+    },
+    "S": {
+      "kind": "network",
+      "note": "O enxofre sólido é formado por anéis S8 (aqui vistos de cima). O jogo escreve só 'S' nas equações, como os livros didáticos.",
+      "atoms": [["S", 1.207, 0.5], ["S", 0.5, 1.207], ["S", -0.5, 1.207], ["S", -1.207, 0.5], ["S", -1.207, -0.5], ["S", -0.5, -1.207], ["S", 0.5, -1.207], ["S", 1.207, -0.5]],
+      "bonds": [[0, 1, 1], [1, 2, 1], [2, 3, 1], [3, 4, 1], [4, 5, 1], [5, 6, 1], [6, 7, 1], [7, 0, 1]]
+    },
+
+    "H2O": { "kind": "molecule", "atoms": [["O", 0, 0], ["H", -0.79, 0.61], ["H", 0.79, 0.61]], "bonds": [[0, 1, 1], [0, 2, 1]] },
+    "H2O2": {
+      "kind": "molecule",
+      "atoms": [["H", -1.2, -0.8], ["O", -0.6, 0], ["O", 0.6, 0], ["H", 1.2, 0.8]],
+      "bonds": [[0, 1, 1], [1, 2, 1], [2, 3, 1]]
+    },
+    "CO2": { "kind": "molecule", "atoms": [["O", -1.15, 0], ["C", 0, 0], ["O", 1.15, 0]], "bonds": [[0, 1, 2], [1, 2, 2]] },
+    "SO2": { "kind": "molecule", "atoms": [["S", 0, 0], ["O", -1.03, 0.61], ["O", 1.03, 0.61]], "bonds": [[0, 1, 2], [0, 2, 2]] },
+    "HCl": { "kind": "molecule", "atoms": [["H", -0.6, 0], ["Cl", 0.6, 0]], "bonds": [[0, 1, 1]] },
+    "NH3": {
+      "kind": "molecule",
+      "atoms": [["N", 0, 0], ["H", -0.85, 0.55], ["H", 0, 1], ["H", 0.85, 0.55]],
+      "bonds": [[0, 1, 1], [0, 2, 1], [0, 3, 1]]
+    },
+    "CH4": {
+      "kind": "molecule",
+      "atoms": [["C", 0, 0], ["H", -1, 0], ["H", 1, 0], ["H", 0, -1], ["H", 0, 1]],
+      "bonds": [[0, 1, 1], [0, 2, 1], [0, 3, 1], [0, 4, 1]]
+    },
+    "H2CO3": {
+      "kind": "molecule",
+      "atoms": [["C", 0, 0], ["O", 0, -1.1], ["O", -0.95, 0.55], ["H", -1.85, 0.15], ["O", 0.95, 0.55], ["H", 1.85, 0.15]],
+      "bonds": [[0, 1, 2], [0, 2, 1], [2, 3, 1], [0, 4, 1], [4, 5, 1]]
+    },
+    "CH3COOH": {
+      "kind": "molecule",
+      "atoms": [["C", -0.6, 0], ["H", -1.6, 0], ["H", -0.6, -1], ["H", -0.6, 1], ["C", 0.6, 0], ["O", 1.1, -0.87], ["O", 1.1, 0.87], ["H", 2.05, 0.87]],
+      "bonds": [[0, 1, 1], [0, 2, 1], [0, 3, 1], [0, 4, 1], [4, 5, 2], [4, 6, 1], [6, 7, 1]]
+    },
+
+    "Li2O": { "kind": "ionic", "cation": { "formula": "Li+", "count": 2 }, "anion": { "formula": "O^2-", "count": 1 } },
+    "Na2O2": { "kind": "ionic", "cation": { "formula": "Na+", "count": 2 }, "anion": { "formula": "O2^2-", "count": 1 } },
+    "MgO": { "kind": "ionic", "cation": { "formula": "Mg^2+", "count": 1 }, "anion": { "formula": "O^2-", "count": 1 } },
+    "CaO": { "kind": "ionic", "cation": { "formula": "Ca^2+", "count": 1 }, "anion": { "formula": "O^2-", "count": 1 } },
+    "CuO": { "kind": "ionic", "cation": { "formula": "Cu^2+", "count": 1 }, "anion": { "formula": "O^2-", "count": 1 } },
+    "Fe2O3": { "kind": "ionic", "cation": { "formula": "Fe^3+", "count": 2 }, "anion": { "formula": "O^2-", "count": 3 } },
+    "Al2O3": { "kind": "ionic", "cation": { "formula": "Al^3+", "count": 2 }, "anion": { "formula": "O^2-", "count": 3 } }
+  }
+}

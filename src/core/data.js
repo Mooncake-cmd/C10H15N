@@ -20,6 +20,7 @@ export function buildGameData(raw) {
     reactions,
     nonReactions,
     progression: raw.progression,
+    structures: raw.structures ?? { ions: {}, substances: {} },
     sources: raw.sources.sources,
     complementarySources: raw.sources._meta.complementaryOnly ?? [],
     reactivitySeries: raw.reactivitySeries.series,

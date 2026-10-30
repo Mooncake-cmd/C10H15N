@@ -41,6 +41,10 @@ O que os testes garantem (são ~250 verificações):
 - Massas atômicas dos elementos jogáveis conferidas com a tabela abreviada da IUPAC 2021.
 - A composição iônica de cada sal, ácido e base fecha com a fórmula (ex.: Ca²⁺ + 2 OH⁻ = Ca(OH)2).
 - Nenhuma "não-reação" contradiz uma reação da base.
+- **Todo desenho de molécula bate com a fórmula**: mesmos átomos, carga total certa, número de
+  ligações de cada átomo dentro do esperado (H faz 1, O faz 2, C faz 4...) e distâncias plausíveis.
+  Compostos iônicos aparecem como íons separados, com carga, nunca como molécula. Em toda reação,
+  cada átomo dos reagentes casa com um átomo dos produtos (é o que a animação mostra).
 - **O jogo pode ser concluído**: um jogador simulado passa por todos os níveis usando só o que
   já está desbloqueado em cada um.
 
@@ -58,13 +62,18 @@ data/                       TODO o conteúdo (JSON) — dá para editar sem mexe
   reactivity-series.json    série de reatividade (E°), usada pelas regras
   progression.json          níveis, desbloqueios e objetivos
   sources.json              referências bibliográficas
+  structures.json           desenho 2D das moléculas, dos íons poliatômicos e dos óxidos iônicos
 src/core/                   química e regras do jogo — sem DOM, testável no Node
   formula.js                lê fórmulas (parênteses, hidratos, cargas), massa molar, formatação
   equation.js               conservação de átomos/carga/massa, formatação de equações
   engine.js                 motor de combinação (resolvers + explainers)
   rules/                    explicações de "não reage" (gás nobre, só metais, série de reatividade...)
   progression.js            estado do jogador, objetivos, níveis
+  structure.js              estruturas 2D: desenho, unidade-fórmula, montagem dos lados da equação,
+                            pareamento de átomos para a animação e verificações
 src/ui/, src/main.js        interface
+  structure-svg.js          desenha as estruturas em SVG (cores CPK)
+  reaction-stage.js         animação: rearranjo dos átomos, efeitos e "não reage"
 tests/                      testes (node:test)
 ```
 
@@ -93,6 +102,12 @@ A fonte principal (`source.ref`) é sempre um livro-texto. Livros de divulgaçã
 `sources.json` → `_meta.complementaryOnly`) só entram como leitura complementar em
 `source.seeAlso: [{ ref, topic, pages? }]`, e os testes conferem isso. Não invente páginas: só
 cite `pages` que você conferiu no livro.
+
+**Desenho da substância**: em `data/structures.json`. Moléculas e ácidos precisam de átomos e
+ligações (coordenadas em comprimentos de ligação, y para baixo); íons poliatômicos novos entram
+em `ions`, com cargas formais. Sais, bases e outros compostos com `ions` em `substances.json`
+são montados sozinhos a partir dos íons; metais e gases nobres também. `npm test` diz se faltar
+um desenho ou se ele não fechar com a fórmula.
 
 **Nova não-reação**: em `data/non-reactions.json`, com motivo e fonte.
 
