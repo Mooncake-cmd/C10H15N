@@ -3,7 +3,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { loadData } from './helpers.js';
-import { stoichiometry } from '../src/core/stoichiometry.js';
+import { stoichiometry, molesOf, percentYield, MOLAR_VOLUME_L } from '../src/core/stoichiometry.js';
 
 const data = loadData();
 const R = (id) => data.reactionsById.get(id);
@@ -37,4 +37,31 @@ test('seção M: reagente limitante e sobra', () => {
 
 test('precisa de pelo menos um reagente', () => {
   assert.throws(() => stoichiometry(R('h2-o2'), data, {}));
+});
+
+test('medidas: gramas, mol, litros de gás e solução (mL × mol/L)', () => {
+  close(molesOf(36.03, 18.015), 2);
+  close(molesOf({ mol: 0.5 }, 18.015), 0.5);
+  close(molesOf({ L: 24.47 }, 44.01), 1); // gás ideal a 25 °C e 1 atm
+  close(molesOf({ mL: 50, M: 0.1 }, 36.46), 0.005); // seção G.3: mol = L × mol/L
+  assert.equal(molesOf({ mL: -1, M: 1 }, 1), null);
+  close(MOLAR_VOLUME_L, (0.082057 * 298.15) / 1, 0.001);
+});
+
+test('produtos gasosos também em litros', () => {
+  const s = stoichiometry(R('ch4-o2'), data, { CH4: { mol: 1 } });
+  close(s.products.find((p) => p.id === 'CO2').liters, 24.47);
+  assert.equal(s.products.find((p) => p.id === 'H2O').liters, null, 'a água sai líquida');
+});
+
+test('solução: 50 mL de HCl 0,10 mol/L neutralizados dão 0,29 g de NaCl', () => {
+  const s = stoichiometry(R('hcl-naoh'), data, { HCl: { mL: 50, M: 0.1 } });
+  close(s.products.find((p) => p.id === 'NaCl').grams, 0.005 * 58.44);
+});
+
+test('rendimento percentual: exercício M (p. F103) — 17,5 g de CO2 de 42,73 g de CaCO3', () => {
+  const s = stoichiometry(R('caco3-calor'), data, { CaCO3: 42.73 });
+  const co2 = s.products.find((p) => p.id === 'CO2');
+  close(co2.grams, 18.79);
+  close(percentYield(17.5, co2.grams), 93.1);
 });

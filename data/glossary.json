@@ -4,474 +4,2401 @@
     "fields": "id; term (como aparece no glossário); aliases (formas que aparecem nos textos — singular, plural, gênero; em minúsculas, sem o termo principal); definition; example (de preferência do próprio jogo); related (ids); exclude (expressões em que a palavra NÃO tem o sentido químico, ex.: 'na base' = base de dados); source { ref, topic, pages }"
   },
   "terms": [
-    { "id": "materia", "term": "Matéria", "aliases": [],
+    {
+      "id": "materia",
+      "term": "Matéria",
+      "aliases": [],
       "definition": "Tudo o que tem massa e ocupa espaço: o ar, a água, você. A química estuda do que a matéria é feita e como ela se transforma.",
       "example": "Uma pedra de sal, o gás oxigênio e a água do mar são matéria.",
-      "related": ["substancia", "mistura", "atomo"], "source": { "ref": "atkins-jones", "topic": "Glossário: matter", "pages": "B17" } },
-    { "id": "substancia", "term": "Substância", "aliases": ["substâncias", "substância pura"],
+      "related": [
+        "substancia",
+        "mistura",
+        "atomo"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: matter",
+        "pages": "B17"
+      }
+    },
+    {
+      "id": "substancia",
+      "term": "Substância",
+      "aliases": [
+        "substâncias",
+        "substância pura"
+      ],
       "definition": "Um tipo único e puro de matéria, com composição fixa: ou é um elemento (só um tipo de átomo) ou um composto (elementos combinados numa proporção certa).",
       "example": "A água (H₂O) é uma substância; a água do mar, não — é uma mistura de água com sais.",
-      "related": ["elemento", "composto", "mistura"], "source": { "ref": "atkins-jones", "topic": "Glossário: substance", "pages": "B27" } },
-    { "id": "mistura", "term": "Mistura", "aliases": ["misturas"],
-      "exclude": ["você mistura", "se mistura", "mistura duas", "mistura dois", "mistura de novo"],
+      "related": [
+        "elemento",
+        "composto",
+        "mistura"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: substance",
+        "pages": "B27"
+      }
+    },
+    {
+      "id": "mistura",
+      "term": "Mistura",
+      "aliases": [
+        "misturas"
+      ],
+      "exclude": [
+        "você mistura",
+        "se mistura",
+        "mistura duas",
+        "mistura dois",
+        "mistura de novo"
+      ],
       "definition": "Duas ou mais substâncias juntas, sem formar uma substância nova. Os componentes podem ser separados por meios físicos (filtrar, evaporar, destilar).",
       "example": "Misturar sal na água forma uma solução; evaporando a água, o sal volta.",
-      "related": ["substancia", "solucao", "liga"], "source": { "ref": "atkins-jones", "topic": "Glossário: mixture", "pages": "B18" } },
-    { "id": "elemento", "term": "Elemento químico", "aliases": ["elemento", "elementos", "elementos químicos"],
+      "related": [
+        "substancia",
+        "solucao",
+        "liga"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: mixture",
+        "pages": "B18"
+      }
+    },
+    {
+      "id": "elemento",
+      "term": "Elemento químico",
+      "aliases": [
+        "elemento",
+        "elementos",
+        "elementos químicos"
+      ],
       "definition": "Substância formada por um só tipo de átomo — todos com o mesmo número de prótons. Não pode ser decomposta em substâncias mais simples por reações químicas. Cada quadradinho da tabela periódica é um elemento.",
       "example": "Ferro (Fe), oxigênio (O) e sódio (Na) são elementos.",
-      "related": ["atomo", "numero-atomico", "tabela-periodica", "composto"], "source": { "ref": "atkins-jones", "topic": "Glossário: element", "pages": "B10" } },
-    { "id": "atomo", "term": "Átomo", "aliases": ["átomos"],
+      "related": [
+        "atomo",
+        "numero-atomico",
+        "tabela-periodica",
+        "composto"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: element",
+        "pages": "B10"
+      }
+    },
+    {
+      "id": "atomo",
+      "term": "Átomo",
+      "aliases": [
+        "átomos"
+      ],
       "definition": "A menor partícula de um elemento que ainda tem as propriedades químicas dele. Tem um núcleo minúsculo (prótons e nêutrons) cercado por elétrons. Como tem tantos prótons quanto elétrons, é eletricamente neutro.",
       "example": "Uma molécula de água tem 3 átomos: 2 de hidrogênio e 1 de oxigênio.",
-      "related": ["eletron", "proton", "neutron", "nucleo", "molecula"], "source": { "ref": "atkins-jones", "topic": "Glossário: atom", "pages": "B3" } },
-    { "id": "molecula", "term": "Molécula", "aliases": ["moléculas"],
+      "related": [
+        "eletron",
+        "proton",
+        "neutron",
+        "nucleo",
+        "molecula"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: atom",
+        "pages": "B3"
+      }
+    },
+    {
+      "id": "molecula",
+      "term": "Molécula",
+      "aliases": [
+        "moléculas"
+      ],
       "definition": "Grupo de átomos unidos por ligações covalentes, que forma uma unidade independente. É a menor parte de uma substância molecular que ainda tem as propriedades dela.",
       "example": "O₂, H₂O, CO₂ e CH₄ são moléculas. O sal de cozinha NÃO é feito de moléculas: é um retículo de íons.",
-      "related": ["atomo", "ligacao-covalente", "composto-molecular", "molecula-diatomica"], "source": { "ref": "atkins-jones", "topic": "Glossário: molecule", "pages": "B18" } },
-    { "id": "molecula-diatomica", "term": "Molécula diatômica", "aliases": ["diatômica", "diatômicas", "diatômico", "moléculas diatômicas"],
+      "related": [
+        "atomo",
+        "ligacao-covalente",
+        "composto-molecular",
+        "molecula-diatomica"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: molecule",
+        "pages": "B18"
+      }
+    },
+    {
+      "id": "molecula-diatomica",
+      "term": "Molécula diatômica",
+      "aliases": [
+        "diatômica",
+        "diatômicas",
+        "diatômico",
+        "moléculas diatômicas"
+      ],
       "definition": "Molécula formada por exatamente dois átomos.",
       "example": "Os gases hidrogênio (H₂), oxigênio (O₂), nitrogênio (N₂) e cloro (Cl₂) são diatômicos.",
-      "related": ["molecula"], "source": { "ref": "atkins-jones", "topic": "Glossário: diatomic molecule", "pages": "B9" } },
-    { "id": "composto", "term": "Composto", "aliases": ["compostos", "composto químico"],
+      "related": [
+        "molecula"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: diatomic molecule",
+        "pages": "B9"
+      }
+    },
+    {
+      "id": "composto",
+      "term": "Composto",
+      "aliases": [
+        "compostos",
+        "composto químico"
+      ],
       "definition": "Substância formada por dois ou mais elementos combinados numa proporção fixa. Só se separa nos elementos por meio de reações químicas — e tem propriedades bem diferentes deles.",
       "example": "O cloreto de sódio (NaCl) é um composto: o sódio é um metal que reage com água e o cloro é um gás tóxico, mas juntos viram sal de cozinha.",
-      "related": ["elemento", "composto-ionico", "composto-molecular", "formula-quimica"], "source": { "ref": "atkins-jones", "topic": "Glossário: compound", "pages": "B7" } },
-    { "id": "composto-ionico", "term": "Composto iônico", "aliases": ["compostos iônicos", "sólido iônico"],
+      "related": [
+        "elemento",
+        "composto-ionico",
+        "composto-molecular",
+        "formula-quimica"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: compound",
+        "pages": "B7"
+      }
+    },
+    {
+      "id": "composto-ionico",
+      "term": "Composto iônico",
+      "aliases": [
+        "compostos iônicos",
+        "sólido iônico"
+      ],
       "definition": "Composto formado por íons positivos (cátions) e negativos (ânions) que se atraem, organizados num retículo cristalino. Não forma moléculas: a fórmula só diz a proporção entre os íons.",
       "example": "NaCl (Na⁺ e Cl⁻), CaCO₃ (Ca²⁺ e CO₃²⁻).",
-      "related": ["ion", "ligacao-ionica", "reticulo", "unidade-formula", "sal"], "source": { "ref": "atkins-jones", "topic": "Glossário: ionic compound; ionic solid", "pages": "B15" } },
-    { "id": "composto-molecular", "term": "Composto molecular", "aliases": ["compostos moleculares"],
+      "related": [
+        "ion",
+        "ligacao-ionica",
+        "reticulo",
+        "unidade-formula",
+        "sal"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: ionic compound; ionic solid",
+        "pages": "B15"
+      }
+    },
+    {
+      "id": "composto-molecular",
+      "term": "Composto molecular",
+      "aliases": [
+        "compostos moleculares"
+      ],
       "definition": "Composto formado por moléculas, em que os átomos compartilham elétrons (ligações covalentes).",
       "example": "Água (H₂O), gás carbônico (CO₂) e amônia (NH₃).",
-      "related": ["molecula", "ligacao-covalente", "composto-ionico"], "source": { "ref": "atkins-jones", "topic": "Glossário: molecular compound", "pages": "B18" } },
-    { "id": "composto-organico", "term": "Composto orgânico", "aliases": ["compostos orgânicos", "química orgânica"],
+      "related": [
+        "molecula",
+        "ligacao-covalente",
+        "composto-ionico"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: molecular compound",
+        "pages": "B18"
+      }
+    },
+    {
+      "id": "composto-organico",
+      "term": "Composto orgânico",
+      "aliases": [
+        "compostos orgânicos",
+        "química orgânica"
+      ],
       "definition": "Composto que contém carbono, geralmente ligado a hidrogênio. Os carbonatos e o CO₂ costumam ficar de fora dessa classificação.",
       "example": "Metano (CH₄) e ácido acético (CH₃COOH) são orgânicos.",
-      "related": ["hidrocarboneto"], "source": { "ref": "atkins-jones", "topic": "Glossário: organic compound", "pages": "B20" } },
-    { "id": "hidrocarboneto", "term": "Hidrocarboneto", "aliases": ["hidrocarbonetos"],
+      "related": [
+        "hidrocarboneto"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: organic compound",
+        "pages": "B20"
+      }
+    },
+    {
+      "id": "hidrocarboneto",
+      "term": "Hidrocarboneto",
+      "aliases": [
+        "hidrocarbonetos"
+      ],
       "definition": "Composto formado só por carbono e hidrogênio. É a base dos combustíveis como gás natural, gás de cozinha e gasolina.",
       "example": "O metano (CH₄), principal componente do gás natural.",
-      "related": ["composto-organico", "combustao"], "source": { "ref": "atkins-jones", "topic": "Glossário: hydrocarbon", "pages": "B14" } },
-    { "id": "ion", "term": "Íon", "aliases": ["íons"],
+      "related": [
+        "composto-organico",
+        "combustao"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: hydrocarbon",
+        "pages": "B14"
+      }
+    },
+    {
+      "id": "ion",
+      "term": "Íon",
+      "aliases": [
+        "íons"
+      ],
       "definition": "Átomo ou grupo de átomos com carga elétrica, porque perdeu ou ganhou elétrons. Se perdeu elétrons fica positivo (cátion); se ganhou, negativo (ânion).",
       "example": "Na⁺, Cl⁻, Ca²⁺, SO₄²⁻.",
-      "related": ["cation", "anion", "ion-poliatomico", "eletron"], "source": { "ref": "atkins-jones", "topic": "Glossário: ion", "pages": "B15" } },
-    { "id": "cation", "term": "Cátion", "aliases": ["cátions"],
+      "related": [
+        "cation",
+        "anion",
+        "ion-poliatomico",
+        "eletron"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: ion",
+        "pages": "B15"
+      }
+    },
+    {
+      "id": "cation",
+      "term": "Cátion",
+      "aliases": [
+        "cátions"
+      ],
       "definition": "Íon com carga positiva: tem menos elétrons do que prótons. Os metais costumam formar cátions.",
       "example": "Na⁺ (o sódio perdeu 1 elétron), Ca²⁺ (o cálcio perdeu 2), NH₄⁺.",
-      "related": ["ion", "anion", "metal"], "source": { "ref": "atkins-jones", "topic": "Glossário: cation", "pages": "B5" } },
-    { "id": "anion", "term": "Ânion", "aliases": ["ânions"],
+      "related": [
+        "ion",
+        "anion",
+        "metal"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: cation",
+        "pages": "B5"
+      }
+    },
+    {
+      "id": "anion",
+      "term": "Ânion",
+      "aliases": [
+        "ânions"
+      ],
       "definition": "Íon com carga negativa: tem mais elétrons do que prótons. Os ametais costumam formar ânions.",
       "example": "Cl⁻ (o cloro ganhou 1 elétron), O²⁻, SO₄²⁻.",
-      "related": ["ion", "cation", "ametal"], "source": { "ref": "atkins-jones", "topic": "Glossário: anion", "pages": "B2" } },
-    { "id": "ion-poliatomico", "term": "Íon poliatômico", "aliases": ["íons poliatômicos"],
+      "related": [
+        "ion",
+        "cation",
+        "ametal"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: anion",
+        "pages": "B2"
+      }
+    },
+    {
+      "id": "ion-poliatomico",
+      "term": "Íon poliatômico",
+      "aliases": [
+        "íons poliatômicos"
+      ],
       "definition": "Íon formado por vários átomos ligados entre si (por ligações covalentes), que se comporta como uma unidade e tem uma carga total.",
       "example": "Sulfato (SO₄²⁻), nitrato (NO₃⁻), carbonato (CO₃²⁻), hidróxido (OH⁻) e amônio (NH₄⁺).",
-      "related": ["ion", "ligacao-covalente"], "source": { "ref": "atkins-jones", "topic": "Glossário: polyatomic ion", "pages": "B21" } },
-    { "id": "eletron", "term": "Elétron", "aliases": ["elétrons"],
+      "related": [
+        "ion",
+        "ligacao-covalente"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: polyatomic ion",
+        "pages": "B21"
+      }
+    },
+    {
+      "id": "eletron",
+      "term": "Elétron",
+      "aliases": [
+        "elétrons"
+      ],
       "definition": "Partícula com carga negativa que fica em volta do núcleo do átomo. É ela que participa das reações: átomos perdem, ganham ou compartilham elétrons.",
       "example": "Na reação do sódio com o cloro, cada átomo de sódio entrega 1 elétron a um átomo de cloro.",
-      "related": ["atomo", "proton", "eletrons-de-valencia", "ion"], "source": { "ref": "atkins-jones", "topic": "Glossário: electron", "pages": "B10" } },
-    { "id": "proton", "term": "Próton", "aliases": ["prótons"],
+      "related": [
+        "atomo",
+        "proton",
+        "eletrons-de-valencia",
+        "ion"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: electron",
+        "pages": "B10"
+      }
+    },
+    {
+      "id": "proton",
+      "term": "Próton",
+      "aliases": [
+        "prótons"
+      ],
       "definition": "Partícula com carga positiva que fica no núcleo do átomo. O número de prótons define qual é o elemento. Em química de ácidos, 'próton' também quer dizer o íon H⁺ (um átomo de hidrogênio sem o seu elétron é só um próton).",
       "example": "Todo átomo de carbono tem 6 prótons. Um ácido 'doa prótons' = libera H⁺.",
-      "related": ["nucleo", "numero-atomico", "acido"], "source": { "ref": "atkins-jones", "topic": "Glossário: proton", "pages": "B22" } },
-    { "id": "neutron", "term": "Nêutron", "aliases": ["nêutrons"],
+      "related": [
+        "nucleo",
+        "numero-atomico",
+        "acido"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: proton",
+        "pages": "B22"
+      }
+    },
+    {
+      "id": "neutron",
+      "term": "Nêutron",
+      "aliases": [
+        "nêutrons"
+      ],
       "definition": "Partícula sem carga, com massa quase igual à do próton, que fica no núcleo do átomo. Átomos do mesmo elemento podem ter números diferentes de nêutrons (isótopos).",
       "example": "O carbono-12 tem 6 nêutrons; o carbono-14 tem 8.",
-      "related": ["nucleo", "isotopo"], "source": { "ref": "atkins-jones", "topic": "Glossário: neutron", "pages": "B19" } },
-    { "id": "nucleo", "term": "Núcleo atômico", "aliases": ["núcleo", "núcleos"],
+      "related": [
+        "nucleo",
+        "isotopo"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: neutron",
+        "pages": "B19"
+      }
+    },
+    {
+      "id": "nucleo",
+      "term": "Núcleo atômico",
+      "aliases": [
+        "núcleo",
+        "núcleos"
+      ],
       "definition": "O centro do átomo, muito pequeno e com carga positiva, onde ficam os prótons e os nêutrons. Concentra quase toda a massa do átomo.",
       "example": "Se um átomo fosse um estádio de futebol, o núcleo seria uma ervilha no centro do campo.",
-      "related": ["atomo", "proton", "neutron"], "source": { "ref": "atkins-jones", "topic": "Glossário: nucleus", "pages": "B20" } },
-    { "id": "numero-atomico", "term": "Número atômico (Z)", "aliases": ["número atômico"],
+      "related": [
+        "atomo",
+        "proton",
+        "neutron"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: nucleus",
+        "pages": "B20"
+      }
+    },
+    {
+      "id": "numero-atomico",
+      "term": "Número atômico (Z)",
+      "aliases": [
+        "número atômico"
+      ],
       "definition": "O número de prótons no núcleo de um átomo. É a 'identidade' do elemento e a ordem dele na tabela periódica.",
       "example": "Hidrogênio tem Z = 1; carbono, Z = 6; ouro, Z = 79.",
-      "related": ["proton", "elemento", "tabela-periodica"], "source": { "ref": "atkins-jones", "topic": "Glossário: atomic number", "pages": "B3" } },
-    { "id": "numero-de-massa", "term": "Número de massa (A)", "aliases": ["número de massa"],
+      "related": [
+        "proton",
+        "elemento",
+        "tabela-periodica"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: atomic number",
+        "pages": "B3"
+      }
+    },
+    {
+      "id": "numero-de-massa",
+      "term": "Número de massa (A)",
+      "aliases": [
+        "número de massa"
+      ],
       "definition": "Prótons + nêutrons no núcleo de um átomo.",
       "example": "O carbono-14 tem número de massa 14: 6 prótons e 8 nêutrons.",
-      "related": ["isotopo", "neutron"], "source": { "ref": "atkins-jones", "topic": "Glossário: mass number", "pages": "B17" } },
-    { "id": "isotopo", "term": "Isótopo", "aliases": ["isótopos"],
+      "related": [
+        "isotopo",
+        "neutron"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: mass number",
+        "pages": "B17"
+      }
+    },
+    {
+      "id": "isotopo",
+      "term": "Isótopo",
+      "aliases": [
+        "isótopos"
+      ],
       "definition": "Átomos do mesmo elemento (mesmo número de prótons) com números diferentes de nêutrons — e, portanto, massas diferentes. Quimicamente se comportam quase igual.",
       "example": "Hidrogênio comum (¹H), deutério (²H) e trítio (³H).",
-      "related": ["numero-de-massa", "neutron"], "source": { "ref": "atkins-jones", "topic": "Glossário: isotope", "pages": "B15" } },
-    { "id": "camada-de-valencia", "term": "Camada de valência", "aliases": ["última camada"],
+      "related": [
+        "numero-de-massa",
+        "neutron"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: isotope",
+        "pages": "B15"
+      }
+    },
+    {
+      "id": "camada-de-valencia",
+      "term": "Camada de valência",
+      "aliases": [
+        "última camada"
+      ],
       "definition": "A camada mais externa de elétrons de um átomo. É ela que 'toca' outros átomos, então decide como o elemento reage.",
       "example": "O sódio tem 1 elétron na camada de valência e o perde fácil; o cloro tem 7 e 'quer' mais 1.",
-      "related": ["eletrons-de-valencia", "regra-do-octeto", "configuracao-eletronica"], "source": { "ref": "atkins-jones", "topic": "Glossário: valence shell", "pages": "B29" } },
-    { "id": "eletrons-de-valencia", "term": "Elétrons de valência", "aliases": ["elétron de valência"],
+      "related": [
+        "eletrons-de-valencia",
+        "regra-do-octeto",
+        "configuracao-eletronica"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: valence shell",
+        "pages": "B29"
+      }
+    },
+    {
+      "id": "eletrons-de-valencia",
+      "term": "Elétrons de valência",
+      "aliases": [
+        "elétron de valência"
+      ],
       "definition": "Os elétrons da camada mais externa do átomo. Elementos do mesmo grupo da tabela têm o mesmo número de elétrons de valência — por isso reagem de forma parecida.",
       "example": "Todos os metais alcalinos (grupo 1) têm 1 elétron de valência.",
-      "related": ["camada-de-valencia", "grupo"], "source": { "ref": "atkins-jones", "topic": "Glossário: valence electrons", "pages": "B29" } },
-    { "id": "configuracao-eletronica", "term": "Configuração eletrônica", "aliases": [],
+      "related": [
+        "camada-de-valencia",
+        "grupo"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: valence electrons",
+        "pages": "B29"
+      }
+    },
+    {
+      "id": "configuracao-eletronica",
+      "term": "Configuração eletrônica",
+      "aliases": [],
       "definition": "A forma como os elétrons de um átomo estão distribuídos em camadas e subcamadas (orbitais).",
       "example": "Nitrogênio: 1s² 2s² 2p³ — 2 elétrons na primeira camada e 5 na segunda.",
-      "related": ["camada-de-valencia", "eletron"], "source": { "ref": "atkins-jones", "topic": "Glossário: electron configuration", "pages": "B10" } },
-    { "id": "tabela-periodica", "term": "Tabela periódica", "aliases": [],
+      "related": [
+        "camada-de-valencia",
+        "eletron"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: electron configuration",
+        "pages": "B10"
+      }
+    },
+    {
+      "id": "tabela-periodica",
+      "term": "Tabela periódica",
+      "aliases": [],
       "definition": "Quadro com todos os elementos em ordem de número atômico, arrumados de modo que elementos parecidos fiquem na mesma coluna (grupo). As linhas são os períodos.",
       "example": "A tabela do jogo, logo abaixo da bancada.",
-      "related": ["grupo", "periodo", "numero-atomico"], "source": { "ref": "atkins-jones", "topic": "Glossário: periodic table", "pages": "B21" } },
-    { "id": "grupo", "term": "Grupo (família)", "aliases": ["grupo", "grupos", "família", "famílias"],
-      "exclude": ["grupo de", "grupo carboxila"],
+      "related": [
+        "grupo",
+        "periodo",
+        "numero-atomico"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: periodic table",
+        "pages": "B21"
+      }
+    },
+    {
+      "id": "grupo",
+      "term": "Grupo (família)",
+      "aliases": [
+        "grupo",
+        "grupos",
+        "família",
+        "famílias"
+      ],
+      "exclude": [
+        "grupo de",
+        "grupo carboxila"
+      ],
       "definition": "Uma coluna da tabela periódica. Os elementos de um grupo têm o mesmo número de elétrons de valência e, por isso, propriedades químicas parecidas.",
       "example": "Grupo 1: metais alcalinos. Grupo 17: halogênios. Grupo 18: gases nobres.",
-      "related": ["periodo", "tabela-periodica", "eletrons-de-valencia"], "source": { "ref": "atkins-jones", "topic": "Glossário: group", "pages": "B13" } },
-    { "id": "periodo", "term": "Período", "aliases": ["períodos"],
+      "related": [
+        "periodo",
+        "tabela-periodica",
+        "eletrons-de-valencia"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: group",
+        "pages": "B13"
+      }
+    },
+    {
+      "id": "periodo",
+      "term": "Período",
+      "aliases": [
+        "períodos"
+      ],
       "definition": "Uma linha da tabela periódica. O número do período é o número de camadas de elétrons ocupadas no átomo.",
       "example": "Sódio, magnésio e cloro estão no período 3: têm 3 camadas de elétrons.",
-      "related": ["grupo", "tabela-periodica"], "source": { "ref": "atkins-jones", "topic": "Glossário: period", "pages": "B21" } },
-    { "id": "metal", "term": "Metal", "aliases": ["metais"],
+      "related": [
+        "grupo",
+        "tabela-periodica"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: period",
+        "pages": "B21"
+      }
+    },
+    {
+      "id": "metal",
+      "term": "Metal",
+      "aliases": [
+        "metais"
+      ],
       "definition": "Elemento brilhante, que conduz eletricidade e calor, pode ser martelado em lâminas ou puxado em fios, e tende a PERDER elétrons, formando cátions.",
       "example": "Ferro, cobre, sódio, ouro.",
-      "related": ["ametal", "semimetal", "cation", "liga"], "source": { "ref": "atkins-jones", "topic": "Glossário: metal", "pages": "B17" } },
-    { "id": "ametal", "term": "Ametal (não metal)", "aliases": ["ametal", "ametais", "não metal", "não metais"],
+      "related": [
+        "ametal",
+        "semimetal",
+        "cation",
+        "liga"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: metal",
+        "pages": "B17"
+      }
+    },
+    {
+      "id": "ametal",
+      "term": "Ametal (não metal)",
+      "aliases": [
+        "ametal",
+        "ametais",
+        "não metal",
+        "não metais"
+      ],
       "definition": "Elemento que não conduz eletricidade (com poucas exceções, como a grafite) e não é maleável. Tende a GANHAR ou compartilhar elétrons.",
       "example": "Oxigênio, cloro, enxofre, carbono, nitrogênio.",
-      "related": ["metal", "anion", "ligacao-covalente"], "source": { "ref": "atkins-jones", "topic": "Glossário: nonmetal", "pages": "B19" } },
-    { "id": "semimetal", "term": "Semimetal (metaloide)", "aliases": ["semimetal", "semimetais", "metaloide", "metaloides"],
+      "related": [
+        "metal",
+        "anion",
+        "ligacao-covalente"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: nonmetal",
+        "pages": "B19"
+      }
+    },
+    {
+      "id": "semimetal",
+      "term": "Semimetal (metaloide)",
+      "aliases": [
+        "semimetal",
+        "semimetais",
+        "metaloide",
+        "metaloides"
+      ],
       "definition": "Elemento com aparência de metal, mas comportamento químico mais parecido com o de um ametal. Fica na 'escada' entre metais e ametais na tabela.",
       "example": "Silício (dos chips) e germânio.",
-      "related": ["metal", "ametal"], "source": { "ref": "atkins-jones", "topic": "Glossário: metalloid", "pages": "B17" } },
-    { "id": "metal-alcalino", "term": "Metal alcalino", "aliases": ["metais alcalinos"],
+      "related": [
+        "metal",
+        "ametal"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: metalloid",
+        "pages": "B17"
+      }
+    },
+    {
+      "id": "metal-alcalino",
+      "term": "Metal alcalino",
+      "aliases": [
+        "metais alcalinos"
+      ],
       "definition": "Elemento do grupo 1 (lítio, sódio, potássio, rubídio, césio, frâncio). Têm 1 elétron de valência, que perdem com muita facilidade: são os metais mais reativos.",
       "example": "Sódio e potássio reagem violentamente com água.",
-      "related": ["grupo", "eletrons-de-valencia", "metal-alcalino-terroso"], "source": { "ref": "atkins-jones", "topic": "Glossário: alkali metal", "pages": "B2" } },
-    { "id": "metal-alcalino-terroso", "term": "Metal alcalino-terroso", "aliases": ["metais alcalino-terrosos", "alcalino-terroso", "alcalino-terrosos"],
+      "related": [
+        "grupo",
+        "eletrons-de-valencia",
+        "metal-alcalino-terroso"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: alkali metal",
+        "pages": "B2"
+      }
+    },
+    {
+      "id": "metal-alcalino-terroso",
+      "term": "Metal alcalino-terroso",
+      "aliases": [
+        "metais alcalino-terrosos",
+        "alcalino-terroso",
+        "alcalino-terrosos"
+      ],
       "definition": "Elemento do grupo 2 (berílio, magnésio, cálcio, estrôncio, bário, rádio). Têm 2 elétrons de valência e formam íons 2+. Em sentido estrito, o nome vale para cálcio, estrôncio e bário.",
       "example": "O cálcio dos ossos e do calcário.",
-      "related": ["grupo", "metal-alcalino"], "source": { "ref": "atkins-jones", "topic": "Glossário: alkaline earth metal", "pages": "B2" } },
-    { "id": "halogenio", "term": "Halogênio", "aliases": ["halogênios"],
+      "related": [
+        "grupo",
+        "metal-alcalino"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: alkaline earth metal",
+        "pages": "B2"
+      }
+    },
+    {
+      "id": "halogenio",
+      "term": "Halogênio",
+      "aliases": [
+        "halogênios"
+      ],
       "definition": "Elemento do grupo 17 (flúor, cloro, bromo, iodo...). Têm 7 elétrons de valência e 'querem' ganhar mais 1: são ametais muito reativos.",
       "example": "O cloro reage com o sódio formando sal de cozinha.",
-      "related": ["grupo", "anion"], "source": { "ref": "atkins-jones", "topic": "Glossário: halogen", "pages": "B13" } },
-    { "id": "gas-nobre", "term": "Gás nobre", "aliases": ["gases nobres"],
+      "related": [
+        "grupo",
+        "anion"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: halogen",
+        "pages": "B13"
+      }
+    },
+    {
+      "id": "gas-nobre",
+      "term": "Gás nobre",
+      "aliases": [
+        "gases nobres"
+      ],
       "definition": "Elemento do grupo 18 (hélio, neônio, argônio, criptônio, xenônio, radônio). Têm a camada de valência completa, por isso quase não reagem.",
       "example": "Hélio nos balões, neônio nos letreiros, argônio dentro de lâmpadas.",
-      "related": ["grupo", "regra-do-octeto", "camada-de-valencia"], "source": { "ref": "atkins-jones", "topic": "Glossário: noble gas", "pages": "B19" } },
-    { "id": "metal-de-transicao", "term": "Metal de transição", "aliases": ["metais de transição"],
+      "related": [
+        "grupo",
+        "regra-do-octeto",
+        "camada-de-valencia"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: noble gas",
+        "pages": "B19"
+      }
+    },
+    {
+      "id": "metal-de-transicao",
+      "term": "Metal de transição",
+      "aliases": [
+        "metais de transição"
+      ],
       "definition": "Elemento dos grupos 3 a 11, no 'meio' da tabela. Muitos formam íons de cargas diferentes e compostos coloridos.",
       "example": "Ferro (Fe²⁺ e Fe³⁺), cobre (o sulfato de cobre é azul), ouro.",
-      "related": ["metal", "grupo"], "source": { "ref": "atkins-jones", "topic": "Glossário: transition metal", "pages": "B28" } },
-    { "id": "ligacao-ionica", "term": "Ligação iônica", "aliases": ["ligações iônicas"],
+      "related": [
+        "metal",
+        "grupo"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: transition metal",
+        "pages": "B28"
+      }
+    },
+    {
+      "id": "ligacao-ionica",
+      "term": "Ligação iônica",
+      "aliases": [
+        "ligações iônicas"
+      ],
       "definition": "A atração entre íons de cargas opostas: um átomo entrega elétron(s) a outro, e os dois íons formados se atraem.",
       "example": "No sal de cozinha, Na⁺ e Cl⁻ se mantêm unidos por ligação iônica.",
-      "related": ["ion", "composto-ionico", "ligacao-covalente"], "source": { "ref": "atkins-jones", "topic": "Glossário: ionic bond", "pages": "B15" } },
-    { "id": "ligacao-covalente", "term": "Ligação covalente", "aliases": ["ligações covalentes", "ligação dupla", "ligação tripla", "ligação simples"],
+      "related": [
+        "ion",
+        "composto-ionico",
+        "ligacao-covalente"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: ionic bond",
+        "pages": "B15"
+      }
+    },
+    {
+      "id": "ligacao-covalente",
+      "term": "Ligação covalente",
+      "aliases": [
+        "ligações covalentes",
+        "ligação dupla",
+        "ligação tripla",
+        "ligação simples"
+      ],
       "definition": "Um par de elétrons COMPARTILHADO entre dois átomos. Dois pares formam uma ligação dupla; três, uma tripla.",
       "example": "Na água, o oxigênio faz uma ligação covalente com cada hidrogênio. No N₂ a ligação é tripla (N≡N).",
-      "related": ["molecula", "ligacao-ionica", "eletronegatividade"], "source": { "ref": "atkins-jones", "topic": "Glossário: covalent bond; bond", "pages": "B4, B8" } },
-    { "id": "regra-do-octeto", "term": "Regra do octeto", "aliases": ["octeto"],
+      "related": [
+        "molecula",
+        "ligacao-ionica",
+        "eletronegatividade"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: covalent bond; bond",
+        "pages": "B4, B8"
+      }
+    },
+    {
+      "id": "regra-do-octeto",
+      "term": "Regra do octeto",
+      "aliases": [
+        "octeto"
+      ],
       "definition": "Ao formar ligações, os átomos tendem a ficar com 8 elétrons na camada de valência (2, no caso do hidrogênio) — a configuração de um gás nobre.",
       "example": "O cloro tem 7 elétrons de valência; ganhando 1, fica com 8.",
-      "related": ["camada-de-valencia", "gas-nobre"], "source": { "ref": "atkins-jones", "topic": "Glossário: octet rule", "pages": "B20" } },
-    { "id": "eletronegatividade", "term": "Eletronegatividade", "aliases": [],
+      "related": [
+        "camada-de-valencia",
+        "gas-nobre"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: octet rule",
+        "pages": "B20"
+      }
+    },
+    {
+      "id": "eletronegatividade",
+      "term": "Eletronegatividade",
+      "aliases": [],
       "definition": "A 'força' com que um átomo puxa os elétrons de uma ligação para perto de si. Cresce para a direita e para cima na tabela (o flúor é o campeão).",
       "example": "Na água, o oxigênio puxa os elétrons mais que o hidrogênio, por isso a molécula tem um lado negativo e outro positivo.",
-      "related": ["ligacao-covalente"], "source": { "ref": "atkins-jones", "topic": "Glossário: electronegativity", "pages": "B10" } },
-    { "id": "formula-quimica", "term": "Fórmula química", "aliases": ["fórmula", "fórmulas", "fórmulas químicas"],
+      "related": [
+        "ligacao-covalente"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: electronegativity",
+        "pages": "B10"
+      }
+    },
+    {
+      "id": "formula-quimica",
+      "term": "Fórmula química",
+      "aliases": [
+        "fórmula",
+        "fórmulas",
+        "fórmulas químicas"
+      ],
       "definition": "Símbolos dos elementos com números pequenos (índices) que dizem quantos átomos de cada tipo há na substância.",
       "example": "H₂O: 2 átomos de hidrogênio e 1 de oxigênio. Ca(OH)₂: 1 cálcio e 2 grupos OH.",
-      "related": ["composto", "unidade-formula"], "source": { "ref": "atkins-jones", "topic": "Glossário: chemical formula", "pages": "B6" } },
-    { "id": "unidade-formula", "term": "Unidade-fórmula", "aliases": ["unidade fórmula"],
+      "related": [
+        "composto",
+        "unidade-formula"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: chemical formula",
+        "pages": "B6"
+      }
+    },
+    {
+      "id": "unidade-formula",
+      "term": "Unidade-fórmula",
+      "aliases": [
+        "unidade fórmula"
+      ],
       "definition": "O menor grupo de íons que corresponde à fórmula de um composto iônico. É o que o jogo desenha para os compostos iônicos.",
       "example": "NaCl: um Na⁺ e um Cl⁻. Fe₂O₃: dois Fe³⁺ e três O²⁻.",
-      "related": ["composto-ionico", "formula-quimica"], "source": { "ref": "atkins-jones", "topic": "Glossário: formula unit", "pages": "B12" } },
-    { "id": "reticulo", "term": "Retículo cristalino", "aliases": ["retículo", "rede cristalina"],
+      "related": [
+        "composto-ionico",
+        "formula-quimica"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: formula unit",
+        "pages": "B12"
+      }
+    },
+    {
+      "id": "reticulo",
+      "term": "Retículo cristalino",
+      "aliases": [
+        "retículo",
+        "rede cristalina"
+      ],
       "definition": "Arranjo organizado e repetitivo de átomos, moléculas ou íons num cristal.",
       "example": "No sal de cozinha, íons Na⁺ e Cl⁻ se alternam formando cubos.",
-      "related": ["composto-ionico"], "source": { "ref": "atkins-jones", "topic": "Glossário: lattice", "pages": "B16" } },
-    { "id": "alotropo", "term": "Alótropo", "aliases": ["alótropos", "forma alotrópica"],
+      "related": [
+        "composto-ionico"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: lattice",
+        "pages": "B16"
+      }
+    },
+    {
+      "id": "alotropo",
+      "term": "Alótropo",
+      "aliases": [
+        "alótropos",
+        "forma alotrópica"
+      ],
       "definition": "Formas diferentes do mesmo elemento, em que os átomos estão ligados de jeitos diferentes.",
       "example": "Grafite e diamante (carbono); O₂ e ozônio, O₃ (oxigênio).",
-      "related": ["elemento"], "source": { "ref": "atkins-jones", "topic": "Glossário: allotropes", "pages": "B2" } },
-    { "id": "liga", "term": "Liga metálica", "aliases": ["ligas metálicas"],
+      "related": [
+        "elemento"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: allotropes",
+        "pages": "B2"
+      }
+    },
+    {
+      "id": "liga",
+      "term": "Liga metálica",
+      "aliases": [
+        "ligas metálicas"
+      ],
       "definition": "Mistura de dois ou mais metais (às vezes com um ametal), obtida derretendo e misturando. Não é um composto: não tem fórmula fixa.",
       "example": "Latão (cobre + zinco), bronze (cobre + estanho), aço (ferro + um pouco de carbono).",
-      "related": ["mistura", "metal"], "source": { "ref": "atkins-jones", "topic": "Glossário: alloy", "pages": "B2" } },
-    { "id": "estado-fisico", "term": "Estado físico", "aliases": ["estados físicos", "estado da matéria"],
+      "related": [
+        "mistura",
+        "metal"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: alloy",
+        "pages": "B2"
+      }
+    },
+    {
+      "id": "estado-fisico",
+      "term": "Estado físico",
+      "aliases": [
+        "estados físicos",
+        "estado da matéria"
+      ],
       "definition": "A forma em que a matéria se apresenta: sólido, líquido ou gasoso. Nas equações aparece entre parênteses: (s), (l), (g), e (aq) para dissolvido em água.",
       "example": "H₂O(s) é gelo, H₂O(l) é água líquida, H₂O(g) é vapor.",
-      "related": ["solido", "liquido", "gas", "solucao-aquosa"], "source": { "ref": "atkins-jones", "topic": "Glossário: state of matter", "pages": "B26" } },
-    { "id": "solido", "term": "Sólido (s)", "aliases": ["sólido", "sólidos"],
+      "related": [
+        "solido",
+        "liquido",
+        "gas",
+        "solucao-aquosa"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: state of matter",
+        "pages": "B26"
+      }
+    },
+    {
+      "id": "solido",
+      "term": "Sólido (s)",
+      "aliases": [
+        "sólido",
+        "sólidos"
+      ],
       "definition": "Estado da matéria que tem forma própria e volume fixo: as partículas ficam presas em posições, só vibrando.",
       "example": "Gelo, sal, ferro.",
-      "related": ["estado-fisico", "precipitado"], "source": { "ref": "atkins-jones", "topic": "Glossário: solid", "pages": "B25" } },
-    { "id": "liquido", "term": "Líquido (l)", "aliases": ["líquido", "líquidos"],
+      "related": [
+        "estado-fisico",
+        "precipitado"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: solid",
+        "pages": "B25"
+      }
+    },
+    {
+      "id": "liquido",
+      "term": "Líquido (l)",
+      "aliases": [
+        "líquido",
+        "líquidos"
+      ],
       "definition": "Estado da matéria com volume fixo, mas que toma a forma do recipiente: as partículas ficam próximas, mas deslizam umas sobre as outras.",
       "example": "Água, mercúrio, bromo.",
-      "related": ["estado-fisico"], "source": { "ref": "atkins-jones", "topic": "Glossário: liquid", "pages": "B16" } },
-    { "id": "gas", "term": "Gás (g)", "aliases": ["gás", "gases", "gasoso"],
+      "related": [
+        "estado-fisico"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: liquid",
+        "pages": "B16"
+      }
+    },
+    {
+      "id": "gas",
+      "term": "Gás (g)",
+      "aliases": [
+        "gás",
+        "gases",
+        "gasoso"
+      ],
       "definition": "Estado da matéria que ocupa todo o recipiente e pode ser comprimido: as partículas ficam longe umas das outras e se movem livremente.",
       "example": "Oxigênio, gás carbônico, hidrogênio.",
-      "related": ["estado-fisico"], "source": { "ref": "atkins-jones", "topic": "Glossário: gas", "pages": "B12" } },
-    { "id": "solucao", "term": "Solução", "aliases": ["soluções"],
+      "related": [
+        "estado-fisico"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: gas",
+        "pages": "B12"
+      }
+    },
+    {
+      "id": "solucao",
+      "term": "Solução",
+      "aliases": [
+        "soluções"
+      ],
       "definition": "Mistura homogênea: uma substância (o soluto) espalhada de maneira uniforme em outra (o solvente), a ponto de não dar para ver as partes.",
       "example": "Água com sal dissolvido; o ar (uma solução de gases).",
-      "related": ["soluto", "solvente", "solucao-aquosa", "mistura"], "source": { "ref": "atkins-jones", "topic": "Glossário: solution", "pages": "B25" } },
-    { "id": "solucao-aquosa", "term": "Solução aquosa (aq)", "aliases": ["solução aquosa", "soluções aquosas", "dissolvido em água"],
+      "related": [
+        "soluto",
+        "solvente",
+        "solucao-aquosa",
+        "mistura"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: solution",
+        "pages": "B25"
+      }
+    },
+    {
+      "id": "solucao-aquosa",
+      "term": "Solução aquosa (aq)",
+      "aliases": [
+        "solução aquosa",
+        "soluções aquosas",
+        "dissolvido em água"
+      ],
       "definition": "Solução em que o solvente é a água. Nas equações, o que está dissolvido em água leva (aq).",
       "example": "NaCl(aq) é sal dissolvido em água.",
-      "related": ["solucao", "solvente"], "source": { "ref": "atkins-jones", "topic": "Glossário: aqueous solution", "pages": "B2" } },
-    { "id": "solvente", "term": "Solvente", "aliases": ["solventes"],
+      "related": [
+        "solucao",
+        "solvente"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: aqueous solution",
+        "pages": "B2"
+      }
+    },
+    {
+      "id": "solvente",
+      "term": "Solvente",
+      "aliases": [
+        "solventes"
+      ],
       "definition": "O componente de uma solução em que os outros estão dissolvidos — normalmente o que está em maior quantidade.",
       "example": "Na água com açúcar, a água é o solvente.",
-      "related": ["solucao", "soluto"], "source": { "ref": "atkins-jones", "topic": "Glossário: solvent", "pages": "B25" } },
-    { "id": "soluto", "term": "Soluto", "aliases": ["solutos"],
+      "related": [
+        "solucao",
+        "soluto"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: solvent",
+        "pages": "B25"
+      }
+    },
+    {
+      "id": "soluto",
+      "term": "Soluto",
+      "aliases": [
+        "solutos"
+      ],
       "definition": "A substância que está dissolvida numa solução.",
       "example": "Na água com açúcar, o açúcar é o soluto.",
-      "related": ["solucao", "solvente"], "source": { "ref": "atkins-jones", "topic": "Glossário: solute", "pages": "B25" } },
-    { "id": "soluvel", "term": "Solúvel", "aliases": ["solúveis", "dissolve", "dissolvem", "se dissolve"],
+      "related": [
+        "solucao",
+        "solvente"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: solute",
+        "pages": "B25"
+      }
+    },
+    {
+      "id": "soluvel",
+      "term": "Solúvel",
+      "aliases": [
+        "solúveis",
+        "dissolve",
+        "dissolvem",
+        "se dissolve"
+      ],
       "definition": "Que se dissolve numa quantidade apreciável de solvente. Quando não se diz qual, o solvente é a água.",
       "example": "O nitrato de prata e o sal de cozinha são solúveis em água.",
-      "related": ["insoluvel", "regras-de-solubilidade", "solucao"], "source": { "ref": "atkins-jones", "topic": "Glossário: soluble substance", "pages": "B25" } },
-    { "id": "insoluvel", "term": "Insolúvel", "aliases": ["insolúveis", "pouco solúvel", "pouco solúveis"],
+      "related": [
+        "insoluvel",
+        "regras-de-solubilidade",
+        "solucao"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: soluble substance",
+        "pages": "B25"
+      }
+    },
+    {
+      "id": "insoluvel",
+      "term": "Insolúvel",
+      "aliases": [
+        "insolúveis",
+        "pouco solúvel",
+        "pouco solúveis"
+      ],
       "definition": "Que praticamente não se dissolve no solvente (em geral, a água). Entre o solúvel e o insolúvel há o 'pouco solúvel': um pouco se dissolve, o resto fica sólido.",
       "example": "O cloreto de prata (AgCl) e o carbonato de cálcio (calcário) são insolúveis.",
-      "related": ["soluvel", "precipitado", "regras-de-solubilidade"], "source": { "ref": "atkins-jones", "topic": "Glossário: insoluble substance", "pages": "B14" } },
-    { "id": "regras-de-solubilidade", "term": "Regras de solubilidade", "aliases": ["regra de solubilidade", "solubilidade"],
+      "related": [
+        "soluvel",
+        "precipitado",
+        "regras-de-solubilidade"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: insoluble substance",
+        "pages": "B14"
+      }
+    },
+    {
+      "id": "regras-de-solubilidade",
+      "term": "Regras de solubilidade",
+      "aliases": [
+        "regra de solubilidade",
+        "solubilidade"
+      ],
       "definition": "Resumo de quais compostos iônicos se dissolvem em água e quais não. O jogo usa a Tabela I.1 de Atkins & Jones para prever precipitados.",
       "example": "Nitratos e compostos do grupo 1 são sempre solúveis; carbonatos quase sempre insolúveis.",
-      "related": ["soluvel", "insoluvel", "precipitacao"], "source": { "ref": "atkins-jones", "topic": "Glossário: solubility rules (ver Tabela I.1)", "pages": "B25" } },
-    { "id": "precipitado", "term": "Precipitado", "aliases": ["precipitados", "precipita", "precipitam", "precipitar"],
+      "related": [
+        "soluvel",
+        "insoluvel",
+        "precipitacao"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: solubility rules (ver Tabela I.1)",
+        "pages": "B25"
+      }
+    },
+    {
+      "id": "precipitado",
+      "term": "Precipitado",
+      "aliases": [
+        "precipitados",
+        "precipita",
+        "precipitam",
+        "precipitar"
+      ],
       "definition": "Sólido que aparece de repente ao misturar duas soluções, porque uma das combinações de íons é insolúvel. Deixa a mistura turva e depois se deposita no fundo.",
       "example": "Nitrato de prata + cloreto de sódio: aparece um precipitado branco de AgCl.",
-      "related": ["precipitacao", "insoluvel"], "source": { "ref": "atkins-jones", "topic": "Glossário: precipitate", "pages": "B22" } },
-    { "id": "precipitacao", "term": "Reação de precipitação", "aliases": ["precipitação", "reações de precipitação"],
+      "related": [
+        "precipitacao",
+        "insoluvel"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: precipitate",
+        "pages": "B22"
+      }
+    },
+    {
+      "id": "precipitacao",
+      "term": "Reação de precipitação",
+      "aliases": [
+        "precipitação",
+        "reações de precipitação"
+      ],
       "definition": "Reação em que se forma um sólido insolúvel ao misturar soluções de dois compostos iônicos. Os íons trocam de parceiro e um dos novos pares não se dissolve.",
       "example": "BaCl₂(aq) + Na₂SO₄(aq) → BaSO₄(s) + 2 NaCl(aq).",
-      "related": ["precipitado", "dupla-troca", "regras-de-solubilidade", "ion-espectador"], "source": { "ref": "atkins-jones", "topic": "Glossário: precipitation", "pages": "B22" } },
-    { "id": "eletrolito", "term": "Eletrólito", "aliases": ["eletrólitos"],
+      "related": [
+        "precipitado",
+        "dupla-troca",
+        "regras-de-solubilidade",
+        "ion-espectador"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: precipitation",
+        "pages": "B22"
+      }
+    },
+    {
+      "id": "eletrolito",
+      "term": "Eletrólito",
+      "aliases": [
+        "eletrólitos"
+      ],
       "definition": "Substância que, dissolvida, forma uma solução que conduz eletricidade, porque libera íons livres para se mover.",
       "example": "Sal de cozinha (eletrólito forte); ácido acético (eletrólito fraco); açúcar não é eletrólito.",
-      "related": ["ion", "solucao-aquosa"], "source": { "ref": "atkins-jones", "topic": "Glossário: electrolyte", "pages": "B10" } },
-    { "id": "reacao-quimica", "term": "Reação química", "aliases": ["reação", "reações", "reações químicas", "reage", "reagem"],
+      "related": [
+        "ion",
+        "solucao-aquosa"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: electrolyte",
+        "pages": "B10"
+      }
+    },
+    {
+      "id": "reacao-quimica",
+      "term": "Reação química",
+      "aliases": [
+        "reação",
+        "reações",
+        "reações químicas",
+        "reage",
+        "reagem"
+      ],
       "definition": "Transformação em que substâncias se convertem em outras substâncias, diferentes. As ligações entre os átomos se rompem e se refazem de outro jeito, mas os átomos continuam os mesmos.",
       "example": "Queimar gás de cozinha: metano + oxigênio viram gás carbônico + água.",
-      "related": ["reagente", "produto", "equacao-quimica", "conservacao-da-massa"], "source": { "ref": "atkins-jones", "topic": "Glossário: chemical reaction; chemical change", "pages": "B5, B6" } },
-    { "id": "reagente", "term": "Reagente", "aliases": ["reagentes"],
+      "related": [
+        "reagente",
+        "produto",
+        "equacao-quimica",
+        "conservacao-da-massa"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: chemical reaction; chemical change",
+        "pages": "B5, B6"
+      }
+    },
+    {
+      "id": "reagente",
+      "term": "Reagente",
+      "aliases": [
+        "reagentes"
+      ],
       "definition": "Substância que entra numa reação e é consumida. Fica do lado esquerdo da seta na equação.",
       "example": "Em 2 H₂ + O₂ → 2 H₂O, os reagentes são H₂ e O₂.",
-      "related": ["produto", "equacao-quimica", "reagente-limitante"], "source": { "ref": "atkins-jones", "topic": "Glossário: reactant", "pages": "B23" } },
-    { "id": "produto", "term": "Produto", "aliases": ["produtos"],
-      "exclude": ["produtos de limpeza", "produto de limpeza"],
+      "related": [
+        "produto",
+        "equacao-quimica",
+        "reagente-limitante"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: reactant",
+        "pages": "B23"
+      }
+    },
+    {
+      "id": "produto",
+      "term": "Produto",
+      "aliases": [
+        "produtos"
+      ],
+      "exclude": [
+        "produtos de limpeza",
+        "produto de limpeza"
+      ],
       "definition": "Substância que se forma numa reação. Fica do lado direito da seta na equação.",
       "example": "Em 2 H₂ + O₂ → 2 H₂O, o produto é a água.",
-      "related": ["reagente", "equacao-quimica"], "source": { "ref": "atkins-jones", "topic": "Glossário: product", "pages": "B22" } },
-    { "id": "equacao-quimica", "term": "Equação química", "aliases": ["equação", "equações", "equações químicas", "equação balanceada"],
+      "related": [
+        "reagente",
+        "equacao-quimica"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: product",
+        "pages": "B22"
+      }
+    },
+    {
+      "id": "equacao-quimica",
+      "term": "Equação química",
+      "aliases": [
+        "equação",
+        "equações",
+        "equações químicas",
+        "equação balanceada"
+      ],
       "definition": "A 'frase' que descreve uma reação com fórmulas: reagentes à esquerda, produtos à direita, uma seta no meio. Balanceada, tem o mesmo número de cada átomo dos dois lados.",
       "example": "CH₄ + 2 O₂ → CO₂ + 2 H₂O.",
-      "related": ["reagente", "produto", "coeficiente", "balanceamento"], "source": { "ref": "atkins-jones", "topic": "Glossário: chemical equation", "pages": "B6" } },
-    { "id": "coeficiente", "term": "Coeficiente estequiométrico", "aliases": ["coeficiente", "coeficientes", "coeficientes estequiométricos"],
+      "related": [
+        "reagente",
+        "produto",
+        "coeficiente",
+        "balanceamento"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: chemical equation",
+        "pages": "B6"
+      }
+    },
+    {
+      "id": "coeficiente",
+      "term": "Coeficiente estequiométrico",
+      "aliases": [
+        "coeficiente",
+        "coeficientes",
+        "coeficientes estequiométricos"
+      ],
       "definition": "O número na frente de cada fórmula numa equação. Diz em que proporção as substâncias reagem e se formam (em moléculas ou em mol).",
       "example": "Em 2 H₂ + O₂ → 2 H₂O, os coeficientes são 2, 1 e 2.",
-      "related": ["equacao-quimica", "balanceamento", "mol"], "source": { "ref": "atkins-jones", "topic": "Glossário: stoichiometric coefficients", "pages": "B27" } },
-    { "id": "balanceamento", "term": "Balanceamento", "aliases": ["balancear", "balanceada", "balanceadas", "balanceamento automático"],
+      "related": [
+        "equacao-quimica",
+        "balanceamento",
+        "mol"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: stoichiometric coefficients",
+        "pages": "B27"
+      }
+    },
+    {
+      "id": "balanceamento",
+      "term": "Balanceamento",
+      "aliases": [
+        "balancear",
+        "balanceada",
+        "balanceadas",
+        "balanceamento automático"
+      ],
       "definition": "Escolher os coeficientes de uma equação para que cada tipo de átomo (e a carga elétrica) apareça na mesma quantidade dos dois lados. Não se mudam as fórmulas, só os números da frente.",
       "example": "H₂ + O₂ → H₂O não está balanceada (2 O à esquerda, 1 à direita); 2 H₂ + O₂ → 2 H₂O está.",
-      "related": ["coeficiente", "conservacao-da-massa", "equacao-quimica"], "source": { "ref": "atkins-jones", "topic": "Seção H.2: balanceamento de equações químicas", "pages": "F62–F64" } },
-    { "id": "conservacao-da-massa", "term": "Conservação da massa (Lavoisier)", "aliases": ["conservação da massa", "conservação de massa", "lavoisier"],
+      "related": [
+        "coeficiente",
+        "conservacao-da-massa",
+        "equacao-quimica"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Seção H.2: balanceamento de equações químicas",
+        "pages": "F62–F64"
+      }
+    },
+    {
+      "id": "conservacao-da-massa",
+      "term": "Conservação da massa (Lavoisier)",
+      "aliases": [
+        "conservação da massa",
+        "conservação de massa",
+        "lavoisier"
+      ],
       "definition": "Numa reação química, a matéria (os átomos) não é criada nem destruída: a massa dos reagentes é igual à dos produtos. 'Na natureza nada se cria, nada se perde, tudo se transforma.'",
       "example": "Queimando 16 g de metano com 64 g de oxigênio, formam-se exatamente 80 g de produtos.",
-      "related": ["balanceamento", "reacao-quimica"], "source": { "ref": "atkins-jones", "topic": "Glossário: law of conservation of mass", "pages": "B16" } },
-    { "id": "sintese", "term": "Síntese", "aliases": ["reação de síntese"],
+      "related": [
+        "balanceamento",
+        "reacao-quimica"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: law of conservation of mass",
+        "pages": "B16"
+      }
+    },
+    {
+      "id": "sintese",
+      "term": "Síntese",
+      "aliases": [
+        "reação de síntese"
+      ],
       "definition": "Reação em que uma substância se forma a partir de outras mais simples (A + B → AB).",
       "example": "N₂ + 3 H₂ → 2 NH₃ (síntese da amônia).",
-      "related": ["decomposicao", "reacao-quimica"], "source": { "ref": "atkins-jones", "topic": "Glossário: synthesis", "pages": "B27" } },
-    { "id": "decomposicao", "term": "Decomposição", "aliases": ["reação de decomposição", "decompõe", "decompor"],
+      "related": [
+        "decomposicao",
+        "reacao-quimica"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: synthesis",
+        "pages": "B27"
+      }
+    },
+    {
+      "id": "decomposicao",
+      "term": "Decomposição",
+      "aliases": [
+        "reação de decomposição",
+        "decompõe",
+        "decompor"
+      ],
       "definition": "Reação em que uma substância se quebra em substâncias mais simples (AB → A + B). Quando é causada por aquecimento, chama-se decomposição térmica.",
       "example": "CaCO₃ → CaO + CO₂ (aquecendo calcário).",
-      "related": ["sintese", "eletrolise"], "source": { "ref": "atkins-jones", "topic": "Glossário: decomposition", "pages": "B8" } },
-    { "id": "simples-troca", "term": "Simples troca (deslocamento)", "aliases": ["simples troca", "deslocamento", "desloca", "deslocar"],
+      "related": [
+        "sintese",
+        "eletrolise"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: decomposition",
+        "pages": "B8"
+      }
+    },
+    {
+      "id": "simples-troca",
+      "term": "Simples troca (deslocamento)",
+      "aliases": [
+        "simples troca",
+        "deslocamento",
+        "desloca",
+        "deslocar"
+      ],
       "definition": "Reação em que um elemento toma o lugar de outro num composto (A + BC → AC + B). Acontece quando o elemento que entra é mais reativo do que o que sai.",
       "example": "Fe + CuSO₄ → FeSO₄ + Cu: o ferro desloca o cobre.",
-      "related": ["serie-eletroquimica", "redox"], "source": { "ref": "atkins-jones", "topic": "Seção 13.7: a série eletroquímica prevê deslocamentos", "pages": "534" } },
-    { "id": "dupla-troca", "term": "Dupla troca", "aliases": ["troca de íons", "trocam de parceiro"],
+      "related": [
+        "serie-eletroquimica",
+        "redox"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Seção 13.7: a série eletroquímica prevê deslocamentos",
+        "pages": "534"
+      }
+    },
+    {
+      "id": "dupla-troca",
+      "term": "Dupla troca",
+      "aliases": [
+        "troca de íons",
+        "trocam de parceiro"
+      ],
       "definition": "Reação entre dois compostos iônicos em que os íons trocam de parceiro (AB + CD → AD + CB). Só 'acontece de verdade' se algo sai da solução: um precipitado, um gás ou água.",
       "example": "AgNO₃ + NaCl → AgCl(s) + NaNO₃.",
-      "related": ["precipitacao", "ion-espectador"], "source": { "ref": "atkins-jones", "topic": "Seção I.2: reações de precipitação", "pages": "F67" } },
-    { "id": "combustao", "term": "Combustão", "aliases": ["queima", "queimar"],
+      "related": [
+        "precipitacao",
+        "ion-espectador"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Seção I.2: reações de precipitação",
+        "pages": "F67"
+      }
+    },
+    {
+      "id": "combustao",
+      "term": "Combustão",
+      "aliases": [
+        "queima",
+        "queimar"
+      ],
       "definition": "Reação de uma substância com oxigênio que libera muita energia, normalmente com chama. Na combustão completa de compostos de carbono e hidrogênio, os produtos são CO₂ e água.",
       "example": "CH₄ + 2 O₂ → CO₂ + 2 H₂O (a chama do fogão).",
-      "related": ["exotermica", "hidrocarboneto", "oxidacao"], "source": { "ref": "atkins-jones", "topic": "Glossário: combustion", "pages": "B6" } },
-    { "id": "neutralizacao", "term": "Neutralização", "aliases": ["neutraliza", "neutralizam", "neutralizar", "reação de neutralização"],
+      "related": [
+        "exotermica",
+        "hidrocarboneto",
+        "oxidacao"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: combustion",
+        "pages": "B6"
+      }
+    },
+    {
+      "id": "neutralizacao",
+      "term": "Neutralização",
+      "aliases": [
+        "neutraliza",
+        "neutralizam",
+        "neutralizar",
+        "reação de neutralização"
+      ],
       "definition": "Reação entre um ácido e uma base, que forma um sal (e, em geral, água). O H⁺ do ácido e o OH⁻ da base viram H₂O.",
       "example": "HCl + NaOH → NaCl + H₂O.",
-      "related": ["acido", "base", "sal"], "source": { "ref": "atkins-jones", "topic": "Glossário: neutralization reaction", "pages": "B19" } },
-    { "id": "equacao-ionica", "term": "Equação iônica líquida", "aliases": ["equação iônica", "equações iônicas"],
+      "related": [
+        "acido",
+        "base",
+        "sal"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: neutralization reaction",
+        "pages": "B19"
+      }
+    },
+    {
+      "id": "equacao-ionica",
+      "term": "Equação iônica líquida",
+      "aliases": [
+        "equação iônica",
+        "equações iônicas"
+      ],
       "definition": "Equação que mostra só as espécies que realmente mudam numa reação em solução, depois de cancelar os íons espectadores.",
       "example": "Para AgNO₃ + NaCl: Ag⁺(aq) + Cl⁻(aq) → AgCl(s).",
-      "related": ["ion-espectador", "precipitacao"], "source": { "ref": "atkins-jones", "topic": "Glossário: net ionic equation", "pages": "B19" } },
-    { "id": "ion-espectador", "term": "Íon espectador", "aliases": ["íons espectadores", "espectador", "espectadores"],
+      "related": [
+        "ion-espectador",
+        "precipitacao"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: net ionic equation",
+        "pages": "B19"
+      }
+    },
+    {
+      "id": "ion-espectador",
+      "term": "Íon espectador",
+      "aliases": [
+        "íons espectadores",
+        "espectador",
+        "espectadores"
+      ],
       "definition": "Íon que está na solução mas não participa da reação: aparece igual dos dois lados da equação, como um torcedor na arquibancada.",
       "example": "Em AgNO₃ + NaCl → AgCl + NaNO₃, os íons Na⁺ e NO₃⁻ são espectadores.",
-      "related": ["equacao-ionica"], "source": { "ref": "atkins-jones", "topic": "Glossário: spectator ion", "pages": "B25" } },
-    { "id": "oxidacao", "term": "Oxidação", "aliases": ["oxida", "oxidar", "oxidado", "oxidada"],
+      "related": [
+        "equacao-ionica"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: spectator ion",
+        "pages": "B25"
+      }
+    },
+    {
+      "id": "oxidacao",
+      "term": "Oxidação",
+      "aliases": [
+        "oxida",
+        "oxidar",
+        "oxidado",
+        "oxidada"
+      ],
       "definition": "Perda de elétrons (antigamente: combinar com oxigênio). Toda oxidação vem junto com uma redução: alguém precisa receber os elétrons.",
       "example": "Quando o ferro enferruja, Fe vira Fe³⁺: o ferro é oxidado.",
-      "related": ["reducao", "redox", "agente-oxidante"], "source": { "ref": "atkins-jones", "topic": "Glossário: oxidation", "pages": "B20" } },
-    { "id": "reducao", "term": "Redução", "aliases": ["reduzir", "reduz", "reduzido", "reduzidos"],
+      "related": [
+        "reducao",
+        "redox",
+        "agente-oxidante"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: oxidation",
+        "pages": "B20"
+      }
+    },
+    {
+      "id": "reducao",
+      "term": "Redução",
+      "aliases": [
+        "reduzir",
+        "reduz",
+        "reduzido",
+        "reduzidos"
+      ],
       "definition": "Ganho de elétrons (antigamente: perder oxigênio). Sempre acontece junto com uma oxidação.",
       "example": "Em Fe + CuSO₄, os íons Cu²⁺ ganham elétrons e viram cobre metálico: são reduzidos.",
-      "related": ["oxidacao", "redox", "agente-redutor"], "source": { "ref": "atkins-jones", "topic": "Glossário: reduction", "pages": "B24" } },
-    { "id": "redox", "term": "Reação redox (oxirredução)", "aliases": ["redox", "oxirredução", "reação redox"],
+      "related": [
+        "oxidacao",
+        "redox",
+        "agente-redutor"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: reduction",
+        "pages": "B24"
+      }
+    },
+    {
+      "id": "redox",
+      "term": "Reação redox (oxirredução)",
+      "aliases": [
+        "redox",
+        "oxirredução",
+        "reação redox"
+      ],
       "definition": "Reação com transferência de elétrons: uma espécie se oxida (perde elétrons) e outra se reduz (ganha os mesmos elétrons).",
       "example": "Combustões, ferrugem, pilhas e o deslocamento de metais são reações redox.",
-      "related": ["oxidacao", "reducao", "serie-eletroquimica"], "source": { "ref": "atkins-jones", "topic": "Glossário: redox reaction", "pages": "B24" } },
-    { "id": "agente-oxidante", "term": "Agente oxidante", "aliases": ["oxidante", "oxidantes"],
+      "related": [
+        "oxidacao",
+        "reducao",
+        "serie-eletroquimica"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: redox reaction",
+        "pages": "B24"
+      }
+    },
+    {
+      "id": "agente-oxidante",
+      "term": "Agente oxidante",
+      "aliases": [
+        "oxidante",
+        "oxidantes"
+      ],
       "definition": "A espécie que ROUBA elétrons de outra (oxidando-a) e, com isso, é reduzida.",
       "example": "O oxigênio é oxidante na combustão; o ácido nítrico é um ácido oxidante.",
-      "related": ["agente-redutor", "oxidacao"], "source": { "ref": "atkins-jones", "topic": "Glossário: oxidizing agent", "pages": "B20" } },
-    { "id": "agente-redutor", "term": "Agente redutor", "aliases": ["redutor", "redutores"],
+      "related": [
+        "agente-redutor",
+        "oxidacao"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: oxidizing agent",
+        "pages": "B20"
+      }
+    },
+    {
+      "id": "agente-redutor",
+      "term": "Agente redutor",
+      "aliases": [
+        "redutor",
+        "redutores"
+      ],
       "definition": "A espécie que ENTREGA elétrons a outra (reduzindo-a) e, com isso, é oxidada.",
       "example": "Os metais alcalinos são redutores fortíssimos.",
-      "related": ["agente-oxidante", "reducao"], "source": { "ref": "atkins-jones", "topic": "Glossário: reducing agent", "pages": "B24" } },
-    { "id": "numero-de-oxidacao", "term": "Número de oxidação", "aliases": ["números de oxidação", "estado de oxidação"],
+      "related": [
+        "agente-oxidante",
+        "reducao"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: reducing agent",
+        "pages": "B24"
+      }
+    },
+    {
+      "id": "numero-de-oxidacao",
+      "term": "Número de oxidação",
+      "aliases": [
+        "números de oxidação",
+        "estado de oxidação"
+      ],
       "definition": "A 'carga efetiva' de um átomo num composto, calculada por regras. Serve para acompanhar quem perde e quem ganha elétrons. É o número romano em nomes como ferro(III).",
       "example": "No Fe₂O₃, o ferro tem número de oxidação +3; no FeCl₂, +2.",
-      "related": ["oxidacao", "reducao"], "source": { "ref": "atkins-jones", "topic": "Glossário: oxidation number", "pages": "B20" } },
-    { "id": "serie-eletroquimica", "term": "Série eletroquímica (de reatividade)", "aliases": ["série eletroquímica", "série de reatividade", "série de atividade"],
+      "related": [
+        "oxidacao",
+        "reducao"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: oxidation number",
+        "pages": "B20"
+      }
+    },
+    {
+      "id": "serie-eletroquimica",
+      "term": "Série eletroquímica (de reatividade)",
+      "aliases": [
+        "série eletroquímica",
+        "série de reatividade",
+        "série de atividade"
+      ],
       "definition": "Lista dos metais (e do hidrogênio) em ordem de facilidade para perder elétrons, medida pelo potencial-padrão. Um metal desloca de um composto outro que esteja abaixo dele na série.",
       "example": "K > Ca > Na > Mg > Al > Zn > Fe > (H) > Cu > Ag > Au.",
-      "related": ["potencial-padrao", "simples-troca", "redox"], "source": { "ref": "atkins-jones", "topic": "Glossário: electrochemical series", "pages": "B9" } },
-    { "id": "potencial-padrao", "term": "Potencial-padrão (E°)", "aliases": ["potencial-padrão", "potencial padrão", "potenciais-padrão"],
+      "related": [
+        "potencial-padrao",
+        "simples-troca",
+        "redox"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: electrochemical series",
+        "pages": "B9"
+      }
+    },
+    {
+      "id": "potencial-padrao",
+      "term": "Potencial-padrão (E°)",
+      "aliases": [
+        "potencial-padrão",
+        "potencial padrão",
+        "potenciais-padrão"
+      ],
       "definition": "Número, em volts, que mede a tendência de uma espécie receber elétrons. Quanto MAIS NEGATIVO o E° de um metal, mais facilmente ele perde elétrons (mais reativo ele é). O hidrogênio é a referência: 0 V.",
       "example": "Zinco: −0,76 V (libera H₂ de ácidos). Cobre: +0,34 V (não libera).",
-      "related": ["serie-eletroquimica"], "source": { "ref": "atkins-jones", "topic": "Glossário: standard potential", "pages": "B26" } },
-    { "id": "corrosao", "term": "Corrosão", "aliases": ["corroído", "corroída", "enferruja", "ferrugem"],
+      "related": [
+        "serie-eletroquimica"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: standard potential",
+        "pages": "B26"
+      }
+    },
+    {
+      "id": "corrosao",
+      "term": "Corrosão",
+      "aliases": [
+        "corroído",
+        "corroída",
+        "enferruja",
+        "ferrugem"
+      ],
       "definition": "Reação indesejada que vai consumindo um material, como um metal que reage com o ar e a água.",
       "example": "A ferrugem do ferro (óxido de ferro hidratado).",
-      "related": ["oxidacao", "passivacao"], "source": { "ref": "atkins-jones", "topic": "Glossário: corrosion", "pages": "B8" } },
-    { "id": "passivacao", "term": "Passivação", "aliases": ["passivado", "passivados", "película de óxido", "camada de óxido", "óxido protetor"],
+      "related": [
+        "oxidacao",
+        "passivacao"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: corrosion",
+        "pages": "B8"
+      }
+    },
+    {
+      "id": "passivacao",
+      "term": "Passivação",
+      "aliases": [
+        "passivado",
+        "passivados",
+        "película de óxido",
+        "camada de óxido",
+        "óxido protetor"
+      ],
       "definition": "Proteção de um metal por uma película fina na superfície (geralmente de óxido) que impede que ele continue reagindo.",
       "example": "O alumínio é bem reativo, mas uma camada de Al₂O₃ o protege — por isso panelas de alumínio não 'enferrujam'.",
-      "related": ["corrosao"], "source": { "ref": "atkins-jones", "topic": "Glossário: passivation; protective oxide", "pages": "B20, B22" } },
-    { "id": "acido", "term": "Ácido", "aliases": ["ácidos"],
+      "related": [
+        "corrosao"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: passivation; protective oxide",
+        "pages": "B20, B22"
+      }
+    },
+    {
+      "id": "acido",
+      "term": "Ácido",
+      "aliases": [
+        "ácidos"
+      ],
       "definition": "Substância que DOA prótons (íons H⁺). Em água, aumenta a quantidade de H₃O⁺ e deixa o pH abaixo de 7. Tem gosto azedo (nunca prove em laboratório!).",
       "example": "Ácido clorídrico (HCl), vinagre (ácido acético).",
-      "related": ["base", "acido-forte", "acido-fraco", "ph", "neutralizacao"], "source": { "ref": "atkins-jones", "topic": "Glossário: acid; Brønsted acid", "pages": "B1, B5" } },
-    { "id": "base", "term": "Base", "aliases": ["bases", "básica", "básico", "básicas", "básicos"],
-      "exclude": ["na base", "da base", "à base", "com base", "base curada", "base de reações", "base do jogo", "pela base", "a base de", "nessa base", "nesta base"],
+      "related": [
+        "base",
+        "acido-forte",
+        "acido-fraco",
+        "ph",
+        "neutralizacao"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: acid; Brønsted acid",
+        "pages": "B1, B5"
+      }
+    },
+    {
+      "id": "base",
+      "term": "Base",
+      "aliases": [
+        "bases",
+        "básica",
+        "básico",
+        "básicas",
+        "básicos"
+      ],
+      "exclude": [
+        "na base",
+        "da base",
+        "à base",
+        "com base",
+        "base curada",
+        "base de reações",
+        "base do jogo",
+        "pela base",
+        "a base de",
+        "nessa base",
+        "nesta base"
+      ],
       "definition": "Substância que ACEITA prótons (íons H⁺). Em água, aumenta a quantidade de OH⁻ e deixa o pH acima de 7. Bases fortes são escorregadias ao tato e corrosivas.",
       "example": "Hidróxido de sódio (soda cáustica), amônia, leite de magnésia.",
-      "related": ["acido", "base-forte", "hidroxido", "ph", "neutralizacao"], "source": { "ref": "atkins-jones", "topic": "Glossário: base; Brønsted base", "pages": "B3, B5" } },
-    { "id": "acido-forte", "term": "Ácido forte", "aliases": ["ácidos fortes"],
+      "related": [
+        "acido",
+        "base-forte",
+        "hidroxido",
+        "ph",
+        "neutralizacao"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: base; Brønsted base",
+        "pages": "B3, B5"
+      }
+    },
+    {
+      "id": "acido-forte",
+      "term": "Ácido forte",
+      "aliases": [
+        "ácidos fortes"
+      ],
       "definition": "Ácido que se separa COMPLETAMENTE em íons na água: todas as moléculas doam o seu H⁺. São poucos: clorídrico, nítrico, sulfúrico (o primeiro H⁺), bromídrico, iodídrico, perclórico e clórico.",
       "example": "HCl(aq) quase não tem moléculas de HCl: só H₃O⁺ e Cl⁻.",
-      "related": ["acido", "acido-fraco"], "source": { "ref": "atkins-jones", "topic": "Glossário: strong acids and bases (ver Tabela J.1)", "pages": "B27" } },
-    { "id": "acido-fraco", "term": "Ácido fraco", "aliases": ["ácidos fracos"],
+      "related": [
+        "acido",
+        "acido-fraco"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: strong acids and bases (ver Tabela J.1)",
+        "pages": "B27"
+      }
+    },
+    {
+      "id": "acido-fraco",
+      "term": "Ácido fraco",
+      "aliases": [
+        "ácidos fracos"
+      ],
       "definition": "Ácido que só se separa em íons em pequena parte: a maioria das moléculas continua inteira na água. A maioria dos ácidos é fraca.",
       "example": "No vinagre, só cerca de 1 em cada 100 moléculas de ácido acético está ionizada.",
-      "related": ["acido", "acido-forte"], "source": { "ref": "atkins-jones", "topic": "Glossário: weak acids and bases", "pages": "B29" } },
-    { "id": "base-forte", "term": "Base forte", "aliases": ["bases fortes"],
+      "related": [
+        "acido",
+        "acido-forte"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: weak acids and bases",
+        "pages": "B29"
+      }
+    },
+    {
+      "id": "base-forte",
+      "term": "Base forte",
+      "aliases": [
+        "bases fortes"
+      ],
       "definition": "Base totalmente 'ativa' em água: os hidróxidos e óxidos dos grupos 1 e 2 (a partir do cálcio), que fornecem muitos íons OH⁻.",
       "example": "NaOH, KOH, Ca(OH)₂, Ba(OH)₂.",
-      "related": ["base", "base-fraca", "hidroxido"], "source": { "ref": "atkins-jones", "topic": "Glossário: strong acids and bases (ver Tabela J.1)", "pages": "B27" } },
-    { "id": "base-fraca", "term": "Base fraca", "aliases": ["bases fracas"],
+      "related": [
+        "base",
+        "base-fraca",
+        "hidroxido"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: strong acids and bases (ver Tabela J.1)",
+        "pages": "B27"
+      }
+    },
+    {
+      "id": "base-fraca",
+      "term": "Base fraca",
+      "aliases": [
+        "bases fracas"
+      ],
       "definition": "Base que só aceita prótons em pequena parte quando está em água.",
       "example": "A amônia (NH₃): em água, quase tudo continua como moléculas de NH₃.",
-      "related": ["base", "base-forte"], "source": { "ref": "atkins-jones", "topic": "Glossário: weak acids and bases", "pages": "B29" } },
-    { "id": "sal", "term": "Sal", "aliases": ["sais"],
+      "related": [
+        "base",
+        "base-forte"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: weak acids and bases",
+        "pages": "B29"
+      }
+    },
+    {
+      "id": "sal",
+      "term": "Sal",
+      "aliases": [
+        "sais"
+      ],
       "definition": "Composto iônico — em especial o que se forma junto com a água na neutralização de um ácido por uma base: o cátion vem da base e o ânion vem do ácido.",
       "example": "NaCl (sal de cozinha), K₂SO₄, CaCO₃.",
-      "related": ["composto-ionico", "neutralizacao"], "source": { "ref": "atkins-jones", "topic": "Glossário: salt", "pages": "B24" } },
-    { "id": "hidroxido", "term": "Hidróxido", "aliases": ["hidróxidos"],
+      "related": [
+        "composto-ionico",
+        "neutralizacao"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: salt",
+        "pages": "B24"
+      }
+    },
+    {
+      "id": "hidroxido",
+      "term": "Hidróxido",
+      "aliases": [
+        "hidróxidos"
+      ],
       "definition": "Composto iônico com o ânion OH⁻. Os hidróxidos de metais são bases; os dos grupos 1 e 2 são bases fortes.",
       "example": "NaOH (soda cáustica), Ca(OH)₂ (cal hidratada), Mg(OH)₂ (leite de magnésia).",
-      "related": ["base", "base-forte"], "source": { "ref": "atkins-jones", "topic": "Seção J.2 e Tabela J.1: hidróxidos como bases fortes", "pages": "F74–F75" } },
-    { "id": "oxido-basico", "term": "Óxido básico", "aliases": ["óxidos básicos"],
+      "related": [
+        "base",
+        "base-forte"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Seção J.2 e Tabela J.1: hidróxidos como bases fortes",
+        "pages": "F74–F75"
+      }
+    },
+    {
+      "id": "oxido-basico",
+      "term": "Óxido básico",
+      "aliases": [
+        "óxidos básicos"
+      ],
       "definition": "Óxido de metal que se comporta como base: reage com ácidos formando sal e água, e os dos grupos 1 e 2 reagem com água formando hidróxidos.",
       "example": "CaO + H₂O → Ca(OH)₂; MgO + 2 HCl → MgCl₂ + H₂O.",
-      "related": ["oxido-acido", "anfotero", "base"], "source": { "ref": "atkins-jones", "topic": "Glossário: basic oxide", "pages": "B3" } },
-    { "id": "oxido-acido", "term": "Óxido ácido", "aliases": ["óxidos ácidos"],
+      "related": [
+        "oxido-acido",
+        "anfotero",
+        "base"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: basic oxide",
+        "pages": "B3"
+      }
+    },
+    {
+      "id": "oxido-acido",
+      "term": "Óxido ácido",
+      "aliases": [
+        "óxidos ácidos"
+      ],
       "definition": "Óxido de ametal que reage com água formando um ácido, e com bases formando sal e água.",
       "example": "CO₂ + H₂O ⇌ H₂CO₃; CO₂ + 2 NaOH → Na₂CO₃ + H₂O.",
-      "related": ["oxido-basico", "acido"], "source": { "ref": "atkins-jones", "topic": "Glossário: acidic oxide", "pages": "B1" } },
-    { "id": "anfotero", "term": "Anfótero", "aliases": ["anfóteros", "anfótera", "anfóteras"],
+      "related": [
+        "oxido-basico",
+        "acido"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: acidic oxide",
+        "pages": "B1"
+      }
+    },
+    {
+      "id": "anfotero",
+      "term": "Anfótero",
+      "aliases": [
+        "anfóteros",
+        "anfótera",
+        "anfóteras"
+      ],
       "definition": "Que reage tanto com ácidos quanto com bases.",
       "example": "Alumínio e óxido de alumínio: dissolvem em ácido clorídrico e também em soda cáustica.",
-      "related": ["anfiprotico", "oxido-basico"], "source": { "ref": "atkins-jones", "topic": "Glossário: amphoteric", "pages": "B2" } },
-    { "id": "anfiprotico", "term": "Anfiprótico", "aliases": ["anfipróticos", "anfiprótica"],
+      "related": [
+        "anfiprotico",
+        "oxido-basico"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: amphoteric",
+        "pages": "B2"
+      }
+    },
+    {
+      "id": "anfiprotico",
+      "term": "Anfiprótico",
+      "aliases": [
+        "anfipróticos",
+        "anfiprótica"
+      ],
       "definition": "Que pode tanto doar quanto aceitar um próton (H⁺).",
       "example": "A água e o íon bicarbonato (HCO₃⁻).",
-      "related": ["anfotero", "acido", "base"], "source": { "ref": "atkins-jones", "topic": "Glossário: amphiprotic", "pages": "B2" } },
-    { "id": "ion-hidronio", "term": "Íon hidrônio (H₃O⁺)", "aliases": ["íon hidrônio", "hidrônio"],
+      "related": [
+        "anfotero",
+        "acido",
+        "base"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: amphiprotic",
+        "pages": "B2"
+      }
+    },
+    {
+      "id": "ion-hidronio",
+      "term": "Íon hidrônio (H₃O⁺)",
+      "aliases": [
+        "íon hidrônio",
+        "hidrônio"
+      ],
       "definition": "Uma molécula de água que recebeu um próton: H₃O⁺. É a forma real do 'H⁺' em água.",
       "example": "HCl + H₂O → H₃O⁺ + Cl⁻.",
-      "related": ["acido", "ph"], "source": { "ref": "atkins-jones", "topic": "Glossário: hydronium ion", "pages": "B14" } },
-    { "id": "ph", "term": "pH", "aliases": [],
+      "related": [
+        "acido",
+        "ph"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: hydronium ion",
+        "pages": "B14"
+      }
+    },
+    {
+      "id": "ph",
+      "term": "pH",
+      "aliases": [],
       "definition": "Escala que mede a acidez de uma solução aquosa. pH 7 é neutro (água pura a 25 °C), abaixo de 7 é ácido, acima é básico. Cada unidade a menos = 10 vezes mais H₃O⁺.",
       "example": "Suco de limão: pH ≈ 2. Água sanitária: pH ≈ 12.",
-      "related": ["acido", "base", "indicador", "ion-hidronio"], "source": { "ref": "atkins-jones", "topic": "Glossário: pH", "pages": "B21" } },
-    { "id": "indicador", "term": "Indicador", "aliases": ["indicadores"],
+      "related": [
+        "acido",
+        "base",
+        "indicador",
+        "ion-hidronio"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: pH",
+        "pages": "B21"
+      }
+    },
+    {
+      "id": "indicador",
+      "term": "Indicador",
+      "aliases": [
+        "indicadores"
+      ],
       "definition": "Substância que muda de cor conforme o meio fica ácido ou básico.",
       "example": "Tornassol (vermelho em ácido, azul em base) e o suco de repolho roxo.",
-      "related": ["ph"], "source": { "ref": "atkins-jones", "topic": "Glossário: indicator", "pages": "B14" } },
-    { "id": "alcali", "term": "Álcali", "aliases": ["álcalis", "alcalina", "alcalino", "alcalinas"],
-      "exclude": ["metal alcalino", "metais alcalinos", "alcalino-terroso", "alcalino-terrosos", "bateria alcalina", "baterias alcalinas", "pilhas alcalinas"],
+      "related": [
+        "ph"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: indicator",
+        "pages": "B14"
+      }
+    },
+    {
+      "id": "alcali",
+      "term": "Álcali",
+      "aliases": [
+        "álcalis",
+        "alcalina",
+        "alcalino",
+        "alcalinas"
+      ],
+      "exclude": [
+        "metal alcalino",
+        "metais alcalinos",
+        "alcalino-terroso",
+        "alcalino-terrosos",
+        "bateria alcalina",
+        "baterias alcalinas",
+        "pilhas alcalinas"
+      ],
       "definition": "Solução aquosa de uma base forte. 'Alcalino' quer dizer básico.",
       "example": "NaOH dissolvido em água.",
-      "related": ["base-forte"], "source": { "ref": "atkins-jones", "topic": "Glossário: alkali", "pages": "B2" } },
-    { "id": "energia-de-ativacao", "term": "Energia de ativação", "aliases": [],
+      "related": [
+        "base-forte"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: alkali",
+        "pages": "B2"
+      }
+    },
+    {
+      "id": "energia-de-ativacao",
+      "term": "Energia de ativação",
+      "aliases": [],
       "definition": "A energia mínima necessária para uma reação começar — uma 'ladeira' que os reagentes precisam subir antes de a reação descer e liberar energia.",
       "example": "Hidrogênio e oxigênio misturados não reagem até receberem uma faísca.",
-      "related": ["catalisador", "exotermica"], "source": { "ref": "atkins-jones", "topic": "Glossário: activation energy", "pages": "B1" } },
-    { "id": "catalisador", "term": "Catalisador", "aliases": ["catalisadores", "catálise"],
+      "related": [
+        "catalisador",
+        "exotermica"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: activation energy",
+        "pages": "B1"
+      }
+    },
+    {
+      "id": "catalisador",
+      "term": "Catalisador",
+      "aliases": [
+        "catalisadores",
+        "catálise"
+      ],
       "definition": "Substância que acelera uma reação sem ser consumida: oferece um caminho com energia de ativação menor. No fim, está igual ao começo.",
       "example": "A enzima catalase do sangue decompõe a água oxigenada; o ferro acelera a síntese da amônia.",
-      "related": ["energia-de-ativacao"], "source": { "ref": "atkins-jones", "topic": "Glossário: catalyst", "pages": "B5" } },
-    { "id": "exotermica", "term": "Exotérmica", "aliases": ["exotérmico", "exotérmicas", "libera calor", "liberam calor"],
+      "related": [
+        "energia-de-ativacao"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: catalyst",
+        "pages": "B5"
+      }
+    },
+    {
+      "id": "exotermica",
+      "term": "Exotérmica",
+      "aliases": [
+        "exotérmico",
+        "exotérmicas",
+        "libera calor",
+        "liberam calor"
+      ],
       "definition": "Reação ou processo que LIBERA calor para o ambiente: a vizinhança esquenta.",
       "example": "Combustões; a cal virgem com água.",
-      "related": ["endotermica", "calor"], "source": { "ref": "atkins-jones", "topic": "Glossário: exothermic process", "pages": "B11" } },
-    { "id": "endotermica", "term": "Endotérmica", "aliases": ["endotérmico", "endotérmicas", "absorve calor"],
+      "related": [
+        "endotermica",
+        "calor"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: exothermic process",
+        "pages": "B11"
+      }
+    },
+    {
+      "id": "endotermica",
+      "term": "Endotérmica",
+      "aliases": [
+        "endotérmico",
+        "endotérmicas",
+        "absorve calor"
+      ],
       "definition": "Reação ou processo que ABSORVE calor do ambiente: precisa de aquecimento constante, ou a vizinhança esfria.",
       "example": "A decomposição do calcário em cal virgem, que só acontece num forno.",
-      "related": ["exotermica", "calor"], "source": { "ref": "atkins-jones", "topic": "Glossário: endothermic process", "pages": "B10" } },
-    { "id": "calor", "term": "Calor", "aliases": [],
+      "related": [
+        "exotermica",
+        "calor"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: endothermic process",
+        "pages": "B10"
+      }
+    },
+    {
+      "id": "calor",
+      "term": "Calor",
+      "aliases": [],
       "definition": "Energia que passa de um corpo para outro por causa da diferença de temperatura (do mais quente para o mais frio).",
       "example": "Aquecer uma reação fornece energia para vencer a energia de ativação.",
-      "related": ["exotermica", "endotermica", "energia-de-ativacao"], "source": { "ref": "atkins-jones", "topic": "Glossário: heat", "pages": "B13" } },
-    { "id": "eletrolise", "term": "Eletrólise", "aliases": [],
+      "related": [
+        "exotermica",
+        "endotermica",
+        "energia-de-ativacao"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: heat",
+        "pages": "B13"
+      }
+    },
+    {
+      "id": "eletrolise",
+      "term": "Eletrólise",
+      "aliases": [],
       "definition": "Uso de corrente elétrica para provocar uma reação que não aconteceria sozinha.",
       "example": "Separar a água em hidrogênio e oxigênio; obter sódio e cloro do sal derretido.",
-      "related": ["decomposicao", "redox"], "source": { "ref": "atkins-jones", "topic": "Glossário: electrolysis", "pages": "B10" } },
-    { "id": "mol", "term": "Mol", "aliases": [],
+      "related": [
+        "decomposicao",
+        "redox"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: electrolysis",
+        "pages": "B10"
+      }
+    },
+    {
+      "id": "mol",
+      "term": "Mol",
+      "aliases": [],
       "definition": "A unidade de 'quantidade de matéria' dos químicos: 1 mol é um pacote de 6,022 × 10²³ partículas (átomos, moléculas, íons...), assim como 1 dúzia são 12.",
       "example": "1 mol de água = 6,022 × 10²³ moléculas e pesa cerca de 18 g.",
-      "related": ["massa-molar", "constante-de-avogadro", "estequiometria"], "source": { "ref": "atkins-jones", "topic": "Glossário: mole; amount of substance", "pages": "B2, B18" } },
-    { "id": "constante-de-avogadro", "term": "Constante de Avogadro", "aliases": ["número de avogadro"],
+      "related": [
+        "massa-molar",
+        "constante-de-avogadro",
+        "estequiometria",
+        "concentracao-molar",
+        "volume-molar"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: mole; amount of substance",
+        "pages": "B2, B18"
+      }
+    },
+    {
+      "id": "constante-de-avogadro",
+      "term": "Constante de Avogadro",
+      "aliases": [
+        "número de avogadro"
+      ],
       "definition": "O número de partículas em 1 mol: 6,022 × 10²³ por mol.",
       "example": "12 g de carbono-12 contêm 6,022 × 10²³ átomos.",
-      "related": ["mol"], "source": { "ref": "atkins-jones", "topic": "Glossário: Avogadro’s constant", "pages": "B3" } },
-    { "id": "massa-molar", "term": "Massa molar (M)", "aliases": ["massa molar", "massas molares"],
+      "related": [
+        "mol"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: Avogadro’s constant",
+        "pages": "B3"
+      }
+    },
+    {
+      "id": "massa-molar",
+      "term": "Massa molar (M)",
+      "aliases": [
+        "massa molar",
+        "massas molares"
+      ],
       "definition": "A massa de 1 mol de uma substância, em gramas por mol (g/mol). Calcula-se somando as massas atômicas de todos os átomos da fórmula.",
       "example": "H₂O: 2 × 1,008 + 16,00 = 18,02 g/mol.",
-      "related": ["mol", "estequiometria"], "source": { "ref": "atkins-jones", "topic": "Glossário: molar mass", "pages": "B18" } },
-    { "id": "estequiometria", "term": "Estequiometria", "aliases": ["estequiométrica", "estequiométrico", "cálculo estequiométrico"],
+      "related": [
+        "mol",
+        "estequiometria"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: molar mass",
+        "pages": "B18"
+      }
+    },
+    {
+      "id": "estequiometria",
+      "term": "Estequiometria",
+      "aliases": [
+        "estequiométrica",
+        "estequiométrico",
+        "cálculo estequiométrico"
+      ],
       "definition": "A 'matemática das reações': a relação entre as quantidades de reagentes consumidos e de produtos formados, tirada dos coeficientes da equação balanceada.",
       "example": "Pela equação CH₄ + 2 O₂ → CO₂ + 2 H₂O, 16 g de metano formam 44 g de CO₂.",
-      "related": ["mol", "massa-molar", "coeficiente", "reagente-limitante"], "source": { "ref": "atkins-jones", "topic": "Glossário: reaction stoichiometry", "pages": "B23" } },
-    { "id": "reagente-limitante", "term": "Reagente limitante", "aliases": ["limitante", "reagentes limitantes"],
+      "related": [
+        "mol",
+        "massa-molar",
+        "coeficiente",
+        "reagente-limitante"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: reaction stoichiometry",
+        "pages": "B23"
+      }
+    },
+    {
+      "id": "reagente-limitante",
+      "term": "Reagente limitante",
+      "aliases": [
+        "limitante",
+        "reagentes limitantes"
+      ],
       "definition": "O reagente que acaba primeiro numa reação e, por isso, decide quanto produto pode se formar. O outro reagente sobra (está 'em excesso').",
       "example": "4 g de H₂ com 16 g de O₂: o O₂ acaba primeiro e sobram cerca de 2 g de H₂.",
-      "related": ["estequiometria", "rendimento-teorico"], "source": { "ref": "atkins-jones", "topic": "Glossário: limiting reactant", "pages": "B16" } },
-    { "id": "rendimento-teorico", "term": "Rendimento teórico", "aliases": [],
+      "related": [
+        "estequiometria",
+        "rendimento-teorico"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: limiting reactant",
+        "pages": "B16"
+      }
+    },
+    {
+      "id": "rendimento-teorico",
+      "term": "Rendimento teórico",
+      "aliases": [],
       "definition": "A quantidade máxima de produto que pode se formar, calculada pela estequiometria. Na prática costuma sair menos.",
       "example": "16 g de metano dão, no máximo, 44 g de CO₂.",
-      "related": ["reagente-limitante", "estequiometria"], "source": { "ref": "atkins-jones", "topic": "Glossário: theoretical yield", "pages": "B28" } },
-    { "id": "equilibrio-quimico", "term": "Equilíbrio químico", "aliases": ["equilíbrio", "reversível", "reversíveis"],
+      "related": [
+        "estequiometria",
+        "reagente-limitante",
+        "rendimento-percentual"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: theoretical yield",
+        "pages": "B28"
+      }
+    },
+    {
+      "id": "equilibrio-quimico",
+      "term": "Equilíbrio químico",
+      "aliases": [
+        "equilíbrio",
+        "reversível",
+        "reversíveis"
+      ],
       "definition": "Situação em que a reação direta e a inversa acontecem ao mesmo tempo, na mesma velocidade, e as quantidades param de mudar. Nas equações aparece com a seta dupla ⇌.",
       "example": "CO₂ + H₂O ⇌ H₂CO₃ no refrigerante.",
-      "related": ["reacao-quimica"], "source": { "ref": "atkins-jones", "topic": "Glossário: chemical equilibrium", "pages": "B6" } },
-    { "id": "propriedade-fisica", "term": "Propriedade física", "aliases": ["propriedades físicas"],
+      "related": [
+        "reacao-quimica"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: chemical equilibrium",
+        "pages": "B6"
+      }
+    },
+    {
+      "id": "propriedade-fisica",
+      "term": "Propriedade física",
+      "aliases": [
+        "propriedades físicas"
+      ],
       "definition": "Característica que se observa ou mede sem transformar a substância em outra.",
       "example": "Cor, ponto de fusão, densidade, conduzir eletricidade.",
-      "related": ["propriedade-quimica"], "source": { "ref": "atkins-jones", "topic": "Glossário: physical property", "pages": "B21" } },
-    { "id": "propriedade-quimica", "term": "Propriedade química", "aliases": ["propriedades químicas"],
+      "related": [
+        "propriedade-quimica"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: physical property",
+        "pages": "B21"
+      }
+    },
+    {
+      "id": "propriedade-quimica",
+      "term": "Propriedade química",
+      "aliases": [
+        "propriedades químicas"
+      ],
       "definition": "A capacidade de uma substância participar de reações químicas — só aparece quando ela se transforma em outra.",
       "example": "O sódio reage com água; o ouro não enferruja.",
-      "related": ["propriedade-fisica", "reacao-quimica"], "source": { "ref": "atkins-jones", "topic": "Glossário: chemical property", "pages": "B6" } }
+      "related": [
+        "propriedade-fisica",
+        "reacao-quimica"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: chemical property",
+        "pages": "B6"
+      }
+    },
+    {
+      "id": "concentracao-molar",
+      "term": "Concentração molar (mol/L)",
+      "aliases": [
+        "concentração",
+        "concentrações",
+        "molaridade",
+        "mol/l"
+      ],
+      "definition": "Quantidade de soluto, em mol, em cada litro de solução. Para saber quantos mol há numa amostra: volume (em litros) × concentração.",
+      "example": "50 mL de HCl 0,10 mol/L contêm 0,050 L × 0,10 mol/L = 0,005 mol de HCl.",
+      "related": [
+        "mol",
+        "solucao",
+        "soluto"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: molar concentration; molarity (seção G.3)",
+        "pages": "B18"
+      }
+    },
+    {
+      "id": "volume-molar",
+      "term": "Volume molar",
+      "aliases": [
+        "volumes molares"
+      ],
+      "definition": "Volume ocupado por 1 mol de uma substância. Para gases, quase não depende de qual gás: cerca de 22,4 L a 0 °C e 1 atm, e cerca de 24,5 L a 25 °C e 1 atm.",
+      "example": "1 mol de CO2 a 25 °C ocupa uns 24,5 L — mais ou menos um garrafão de água grande.",
+      "related": [
+        "mol",
+        "lei-dos-gases",
+        "gas"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: molar volume (e seção 4.4, p. 140)",
+        "pages": "B18"
+      }
+    },
+    {
+      "id": "lei-dos-gases",
+      "term": "Lei dos gases ideais",
+      "aliases": [
+        "gás ideal",
+        "gases ideais",
+        "pv = nrt"
+      ],
+      "definition": "A relação PV = nRT entre pressão (P), volume (V), quantidade em mol (n) e temperatura (T) de um gás. Os gases reais seguem essa lei cada vez melhor quanto menor a pressão.",
+      "example": "Com ela se calcula que 1 mol de gás a 25 °C e 1 atm ocupa cerca de 24,5 L.",
+      "related": [
+        "volume-molar",
+        "gas"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: ideal gas law (seção 4.5)",
+        "pages": "B14"
+      }
+    },
+    {
+      "id": "rendimento-percentual",
+      "term": "Rendimento percentual",
+      "aliases": [
+        "rendimento",
+        "rendimentos"
+      ],
+      "definition": "Quanto do produto se conseguiu de verdade, em porcentagem do máximo possível (rendimento teórico): obtido ÷ teórico × 100%.",
+      "example": "Se a conta prevê 18,8 g de CO2 e saem 17,5 g, o rendimento é 93%.",
+      "related": [
+        "rendimento-teorico",
+        "estequiometria"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: percentage yield (seção M.1)",
+        "pages": "B21"
+      }
+    },
+    {
+      "id": "alcool",
+      "term": "Álcool",
+      "aliases": [
+        "álcoois"
+      ],
+      "definition": "Composto orgânico com um grupo –OH ligado a um carbono (que não faz parte de um grupo C=O nem de um anel aromático).",
+      "example": "Etanol (C2H5OH), o álcool das bebidas e do combustível; metanol (CH3OH).",
+      "related": [
+        "composto-organico"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: alcohol",
+        "pages": "B1"
+      }
+    },
+    {
+      "id": "radical",
+      "term": "Radical",
+      "aliases": [
+        "radicais"
+      ],
+      "definition": "Átomo, molécula ou íon com pelo menos um elétron desemparelhado. Por isso costuma ser muito reativo.",
+      "example": "O monóxido de nitrogênio, NO: tem um número ímpar de elétrons.",
+      "related": [
+        "eletron",
+        "ligacao-covalente"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: radical",
+        "pages": "B23"
+      }
+    }
   ]
 }

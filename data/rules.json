@@ -2,17 +2,16 @@
   "_meta": {
     "description": "Motor de regras da Fase 2. A lógica está em src/core/rules/reaction-rules.js; aqui ficam os textos (com marcadores {assim}), as fontes e os padrões de segurança. Uma reação gerada por regra é sempre balanceada automaticamente e conferida pelos mesmos testes das curadas. O motor só afirma 'reage' ou 'não reage' quando a regra é sólida; fora disso devolve 'unknown' explicando o porquê.",
     "acidos": "strongAcids: Tabela J.1 (Atkins & Jones, p. F75). oxidizingAcids: atacam metais pelo ânion, não só pelo H⁺, e saem da regra 'metal + ácido'. weakAcidSkip: ácidos que a regra não usa com metais e carbonatos.",
-    "waterReactiveBelow": "metais com E° abaixo deste valor reagem com a água fria (grupo 1, Ca, Sr, Ba): numa solução, eles atacam a água antes de deslocar outro metal",
-    "passivated": "metais protegidos por uma película de óxido que ácidos fracos não removem",
-    "depositMinE0": "um metal com E° abaixo deste valor não se deposita a partir de solução aquosa: a água é reduzida antes (por isso Al e Mg não são 'deslocados' de seus sais em água)"
+    "coldWaterReactive": "metais que reagem com a água fria, segundo Atkins & Jones: todo o grupo 1 (p. 621) e Ca, Sr, Ba (p. 625; o Mg só com água quente, o Be nem ao rubro). Numa solução, eles atacam a água antes de deslocar outro metal.",
+    "passivated": "metais protegidos por uma película de óxido: alumínio (p. 629) e berílio (p. 625). Ácidos fracos não a removem.",
+    "depositMinE0": "um metal com E° abaixo deste valor não se deposita a partir de solução aquosa, porque a água é reduzida antes. Base: a pH 7, reduzir a água exige −0,41 V e, havendo duas espécies redutíveis, reduz-se a de potencial maior (p. 544); a sobretensão do H2 (cerca de 0,6 V, p. 543) é o que ainda permite depositar zinco (−0,76 V). −1,0 V é uma estimativa que separa Zn/Fe (depositam) de Al/Mg/Be (não depositam)."
   },
   "strongAcids": ["HCl", "HNO3", "H2SO4"],
   "oxidizingAcids": ["HNO3"],
   "weakAcidSkip": ["H2CO3"],
-  "waterReactiveBelow": -2.5,
+  "coldWaterReactive": ["Li", "Na", "K", "Rb", "Cs", "Ca", "Sr", "Ba"],
   "passivated": ["Al", "Be"],
-  "weakAcidMaxE0": -0.4,
-  "depositMinE0": -0.8,
+  "depositMinE0": -1.0,
   "carbonateDecomposition": ["Mg^2+", "Ca^2+"],
   "amphotericMetals": ["Al", "Zn", "Be"],
   "netIonicNote": "Os íons espectadores (iguais dos dois lados) foram cancelados; ácidos fortes e compostos iônicos solúveis aparecem separados em íons.",
@@ -115,6 +114,15 @@
       "source": { "ref": "atkins-jones", "topic": "Seção 15.8: o OH⁻ converte HCO3⁻ em CO3²⁻ (amaciamento da água com cal)", "pages": "627", "justification": "HCO3⁻(aq) + OH⁻(aq) → CO3²⁻(aq) + H2O(l)." },
       "safety": { "level": "cuidado", "why": "O hidróxido é corrosivo.", "home": "Não faça em casa com hidróxidos de laboratório." }
     },
+    "metal-cloro": {
+      "types": ["sintese"], "tags": ["redox", "exotermica"],
+      "name": "{metal} + cloro",
+      "conditionNote": "Em demonstrações, o metal costuma ser levemente aquecido para começar; depois a reação se mantém sozinha.",
+      "explanation": "O {metal} entrega o seu único elétron de valência a um átomo de cloro: formam-se íons {cation} e Cl⁻, que se juntam num cristal de {salt}.",
+      "why": "Todo metal alcalino (grupo 1) tem 1 elétron de valência e o perde fácil; o cloro (grupo 17) precisa de 1 elétron. Como no sal de cozinha, o produto é um cloreto de fórmula MCl.",
+      "source": { "ref": "atkins-jones", "topic": "Seção 15.5: os metais alcalinos reagem diretamente com quase todos os ametais", "pages": "621", "justification": "2 M(s) + Cl2(g) → 2 MCl(s) para M do grupo 1." },
+      "safety": { "level": "perigo", "why": "O cloro é um gás tóxico e os metais alcalinos reagem violentamente; a reação libera muito calor e luz.", "home": "Não faça em casa em nenhuma hipótese." }
+    },
     "decomposicao-carbonato": {
       "types": ["decomposicao"], "tags": ["endotermica"],
       "name": "Aquecendo {carbonate}",
@@ -182,7 +190,7 @@
       "kind": "unknown",
       "title": "{metal} reage com base forte",
       "reason": "O {metal} é anfótero: além de reagir com ácidos, dissolve-se em soluções de bases fortes como o {b}, liberando hidrogênio e formando um íon complexo (para o berílio, Be(OH)4²⁻; para o alumínio, Al(OH)4⁻). Por isso a série de reatividade sozinha não decide aqui, e a equação não está na base.",
-      "source": { "ref": "atkins-jones", "topic": "Seções 11.3 e 15.8: metais e óxidos anfóteros (Be + 2 OH⁻ + 2 H2O → Be(OH)4²⁻ + H2)", "pages": "429, 626", "justification": "Be e Al são anfóteros e reagem com bases fortes." }
+      "source": { "ref": "atkins-jones", "topic": "Seções 11.3, 15.8 e 16.4: metais anfóteros (Be + 2 OH⁻ + 2 H2O → Be(OH)4²⁻ + H2; Zn + 2 OH⁻ + 2 H2O → [Zn(OH)4]²⁻ + H2)", "pages": "429, 626, 679", "justification": "Be, Al e Zn são anfóteros e reagem com bases fortes liberando hidrogênio." }
     },
     "reage-com-agua": {
       "kind": "unknown",

@@ -4,9 +4,9 @@
 import { html, raw, esc, TYPE_LABEL } from './dom.js';
 import { formatFormulaHTML } from '../core/formula.js';
 import { resolveSide, checkConservation, formatEquationHTML } from '../core/equation.js';
-import { molarMass } from '../core/formula.js';
+import { molarMass, formatFormulaText } from '../core/formula.js';
 import { mountReactionStage, mountBounceStage } from './reaction-stage.js';
-import { stoichiometry } from '../core/stoichiometry.js';
+import { stoichiometry, percentYield } from '../core/stoichiometry.js';
 
 let stopStage = () => {};
 
@@ -59,21 +59,30 @@ function conservationHTML(data, reactants, products) {
     </details>`;
 }
 
-/** Calculadora de estequiometria (seções L e M de Atkins & Jones). */
-function calculatorHTML(data, reactants) {
+/** Calculadora de estequiometria (seções G, L e M de Atkins & Jones; gases pela lei dos gases ideais). */
+function calculatorHTML(data, reactants, products) {
+  const unitOptions = (sp) =>
+    [['g', 'g'], ['mol', 'mol'], ...(sp.state === 'g' ? [['L', 'L de gás']] : []), ...(sp.state === 'aq' ? [['sol', 'mL de solução']] : [])]
+      .map(([v, t]) => `<option value="${v}">${t}</option>`)
+      .join('');
   const inputs = reactants
     .map((sp) => {
       const m = molarMass(sp.formula, data.atomicMasses);
-      return html`<label class="calc-in"><span>${raw(formatFormulaHTML(sp.formula))}</span>
-        <input type="number" min="0" step="any" inputmode="decimal" data-calc="${sp.id}" placeholder="g" aria-label="Massa de ${sp.formula} em gramas">
-        <span class="small muted">g (M = ${fmtNum(m)} g/mol)</span></label>`;
+      return html`<div class="calc-in" data-row="${sp.id}"><span class="calc-name">${raw(formatFormulaHTML(sp.formula))}</span>
+        <input type="number" min="0" step="any" inputmode="decimal" data-calc="${sp.id}" aria-label="Quantidade de ${sp.formula}">
+        <select data-unit="${sp.id}" aria-label="Unidade de ${sp.formula}">${raw(unitOptions(sp))}</select>
+        <span class="calc-conc" hidden>× <input type="number" min="0" step="any" inputmode="decimal" data-conc="${sp.id}" aria-label="Concentração de ${sp.formula} em mol/L"> mol/L</span>
+        <span class="small muted">M = ${fmtNum(m)} g/mol</span></div>`;
     })
     .join('');
+  const yieldOpts = products.map((sp) => `<option value="${esc(sp.id)}">${esc(formatFormulaText(sp.formula))}</option>`).join('');
   return html`<details class="stoich-calc">
       <summary>Calculadora: quanto de produto sai?</summary>
-      <p class="small">Digite a massa de um reagente (o outro fica "de sobra") ou de dois, para descobrir o <strong>reagente limitante</strong>. A conta: gramas → mol (÷ massa molar) → razão dos coeficientes → mol → gramas.</p>
+      <p class="small">Informe um reagente (o outro fica "de sobra") ou dois, para descobrir o <strong>reagente limitante</strong>. Massa: mol = g ÷ massa molar. Gás (25 °C, 1 atm): mol = L ÷ 24,47. Solução: mol = L × mol/L.</p>
       <div class="calc-inputs">${raw(inputs)}</div>
       <div class="calc-out small muted" aria-live="polite">Os resultados aparecem aqui.</div>
+      <div class="calc-yield small">Rendimento: obtive <input type="number" min="0" step="any" inputmode="decimal" data-actual aria-label="Massa obtida em gramas"> g de
+        <select data-actual-id aria-label="Produto">${raw(yieldOpts)}</select> <span class="calc-yield-out"></span></div>
     </details>`;
 }
 
@@ -81,28 +90,51 @@ function mountCalculator(root, data, reaction) {
   const box = root.querySelector('.stoich-calc');
   if (!box) return;
   const out = box.querySelector('.calc-out');
+  const yOut = box.querySelector('.calc-yield-out');
   const f = (n) => (n >= 100 ? n.toFixed(1) : n.toFixed(2)).replace('.', ',');
-  box.addEventListener('input', () => {
+  const num = (el) => parseFloat(String(el?.value ?? '').replace(',', '.'));
+  let last = null;
+  const update = () => {
     const given = {};
     box.querySelectorAll('[data-calc]').forEach((i) => {
-      const v = parseFloat(i.value.replace(',', '.'));
-      if (Number.isFinite(v) && v >= 0) given[i.dataset.calc] = v;
+      const id = i.dataset.calc;
+      const unit = box.querySelector(`[data-unit="${CSS.escape(id)}"]`).value;
+      box.querySelector(`[data-row="${CSS.escape(id)}"] .calc-conc`).hidden = unit !== 'sol';
+      const v = num(i);
+      if (!Number.isFinite(v) || v < 0) return;
+      if (unit === 'sol') {
+        const c = num(box.querySelector(`[data-conc="${CSS.escape(id)}"]`));
+        if (Number.isFinite(c) && c >= 0) given[id] = { mL: v, M: c };
+      } else given[id] = unit === 'g' ? { g: v } : unit === 'mol' ? { mol: v } : { L: v };
     });
     if (!Object.keys(given).length) {
       out.textContent = 'Os resultados aparecem aqui.';
+      yOut.textContent = '';
+      last = null;
       return;
     }
     const res = stoichiometry(reaction, data, given);
+    last = res;
     const name = (id) => formatFormulaHTML(data.substancesById.get(id).formula);
-    const rows = res.products.map((p) => `<tr><td>${name(p.id)}</td><td>${f(p.mol)} mol</td><td><strong>${f(p.grams)} g</strong></td></tr>`).join('');
+    const rows = res.products
+      .map((p) => `<tr><td>${name(p.id)}</td><td>${f(p.mol)} mol</td><td><strong>${f(p.grams)} g</strong>${p.liters !== null ? ` · ${f(p.liters)} L` : ''}</td></tr>`)
+      .join('');
     const used = res.reactants
       .map((r) => `<tr><td>${name(r.id)}</td><td>${f(r.used / r.molarMass)} mol</td><td>${f(r.used)} g usados${r.left ? ` · sobram ${f(r.left)} g` : r.given === null ? ' (necessários)' : ''}</td></tr>`)
       .join('');
     out.innerHTML =
       (res.limiting ? `<p><strong>Reagente limitante:</strong> ${name(res.limiting)} — ele acaba primeiro e decide quanto produto sai.</p>` : '') +
-      `<table class="calc-table"><thead><tr><th>Produto</th><th>Quantidade</th><th>Massa</th></tr></thead><tbody>${rows}</tbody></table>` +
+      `<table class="calc-table"><thead><tr><th>Produto</th><th>Quantidade</th><th>Massa (e volume, se gás)</th></tr></thead><tbody>${rows}</tbody></table>` +
       `<table class="calc-table"><thead><tr><th>Reagente</th><th>Quantidade</th><th>Massa</th></tr></thead><tbody>${used}</tbody></table>`;
-  });
+    const actual = num(box.querySelector('[data-actual]'));
+    const p = res.products.find((x) => x.id === box.querySelector('[data-actual-id]').value);
+    const pct = Number.isFinite(actual) && p ? percentYield(actual, p.grams) : NaN;
+    yOut.textContent = Number.isFinite(pct)
+      ? `→ ${f(pct)}% do teórico (${f(p.grams)} g)${pct > 100 ? ' — acima de 100%: a massa medida deve conter impurezas ou água, ou a conta tem algum erro.' : ''}`
+      : '';
+  };
+  box.addEventListener('input', update);
+  box.addEventListener('change', update);
 }
 
 const itemLabel = (data, id) => {
@@ -146,7 +178,7 @@ export function renderResult(root, data, result, { newSubstances = [] } = {}) {
         ${raw(r.safety.home ? `<p><strong>Em casa?</strong> ${esc(r.safety.home)}</p>` : '')}
       </aside>
       ${raw(conservationHTML(data, reactants, products))}
-      ${raw(calculatorHTML(data, reactants))}
+      ${raw(calculatorHTML(data, reactants, products))}
       ${raw(r.generated ? '<p class="small muted rule-note">⚙️ Esta reação não está na lista conferida uma a uma: o motor de regras escolheu os produtos por uma regra geral (fonte abaixo) e calculou os coeficientes pelo balanceamento automático. Os testes do jogo conferem átomos, cargas e estados de todas as reações que as regras podem gerar.</p>' : '')}
       ${raw(sourceHTML(data, r.source))}`;
     mountStage(root, (el) => mountReactionStage(el, data, r));

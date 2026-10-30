@@ -8,7 +8,7 @@ import { loadData } from './helpers.js';
 import { resolveSide, checkConservation, sideMass, hasMinimalCoefficients } from '../src/core/equation.js';
 
 const data = loadData();
-const TYPES = ['sintese', 'decomposicao', 'simples_troca', 'dupla_troca', 'combustao', 'acido_base'];
+const TYPES = ['sintese', 'decomposicao', 'simples_troca', 'dupla_troca', 'combustao', 'acido_base', 'oxirreducao'];
 const STATES = ['s', 'l', 'g', 'aq'];
 const SAFETY = ['seguro', 'cuidado', 'perigo'];
 
@@ -74,6 +74,7 @@ for (const r of data.reactions) {
       if (r.types.includes('decomposicao')) assert.equal(r.reactants.length, 1, 'decomposição tem 1 reagente');
       if (r.types.includes('sintese')) assert.equal(r.products.length, 1, 'síntese tem 1 produto');
       if (r.types.includes('combustao')) assert.ok(r.reactants.some((e) => e.id === 'O2'), 'combustão usa O2');
+      if (r.types.includes('oxirreducao')) assert.ok(r.tags.includes('redox'), 'oxirredução precisa da tag redox');
       if (r.types.includes('simples_troca')) {
         const elementais = (side) => side.filter((e) => data.substancesById.get(e.id).elementOf).length;
         assert.ok(elementais(r.reactants) >= 1 && elementais(r.products) >= 1, 'simples troca: um elemento entra e outro sai');

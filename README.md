@@ -5,12 +5,12 @@ faísca, luz, eletricidade, catalisador) e vê **reações químicas reais**, co
 o porquê, a conservação de átomos e massa, os riscos de segurança e a fonte para conferir num
 livro-texto. Quando não há reação, o jogo diz isso e explica o motivo.
 
-**Fases 1 e 2 concluídas.** 25 elementos jogáveis (os 118 aparecem na tabela), 41 compostos
-curados e mais 81 gerados a partir de íons, 38 reações curadas, 17 "não-reações" curadas e um
+**Fases 1 e 2 concluídas.** 25 elementos jogáveis (os 118 aparecem na tabela), 44 compostos
+curados e mais 81 gerados a partir de íons, 41 reações curadas, 17 "não-reações" curadas e um
 **motor de regras** que monta e balanceia sozinho cerca de 750 reações a partir de regras gerais
 (solubilidade, ácido-base, série eletroquímica, combustão, decomposição), com explicação, fonte e
-segurança. Há também uma calculadora de estequiometria, 11 níveis de progressão em duas fases e um
-**glossário** com mais de 100 termos: nos textos, as palavras de química ficam sublinhadas e mostram a
+segurança. Há também uma calculadora de estequiometria (massa, mol, litros de gás, solução em
+mol/L e rendimento), 12 níveis de progressão em duas fases e um **glossário** com mais de 120 termos: nos textos, as palavras de química ficam sublinhadas e mostram a
 definição ao toque.
 
 ## Como rodar
@@ -52,7 +52,7 @@ O que os testes garantem (são ~530 verificações):
 - **O jogo pode ser concluído**: um jogador simulado passa por todos os níveis usando só o que
   já está desbloqueado em cada um (testando todos os pares de substâncias e respondendo às
   perguntas de estequiometria).
-- **Balanceamento automático** reproduz os coeficientes de todas as 38 reações curadas e recusa
+- **Balanceamento automático** reproduz os coeficientes de todas as reações curadas e recusa
   equações impossíveis ou ambíguas.
 - **Motor de regras**: onde uma regra se aplica a uma reação curada, ela dá exatamente os mesmos
   produtos e coeficientes; nunca contradiz uma não-reação curada; e uma varredura de TODOS os
@@ -128,13 +128,16 @@ progresso). As regras de `src/core/rules/reaction-rules.js`:
 | CO2 + hidróxido → carbonato + água | 2 NaOH + CO2 | 11.3, p. 428 |
 | bicarbonato + hidróxido → carbonato | NaHCO3 + NaOH | 15.8, p. 627 |
 | decomposição de carbonatos de Mg e Ca | MgCO3 → MgO + CO2 | 15.7–15.8, p. 624–627 |
-| combustão completa de compostos de C, H (e O) | (para combustíveis futuros) | H e M, p. F64 e F95 |
+| metal alcalino + cloro → cloreto | 2 K + Cl2 → 2 KCl | 15.5, p. 621 |
+| combustão completa de compostos de C, H (e O) | C2H5OH + 3 O2, C3H8 + 5 O2 | H e M, p. F64 e F95; etanol, p. 270 |
 
-E as exceções que viram `unknown` em vez de uma equação errada: Ag⁺ + OH⁻ (forma Ag2O), NH4⁺ +
-OH⁻ (forma NH3), carbonatos de Cu²⁺, Fe³⁺ e Al³⁺ (não existem), metais anfóteros (Al, Zn, Be) em
-base forte, ácido nítrico com metais (oxidante: forma NO/NO2), metais do grupo 1 e Ca/Sr/Ba em
-soluções de sais (atacam a água primeiro), Al e Mg que não se depositam a partir de água,
-compostos pouco solúveis, misturas de ácidos com o nítrico (água régia, mistura sulfonítrica).
+E as exceções que viram `unknown` em vez de uma equação errada, quase todas com a página do livro
+na própria explicação: Ag⁺ + OH⁻ forma Ag2O (p. 389; com NaOH é a reação curada `agno3-naoh`),
+NH4⁺ + OH⁻ forma NH3 (p. 425), carbonatos de Cu²⁺ e Zn²⁺ são básicos (p. 677–679), Fe³⁺ e Al³⁺ são
+cátions ácidos (p. 450), bicarbonatos sólidos só do grupo 1 e NH4⁺ (p. 351), metais anfóteros em
+base forte (p. 429, 626, 679), ácido nítrico com metais (o caso Cu + HNO3 diluído da p. 519 é
+curado), metais que atacam a água fria — grupo 1, Ca, Sr, Ba (p. 621, 625) —, Al e Mg que não se
+depositam a partir de água (p. 543–544), compostos pouco solúveis, água régia e mistura sulfonítrica.
 
 ## Como adicionar conteúdo
 
@@ -173,7 +176,7 @@ revise uma amostra das equações geradas.
 
 **Novo nível/objetivo**: em `progression.json` (cada nível tem `phase`). Tipos de objetivo:
 `produce`, `produceCategory`, `reactionType`, `nonReaction`, `reaction` e `stoich` (pergunta de
-estequiometria; a resposta certa é calculada). O teste de progressão avisa se um objetivo ficar
+estequiometria em g, mol, L de gás, solução ou rendimento; a resposta certa é calculada). O teste de progressão avisa se um objetivo ficar
 impossível. Inserir um nível no meio muda os índices dos saves: suba `STATE_VERSION` em
 `src/core/progression.js`; saves antigos são migrados refazendo o caminho pelo histórico.
 

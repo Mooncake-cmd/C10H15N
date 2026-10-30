@@ -14,7 +14,9 @@
 import { setKey, isMetal } from '../data.js';
 import { balance, BalanceError } from '../balancer.js';
 import { solubility, pairProblem, pairKey } from '../ions.js';
-import { parseFormula } from '../formula.js';
+import { parseFormula, formatFormulaText } from '../formula.js';
+
+const formatIon = formatFormulaText;
 
 const fmtV = (v) => `${v > 0 ? '+' : v < 0 ? '−' : ''}${Math.abs(v).toFixed(2).replace('.', ',')} V`;
 const fill = (tpl, vars) => (tpl ?? '').replace(/\{(\w+)\}/g, (m, k) => (k in vars ? vars[k] : m));
@@ -170,12 +172,14 @@ export function createRules(data) {
     return reaction;
   }
 
-  function outcome(id, vars = {}) {
+  function outcome(id, vars = {}, source = null) {
     const o = R.outcomes[id];
     const res = { kind: o.kind, reasonId: `rule:${id}`, title: cap(fill(o.title, vars)), reason: fill(o.reason, vars) };
-    if (o.source) res.source = o.source;
+    if (source ?? o.source) res.source = source ?? o.source;
     return res;
   }
+  /** "Não forma o composto esperado", com a página do livro quando a exceção tem fonte. */
+  const anomalyOutcome = (expected, problem) => outcome('anomalia', { expected, why: problem.why }, problem.source ?? null);
 
   // ---------- Regras para pares ----------
   const OH = 'OH-';
@@ -207,15 +211,15 @@ export function createRules(data) {
       if (!m) return null;
       if (isOxidizingAcid(acid)) return outcome('acido-oxidante', { acid: short(acid), metal: short(other) });
       if (m.E0 >= 0) return null; // "não reage" fica com a regra da série de reatividade
-      if (!isStrongAcid(acid) && (R.weakAcidSkip.includes(acid.id) || m.E0 > R.weakAcidMaxE0 || R.passivated.includes(other.elementOf))) {
+      if (!isStrongAcid(acid) && (R.weakAcidSkip.includes(acid.id) || R.passivated.includes(other.elementOf))) {
         return outcome('acido-fraco-metal', { acid: short(acid), metal: short(other) });
       }
       const problem = pairProblem(m.cation, aio.anion, ions);
       if (problem?.outOfCatalog) return null;
-      if (problem) return outcome('anomalia', { expected: `um sal de ${short(other)}`, why: problem.why });
+      if (problem) return anomalyOutcome(`um sal de ${short(other)}`, problem);
       const salt = compound(m.cation, aio.anion);
       if (!salt) return null;
-      const danger = m.E0 < R.waterReactiveBelow;
+      const danger = R.coldWaterReactive.includes(other.elementOf);
       return build('metal-acido', [other, acid], [salt, sub('H2')], { ...vars, metal: short(other), cation: cationInfo(m.cation)?.name ?? m.cation, salt: short(salt), saltState: stateText(salt), E0: fmtV(m.E0) }, danger ? { safetyLevel: 'perigo', safetyWhy: fill(R.rules['metal-acido'].dangerWhy, { metal: short(other) }) } : {});
     }
 
@@ -233,7 +237,7 @@ export function createRules(data) {
     if (R.weakAcidSkip.includes(acid.id) && (oio.anion === OH || oio.anion === O2m)) return null; // H2CO3: carbonato ou bicarbonato, conforme as proporções
     if (oio.anion === OH) {
       const { salt, problem } = saltFor(oio.cation);
-      if (problem) return outcome('anomalia', { expected: `um sal de ${cationInfo(oio.cation).name}`, why: problem.why });
+      if (problem) return anomalyOutcome(`um sal de ${cationInfo(oio.cation).name}`, problem);
       if (!salt) return null;
       return build('neutralizacao', [acid, other], [salt, sub('H2O')], { ...vars, base: short(other), salt: short(salt), saltState: stateText(salt), cation: cationInfo(oio.cation).name, anion: ions.anionsByFormula.get(aio.anion).name });
     }
@@ -241,14 +245,14 @@ export function createRules(data) {
       const cat = cationInfo(oio.cation);
       if (!isStrongAcid(acid) && ![1, 2].includes(cat.group)) return outcome('oxido-acido-fraco', { oxide: short(other), acid: short(acid) });
       const { salt, problem } = saltFor(oio.cation);
-      if (problem) return outcome('anomalia', { expected: `um sal de ${cat.name}`, why: problem.why });
+      if (problem) return anomalyOutcome(`um sal de ${cat.name}`, problem);
       if (!salt) return null;
       return build('acido-oxido', [other, acid], [salt, sub('H2O')], { ...vars, oxide: short(other), salt: short(salt), saltState: stateText(salt) });
     }
     if (oio.anion === 'CO3^2-' || oio.anion === 'HCO3-') {
       if (R.weakAcidSkip.includes(acid.id)) return null;
       const { salt, problem } = saltFor(oio.cation);
-      if (problem) return outcome('anomalia', { expected: `um sal de ${cationInfo(oio.cation).name}`, why: problem.why });
+      if (problem) return anomalyOutcome(`um sal de ${cationInfo(oio.cation).name}`, problem);
       if (!salt) return null;
       return build('acido-carbonato', [other, acid], [salt, sub('H2O'), sub('CO2')], { ...vars, carbonate: short(other), salt: short(salt), saltState: stateText(salt) });
     }
@@ -279,7 +283,7 @@ export function createRules(data) {
       }
       const problem = pairProblem(c, an, ions);
       const anomaly = ions.anomaliesByPair.get(pairKey(c, an));
-      if (problem || anomaly) return outcome('anomalia', { expected: `${cationInfo(c).name} com ${ions.anionsByFormula.get(an).name}`, why: (problem ?? anomaly).why });
+      if (problem || anomaly) return anomalyOutcome(`${cationInfo(c).name} com ${ions.anionsByFormula.get(an).name}`, problem ?? anomaly);
       const s = compound(c, an);
       if (!s) return null;
       products.push({ sub: s, sol: solubility(c, an, ions) });
@@ -306,11 +310,11 @@ export function createRules(data) {
     if (!m || !c || m.metal === c.metal || m.E0 >= c.E0) return null; // fica com a regra da série
     if (solOf(salt)?.result === 'insoluble') return outcome('reagente-insoluvel', { a: short(salt) });
     if (solOf(salt)?.result !== 'soluble') return null;
-    if (m.E0 < R.waterReactiveBelow) return outcome('reage-com-agua', { metal: short(metal), E0: fmtV(m.E0), salt0: short(salt) });
+    if (R.coldWaterReactive.includes(metal.elementOf)) return outcome('reage-com-agua', { metal: short(metal), E0: fmtV(m.E0), salt0: short(salt) });
     if (c.E0 < R.depositMinE0) return outcome('nao-deposita', { metal: short(metal), otherMetal: short(data.elementalBySymbol.get(c.metal) ?? metal), E0b: fmtV(c.E0) });
     const problem = pairProblem(m.cation, io.anion, ions);
     if (problem?.outOfCatalog) return null;
-    if (problem) return outcome('anomalia', { expected: `um sal de ${short(metal)}`, why: problem.why });
+    if (problem) return anomalyOutcome(`um sal de ${short(metal)}`, problem);
     const newSalt = compound(m.cation, io.anion);
     const freed = data.elementalBySymbol.get(c.metal);
     if (!newSalt || !freed) return null;
@@ -326,6 +330,15 @@ export function createRules(data) {
       const fuel = a.id === 'O2' ? b : a;
       if (isOrganicFuel(fuel)) return build('combustao', [fuel, sub('O2')], [sub('CO2'), sub('H2O')], { fuel: short(fuel), Fuel: cap(short(fuel)) });
       return null;
+    }
+
+    // Metal alcalino + cloro → cloreto (seção 15.5)
+    if (a.id === 'Cl2' || b.id === 'Cl2') {
+      const m = a.id === 'Cl2' ? b : a;
+      const cation = isMetal(m) ? ions.cationsByFormula.get(series.get(m.elementOf)?.cation) : null;
+      if (cation?.group !== 1) return null;
+      const salt = compound(cation.formula, 'Cl-');
+      return salt ? build('metal-cloro', [m, sub('Cl2')], [salt], { metal: short(m), cation: formatIon(cation.formula), salt: short(salt) }, { productStates: { [salt.id]: 's' } }) : null;
     }
 
     if (isAcid(a)) return acidPlus(a, b);

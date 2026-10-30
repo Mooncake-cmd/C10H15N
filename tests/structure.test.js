@@ -82,3 +82,10 @@ test('animação: em toda reação, cada átomo dos reagentes casa com um dos pr
     match.forEach((m, i) => assert.equal(left.atoms[i].el, right.atoms[m].el, `${r.id}: elemento trocado`));
   }
 });
+
+test('radicais: só passam marcados, e com exatamente um elétron desemparelhado', () => {
+  const s = (atoms, bonds, radical) => ({ atoms: atoms.map(([el, x, y, charge = 0]) => ({ el, x, y, charge })), bonds: bonds.map(([a, b, order]) => ({ a, b, order })), ...(radical ? { radical } : {}) });
+  assert.deepEqual(checkStructure(s([['N', -0.55, 0], ['O', 0.55, 0]], [[0, 1, 2]], true), 'NO'), []);
+  assert.notDeepEqual(checkStructure(s([['N', -0.55, 0], ['O', 0.55, 0]], [[0, 1, 2]], false), 'NO'), [], 'sem a marca de radical, N com 2 ligações é erro');
+  assert.notDeepEqual(checkStructure(s([['N', -0.55, 0], ['O', 0.55, 0]], [[0, 1, 1]], true), 'NO'), [], 'dois átomos "faltando" ligação não é um radical simples');
+});

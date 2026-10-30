@@ -3,7 +3,7 @@
     "description": "Base curada de reações da Fase 1. Para adicionar uma reação, acrescente um objeto à lista 'reactions' e rode 'npm test': os testes conferem conservação de átomos e de carga (equação completa e iônica), se todas as substâncias e condições existem, se há fonte/justificativa e se reações perigosas explicam o perigo.",
     "fields": {
       "reactants/products": "lista de { id (de substances.json), coef (inteiro ≥ 1), state? (s/l/g/aq — sobrescreve o estado padrão da substância) }",
-      "types": "um ou mais de: sintese, decomposicao, simples_troca, dupla_troca, combustao, acido_base",
+      "types": "um ou mais de: sintese, decomposicao, simples_troca, dupla_troca, combustao, acido_base, oxirreducao (transferência de elétrons que não se encaixa nos outros tipos, ex.: metal + ácido oxidante)",
       "tags": "marcadores livres: redox, precipitacao, neutralizacao, exotermica, endotermica, reversivel, efervescencia, cotidiano",
       "conditions": "lista de requisitos; cada requisito é uma lista de ids de items.json dos quais BASTA UM (ex.: [[\"calor\",\"faisca\"]] = calor OU faísca). Lista vazia = acontece só de misturar.",
       "netIonic": "opcional: equação iônica líquida, com fórmulas (e cargas) explícitas. Também é testada.",
@@ -729,6 +729,83 @@
         "ref": "brown",
         "topic": "Reações ácido-base; antiácidos",
         "justification": "Mg(OH)2(s) + 2 HCl(aq) → MgCl2(aq) + 2 H2O(l) é o exemplo usual de antiácido de hidróxido metálico pouco solúvel.", "seeAlso": [{ "ref": "atkins-jones", "topic": "Seção 15.8: leite de magnésia, Mg(OH)2, como antiácido", "pages": "626" }]
+      }
+    },
+    {
+      "id": "agno3-naoh",
+      "name": "Nitrato de prata + hidróxido de sódio: óxido de prata",
+      "reactants": [{ "id": "AgNO3", "coef": 2, "state": "aq" }, { "id": "NaOH", "coef": 2, "state": "aq" }],
+      "products": [{ "id": "Ag2O", "coef": 1, "state": "s" }, { "id": "NaNO3", "coef": 2, "state": "aq" }, { "id": "H2O", "coef": 1 }],
+      "types": ["dupla_troca"],
+      "tags": ["precipitacao"],
+      "conditions": [],
+      "explanation": "Aparece um precipitado marrom-escuro: óxido de prata, Ag₂O — e não 'hidróxido de prata'.",
+      "why": "Pela simples troca de parceiros, esperaríamos AgOH. Mas o hidróxido de prata não é estável: os íons Ag⁺ e OH⁻ formam direto o óxido, liberando água (2 Ag⁺ + 2 OH⁻ → Ag₂O + H₂O). É um bom exemplo de que as regras gerais têm exceções — e de por que o jogo só afirma o que tem fonte.",
+      "netIonic": {
+        "reactants": [{ "formula": "Ag+", "coef": 2, "state": "aq" }, { "formula": "OH-", "coef": 2, "state": "aq" }],
+        "products": [{ "formula": "Ag2O", "coef": 1, "state": "s" }, { "formula": "H2O", "coef": 1, "state": "l" }],
+        "note": "Na⁺ e NO₃⁻ são íons espectadores."
+      },
+      "safety": {
+        "level": "cuidado",
+        "why": "O nitrato de prata mancha a pele de preto e é corrosivo; o hidróxido de sódio é corrosivo.",
+        "home": "Não faça em casa: são reagentes de laboratório."
+      },
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Autoteste 10.3A: 2 AgNO3(aq) + 2 NaOH(aq) ⇌ Ag2O(s) + 2 NaNO3(aq) + H2O(l)",
+        "pages": "389",
+        "justification": "O livro dá a equação da reação do nitrato de prata com o hidróxido de sódio, que forma Ag2O."
+      }
+    },
+    {
+      "id": "mgoh2-calor",
+      "name": "Aquecendo leite de magnésia",
+      "reactants": [{ "id": "Mg(OH)2", "coef": 1 }],
+      "products": [{ "id": "MgO", "coef": 1 }, { "id": "H2O", "coef": 1, "state": "g" }],
+      "types": ["decomposicao"],
+      "tags": ["endotermica"],
+      "conditions": [["calor"]],
+      "explanation": "Aquecido, o hidróxido de magnésio perde água e vira óxido de magnésio puro, um pó branco.",
+      "why": "Os íons OH⁻ se combinam dois a dois: um vira água e o outro deixa um O²⁻ no sólido (2 OH⁻ → O²⁻ + H₂O). É assim que se prepara MgO puro, já que queimar magnésio no ar dá MgO misturado com nitreto de magnésio.",
+      "safety": {
+        "level": "cuidado",
+        "why": "Exige aquecimento forte; o vapor e o sólido quente queimam.",
+        "home": "Não faça em casa."
+      },
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Seção 15.8: para preparar MgO puro, aquece-se o hidróxido ou o carbonato",
+        "pages": "626",
+        "justification": "Mg(OH)2(s) → MgO(s) + H2O(g) por aquecimento."
+      }
+    },
+    {
+      "id": "cu-hno3",
+      "name": "Cobre no ácido nítrico diluído",
+      "reactants": [{ "id": "Cu", "coef": 3 }, { "id": "HNO3", "coef": 8 }],
+      "products": [{ "id": "Cu(NO3)2", "coef": 3, "state": "aq" }, { "id": "NO", "coef": 2 }, { "id": "H2O", "coef": 4 }],
+      "types": ["oxirreducao"],
+      "tags": ["redox"],
+      "conditions": [],
+      "conditionNote": "Com ácido nítrico concentrado os produtos mudam; esta é a reação com o ácido diluído.",
+      "explanation": "O cobre se dissolve e a solução fica azul (íons Cu²⁺), soltando bolhas de um gás incolor, o NO — que fica castanho ao encontrar o ar.",
+      "why": "O cobre não reage com ácido clorídrico: ele não consegue reduzir o H⁺ (E° = +0,34 V). Mas o íon nitrato, em meio ácido, é um oxidante muito mais forte que o H⁺: ele rouba os elétrons do cobre e é reduzido a NO, em vez de sair hidrogênio. Por isso o ácido nítrico é chamado de ácido OXIDANTE. Os coeficientes saem do balanceamento: 3 Cu cedem 6 elétrons, que 2 NO₃⁻ recebem.",
+      "netIonic": {
+        "reactants": [{ "formula": "Cu", "coef": 3, "state": "s" }, { "formula": "H+", "coef": 8, "state": "aq" }, { "formula": "NO3-", "coef": 2, "state": "aq" }],
+        "products": [{ "formula": "Cu^2+", "coef": 3, "state": "aq" }, { "formula": "NO", "coef": 2, "state": "g" }, { "formula": "H2O", "coef": 4, "state": "l" }],
+        "note": "Dos 8 NO₃⁻ do ácido, 6 são espectadores (ficam no nitrato de cobre) e 2 são reduzidos a NO."
+      },
+      "safety": {
+        "level": "perigo",
+        "why": "O ácido nítrico é muito corrosivo, e o NO formado é tóxico; no ar ele vira NO2, um gás castanho que ataca os pulmões.",
+        "home": "Não faça em casa em nenhuma hipótese: exige capela de exaustão."
+      },
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Autoteste 13.1A: o cobre reage com ácido nítrico diluído formando nitrato de cobre(II) e óxido nítrico, NO",
+        "pages": "519",
+        "justification": "O livro dá reagentes e produtos; os coeficientes (3, 8 → 3, 2, 4) vêm do balanceamento automático e são conferidos pelos testes."
       }
     },
     {

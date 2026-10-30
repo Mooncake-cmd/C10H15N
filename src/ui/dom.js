@@ -21,6 +21,7 @@ export const TYPE_LABEL = {
   dupla_troca: 'Dupla troca',
   combustao: 'Combustão',
   acido_base: 'Ácido-base',
+  oxirreducao: 'Oxirredução',
 };
 
 export const FAMILY_LABEL = {

@@ -8,7 +8,7 @@
       "reactionType": "{ reactionType, withReactant? } — fazer uma reação daquele tipo (opcionalmente usando um reagente específico)",
       "nonReaction": "{ reasonId } — tentar uma combinação que não reage e ver o porquê. reasonId é o id em non-reactions.json ou 'rule:<id>' de uma regra genérica",
       "reaction": "{ reaction } — fazer uma reação específica (id de reactions.json, ou 'gen:A+B' de uma reação gerada por regra); útil quando o produto já pode ter sido obtido por outro caminho",
-      "stoich": "{ reaction, given: { idDoReagente: gramas }, ask: idDoProduto | 'limiting' } — pergunta de estequiometria; a resposta certa é calculada (tolerância de 2%)"
+      "stoich": "{ reaction, given: { idDoReagente: medida }, ask: idDoProduto | 'limiting' | 'yield', unit?: 'g' | 'mol' | 'L', actual?: { id, g } } — pergunta de estequiometria; a resposta certa é calculada (tolerância de 2%). medida: gramas, { mol }, { L } de gás (25 °C, 1 atm) ou { mL, M } de solução"
     }
   },
   "levels": [
@@ -188,7 +188,28 @@
           "text": "Com 4,0 g de H₂ e 16,0 g de O₂, qual reagente acaba primeiro?",
           "hint": "Calcule quantos mol de cada um você tem e compare com a proporção 2 H2 : 1 O2." }
       ],
-      "lesson": "Estequiometria em três passos: gramas → mol (÷ massa molar), mol → mol (razão dos coeficientes), mol → gramas (× massa molar). Com dois reagentes, o que acaba primeiro é o LIMITANTE: ele decide quanto produto sai, e o outro sobra. Você concluiu a Fase 2!"
+      "lesson": "Estequiometria em três passos: gramas → mol (÷ massa molar), mol → mol (razão dos coeficientes), mol → gramas (× massa molar). Com dois reagentes, o que acaba primeiro é o LIMITANTE: ele decide quanto produto sai, e o outro sobra."
+    },
+    {
+      "id": "n11",
+      "phase": 2,
+      "title": "Combustíveis, soluções e gases",
+      "intro": "Nem tudo se mede em gramas: gases se medem em litros, soluções em mililitros e concentração (mol/L). E a química dos combustíveis mostra como a estequiometria vira conta do dia a dia. Novos: etanol e propano (o gás de botijão).",
+      "unlocks": { "substances": ["C2H5OH", "C3H8"] },
+      "objectives": [
+        { "id": "n11-etanol", "type": "reactionType", "reactionType": "combustao", "withReactant": "C2H5OH", "text": "Queime etanol, o combustível dos carros a álcool",
+          "hint": "Combustível + oxigênio + uma faísca." },
+        { "id": "n11-litros", "type": "stoich", "reaction": "gen:C3H8+O2", "given": { "C3H8": { "mol": 1 } }, "ask": "CO2", "unit": "L",
+          "text": "Queimando 1 mol de propano, quantos litros de CO₂ saem (a 25 °C e 1 atm)?",
+          "hint": "A equação diz quantos mol de CO2 saem de 1 mol de C3H8. Cada mol de gás ocupa cerca de 24,5 L a 25 °C e 1 atm." },
+        { "id": "n11-solucao", "type": "stoich", "reaction": "hcl-naoh", "given": { "HCl": { "mL": 50, "M": 0.1 } }, "ask": "NaCl",
+          "text": "50 mL de ácido clorídrico 0,10 mol/L são neutralizados por NaOH. Quantos gramas de sal se formam?",
+          "hint": "mol = volume em litros × concentração: 0,050 L × 0,10 mol/L. Depois, a razão da equação e a massa molar do NaCl (58,44 g/mol)." },
+        { "id": "n11-rendimento", "type": "stoich", "reaction": "caco3-calor", "given": { "CaCO3": 42.73 }, "ask": "yield", "actual": { "id": "CO2", "g": 17.5 },
+          "text": "Aquecendo 42,73 g de calcário, obtiveram-se 17,5 g de CO₂. Qual foi o rendimento (em %)?",
+          "hint": "Calcule quanto CO2 sairia no máximo (rendimento teórico) e divida o obtido por ele." }
+      ],
+      "lesson": "Gás: mol = litros ÷ volume molar (cerca de 24,5 L/mol a 25 °C e 1 atm). Solução: mol = litros × concentração (mol/L). Rendimento = obtido ÷ teórico × 100%: na prática quase sempre sai menos do que a conta prevê. Você concluiu a Fase 2!"
     }
   ]
 }
