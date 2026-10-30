@@ -1,4 +1,4 @@
-# Elementar — instruções para o Claude
+# C10H15N — instruções para o Claude
 
 Jogo educativo de química 2D para navegador, no estilo crafting (parecido com Little Alchemy): o
 jogador junta substâncias e ferramentas e vê reações químicas reais, com equação balanceada e

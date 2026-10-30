@@ -1,4 +1,4 @@
-# Elementar — jogo educativo de química
+# C10H15N — jogo educativo de química
 
 Jogo 2D de navegador no estilo *crafting*: você junta elementos, compostos e ferramentas (calor,
 faísca, luz, eletricidade, catalisador) e vê **reações químicas reais**, com a equação balanceada,
