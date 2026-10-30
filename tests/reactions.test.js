@@ -86,6 +86,11 @@ for (const r of data.reactions) {
       assert.ok(data.sources[r.source?.ref], `fonte desconhecida: ${r.source?.ref}`);
       assert.ok(r.source.topic?.length > 3, 'falta source.topic');
       assert.ok(r.source.justification?.length > 10, 'falta source.justification');
+      assert.ok(!data.complementarySources.includes(r.source.ref), `${r.source.ref} é só leitura complementar: a fonte principal precisa ser um livro-texto`);
+      for (const sa of r.source.seeAlso ?? []) {
+        assert.ok(data.sources[sa.ref], `seeAlso com fonte desconhecida: ${sa.ref}`);
+        assert.ok(sa.topic?.length > 3, 'seeAlso sem topic');
+      }
     });
 
     test('segurança: nível válido e, se houver risco, explica o porquê e o "em casa"', () => {

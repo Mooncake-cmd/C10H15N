@@ -5,6 +5,21 @@ import { html, raw, esc, TYPE_LABEL } from './dom.js';
 import { formatFormulaHTML } from '../core/formula.js';
 import { resolveSide, checkConservation, formatEquationHTML } from '../core/equation.js';
 import { molarMass } from '../core/formula.js';
+import { mountReactionStage, mountBounceStage } from './reaction-stage.js';
+
+let stopStage = () => {};
+
+/** Monta a animação no placeholder [data-stage]; um erro aqui nunca derruba o painel. */
+function mountStage(root, mount) {
+  const el = root.querySelector('[data-stage]');
+  if (!el) return;
+  try {
+    stopStage = mount(el);
+  } catch (err) {
+    console.warn('Animação indisponível:', err);
+    el.remove();
+  }
+}
 
 const SAFETY_LABEL = { seguro: '✅ Seguro', cuidado: '⚠️ Cuidado', perigo: '☠️ Perigo' };
 const fmtNum = (n, d = 2) => n.toFixed(d).replace('.', ',');
@@ -13,7 +28,8 @@ function sourceHTML(data, source) {
   if (!source) return '';
   const ref = data.sources[source.ref];
   return html`<footer class="source"><strong>Fonte:</strong> ${ref ?? source.ref}${raw(source.topic ? ` — <em>${esc(source.topic)}</em>` : '')}.
-    ${raw(source.justification ? `<br><span class="muted">${esc(source.justification)}</span>` : '')}</footer>`;
+    ${raw(source.justification ? `<br><span class="muted">${esc(source.justification)}</span>` : '')}
+    ${raw((source.seeAlso ?? []).map((sa) => `<br><span class="small">Veja também: ${esc(data.sources[sa.ref] ?? sa.ref)}${sa.topic ? ` — <em>${esc(sa.topic)}</em>` : ''}${sa.pages ? `, p. ${esc(sa.pages)}` : ''}.</span>`).join(''))}</footer>`;
 }
 
 function conservationHTML(data, reactants, products) {
@@ -48,6 +64,8 @@ const itemLabel = (data, id) => {
 };
 
 export function renderResult(root, data, result, { newSubstances = [] } = {}) {
+  stopStage();
+  stopStage = () => {};
   root.classList.remove('kind-reaction', 'kind-needs-condition', 'kind-no-reaction', 'kind-unknown', 'kind-invalid');
   root.classList.add(`kind-${result.kind}`);
 
@@ -62,6 +80,7 @@ export function renderResult(root, data, result, { newSubstances = [] } = {}) {
       <div class="badges">${raw(r.types.map((t) => `<span class="badge type-${t}">${TYPE_LABEL[t]}</span>`).join(''))}</div>
       <div class="equation" aria-label="Equação balanceada">${raw(formatEquationHTML(reactants, products, { reversible: r.reversible }))}</div>
       ${raw(conds ? `<p class="small muted">Condição: ${esc(conds)}</p>` : '')}
+      <div class="stage" data-stage></div>
       ${raw(newSubstances.length ? `<p class="discovered">✨ Nova descoberta: ${newSubstances.map((s) => `<strong>${esc(s.name)}</strong> (${formatFormulaHTML(s.formula)})`).join(', ')}</p>` : '')}
       <p>${r.explanation}</p>
       <h3>Por quê?</h3>
@@ -81,6 +100,7 @@ export function renderResult(root, data, result, { newSubstances = [] } = {}) {
       </aside>
       ${raw(conservationHTML(data, reactants, products))}
       ${raw(sourceHTML(data, r.source))}`;
+    mountStage(root, (el) => mountReactionStage(el, data, r));
     return;
   }
 
@@ -91,9 +111,11 @@ export function renderResult(root, data, result, { newSubstances = [] } = {}) {
       <p class="result-kicker">Quase!</p>
       <h2>Essas substâncias reagem, mas falta algo</h2>
       <p>Adicione à bancada: <strong>${missing.join(' + ')}</strong>.</p>
+      <div class="stage" data-stage></div>
       <h3>Por quê?</h3>
       <p>Muitas reações não começam sozinhas, mesmo liberando energia depois. É preciso vencer uma "barreira" inicial, a <strong>energia de ativação</strong> — ou baixá-la com um catalisador.</p>
       <ul class="small">${raw(desc.map((it) => `<li><strong>${esc(it.icon)} ${esc(it.name)}:</strong> ${esc(it.description)}</li>`).join(''))}</ul>`;
+    mountStage(root, (el) => mountBounceStage(el, data, result.substanceIds, 'needs-condition'));
     return;
   }
 
@@ -101,9 +123,11 @@ export function renderResult(root, data, result, { newSubstances = [] } = {}) {
   root.innerHTML = html`
     <p class="result-kicker">${kicker}</p>
     <h2>${result.title}</h2>
+    ${raw(result.kind === 'no-reaction' ? '<div class="stage" data-stage></div>' : '')}
     <p>${result.reason}</p>
     ${raw(result.kind === 'unknown' ? '<p class="small muted">O jogo só afirma que algo reage (ou não) quando tem uma reação conferida com fonte ou uma regra química sólida.</p>' : '')}
     ${raw(sourceHTML(data, result.source))}`;
+  if (result.kind === 'no-reaction') mountStage(root, (el) => mountBounceStage(el, data, result.substanceIds, 'no-reaction'));
 }
 
 export function renderWelcome(root) {

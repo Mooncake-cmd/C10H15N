@@ -3,14 +3,14 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Elementar — jogo de química</title>
+  <title>C10H15N — jogo de química</title>
   <meta name="description" content="Combine elementos e compostos, veja reações químicas reais com equação balanceada e entenda o porquê.">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚗️</text></svg>">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
   <header class="topbar">
-    <div class="brand"><span class="logo" aria-hidden="true">⚗️</span><span>Elementar</span></div>
+    <div class="brand"><span class="logo" aria-hidden="true">⚗️</span><span>C10H15N</span></div>
     <div class="level">
       <span id="level-name">Carregando…</span>
       <div class="progress" role="progressbar" aria-label="Progresso da Fase 1" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div id="progress-bar"></div></div>
@@ -21,6 +21,8 @@
   <p id="app-error" class="app-error" hidden></p>
 
   <main class="layout">
+    <!-- Inventário e objetivos ficam "grudados" ao rolar só dentro desta área, nunca sobre a tabela. -->
+    <div class="workspace">
     <section id="objectives-panel" class="panel objectives-panel" aria-label="Objetivos">
       <div id="objectives"></div>
     </section>
@@ -50,6 +52,7 @@
       </div>
       <article id="result" class="panel result" aria-live="polite"></article>
     </section>
+    </div>
 
     <section id="periodic-table" class="panel periodic" aria-label="Tabela periódica">
       <div class="panel-head"><h2>Tabela periódica</h2><span class="muted small">Clique para ver detalhes · duplo clique coloca na bancada</span></div>

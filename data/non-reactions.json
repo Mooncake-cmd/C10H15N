@@ -110,6 +110,13 @@
       "source": { "ref": "brown", "topic": "Regras de solubilidade (haletos)", "justification": "Cloretos são solúveis, exceto os de Ag⁺, Hg2²⁺ e Pb²⁺." }
     },
     {
+      "id": "nr-be-h2o",
+      "substances": ["Be", "H2O"],
+      "title": "Berílio não reage com água",
+      "reason": "O berílio é o 'rebelde' do grupo 2. Seus 2 elétrons de valência estão na 2ª camada, muito perto do núcleo, e arrancá-los custa bem mais energia que nos vizinhos de baixo. Além disso, a superfície do metal fica coberta por uma película finíssima e aderente de óxido (BeO), que isola o metal da água. Resultado: nem água fria nem água quente atacam o berílio, enquanto o magnésio reage com vapor e o cálcio com água fria.",
+      "source": { "ref": "greenwood", "topic": "Berílio: propriedades químicas; comportamento anômalo no grupo 2", "justification": "O Be é passivado por uma camada de BeO e não reage com água em condições usuais, ao contrário de Mg, Ca, Sr e Ba." }
+    },
+    {
       "id": "nr-nacl-cl2",
       "substances": ["NaCl", "Cl2"],
       "title": "NaCl + Cl2: nada a ganhar",

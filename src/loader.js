@@ -10,6 +10,7 @@ const FILES = {
   progression: 'progression.json',
   sources: 'sources.json',
   reactivitySeries: 'reactivity-series.json',
+  structures: 'structures.json',
 };
 
 export async function loadGameData(base = './data/') {

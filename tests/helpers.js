@@ -16,6 +16,7 @@ export function loadRaw() {
     progression: read('progression.json'),
     sources: read('sources.json'),
     reactivitySeries: read('reactivity-series.json'),
+    structures: read('structures.json'),
   };
 }
 

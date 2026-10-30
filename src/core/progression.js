@@ -4,7 +4,9 @@
 // Extensão: novos tipos de objetivo entram em OBJECTIVE_CHECKS (ex.: Fase 2 — "produza 10 g de
 // NaCl" com estequiometria; Fase 3 — missões com várias etapas).
 
-export const STATE_VERSION = 1;
+export const STATE_VERSION = 2;
+// v1 → v2: um nível novo (metais alcalino-terrosos) entrou no meio da Fase 1, então o
+// levelIndex salvo deixou de valer. A migração refaz o caminho a partir do histórico.
 
 export function initialState(data) {
   const state = {
@@ -54,6 +56,7 @@ const OBJECTIVE_CHECKS = {
       return r.types.includes(o.reactionType) && (!o.withReactant || r.reactants.some((e) => e.id === o.withReactant));
     }),
   nonReaction: (o, h) => h.nonReactionsSeen.has(o.reasonId),
+  reaction: (o, h) => h.reactionsDone.has(o.reaction),
 };
 
 export function isObjectiveDone(objective, state, data) {
@@ -130,15 +133,28 @@ export function unlockLevelMap(data) {
 
 /** Valida/migra um estado salvo; devolve null se inválido. */
 export function restoreState(saved, data) {
-  if (!saved || saved.version !== STATE_VERSION) return null;
-  if (typeof saved.levelIndex !== 'number' || saved.levelIndex >= data.progression.levels.length) return null;
+  if (!saved || ![1, STATE_VERSION].includes(saved.version)) return null;
+  if (typeof saved.levelIndex !== 'number' || saved.levelIndex < 0) return null;
   const known = (arr, has) => (Array.isArray(arr) ? arr.filter(has) : []);
-  return {
-    ...initialState(data),
-    ...saved,
+  const history = {
     produced: known(saved.produced, (id) => data.substancesById.has(id)),
     reactionsDone: known(saved.reactionsDone, (id) => data.reactionsById.has(id)),
     nonReactionsSeen: known(saved.nonReactionsSeen, () => true),
     completedObjectives: known(saved.completedObjectives, () => true),
   };
+  if (saved.version === STATE_VERSION) {
+    if (saved.levelIndex >= data.progression.levels.length) return null;
+    return { ...initialState(data), ...saved, ...history };
+  }
+  return replayHistory(history, data);
+}
+
+/**
+ * Reconstrói o estado a partir do histórico (o que o jogador já fez), recomeçando do nível 1:
+ * os níveis cujos objetivos o histórico já cumpre são concluídos de novo, com seus desbloqueios,
+ * e o jogador para no primeiro nível com objetivo pendente.
+ */
+function replayHistory(history, data) {
+  const start = { ...initialState(data), ...history, completedObjectives: [] };
+  return applyResult(start, { kind: 'invalid' }, data).state;
 }

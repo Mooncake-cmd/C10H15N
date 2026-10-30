@@ -8,6 +8,8 @@ import { formatFormulaHTML } from './core/formula.js';
 import { renderPeriodicTable } from './ui/periodic-table.js';
 import { renderResult, renderWelcome } from './ui/result-panel.js';
 import { $, html, raw, esc, mainCategory } from './ui/dom.js';
+import { displayStructure } from './core/structure.js';
+import { structureSVG } from './ui/structure-svg.js';
 
 const SAVE_KEY = 'elementar:v1';
 const MAX_SUBSTANCES = 4;
@@ -62,6 +64,17 @@ async function main() {
     onPick: addToBench,
   });
 
+  // ---------- Desenhos das substâncias (cacheados: não mudam durante o jogo) ----------
+  const svgCache = new Map();
+  function substanceSVG(s, size) {
+    const key = `${s.id}|${size}`;
+    if (!svgCache.has(key)) {
+      const struct = displayStructure(s, data);
+      svgCache.set(key, struct ? structureSVG(struct, { labels: size === 'big', className: `mol mol-${size}`, scale: size === 'big' ? 22 : 8 }) : '');
+    }
+    return svgCache.get(key);
+  }
+
   // ---------- Inventário ----------
   function renderInventory() {
     const inv = inventory(state, data);
@@ -70,7 +83,7 @@ async function main() {
       .map((id) => data.substancesById.get(id))
       .filter((s) => !filter || s.name.toLowerCase().includes(filter) || s.formula.toLowerCase().includes(filter) || (s.aka ?? []).some((a) => a.includes(filter)));
     const chip = (s) => html`<button class="chip cat-${mainCategory(s)}${raw(bench.includes(s.id) ? ' is-on-bench' : '')}${raw(lastNew.has(s.id) ? ' is-new' : '')}"
-        data-id="${s.id}" draggable="true" title="${s.description}"><span class="chip-formula">${raw(formatFormulaHTML(s.formula))}</span><span class="chip-name">${s.name}</span></button>`;
+        data-id="${s.id}" draggable="true" title="${s.description}"><span class="chip-mol">${raw(substanceSVG(s, 'icon'))}</span><span class="chip-formula">${raw(formatFormulaHTML(s.formula))}</span><span class="chip-name">${s.name}</span></button>`;
     const elementais = subs.filter((s) => s.elementOf).sort((a, b) => data.elementsBySymbol.get(a.elementOf).Z - data.elementsBySymbol.get(b.elementOf).Z);
     const compostos = subs.filter((s) => !s.elementOf).sort((a, b) => a.name.localeCompare(b.name, 'pt'));
     $('#inv-elements').innerHTML = elementais.map(chip).join('') || '<p class="muted small">—</p>';
@@ -112,7 +125,7 @@ async function main() {
           const it = data.itemsById.get(id);
           if (it) return html`${raw(plus)}<button class="chip chip-item on-bench" data-remove="${id}" title="Remover">${it.icon} ${it.name}<span class="x" aria-hidden="true">×</span></button>`;
           const s = data.substancesById.get(id);
-          return html`${raw(plus)}<button class="chip cat-${mainCategory(s)} on-bench" data-remove="${id}" title="Remover ${s.name}"><span class="chip-formula">${raw(formatFormulaHTML(s.formula))}</span><span class="chip-name">${s.name}</span><span class="x" aria-hidden="true">×</span></button>`;
+          return html`${raw(plus)}<button class="chip cat-${mainCategory(s)} on-bench" data-remove="${id}" title="Remover ${s.name}"><span class="chip-mol">${raw(substanceSVG(s, 'big'))}</span><span class="chip-text"><span class="chip-formula">${raw(formatFormulaHTML(s.formula))}</span><span class="chip-name">${s.name}</span></span><span class="x" aria-hidden="true">×</span></button>`;
         })
         .join('');
     }
