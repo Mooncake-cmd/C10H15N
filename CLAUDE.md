@@ -11,11 +11,12 @@ Detalhes de arquitetura, estrutura de pastas e "como adicionar conteúdo" estão
 - **Fase 1 (protótipo) — CONCLUÍDA**: ~20 elementos, reações curadas, tabela periódica navegável,
   inventário, bancada, painel de explicação, 8 níveis de progressão (grupos 1 e 2 ampliados com
   base no livro de divulgação DK, só como leitura complementar).
-- **Fase 2 (motor de regras) — próxima**: combinações não previstas, balanceamento automático,
-  tipos de reação (síntese, decomposição, simples troca, dupla troca, combustão, ácido-base),
-  regras de solubilidade, série de reatividade, massa molar e estequiometria básica. Os pontos de
-  extensão estão descritos no fim do README ("Roteiro").
-- **Fase 3 (avançado)**: termodinâmica e cinética, equilíbrio, moléculas 3D, introdução à química
+- **Fase 2 (motor de regras) — CONCLUÍDA**: balanceamento automático, motor de regras para
+  combinações não previstas (precipitação pela Tabela I.1, ácido-base, série eletroquímica,
+  óxidos, combustão, decomposição), compostos iônicos gerados a partir de íons, estequiometria
+  (calculadora e objetivos) e 3 níveis novos. Fonte principal das regras: Atkins & Jones,
+  *Chemical Principles*, 5. ed., com página. Detalhes no README.
+- **Fase 3 (avançado) — próxima**: termodinâmica e cinética, equilíbrio, moléculas 3D, introdução à química
   orgânica, missões e progressão mais elaborada.
 
 ## Requisitos que valem para qualquer mudança
@@ -29,6 +30,8 @@ Detalhes de arquitetura, estrutura de pastas e "como adicionar conteúdo" estão
    teste falhar — não enfraquecer testes para passar.
 3. **"Não reage" ≠ "não sei"**: o motor só afirma que algo não reage com base curada ou regra
    sólida; fora disso devolve `unknown` e no máximo sugere uma previsão, sem inventar equação.
+   Toda regra nova do motor (Fase 2+) precisa listar as exceções químicas conhecidas como
+   `unknown` e passar pela varredura de todos os pares em `tests/rules.test.js`.
 4. **Progressão pedagógica**: começar com poucos elementos, desbloquear por níveis (famílias,
    periodicidade), objetivos simples, feedback que explica o porquê. O teste de progressão
    garante que o jogo é concluível.

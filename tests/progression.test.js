@@ -5,7 +5,8 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { loadData } from './helpers.js';
 import { createEngine } from '../src/core/engine.js';
-import { initialState, applyResult, inventory, restoreState, STATE_VERSION, OBJECTIVE_TYPES } from '../src/core/progression.js';
+import { initialState, applyResult, inventory, restoreState, STATE_VERSION, OBJECTIVE_TYPES, answerObjective, stoichAnswer } from '../src/core/progression.js';
+import { lookupReaction } from '../src/core/engine.js';
 
 const data = loadData();
 const engine = createEngine(data);
@@ -26,7 +27,13 @@ test('referências da progressão existem', () => {
       assert.ok(OBJECTIVE_TYPES.includes(o.type), `${o.id}: tipo ${o.type}`);
       if (o.substance) assert.ok(data.substancesById.has(o.substance), o.id);
       if (o.withReactant) assert.ok(data.substancesById.has(o.withReactant), o.id);
-      if (o.type === 'reaction') assert.ok(data.reactionsById.has(o.reaction), o.id);
+      if (o.type === 'reaction') assert.ok(lookupReaction(data, o.reaction), o.id);
+      if (o.type === 'stoich') {
+        const r = lookupReaction(data, o.reaction);
+        assert.ok(r, `${o.id}: reação ${o.reaction}`);
+        for (const id of Object.keys(o.given)) assert.ok(r.reactants.some((e) => e.id === id), `${o.id}: ${id} não é reagente`);
+        assert.ok(o.ask === 'limiting' ? Object.keys(o.given).length > 1 : r.products.some((e) => e.id === o.ask), `${o.id}: pergunta inválida`);
+      }
       if (o.type === 'nonReaction' && !o.reasonId.startsWith('rule:')) assert.ok(nrIds.has(o.reasonId), o.id);
     }
   }
@@ -46,10 +53,14 @@ function playLevel(state) {
     changed = false;
     const inv = inventory(state, data);
     const have = new Set(inv.substances);
+    const subs = inv.substances;
     const attempts = [
       ...data.reactions.filter((r) => r.reactants.every((e) => have.has(e.id))).map((r) => [...r.reactants.map((e) => e.id), ...inv.items]),
       ...data.nonReactions.filter((n) => n.substances.every((id) => have.has(id))).map((n) => n.substances),
-      ...inv.substances.filter((id) => data.substancesById.get(id).categories.includes('gas-nobre')).map((id) => [id, 'O2']),
+      ...subs.filter((id) => data.substancesById.get(id).categories.includes('gas-nobre')).map((id) => [id, 'O2']),
+      // Fase 2: qualquer par (com e sem ferramentas), como um jogador explorando
+      ...subs.flatMap((a, i) => subs.slice(i + 1).flatMap((b) => [[a, b], [a, b, ...inv.items]])),
+      ...subs.map((a) => [a, ...inv.items]),
     ];
     for (const sel of attempts) {
       const before = JSON.stringify(state);
@@ -58,6 +69,13 @@ function playLevel(state) {
       allEvents.push(...events);
       if (JSON.stringify(state) !== before) changed = true;
       if (state.levelIndex !== startLevel || state.finished) break;
+    }
+    // Perguntas de estequiometria: o jogador "faz a conta" (a resposta certa calculada).
+    for (const o of data.progression.levels[startLevel].objectives.filter((x) => x.type === 'stoich')) {
+      if (state.levelIndex !== startLevel || state.finished) break;
+      const before = JSON.stringify(state);
+      state = answerObjective(state, o.id, stoichAnswer(o, data), data).state;
+      if (JSON.stringify(state) !== before) changed = true;
     }
   }
   return { state, events: allEvents };
@@ -118,4 +136,27 @@ test('save da versão atual é restaurado como está', () => {
   let s = initialState(data);
   s = applyResult(s, engine.combine(['H2', 'O2', 'faisca']), data).state;
   assert.deepEqual(restoreState(JSON.parse(JSON.stringify(s)), data), s);
+});
+
+test('estequiometria: resposta errada não conta; certa (com vírgula e arredondada) conta', () => {
+  const o = levels.flatMap((l) => l.objectives).find((x) => x.id === 'n10-co2');
+  const s0 = initialState(data);
+  assert.equal(answerObjective(s0, o.id, '40', data).correct, false);
+  const { correct, state } = answerObjective(s0, o.id, '43,9', data);
+  assert.equal(correct, true);
+  assert.ok(state.stoichSolved.includes(o.id));
+  const lim = levels.flatMap((l) => l.objectives).find((x) => x.id === 'n10-limite');
+  assert.equal(stoichAnswer(lim, data), 'O2');
+  assert.equal(answerObjective(s0, lim.id, 'H2', data).correct, false);
+});
+
+test('quem terminou a Fase 1 entra na Fase 2 ao carregar o jogo', () => {
+  let s = initialState(data);
+  for (let i = 0; i < levels.length && levels[i].phase === 1; i++) s = playLevel(s).state;
+  const phase1Last = levels.findLastIndex((l) => l.phase === 1);
+  const oldSave = { ...s, finished: true, levelIndex: phase1Last };
+  const restored = restoreState(JSON.parse(JSON.stringify(oldSave)), data);
+  assert.equal(restored.finished, false);
+  assert.equal(levels[restored.levelIndex].phase, 2);
+  assert.ok(restored.unlockedSubstances.includes('BaCl2'));
 });

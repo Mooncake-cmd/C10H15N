@@ -11,6 +11,8 @@ const FILES = {
   sources: 'sources.json',
   reactivitySeries: 'reactivity-series.json',
   structures: 'structures.json',
+  ions: 'ions.json',
+  rules: 'rules.json',
 };
 
 export async function loadGameData(base = './data/') {

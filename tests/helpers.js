@@ -17,6 +17,8 @@ export function loadRaw() {
     sources: read('sources.json'),
     reactivitySeries: read('reactivity-series.json'),
     structures: read('structures.json'),
+    ions: read('ions.json'),
+    rules: read('rules.json'),
   };
 }
 

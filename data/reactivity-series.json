@@ -1,7 +1,8 @@
 {
   "_meta": {
     "description": "Série de reatividade dos metais, ordenada pelo potencial-padrão de redução E° (V, 25 °C) do par Mⁿ⁺/M. Quanto MAIS NEGATIVO o E°, mais facilmente o metal perde elétrons, ou seja, mais reativo ele é. Um metal desloca de uma solução o cátion de outro metal (ou o H⁺ de um ácido) se o seu E° for menor que o do cátion. Previsão termodinâmica: alguns casos são lentos na prática (camada de óxido protetora, por exemplo).",
-    "source": { "ref": "crc", "note": "Valores também tabelados no apêndice de potenciais-padrão de Atkins e de Brown." }
+    "source": { "ref": "crc", "note": "Valores também tabelados no apêndice de potenciais-padrão de Atkins e de Brown.", "seeAlso": [{ "ref": "atkins-jones", "topic": "Tabela 13.1 e Apêndice 2B: potenciais-padrão a 25 °C", "pages": "532, A18–A20" }] },
+    "divergences": "Atkins & Jones (Apêndice 2B) dá Cs⁺/Cs −2,92 V, Rb⁺/Rb −2,93 V e Au³⁺/Au +1,40 V; o CRC dá −3,03, −2,98 e +1,50 V. São tabelas de origens diferentes; nenhuma diferença muda o resultado de uma reação do jogo. O teste compara as duas fontes."
   },
   "series": [
     { "metal": "Li", "cation": "Li+", "E0": -3.04 },

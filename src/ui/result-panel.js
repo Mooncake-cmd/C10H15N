@@ -6,6 +6,7 @@ import { formatFormulaHTML } from '../core/formula.js';
 import { resolveSide, checkConservation, formatEquationHTML } from '../core/equation.js';
 import { molarMass } from '../core/formula.js';
 import { mountReactionStage, mountBounceStage } from './reaction-stage.js';
+import { stoichiometry } from '../core/stoichiometry.js';
 
 let stopStage = () => {};
 
@@ -58,6 +59,52 @@ function conservationHTML(data, reactants, products) {
     </details>`;
 }
 
+/** Calculadora de estequiometria (seções L e M de Atkins & Jones). */
+function calculatorHTML(data, reactants) {
+  const inputs = reactants
+    .map((sp) => {
+      const m = molarMass(sp.formula, data.atomicMasses);
+      return html`<label class="calc-in"><span>${raw(formatFormulaHTML(sp.formula))}</span>
+        <input type="number" min="0" step="any" inputmode="decimal" data-calc="${sp.id}" placeholder="g" aria-label="Massa de ${sp.formula} em gramas">
+        <span class="small muted">g (M = ${fmtNum(m)} g/mol)</span></label>`;
+    })
+    .join('');
+  return html`<details class="stoich-calc">
+      <summary>Calculadora: quanto de produto sai?</summary>
+      <p class="small">Digite a massa de um reagente (o outro fica "de sobra") ou de dois, para descobrir o <strong>reagente limitante</strong>. A conta: gramas → mol (÷ massa molar) → razão dos coeficientes → mol → gramas.</p>
+      <div class="calc-inputs">${raw(inputs)}</div>
+      <div class="calc-out small muted" aria-live="polite">Os resultados aparecem aqui.</div>
+    </details>`;
+}
+
+function mountCalculator(root, data, reaction) {
+  const box = root.querySelector('.stoich-calc');
+  if (!box) return;
+  const out = box.querySelector('.calc-out');
+  const f = (n) => (n >= 100 ? n.toFixed(1) : n.toFixed(2)).replace('.', ',');
+  box.addEventListener('input', () => {
+    const given = {};
+    box.querySelectorAll('[data-calc]').forEach((i) => {
+      const v = parseFloat(i.value.replace(',', '.'));
+      if (Number.isFinite(v) && v >= 0) given[i.dataset.calc] = v;
+    });
+    if (!Object.keys(given).length) {
+      out.textContent = 'Os resultados aparecem aqui.';
+      return;
+    }
+    const res = stoichiometry(reaction, data, given);
+    const name = (id) => formatFormulaHTML(data.substancesById.get(id).formula);
+    const rows = res.products.map((p) => `<tr><td>${name(p.id)}</td><td>${f(p.mol)} mol</td><td><strong>${f(p.grams)} g</strong></td></tr>`).join('');
+    const used = res.reactants
+      .map((r) => `<tr><td>${name(r.id)}</td><td>${f(r.used / r.molarMass)} mol</td><td>${f(r.used)} g usados${r.left ? ` · sobram ${f(r.left)} g` : r.given === null ? ' (necessários)' : ''}</td></tr>`)
+      .join('');
+    out.innerHTML =
+      (res.limiting ? `<p><strong>Reagente limitante:</strong> ${name(res.limiting)} — ele acaba primeiro e decide quanto produto sai.</p>` : '') +
+      `<table class="calc-table"><thead><tr><th>Produto</th><th>Quantidade</th><th>Massa</th></tr></thead><tbody>${rows}</tbody></table>` +
+      `<table class="calc-table"><thead><tr><th>Reagente</th><th>Quantidade</th><th>Massa</th></tr></thead><tbody>${used}</tbody></table>`;
+  });
+}
+
 const itemLabel = (data, id) => {
   const it = data.itemsById.get(id);
   return `${it.icon} ${it.name}`;
@@ -77,7 +124,7 @@ export function renderResult(root, data, result, { newSubstances = [] } = {}) {
     root.innerHTML = html`
       <p class="result-kicker">Reação!</p>
       <h2>${r.name}</h2>
-      <div class="badges">${raw(r.types.map((t) => `<span class="badge type-${t}">${TYPE_LABEL[t]}</span>`).join(''))}</div>
+      <div class="badges">${raw(r.types.map((t) => `<span class="badge type-${t}">${TYPE_LABEL[t]}</span>`).join(''))}${raw(r.generated ? '<span class="badge badge-rule" title="Montada pelo motor de regras da Fase 2 e balanceada automaticamente">⚙️ Prevista por regra</span>' : '')}</div>
       <div class="equation" aria-label="Equação balanceada">${raw(formatEquationHTML(reactants, products, { reversible: r.reversible }))}</div>
       ${raw(conds ? `<p class="small muted">Condição: ${esc(conds)}</p>` : '')}
       <div class="stage" data-stage></div>
@@ -99,8 +146,11 @@ export function renderResult(root, data, result, { newSubstances = [] } = {}) {
         ${raw(r.safety.home ? `<p><strong>Em casa?</strong> ${esc(r.safety.home)}</p>` : '')}
       </aside>
       ${raw(conservationHTML(data, reactants, products))}
+      ${raw(calculatorHTML(data, reactants))}
+      ${raw(r.generated ? '<p class="small muted rule-note">⚙️ Esta reação não está na lista conferida uma a uma: o motor de regras escolheu os produtos por uma regra geral (fonte abaixo) e calculou os coeficientes pelo balanceamento automático. Os testes do jogo conferem átomos, cargas e estados de todas as reações que as regras podem gerar.</p>' : '')}
       ${raw(sourceHTML(data, r.source))}`;
     mountStage(root, (el) => mountReactionStage(el, data, r));
+    mountCalculator(root, data, r);
     return;
   }
 

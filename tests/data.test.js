@@ -123,3 +123,12 @@ test('ferramentas têm ids únicos, nome e ícone', () => {
   assert.equal(new Set(data.items.map((i) => i.id)).size, data.items.length);
   for (const i of data.items) assert.ok(i.name && i.icon && i.description, i.id);
 });
+
+test('série de reatividade confere com Atkins & Jones, Apêndice 2B (tolerância de 0,15 V)', () => {
+  // Valores lidos no Apêndice 2B (p. A18–A20); os do jogo vêm do CRC.
+  const AJ = { Li: -3.05, Cs: -2.92, Rb: -2.93, K: -2.93, Ba: -2.91, Sr: -2.89, Ca: -2.87, Na: -2.71, Mg: -2.36, Be: -1.85, Al: -1.66, Zn: -0.76, Fe: -0.44, H: 0, Cu: 0.34, Ag: 0.8, Au: 1.4 };
+  for (const e of data.reactivitySeries) {
+    assert.ok(e.metal in AJ, `${e.metal} sem valor de conferência`);
+    assert.ok(Math.abs(e.E0 - AJ[e.metal]) <= 0.15, `${e.metal}: jogo ${e.E0} V, Atkins & Jones ${AJ[e.metal]} V`);
+  }
+});
