@@ -2,6 +2,7 @@
 // (o navegador usa fetch em src/loader.js; os testes usam fs).
 
 import { deriveSubstances, buildIonCatalog } from './ions.js';
+import { createGlossary } from './glossary.js';
 
 export function buildGameData(raw) {
   const elements = raw.elements.elements;
@@ -29,6 +30,7 @@ export function buildGameData(raw) {
     structures,
     ions: raw.ions ? buildIonCatalog(raw.ions) : null,
     rules: raw.rules ?? null,
+    glossary: createGlossary(raw.glossary),
     sources: raw.sources.sources,
     complementarySources: raw.sources._meta.complementaryOnly ?? [],
     reactivitySeries: raw.reactivitySeries.series,

@@ -11,6 +11,7 @@ import { renderResult, renderWelcome } from './ui/result-panel.js';
 import { $, html, raw, esc, mainCategory } from './ui/dom.js';
 import { displayStructure } from './core/structure.js';
 import { structureSVG } from './ui/structure-svg.js';
+import { initGlossaryUI } from './ui/glossary-ui.js';
 
 const SAVE_KEY = 'elementar:v1';
 const MAX_SUBSTANCES = 4;
@@ -324,6 +325,8 @@ async function main() {
 
   renderWelcome($('#result'));
   renderAll();
+  // Glossário: termos dos textos explicativos viram links para a definição.
+  initGlossaryUI(data, ['#result', '#objectives', '.pt-info', '#level-dialog-body']);
 }
 
 main();

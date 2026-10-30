@@ -16,6 +16,19 @@ Detalhes de arquitetura, estrutura de pastas e "como adicionar conteúdo" estão
   óxidos, combustão, decomposição), compostos iônicos gerados a partir de íons, estequiometria
   (calculadora e objetivos) e 3 níveis novos. Fonte principal das regras: Atkins & Jones,
   *Chemical Principles*, 5. ed., com página. Detalhes no README.
+- **Pendências da Fase 2 (decidir com o usuário como proceder)**:
+  1. Exceções do motor de regras sem fonte com página (Ag⁺ + OH⁻ → Ag2O, carbonatos básicos de
+     Cu/Mg/Zn/Fe(II), carbonatos de Fe³⁺/Al³⁺ inexistentes, acetatos básicos, bicarbonatos só do
+     grupo 1/NH4⁺) e limites numéricos escolhidos sem livro (−2,5 V "ataca a água", −0,8 V "não se
+     deposita", −0,4 V para ácido fraco, passivação de Al/Be). Ideal: conferir no Greenwood.
+  2. Síntese e decomposição estreitas: só óxido + água e carbonatos de Mg/Ca; sem regra geral para
+     metal + O2 e metal + Cl2 (produto varia).
+  3. Regras só para pares; combinações de 3+ substâncias não passam pelo motor.
+  4. Estequiometria só com massa: faltam volume de gás, concentração (mol/L) e rendimento
+     percentual (Atkins & Jones, seções G, L, M).
+  5. A regra de combustão não tem combustível novo (só o metano, que é curado): depende de
+     adicionar orgânicos como etanol e propano.
+  6. Ácido nítrico + metais sempre "não sei"; curar casos clássicos (Cu + HNO3 diluído, p. 519).
 - **Fase 3 (avançado) — próxima**: termodinâmica e cinética, equilíbrio, moléculas 3D, introdução à química
   orgânica, missões e progressão mais elaborada.
 
@@ -37,7 +50,9 @@ Detalhes de arquitetura, estrutura de pastas e "como adicionar conteúdo" estão
    garante que o jogo é concluível.
 5. **Segurança**: reações perigosas podem aparecer, mas sempre explicando por que são perigosas
    e por que não se faz em casa (`safety.level`, `safety.why`, `safety.home`).
-6. **Arquitetura extensível**: `src/core/` é puro (sem DOM) e testável; novas fases entram como
+6. **Vocabulário explicado**: o público é iniciante. Ao introduzir um conceito novo nos textos,
+   acrescente o termo em `data/glossary.json` (definição simples + exemplo + fonte com página).
+7. **Arquitetura extensível**: `src/core/` é puro (sem DOM) e testável; novas fases entram como
    resolvers/explainers/tipos de objetivo novos, sem reescrever a Fase 1.
 
 ## Publicação
@@ -45,3 +60,5 @@ Detalhes de arquitetura, estrutura de pastas e "como adicionar conteúdo" estão
 O site é estático (sem build) e é publicado pelo GitHub Pages a partir do branch `main`, pasta
 raiz. Qualquer push no `main` atualiza o site em `https://mooncake-cmd.github.io/c10h15n/`.
 Por isso, use caminhos relativos (sem `/` inicial) em HTML/JS/CSS.
+O usuário pediu que **toda mudança seja publicada**: ao terminar, abra o PR para o `main` e faça o
+merge (depois, realinhe o branch de trabalho com o `main`).
