@@ -9,7 +9,8 @@ Detalhes de arquitetura, estrutura de pastas e "como adicionar conteúdo" estão
 ## Fases
 
 - **Fase 1 (protótipo) — CONCLUÍDA**: ~20 elementos, reações curadas, tabela periódica navegável,
-  inventário, bancada, painel de explicação, 7 níveis de progressão.
+  inventário, bancada, painel de explicação, 8 níveis de progressão (grupos 1 e 2 ampliados com
+  base no livro de divulgação DK, só como leitura complementar).
 - **Fase 2 (motor de regras) — próxima**: combinações não previstas, balanceamento automático,
   tipos de reação (síntese, decomposição, simples troca, dupla troca, combustão, ácido-base),
   regras de solubilidade, série de reatividade, massa molar e estequiometria básica. Os pontos de

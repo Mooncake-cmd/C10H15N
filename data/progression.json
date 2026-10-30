@@ -6,7 +6,8 @@
       "produce": "{ substance } — obter a substância como PRODUTO de uma reação",
       "produceCategory": "{ category } — obter como produto qualquer substância daquela categoria",
       "reactionType": "{ reactionType, withReactant? } — fazer uma reação daquele tipo (opcionalmente usando um reagente específico)",
-      "nonReaction": "{ reasonId } — tentar uma combinação que não reage e ver o porquê. reasonId é o id em non-reactions.json ou 'rule:<id>' de uma regra genérica"
+      "nonReaction": "{ reasonId } — tentar uma combinação que não reage e ver o porquê. reasonId é o id em non-reactions.json ou 'rule:<id>' de uma regra genérica",
+      "reaction": "{ reaction } — fazer uma reação específica (id de reactions.json); útil quando o produto já pode ter sido obtido por outro caminho"
     }
   },
   "levels": [
@@ -41,31 +42,53 @@
     {
       "id": "n3",
       "title": "Famílias: metais alcalinos",
-      "intro": "Elementos da mesma coluna (grupo ou família) da tabela periódica se comportam de forma parecida, porque têm o mesmo número de elétrons na última camada. Teste lítio e potássio — vizinhos do sódio no grupo 1 — e o cálcio, do grupo 2.",
-      "unlocks": { "elements": ["Li", "K", "Ca"], "items": ["luz"] },
+      "intro": "Elementos da mesma coluna (grupo ou família) da tabela periódica se comportam de forma parecida, porque têm o mesmo número de elétrons na última camada. O sódio você já conhece; agora vêm seus vizinhos do grupo 1: lítio, potássio, rubídio e césio. Nenhum deles existe puro na natureza: reagem com o ar e com a água.",
+      "unlocks": { "elements": ["Li", "K", "Rb", "Cs"], "items": ["luz"] },
       "objectives": [
         { "id": "n3-na", "type": "produce", "substance": "NaOH", "text": "Coloque sódio na água",
           "hint": "Você já tem sódio e já sabe fazer água." },
         { "id": "n3-li", "type": "produce", "substance": "LiOH", "text": "Faça o mesmo com o lítio" },
         { "id": "n3-k", "type": "produce", "substance": "KOH", "text": "E com o potássio" },
-        { "id": "n3-ca", "type": "produce", "substance": "Ca(OH)2", "text": "Agora o cálcio (grupo 2): qual a diferença?",
-          "hint": "Repare na fórmula do hidróxido formado." }
+        { "id": "n3-cs", "type": "produce", "substance": "CsOH", "text": "Desça até o fim da coluna: césio na água",
+          "hint": "Compare a explicação com a do lítio. O que mudou?" },
+        { "id": "n3-li-o2", "type": "produce", "substance": "Li2O", "text": "Queime lítio",
+          "hint": "Oxigênio + uma fonte de calor." },
+        { "id": "n3-na-o2", "type": "produce", "substance": "Na2O2", "text": "Queime sódio: o produto é igual ao do lítio?" }
       ],
-      "lesson": "Todo metal do grupo 1 + água → hidróxido + hidrogênio, e a violência aumenta descendo a coluna (Li < Na < K). No grupo 2 os metais perdem 2 elétrons — por isso Ca(OH)2 tem dois OH."
+      "lesson": "Todo metal do grupo 1 + água → hidróxido + hidrogênio, e a violência aumenta descendo a coluna (Li < Na < K < Rb < Cs): o elétron de valência fica cada vez mais longe do núcleo e sai mais fácil. Mas 'parecido' não é 'igual': queimando, o lítio forma óxido (Li2O) e o sódio, peróxido (Na2O2)."
+    },
+    {
+      "id": "g2",
+      "title": "Família 2: metais alcalino-terrosos",
+      "intro": "Na coluna ao lado ficam os metais alcalino-terrosos: berílio, magnésio, cálcio, estrôncio, bário e rádio. Eles têm 2 elétrons na última camada. O nome vem das 'terras' (óxidos) alcalinas de onde foram extraídos. Novos: berílio, cálcio, estrôncio e bário. O rádio fica de fora: é radioativo.",
+      "unlocks": { "elements": ["Be", "Ca", "Sr", "Ba"] },
+      "objectives": [
+        { "id": "n3-ca", "type": "produce", "substance": "Ca(OH)2", "text": "Coloque cálcio na água: qual a diferença para o sódio?",
+          "hint": "Repare na fórmula do hidróxido formado." },
+        { "id": "g2-ba", "type": "produce", "substance": "Ba(OH)2", "text": "Agora o bário, quatro andares abaixo" },
+        { "id": "g2-mg", "type": "reaction", "reaction": "mg-h2o", "text": "Faça o magnésio reagir com água",
+          "hint": "Na água fria quase nada acontece. Que ferramenta pode ajudar?" },
+        { "id": "g2-be", "type": "nonReaction", "reasonId": "nr-be-h2o", "text": "Coloque berílio na água e descubra por que ele é o 'rebelde' do grupo" }
+      ],
+      "lesson": "No grupo 2 os metais perdem 2 elétrons, por isso os hidróxidos têm dois OH⁻: Ca(OH)2, Ba(OH)2. A reatividade também cresce descendo a coluna: Be não reage com água, Mg só com vapor, Ca devagar, Sr e Ba cada vez mais rápido. Tudo é mais brando que no grupo 1, porque perder 2 elétrons custa mais energia que perder 1."
     },
     {
       "id": "n4",
       "title": "Ácidos e bases",
-      "intro": "Ácidos liberam H⁺ na água; bases liberam OH⁻. Juntos, eles se neutralizam. Novos reagentes do cotidiano: calcário (CaCO3), bicarbonato de sódio e vinagre.",
-      "unlocks": { "substances": ["CaCO3", "NaHCO3", "CH3COOH"] },
+      "intro": "Ácidos liberam H⁺ na água; bases liberam OH⁻. Juntos, eles se neutralizam. Novos reagentes do cotidiano: calcário (CaCO3), bicarbonato de sódio, vinagre e leite de magnésia.",
+      "unlocks": { "substances": ["CaCO3", "NaHCO3", "CH3COOH", "Mg(OH)2"] },
       "objectives": [
         { "id": "n4-hcl", "type": "produce", "substance": "HCl", "text": "Produza ácido clorídrico",
           "hint": "Hidrogênio + cloro. No escuro, quase nada acontece..." },
         { "id": "n4-neutraliza", "type": "reactionType", "reactionType": "acido_base", "withReactant": "HCl", "text": "Neutralize o ácido clorídrico",
           "hint": "Ácido + base → sal + água. Que base você produziu no nível anterior?" },
-        { "id": "n4-vulcao", "type": "reactionType", "reactionType": "acido_base", "withReactant": "NaHCO3", "text": "Faça o 'vulcão' da feira de ciências" }
+        { "id": "n4-vulcao", "type": "reactionType", "reactionType": "acido_base", "withReactant": "NaHCO3", "text": "Faça o 'vulcão' da feira de ciências" },
+        { "id": "n4-antiacido", "type": "reaction", "reaction": "mgoh2-hcl", "text": "Use um antiácido para neutralizar o ácido do estômago",
+          "hint": "O ácido do estômago é o clorídrico." },
+        { "id": "n4-apollo", "type": "produce", "substance": "Li2CO3", "text": "Limpe o ar de uma nave espacial: capture o CO2 que os astronautas expiram",
+          "hint": "O CO2 é um óxido ácido. Que base leve você já produziu?" }
       ],
-      "lesson": "Ácido + base → sal + água. E carbonatos/bicarbonatos + ácido → sal + água + CO2 (efervescência)."
+      "lesson": "Ácido + base → sal + água. Óxidos ácidos, como o CO2, também neutralizam bases. E carbonatos/bicarbonatos + ácido → sal + água + CO2 (efervescência)."
     },
     {
       "id": "n5",
@@ -78,7 +101,7 @@
           "hint": "Um metal mais reativo que o cobre pode tomar o lugar dele." },
         { "id": "n5-nao", "type": "nonReaction", "reasonId": "nr-cu-hcl", "text": "Tente dissolver cobre em ácido clorídrico — e descubra por que não funciona" }
       ],
-      "lesson": "Um metal só desloca outro (ou o H⁺ de um ácido) se for MAIS reativo: K > Ca > Na > Mg > Al > Zn > Fe > (H) > Cu > Ag > Au."
+      "lesson": "Um metal só desloca outro (ou o H⁺ de um ácido) se for MAIS reativo: K > Ca > Na > Mg > Al > Zn > Fe > (H) > Cu > Ag > Au. (Pelos potenciais-padrão, Li, Cs, Rb, Ba e Sr ficam no topo, junto do K.)"
     },
     {
       "id": "n6",

@@ -8,7 +8,7 @@
       "conditions": "lista de requisitos; cada requisito é uma lista de ids de items.json dos quais BASTA UM (ex.: [[\"calor\",\"faisca\"]] = calor OU faísca). Lista vazia = acontece só de misturar.",
       "netIonic": "opcional: equação iônica líquida, com fórmulas (e cargas) explícitas. Também é testada.",
       "safety.level": "seguro | cuidado | perigo. Para cuidado/perigo, 'why' e 'home' são obrigatórios.",
-      "source": "{ ref (chave de sources.json), topic, justification }"
+      "source": "{ ref (chave de sources.json), topic, justification, seeAlso? } — seeAlso: leituras complementares [{ ref, topic, pages? }]; a fonte principal (ref) é sempre um livro-texto"
     }
   },
   "reactions": [
@@ -528,6 +528,208 @@
         "home": "Não faça em casa em nenhuma hipótese. Só profissionais, ao ar livre, com proteção."
       },
       "source": { "ref": "brown", "topic": "Reação termita; oxirredução", "justification": "2 Al(s) + Fe2O3(s) → Al2O3(s) + 2 Fe(l), fortemente exotérmica, é o exemplo-padrão de reação termita." }
+    },
+    {
+      "id": "li-o2",
+      "name": "Lítio queimando",
+      "reactants": [{ "id": "Li", "coef": 4 }, { "id": "O2", "coef": 1 }],
+      "products": [{ "id": "Li2O", "coef": 2 }],
+      "types": ["combustao", "sintese"],
+      "tags": ["redox", "exotermica"],
+      "conditions": [["calor"]],
+      "conditionNote": "Sem aquecer, o lítio só perde o brilho aos poucos ao ar (reage com o oxigênio, a umidade e até com o nitrogênio). Aquecido, pega fogo com chama vermelho-carmim.",
+      "explanation": "Aquecido, o lítio pega fogo com chama vermelha e se transforma num pó branco: óxido de lítio.",
+      "why": "Cada lítio perde 1 elétron (Li⁺) e cada oxigênio ganha 2 (O²⁻); por isso são precisos dois Li para cada O em Li2O. Compare com o sódio: queimando, ele forma um PERÓXIDO (Na2O2), não um óxido simples. O íon Li⁺ é muito pequeno e estabiliza melhor o íon O²⁻, também pequeno; cátions maiores estabilizam melhor ânions maiores, como o peróxido O2²⁻.",
+      "safety": {
+        "level": "cuidado",
+        "why": "Fogo de metal alcalino não se apaga com água (o metal reage com ela e libera hidrogênio). O óxido formado é corrosivo.",
+        "home": "Não faça em casa. É também por isso que baterias de lítio danificadas são um risco de incêndio."
+      },
+      "source": {
+        "ref": "greenwood",
+        "topic": "Metais alcalinos: reação com oxigênio (Li forma o óxido, Na o peróxido, K/Rb/Cs o superóxido)",
+        "justification": "4 Li(s) + O2(g) → 2 Li2O(s) é a combustão característica do lítio, único metal alcalino cujo produto principal é o óxido normal.",
+        "seeAlso": [{ "ref": "dk-elements", "topic": "Introdução: 'Reactions and uses' (lítio queimando ao ar)", "pages": "16–17" }]
+      }
+    },
+    {
+      "id": "na-o2",
+      "name": "Sódio queimando",
+      "reactants": [{ "id": "Na", "coef": 2 }, { "id": "O2", "coef": 1 }],
+      "products": [{ "id": "Na2O2", "coef": 1 }],
+      "types": ["combustao", "sintese"],
+      "tags": ["redox", "exotermica"],
+      "conditions": [["calor"]],
+      "conditionNote": "Sem aquecer, a superfície do sódio escurece ao ar formando principalmente óxido de sódio (Na2O). Queimando com chama amarela e excesso de ar, o produto principal é o peróxido.",
+      "explanation": "Aquecido, o sódio queima com chama amarela intensa e forma um pó amarelado: peróxido de sódio.",
+      "why": "Mesmo grupo do lítio, mas outro produto! Aqui o oxigênio não fica como O²⁻: dois átomos de O continuam ligados e formam o íon peróxido O2²⁻ (o mesmo 'O–O' da água oxigenada). O cátion Na⁺, maior que o Li⁺, estabiliza melhor esse ânion maior. Descendo o grupo, K, Rb e Cs chegam a formar superóxidos (KO2). Muitos livros de divulgação dizem só 'óxido de sódio', mas quando o sódio queima, o produto principal é o peróxido.",
+      "safety": {
+        "level": "perigo",
+        "why": "O sódio pode reagir violentamente com a umidade, e o peróxido formado é um oxidante forte que pode inflamar papel, tecido e outros materiais orgânicos.",
+        "home": "Não faça em casa em nenhuma hipótese."
+      },
+      "source": {
+        "ref": "greenwood",
+        "topic": "Metais alcalinos: reação com oxigênio; peróxido de sódio",
+        "justification": "Na queimado em excesso de ar forma principalmente Na2O2: 2 Na(s) + O2(g) → Na2O2(s)."
+      }
+    },
+    {
+      "id": "rb-h2o",
+      "name": "Rubídio na água",
+      "reactants": [{ "id": "Rb", "coef": 2 }, { "id": "H2O", "coef": 2 }],
+      "products": [{ "id": "RbOH", "coef": 2, "state": "aq" }, { "id": "H2", "coef": 1 }],
+      "types": ["simples_troca"],
+      "tags": ["redox", "exotermica"],
+      "conditions": [],
+      "explanation": "O rubídio reage de forma explosiva: o hidrogênio liberado se inflama na hora.",
+      "why": "Continuando a descer o grupo 1 (Li → Na → K → Rb), o elétron de valência fica cada vez mais longe do núcleo e mais 'blindado' pelas camadas internas. Ele sai com ainda mais facilidade, e a reação fica ainda mais violenta que a do potássio.",
+      "safety": {
+        "level": "perigo",
+        "why": "Explosão, fogo e respingos de base corrosiva. O rubídio inflama-se até no ar.",
+        "home": "Não faça em casa em nenhuma hipótese. O rubídio só é manuseado em atmosfera inerte, em laboratório."
+      },
+      "source": {
+        "ref": "greenwood",
+        "topic": "Metais alcalinos: reatividade com água; tendências no grupo 1",
+        "justification": "2 Rb(s) + 2 H2O(l) → 2 RbOH(aq) + H2(g); a reatividade com a água aumenta de Li para Cs.",
+        "seeAlso": [{ "ref": "dk-elements", "topic": "Rubídio", "pages": "32" }]
+      }
+    },
+    {
+      "id": "cs-h2o",
+      "name": "Césio na água",
+      "reactants": [{ "id": "Cs", "coef": 2 }, { "id": "H2O", "coef": 2 }],
+      "products": [{ "id": "CsOH", "coef": 2, "state": "aq" }, { "id": "H2", "coef": 1 }],
+      "types": ["simples_troca"],
+      "tags": ["redox", "exotermica"],
+      "conditions": [],
+      "explanation": "O césio explode em contato com a água, até mesmo com gelo bem abaixo de 0 °C.",
+      "why": "O césio é o último metal alcalino estável do grupo 1: seu único elétron de valência está na 6ª camada, muito longe do núcleo, e é perdido com facilidade enorme. É a mesma reação do lítio (metal + água → hidróxido + hidrogênio), só que no extremo da tendência. O frâncio, abaixo dele, é radioativo e tão raro que nunca se juntou uma amostra visível.",
+      "safety": {
+        "level": "perigo",
+        "why": "Reação explosiva; o recipiente de vidro pode estilhaçar e espalhar hidróxido de césio, muito corrosivo.",
+        "home": "Não faça em casa em nenhuma hipótese. O césio é guardado em ampolas de vidro seladas, sem ar."
+      },
+      "source": {
+        "ref": "greenwood",
+        "topic": "Metais alcalinos: reatividade com água; tendências no grupo 1",
+        "justification": "2 Cs(s) + 2 H2O(l) → 2 CsOH(aq) + H2(g); o Cs reage explosivamente com água, mesmo com gelo a −116 °C.",
+        "seeAlso": [{ "ref": "dk-elements", "topic": "Césio", "pages": "34" }]
+      }
+    },
+    {
+      "id": "sr-h2o",
+      "name": "Estrôncio na água",
+      "reactants": [{ "id": "Sr", "coef": 1 }, { "id": "H2O", "coef": 2 }],
+      "products": [{ "id": "Sr(OH)2", "coef": 1, "state": "aq" }, { "id": "H2", "coef": 1 }],
+      "types": ["simples_troca"],
+      "tags": ["redox", "exotermica"],
+      "conditions": [],
+      "explanation": "O estrôncio reage com a água fria liberando hidrogênio, de forma mais viva que o cálcio.",
+      "why": "Mesma reação do cálcio, um andar abaixo no grupo 2. O estrôncio tem os 2 elétrons de valência na 5ª camada, mais longe do núcleo que os do cálcio (4ª camada), e os perde com mais facilidade. Por ser do grupo 2, forma Sr²⁺ e precisa de dois OH⁻: Sr(OH)2.",
+      "safety": {
+        "level": "cuidado",
+        "why": "Libera hidrogênio inflamável e forma uma solução corrosiva.",
+        "home": "Não faça em casa; estrôncio metálico é material de laboratório."
+      },
+      "source": {
+        "ref": "greenwood",
+        "topic": "Metais alcalino-terrosos: reação com água; tendências no grupo 2",
+        "justification": "Sr(s) + 2 H2O(l) → Sr(OH)2(aq) + H2(g); Ca, Sr e Ba reagem com água fria, com vigor crescente."
+      }
+    },
+    {
+      "id": "ba-h2o",
+      "name": "Bário na água",
+      "reactants": [{ "id": "Ba", "coef": 1 }, { "id": "H2O", "coef": 2 }],
+      "products": [{ "id": "Ba(OH)2", "coef": 1, "state": "aq" }, { "id": "H2", "coef": 1 }],
+      "types": ["simples_troca"],
+      "tags": ["redox", "exotermica"],
+      "conditions": [],
+      "explanation": "O bário reage vigorosamente com a água, liberando hidrogênio e formando hidróxido de bário.",
+      "why": "O bário é o mais reativo dos alcalino-terrosos estáveis: seus elétrons de valência estão na 6ª camada. Repare na tendência do grupo 2: Be não reage com água, Mg só com vapor, Ca devagar, Sr mais rápido, Ba vigorosamente. É o mesmo padrão do grupo 1, só que mais brando, porque perder 2 elétrons custa mais energia que perder 1.",
+      "safety": {
+        "level": "perigo",
+        "why": "Libera hidrogênio inflamável, e o hidróxido de bário formado é corrosivo e tóxico se ingerido (íons Ba²⁺ solúveis).",
+        "home": "Não faça em casa em nenhuma hipótese."
+      },
+      "source": {
+        "ref": "greenwood",
+        "topic": "Metais alcalino-terrosos: reação com água; tendências no grupo 2",
+        "justification": "Ba(s) + 2 H2O(l) → Ba(OH)2(aq) + H2(g); o Ba é o alcalino-terroso (não radioativo) mais reativo."
+      }
+    },
+    {
+      "id": "mg-h2o",
+      "name": "Magnésio no vapor d'água",
+      "reactants": [{ "id": "Mg", "coef": 1 }, { "id": "H2O", "coef": 1, "state": "g" }],
+      "products": [{ "id": "MgO", "coef": 1 }, { "id": "H2", "coef": 1 }],
+      "types": ["simples_troca"],
+      "tags": ["redox", "exotermica"],
+      "conditions": [["calor"]],
+      "conditionNote": "Na água fria quase nada acontece: uma camada de Mg(OH)2 pouco solúvel cobre o metal e trava a reação. Em água quente sai um pouco de hidrogênio, devagar. Com vapor d'água e magnésio aquecido, a reação é rápida e o magnésio brilha.",
+      "explanation": "Magnésio aquecido no vapor d'água brilha com luz branca, libera hidrogênio e vira óxido de magnésio.",
+      "why": "O magnésio está acima do cálcio no grupo 2: seus elétrons de valência estão mais perto do núcleo e saem com menos facilidade. Por isso ele precisa de uma 'ajuda' de energia (calor e água na forma de vapor) para fazer o que o cálcio faz com água fria.",
+      "safety": {
+        "level": "perigo",
+        "why": "Magnésio quente com água libera hidrogênio, que pode explodir. É por isso que nunca se joga água num incêndio de magnésio.",
+        "home": "Não faça em casa: é uma montagem de laboratório, com tubo de vidro resistente ao calor e proteção para os olhos."
+      },
+      "source": {
+        "ref": "kotz",
+        "topic": "Metais alcalino-terrosos: reação com água e com vapor",
+        "justification": "Mg(s) + H2O(g) → MgO(s) + H2(g), com o metal aquecido; com água fria a reação é desprezível.",
+        "seeAlso": [{ "ref": "dk-elements", "topic": "Metais alcalino-terrosos: abertura do grupo ('react with hot water or steam')", "pages": "37" }]
+      }
+    },
+    {
+      "id": "lioh-co2",
+      "name": "Filtro de ar de nave espacial",
+      "reactants": [{ "id": "LiOH", "coef": 2 }, { "id": "CO2", "coef": 1 }],
+      "products": [{ "id": "Li2CO3", "coef": 1 }, { "id": "H2O", "coef": 1 }],
+      "types": ["acido_base"],
+      "tags": ["neutralizacao", "cotidiano"],
+      "conditions": [],
+      "explanation": "Cartuchos de hidróxido de lítio retiram o CO2 que os astronautas expiram. Na missão Apollo 13 (1970), a tripulação improvisou um adaptador para esses cartuchos e conseguiu voltar viva.",
+      "why": "O CO2 é um óxido ácido e o LiOH é uma base: eles se neutralizam formando um sal (Li2CO3) e água. Por que lítio, e não sódio ou potássio? O lítio é o metal alcalino mais leve: cada quilo de LiOH captura mais CO2 do que um quilo de NaOH ou KOH, e em nave espacial cada grama conta.",
+      "safety": {
+        "level": "cuidado",
+        "why": "O hidróxido de lítio é corrosivo para pele e olhos, e sua poeira irrita as vias respiratórias.",
+        "home": "Não faça em casa; não manuseie hidróxidos alcalinos sem luvas e óculos."
+      },
+      "source": {
+        "ref": "greenwood",
+        "topic": "Lítio: compostos; LiOH como absorvedor de CO2 em naves e submarinos",
+        "justification": "2 LiOH(s) + CO2(g) → Li2CO3(s) + H2O(l); a baixa massa molar do LiOH o torna o absorvedor preferido em veículos espaciais.",
+        "seeAlso": [{ "ref": "dk-elements", "topic": "Lítio: usos (air scrubber da Apollo 13)", "pages": "25" }]
+      }
+    },
+    {
+      "id": "mgoh2-hcl",
+      "name": "Leite de magnésia contra a azia",
+      "reactants": [{ "id": "Mg(OH)2", "coef": 1 }, { "id": "HCl", "coef": 2 }],
+      "products": [{ "id": "MgCl2", "coef": 1, "state": "aq" }, { "id": "H2O", "coef": 2 }],
+      "types": ["acido_base"],
+      "tags": ["neutralizacao", "cotidiano"],
+      "conditions": [],
+      "explanation": "O leite de magnésia neutraliza o excesso de ácido clorídrico do estômago, aliviando a azia.",
+      "why": "Base + ácido → sal + água. O Mg(OH)2 é quase insolúvel: fica em suspensão (por isso o 'leite' é branco e opaco) e vai se dissolvendo só à medida que encontra o ácido. Assim ele neutraliza o excesso de ácido sem deixar o estômago fortemente básico, como faria uma base solúvel como o NaOH. Alguns livros de divulgação confundem o leite de magnésia com carbonato de magnésio; o princípio ativo é o hidróxido.",
+      "netIonic": {
+        "reactants": [{ "formula": "Mg(OH)2", "coef": 1, "state": "s" }, { "formula": "H+", "coef": 2, "state": "aq" }],
+        "products": [{ "formula": "Mg^2+", "coef": 1, "state": "aq" }, { "formula": "H2O", "coef": 2, "state": "l" }],
+        "note": "O Mg(OH)2 aparece inteiro porque é um sólido pouco solúvel; o Cl⁻ não participa (é íon espectador)."
+      },
+      "safety": {
+        "level": "seguro",
+        "why": "É um medicamento vendido em farmácias. O ácido clorídrico concentrado, por outro lado, é corrosivo.",
+        "home": "Não faça com ácido clorídrico comprado: o 'experimento' seguro é o próprio uso do remédio, conforme a bula."
+      },
+      "source": {
+        "ref": "brown",
+        "topic": "Reações ácido-base; antiácidos",
+        "justification": "Mg(OH)2(s) + 2 HCl(aq) → MgCl2(aq) + 2 H2O(l) é o exemplo usual de antiácido de hidróxido metálico pouco solúvel."
+      }
     },
     {
       "id": "h2o2-decomposicao",

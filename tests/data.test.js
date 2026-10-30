@@ -14,6 +14,7 @@ const raw = loadRaw();
 const IUPAC = {
   H: 1.008, He: 4.0026, Li: 6.94, C: 12.011, N: 14.007, O: 15.999, Ne: 20.18, Na: 22.99, Mg: 24.305, Al: 26.982,
   S: 32.06, Cl: 35.45, Ar: 39.95, K: 39.098, Ca: 40.078, Fe: 55.845, Cu: 63.546, Zn: 65.38, Ag: 107.87, Au: 196.97,
+  Be: 9.0122, Rb: 85.468, Sr: 87.62, Cs: 132.91, Ba: 137.33,
 };
 
 test('118 elementos, Z sequencial, símbolos únicos', () => {
@@ -104,6 +105,7 @@ test('não-reações: ids únicos, substâncias existem, têm motivo e não cont
     assert.ok(!reactionKeys.has(setKey(nr.substances)), `${nr.id} contradiz uma reação curada`);
     assert.ok(nr.reason.length > 40 && nr.title, nr.id);
     assert.ok(data.sources[nr.source?.ref], `${nr.id}: fonte`);
+    assert.ok(!data.complementarySources.includes(nr.source.ref), `${nr.id}: fonte principal não pode ser só complementar`);
   }
 });
 

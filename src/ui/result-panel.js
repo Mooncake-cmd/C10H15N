@@ -13,7 +13,8 @@ function sourceHTML(data, source) {
   if (!source) return '';
   const ref = data.sources[source.ref];
   return html`<footer class="source"><strong>Fonte:</strong> ${ref ?? source.ref}${raw(source.topic ? ` — <em>${esc(source.topic)}</em>` : '')}.
-    ${raw(source.justification ? `<br><span class="muted">${esc(source.justification)}</span>` : '')}</footer>`;
+    ${raw(source.justification ? `<br><span class="muted">${esc(source.justification)}</span>` : '')}
+    ${raw((source.seeAlso ?? []).map((sa) => `<br><span class="small">Veja também: ${esc(data.sources[sa.ref] ?? sa.ref)}${sa.topic ? ` — <em>${esc(sa.topic)}</em>` : ''}${sa.pages ? `, p. ${esc(sa.pages)}` : ''}.</span>`).join(''))}</footer>`;
 }
 
 function conservationHTML(data, reactants, products) {

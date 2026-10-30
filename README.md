@@ -5,8 +5,8 @@ faísca, luz, eletricidade, catalisador) e vê **reações químicas reais**, co
 o porquê, a conservação de átomos e massa, os riscos de segurança e a fonte para conferir num
 livro-texto. Quando não há reação, o jogo diz isso e explica o motivo.
 
-Esta é a **Fase 1 (protótipo)**: 20 elementos jogáveis (os 118 aparecem na tabela), 31 compostos,
-29 reações curadas, 16 "não-reações" curadas, regras genéricas de explicação e 7 níveis de
+Esta é a **Fase 1 (protótipo)**: 25 elementos jogáveis (os 118 aparecem na tabela), 39 compostos,
+38 reações curadas, 17 "não-reações" curadas, regras genéricas de explicação e 8 níveis de
 progressão.
 
 ## Como rodar
@@ -89,13 +89,20 @@ descreve cada campo) e rode `npm test`. Se alguma substância for nova, crie-a a
 `substances.json`. Condições usam lista de alternativas: `[["calor", "faisca"]]` significa
 calor OU faísca; `[["calor"], ["catalisador"]]` significa calor E catalisador.
 
+A fonte principal (`source.ref`) é sempre um livro-texto. Livros de divulgação (marcados em
+`sources.json` → `_meta.complementaryOnly`) só entram como leitura complementar em
+`source.seeAlso: [{ ref, topic, pages? }]`, e os testes conferem isso. Não invente páginas: só
+cite `pages` que você conferiu no livro.
+
 **Nova não-reação**: em `data/non-reactions.json`, com motivo e fonte.
 
 **Novo elemento jogável**: crie a forma elementar em `substances.json` (campo `elementOf`) e
 desbloqueie-o em algum nível de `progression.json`. Os dados físicos já estão em `elements.json`.
 
 **Novo nível/objetivo**: em `progression.json`. Tipos de objetivo: `produce`, `produceCategory`,
-`reactionType` e `nonReaction`. O teste de progressão avisa se um objetivo ficar impossível.
+`reactionType`, `nonReaction` e `reaction`. O teste de progressão avisa se um objetivo ficar
+impossível. Inserir um nível no meio muda os índices dos saves: suba `STATE_VERSION` em
+`src/core/progression.js`; saves antigos são migrados refazendo o caminho pelo histórico.
 
 **Atualizar os elementos**: troque `data/source/PeriodicTableJSON.json` e rode
 `npm run build:elements`.

@@ -21,6 +21,7 @@ export function buildGameData(raw) {
     nonReactions,
     progression: raw.progression,
     sources: raw.sources.sources,
+    complementarySources: raw.sources._meta.complementaryOnly ?? [],
     reactivitySeries: raw.reactivitySeries.series,
     reactivitySeriesSource: raw.reactivitySeries._meta.source,
     elementsBySymbol,
