@@ -90,22 +90,23 @@ sub, sup { font-size: 0.7em; line-height: 0; }
 .app-error { margin: 1rem; padding: 1rem; background: var(--c-acido); color: #4a0d07; border-radius: var(--radius); }
 
 /* ---------- Layout ---------- */
-.layout {
-  display: grid; gap: 1rem; padding: 1rem;
+.layout { display: flex; flex-direction: column; gap: 1rem; padding: 1rem; max-width: 1500px; margin: 0 auto; }
+/* O sticky do inventário e dos objetivos vale só dentro de .workspace (o bloco que os contém). */
+.workspace {
+  display: grid; gap: 1rem;
   grid-template-columns: minmax(230px, 280px) minmax(0, 1fr) minmax(240px, 300px);
-  grid-template-areas: "inv center obj" "pt pt pt";
-  max-width: 1500px; margin: 0 auto;
+  grid-template-areas: "inv center obj";
 }
 .inventory { grid-area: inv; }
 .center { grid-area: center; display: flex; flex-direction: column; gap: 1rem; min-width: 0; }
 .objectives-panel { grid-area: obj; }
-.periodic { grid-area: pt; }
 .panel { background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem; box-shadow: var(--shadow); min-width: 0; }
 .panel-head { display: flex; justify-content: space-between; align-items: baseline; gap: 0.5rem; }
 .inventory, .objectives-panel { align-self: start; position: sticky; top: 70px; max-height: calc(100vh - 86px); overflow: auto; }
 
 @media (max-width: 900px) {
-  .layout { grid-template-columns: minmax(0, 1fr); grid-template-areas: "obj" "inv" "center" "pt"; padding: 1rem 16px; }
+  .layout { padding: 1rem 16px; }
+  .workspace { grid-template-columns: minmax(0, 1fr); grid-template-areas: "obj" "inv" "center"; }
   .bench .panel-head .muted { display: none; }
   .inventory, .objectives-panel { position: static; max-height: none; }
   .topbar { padding: 0.5rem 16px; }
