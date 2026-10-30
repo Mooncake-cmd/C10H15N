@@ -26,7 +26,11 @@ const VALENCE = {
 };
 
 const toAtom = ([el, x, y, charge = 0]) => ({ el, x, y, charge });
-const fromEntry = (e) => ({ atoms: e.atoms.map(toAtom), bonds: e.bonds.map(([a, b, order]) => ({ a, b, order })) });
+const fromEntry = (e) => ({
+  atoms: e.atoms.map(toAtom),
+  bonds: e.bonds.map(([a, b, order]) => ({ a, b, order })),
+  ...(e.radical ? { radical: true } : {}),
+});
 
 export function bbox(atoms, r = LAYOUT_RADIUS) {
   const xs = atoms.map((a) => a.x);
@@ -242,11 +246,16 @@ export function checkStructure(struct, formula, { covalent = true, exactAtoms = 
     }
   }
   if (covalent) {
+    // Radical (ex.: NO): exatamente UM átomo tem um elétron desemparelhado, ou seja, uma
+    // ligação a menos do que o normal. Qualquer outro desvio continua sendo erro.
+    let unpaired = 0;
     struct.atoms.forEach((at, i) => {
       const allowed = VALENCE[at.el]?.[at.charge];
       if (!allowed) problems.push(`${at.el}${i} com carga ${at.charge} não pode aparecer ligado`);
+      else if (struct.radical && allowed.some((v) => v - 1 === order[i]) && !allowed.includes(order[i])) unpaired++;
       else if (!allowed.includes(order[i])) problems.push(`${at.el}${i} faz ${order[i]} ligações (esperado ${allowed.join(' ou ')})`);
     });
+    if (struct.radical && unpaired !== 1) problems.push(`radical precisa de exatamente 1 átomo com elétron desemparelhado (tem ${unpaired})`);
   }
   return problems;
 }

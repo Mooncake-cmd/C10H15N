@@ -5,7 +5,7 @@
 // NaCl" com estequiometria; Fase 3 — missões com várias etapas).
 
 import { lookupReaction } from './engine.js';
-import { stoichiometry } from './stoichiometry.js';
+import { stoichiometry, percentYield } from './stoichiometry.js';
 
 export const STATE_VERSION = 2;
 // v1 → v2: um nível novo (metais alcalino-terrosos) entrou no meio da Fase 1, então o
@@ -134,19 +134,29 @@ function advance(s, data, events) {
   return s;
 }
 
-/** Resposta certa de um objetivo de estequiometria: gramas do produto pedido ou o id do reagente limitante. */
+/**
+ * Resposta certa de um objetivo de estequiometria:
+ *   ask 'limiting' → id do reagente limitante;
+ *   ask 'yield'    → rendimento percentual (actual: { id, g } é a massa obtida de verdade);
+ *   ask <produto>  → quantidade do produto na unidade `unit` ('g' padrão, 'mol' ou 'L' de gás a 25 °C e 1 atm).
+ */
 export function stoichAnswer(objective, data) {
   const res = stoichiometry(lookupReaction(data, objective.reaction), data, objective.given);
   if (objective.ask === 'limiting') return res.limiting;
-  return res.products.find((p) => p.id === objective.ask).grams;
+  if (objective.ask === 'yield') {
+    const p = res.products.find((x) => x.id === objective.actual.id);
+    return percentYield(objective.actual.g, p.grams);
+  }
+  const p = res.products.find((x) => x.id === objective.ask);
+  return objective.unit === 'mol' ? p.mol : objective.unit === 'L' ? p.liters : p.grams;
 }
 
-/** Tolerância de 2% (arredondamentos de massa molar), e no mínimo 0,05 g. */
+/** Tolerância de 2% (arredondamentos de massa molar), com um mínimo de 0,01. */
 export function isStoichAnswerRight(objective, answer, data) {
   const expected = stoichAnswer(objective, data);
   if (objective.ask === 'limiting') return answer === expected;
-  const x = Number(String(answer).replace(',', '.'));
-  return Number.isFinite(x) && Math.abs(x - expected) <= Math.max(0.02 * expected, 0.05);
+  const x = Number(String(answer).replace(',', '.').replace('%', '').trim());
+  return Number.isFinite(x) && Math.abs(x - expected) <= Math.max(0.02 * Math.abs(expected), 0.01);
 }
 
 /** O jogador respondeu a um objetivo de estequiometria. */

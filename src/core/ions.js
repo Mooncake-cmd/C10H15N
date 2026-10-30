@@ -76,7 +76,7 @@ export function pairProblem(cation, anion, ions) {
   const anomaly = ions.anomaliesByPair.get(pairKey(cation, anion));
   if (anomaly?.scope === 'never') return anomaly;
   if (an.metalsOnly && !cat.metal) return { why: `O ${cat.name} não forma ${an.name}.` };
-  if (an.onlyWith && !an.onlyWith.some((sel) => matchesCation(sel, cat))) return { why: an.onlyWithWhy };
+  if (an.onlyWith && !an.onlyWith.some((sel) => matchesCation(sel, cat))) return { why: an.onlyWithWhy, source: an.onlyWithSource };
   return null;
 }
 

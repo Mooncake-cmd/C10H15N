@@ -16,19 +16,18 @@ Detalhes de arquitetura, estrutura de pastas e "como adicionar conteúdo" estão
   óxidos, combustão, decomposição), compostos iônicos gerados a partir de íons, estequiometria
   (calculadora e objetivos) e 3 níveis novos. Fonte principal das regras: Atkins & Jones,
   *Chemical Principles*, 5. ed., com página. Detalhes no README.
-- **Pendências da Fase 2 (decidir com o usuário como proceder)**:
-  1. Exceções do motor de regras sem fonte com página (Ag⁺ + OH⁻ → Ag2O, carbonatos básicos de
-     Cu/Mg/Zn/Fe(II), carbonatos de Fe³⁺/Al³⁺ inexistentes, acetatos básicos, bicarbonatos só do
-     grupo 1/NH4⁺) e limites numéricos escolhidos sem livro (−2,5 V "ataca a água", −0,8 V "não se
-     deposita", −0,4 V para ácido fraco, passivação de Al/Be). Ideal: conferir no Greenwood.
-  2. Síntese e decomposição estreitas: só óxido + água e carbonatos de Mg/Ca; sem regra geral para
-     metal + O2 e metal + Cl2 (produto varia).
-  3. Regras só para pares; combinações de 3+ substâncias não passam pelo motor.
-  4. Estequiometria só com massa: faltam volume de gás, concentração (mol/L) e rendimento
-     percentual (Atkins & Jones, seções G, L, M).
-  5. A regra de combustão não tem combustível novo (só o metano, que é curado): depende de
-     adicionar orgânicos como etanol e propano.
-  6. Ácido nítrico + metais sempre "não sei"; curar casos clássicos (Cu + HNO3 diluído, p. 519).
+- **Pendências da Fase 2**: o que o livro (Atkins & Jones) cobria foi feito — fontes com página nas
+  exceções, limites trocados pelo que o livro diz, metal alcalino + Cl2, Mg(OH)2 → MgO, Cu + HNO3
+  diluído (com o radical NO), etanol e propano, estequiometria com mol, litros de gás, solução e
+  rendimento. **Ainda em aberto** (o livro não supre):
+  1. Exceções sem página: carbonatos básicos de Mg²⁺ e Fe²⁺ (escopo "precipitation"), a formação
+     dos acetatos básicos de Fe³⁺/Al³⁺ em si, e o limite de −1,0 V para "não se deposita" (é uma
+     estimativa a partir das p. 543–544). Ideal: conferir no Greenwood.
+  2. Sem regra geral para metais do grupo 2 e de transição + O2/Cl2 (o produto varia); só o grupo 1
+     + Cl2 tem regra. Decomposição: só carbonatos de Mg/Ca e o Mg(OH)2 curado.
+  3. Regras só para pares; combinações de 3+ substâncias não passam pelo motor (é decisão de
+     projeto, não de fonte).
+  4. Ácido nítrico + outros metais continua "não sei" (produtos dependem da concentração).
 - **Fase 3 (avançado) — próxima**: termodinâmica e cinética, equilíbrio, moléculas 3D, introdução à química
   orgânica, missões e progressão mais elaborada.
 

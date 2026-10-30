@@ -32,7 +32,10 @@ test('referências da progressão existem', () => {
         const r = lookupReaction(data, o.reaction);
         assert.ok(r, `${o.id}: reação ${o.reaction}`);
         for (const id of Object.keys(o.given)) assert.ok(r.reactants.some((e) => e.id === id), `${o.id}: ${id} não é reagente`);
-        assert.ok(o.ask === 'limiting' ? Object.keys(o.given).length > 1 : r.products.some((e) => e.id === o.ask), `${o.id}: pergunta inválida`);
+        if (o.ask === 'limiting') assert.ok(Object.keys(o.given).length > 1, `${o.id}: limitante precisa de dois reagentes`);
+        else if (o.ask === 'yield') assert.ok(r.products.some((e) => e.id === o.actual?.id), `${o.id}: rendimento de um produto`);
+        else assert.ok(r.products.some((e) => e.id === o.ask), `${o.id}: pergunta inválida`);
+        assert.ok(Number.isFinite(stoichAnswer(o, data)) || typeof stoichAnswer(o, data) === 'string', `${o.id}: sem resposta calculável`);
       }
       if (o.type === 'nonReaction' && !o.reasonId.startsWith('rule:')) assert.ok(nrIds.has(o.reasonId), o.id);
     }
@@ -159,4 +162,16 @@ test('quem terminou a Fase 1 entra na Fase 2 ao carregar o jogo', () => {
   assert.equal(restored.finished, false);
   assert.equal(levels[restored.levelIndex].phase, 2);
   assert.ok(restored.unlockedSubstances.includes('BaCl2'));
+});
+
+test('estequiometria com unidades: litros de gás, solução e rendimento', () => {
+  const find = (id) => levels.flatMap((l) => l.objectives).find((x) => x.id === id);
+  const s0 = initialState(data);
+  assert.ok(Math.abs(stoichAnswer(find('n11-litros'), data) - 3 * 24.47) < 0.01);
+  assert.equal(answerObjective(s0, 'n11-litros', '73,4', data).correct, true);
+  assert.equal(answerObjective(s0, 'n11-litros', '24,5', data).correct, false);
+  assert.equal(answerObjective(s0, 'n11-solucao', '0,29', data).correct, true);
+  assert.equal(answerObjective(s0, 'n11-solucao', '0,58', data).correct, false);
+  assert.equal(answerObjective(s0, 'n11-rendimento', '93,1%', data).correct, true);
+  assert.equal(answerObjective(s0, 'n11-rendimento', '107', data).correct, false);
 });

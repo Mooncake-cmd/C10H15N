@@ -2,53 +2,223 @@
   "_meta": {
     "description": "Íons que o motor de regras (Fase 2) combina. Cada par cátion + ânion vira um composto iônico (sal, hidróxido ou óxido) com nome e fórmula montados pela carga, a não ser que já exista em substances.json (aí o curado é usado) ou esteja em 'anomalies' com escopo 'never'. A solubilidade segue a Tabela I.1 de Atkins & Jones.",
     "group": "grupo da tabela periódica do metal (1 e 2 entram nas regras de solubilidade e de ácido/base fortes)",
-    "anomalies": "pares em que a 'troca de íons' não dá o composto simples. scope 'never': o composto não existe como sólido comum (não é gerado). scope 'precipitation': o composto existe (mineral), mas misturar as soluções dá outro produto, então a regra de precipitação não afirma nada.",
+    "anomalies": "pares em que a 'troca de íons' não dá o composto simples. scope 'never': o composto não existe como sólido comum (não é gerado). scope 'precipitation': o composto existe (mineral), mas misturar as soluções dá outro produto, então a regra de precipitação não afirma nada. Cada anomalia cita a página do livro quando ele a confirma (campo source); as que ainda não têm página estão marcadas sem source.",
     "hazards": "avisos de segurança dos compostos gerados, por íon (when: 'soluble' = só quando o composto é solúvel)"
   },
-  "source": { "ref": "atkins-jones", "topic": "Tabela I.1: regras de solubilidade para compostos inorgânicos", "pages": "F69" },
+  "source": {
+    "ref": "atkins-jones",
+    "topic": "Tabela I.1: regras de solubilidade para compostos inorgânicos",
+    "pages": "F69"
+  },
   "cations": [
-    { "formula": "Li+", "name": "lítio", "metal": "Li", "group": 1 },
-    { "formula": "Na+", "name": "sódio", "metal": "Na", "group": 1 },
-    { "formula": "K+", "name": "potássio", "metal": "K", "group": 1 },
-    { "formula": "Rb+", "name": "rubídio", "metal": "Rb", "group": 1 },
-    { "formula": "Cs+", "name": "césio", "metal": "Cs", "group": 1 },
-    { "formula": "NH4+", "name": "amônio" },
-    { "formula": "Mg^2+", "name": "magnésio", "metal": "Mg", "group": 2 },
-    { "formula": "Ca^2+", "name": "cálcio", "metal": "Ca", "group": 2 },
-    { "formula": "Sr^2+", "name": "estrôncio", "metal": "Sr", "group": 2 },
-    { "formula": "Ba^2+", "name": "bário", "metal": "Ba", "group": 2 },
-    { "formula": "Al^3+", "name": "alumínio", "metal": "Al", "group": 13 },
-    { "formula": "Zn^2+", "name": "zinco", "metal": "Zn", "group": 12 },
-    { "formula": "Fe^2+", "name": "ferro(II)", "metal": "Fe", "group": 8 },
-    { "formula": "Fe^3+", "name": "ferro(III)", "metal": "Fe", "group": 8 },
-    { "formula": "Cu^2+", "name": "cobre(II)", "metal": "Cu", "group": 11 },
-    { "formula": "Ag+", "name": "prata", "metal": "Ag", "group": 11 }
+    {
+      "formula": "Li+",
+      "name": "lítio",
+      "metal": "Li",
+      "group": 1
+    },
+    {
+      "formula": "Na+",
+      "name": "sódio",
+      "metal": "Na",
+      "group": 1
+    },
+    {
+      "formula": "K+",
+      "name": "potássio",
+      "metal": "K",
+      "group": 1
+    },
+    {
+      "formula": "Rb+",
+      "name": "rubídio",
+      "metal": "Rb",
+      "group": 1
+    },
+    {
+      "formula": "Cs+",
+      "name": "césio",
+      "metal": "Cs",
+      "group": 1
+    },
+    {
+      "formula": "NH4+",
+      "name": "amônio"
+    },
+    {
+      "formula": "Mg^2+",
+      "name": "magnésio",
+      "metal": "Mg",
+      "group": 2
+    },
+    {
+      "formula": "Ca^2+",
+      "name": "cálcio",
+      "metal": "Ca",
+      "group": 2
+    },
+    {
+      "formula": "Sr^2+",
+      "name": "estrôncio",
+      "metal": "Sr",
+      "group": 2
+    },
+    {
+      "formula": "Ba^2+",
+      "name": "bário",
+      "metal": "Ba",
+      "group": 2
+    },
+    {
+      "formula": "Al^3+",
+      "name": "alumínio",
+      "metal": "Al",
+      "group": 13
+    },
+    {
+      "formula": "Zn^2+",
+      "name": "zinco",
+      "metal": "Zn",
+      "group": 12
+    },
+    {
+      "formula": "Fe^2+",
+      "name": "ferro(II)",
+      "metal": "Fe",
+      "group": 8
+    },
+    {
+      "formula": "Fe^3+",
+      "name": "ferro(III)",
+      "metal": "Fe",
+      "group": 8
+    },
+    {
+      "formula": "Cu^2+",
+      "name": "cobre(II)",
+      "metal": "Cu",
+      "group": 11
+    },
+    {
+      "formula": "Ag+",
+      "name": "prata",
+      "metal": "Ag",
+      "group": 11
+    }
   ],
   "anions": [
-    { "formula": "Cl-", "name": "cloreto" },
-    { "formula": "NO3-", "name": "nitrato" },
-    { "formula": "SO4^2-", "name": "sulfato" },
-    { "formula": "CO3^2-", "name": "carbonato" },
-    { "formula": "HCO3-", "name": "bicarbonato", "onlyWith": ["group1", "NH4+"],
-      "onlyWithWhy": "Bicarbonatos sólidos só existem com os metais do grupo 1 e o amônio; os de cálcio e magnésio existem apenas dissolvidos (é a 'água dura')." },
-    { "formula": "CH3COO-", "name": "acetato", "organic": true },
-    { "formula": "OH-", "name": "hidróxido" },
-    { "formula": "O^2-", "name": "óxido", "metalsOnly": true }
+    {
+      "formula": "Cl-",
+      "name": "cloreto"
+    },
+    {
+      "formula": "NO3-",
+      "name": "nitrato"
+    },
+    {
+      "formula": "SO4^2-",
+      "name": "sulfato"
+    },
+    {
+      "formula": "CO3^2-",
+      "name": "carbonato"
+    },
+    {
+      "formula": "HCO3-",
+      "name": "bicarbonato",
+      "onlyWith": [
+        "group1",
+        "NH4+"
+      ],
+      "onlyWithWhy": "Bicarbonatos sólidos só existem com os metais do grupo 1 e o amônio; os de cálcio e magnésio existem apenas dissolvidos (é a 'água dura').",
+      "onlyWithSource": {
+        "ref": "atkins-jones",
+        "topic": "Seção 9.13: água dura — Ca(HCO3)2 existe dissolvido e se decompõe ao aquecer",
+        "pages": "351"
+      }
+    },
+    {
+      "formula": "CH3COO-",
+      "name": "acetato",
+      "organic": true
+    },
+    {
+      "formula": "OH-",
+      "name": "hidróxido"
+    },
+    {
+      "formula": "O^2-",
+      "name": "óxido",
+      "metalsOnly": true
+    }
   ],
   "solubility": {
     "rules": [
-      { "id": "grupo1-amonio", "cations": ["group1", "NH4+"], "result": "soluble",
-        "text": "compostos dos metais do grupo 1 e de amônio são solúveis" },
-      { "id": "nitrato-acetato", "anions": ["NO3-", "CH3COO-"], "result": "soluble",
-        "text": "nitratos e acetatos são solúveis" },
-      { "id": "haletos", "anions": ["Cl-"], "result": "soluble", "except": { "Ag+": "insoluble" },
-        "text": "cloretos são solúveis, exceto o de prata (e os de Hg2²⁺ e Pb²⁺)" },
-      { "id": "sulfatos", "anions": ["SO4^2-"], "result": "soluble", "except": { "Ca^2+": "insoluble", "Sr^2+": "insoluble", "Ba^2+": "insoluble", "Ag+": "slightly" },
-        "text": "sulfatos são solúveis, exceto os de Ca²⁺, Sr²⁺, Ba²⁺ (e Pb²⁺, Hg2²⁺); o de prata é pouco solúvel" },
-      { "id": "carbonatos", "anions": ["CO3^2-"], "result": "insoluble",
-        "text": "carbonatos são insolúveis, exceto os do grupo 1 e de amônio" },
-      { "id": "hidroxidos-oxidos", "anions": ["OH-", "O^2-"], "result": "insoluble", "except": { "Ba^2+": "soluble", "Ca^2+": "slightly", "Sr^2+": "slightly" },
-        "text": "hidróxidos e óxidos são insolúveis, exceto os do grupo 1 e os do grupo 2 abaixo do período 2; Ca(OH)2 e Sr(OH)2 são pouco solúveis e Mg(OH)2 é só muito ligeiramente solúvel" }
+      {
+        "id": "grupo1-amonio",
+        "cations": [
+          "group1",
+          "NH4+"
+        ],
+        "result": "soluble",
+        "text": "compostos dos metais do grupo 1 e de amônio são solúveis"
+      },
+      {
+        "id": "nitrato-acetato",
+        "anions": [
+          "NO3-",
+          "CH3COO-"
+        ],
+        "result": "soluble",
+        "text": "nitratos e acetatos são solúveis"
+      },
+      {
+        "id": "haletos",
+        "anions": [
+          "Cl-"
+        ],
+        "result": "soluble",
+        "except": {
+          "Ag+": "insoluble"
+        },
+        "text": "cloretos são solúveis, exceto o de prata (e os de Hg2²⁺ e Pb²⁺)"
+      },
+      {
+        "id": "sulfatos",
+        "anions": [
+          "SO4^2-"
+        ],
+        "result": "soluble",
+        "except": {
+          "Ca^2+": "insoluble",
+          "Sr^2+": "insoluble",
+          "Ba^2+": "insoluble",
+          "Ag+": "slightly"
+        },
+        "text": "sulfatos são solúveis, exceto os de Ca²⁺, Sr²⁺, Ba²⁺ (e Pb²⁺, Hg2²⁺); o de prata é pouco solúvel"
+      },
+      {
+        "id": "carbonatos",
+        "anions": [
+          "CO3^2-"
+        ],
+        "result": "insoluble",
+        "text": "carbonatos são insolúveis, exceto os do grupo 1 e de amônio"
+      },
+      {
+        "id": "hidroxidos-oxidos",
+        "anions": [
+          "OH-",
+          "O^2-"
+        ],
+        "result": "insoluble",
+        "except": {
+          "Ba^2+": "soluble",
+          "Ca^2+": "slightly",
+          "Sr^2+": "slightly"
+        },
+        "text": "hidróxidos e óxidos são insolúveis, exceto os do grupo 1 e os do grupo 2 abaixo do período 2; Ca(OH)2 e Sr(OH)2 são pouco solúveis e Mg(OH)2 é só muito ligeiramente solúvel"
+      }
     ],
     "labels": {
       "soluble": "solúvel em água",
@@ -57,35 +227,145 @@
     }
   },
   "anomalies": [
-    { "cation": "Ag+", "anion": "OH-", "scope": "never",
-      "why": "O hidróxido de prata não existe como sólido: misturar íons Ag⁺ e OH⁻ forma óxido de prata, Ag2O, um sólido marrom-escuro." },
-    { "cation": "NH4+", "anion": "OH-", "scope": "never",
-      "why": "Não existe 'hidróxido de amônio' sólido: NH4⁺ e OH⁻ formam amônia (NH3) e água. A amônia é uma base fraca, quase toda na forma de moléculas de NH3 em água." },
-    { "cation": "NH4+", "anion": "O^2-", "scope": "never", "why": "O amônio não forma óxido." },
-    { "cation": "Cu^2+", "anion": "CO3^2-", "scope": "never",
-      "why": "Misturar íons Cu²⁺ e carbonato precipita um carbonato BÁSICO de cobre (que contém também íons OH⁻, como a malaquita), não CuCO3 simples." },
-    { "cation": "Fe^3+", "anion": "CO3^2-", "scope": "never",
-      "why": "O carbonato de ferro(III) não existe: o íon Fe³⁺ é ácido o bastante para transformar o carbonato em CO2, e precipita hidróxido de ferro(III)." },
-    { "cation": "Al^3+", "anion": "CO3^2-", "scope": "never",
-      "why": "O carbonato de alumínio não existe em condições comuns: o íon Al³⁺ transforma o carbonato em CO2 e precipita hidróxido de alumínio." },
-    { "cation": "Fe^3+", "anion": "CH3COO-", "scope": "never",
-      "why": "O acetato de ferro(III) simples não se forma: em água o Fe³⁺ dá acetatos 'básicos', com íons OH⁻ na estrutura." },
-    { "cation": "Al^3+", "anion": "CH3COO-", "scope": "never",
-      "why": "O acetato de alumínio simples não se forma: em água o Al³⁺ dá acetatos 'básicos', com íons OH⁻ na estrutura." },
-    { "cation": "Zn^2+", "anion": "CO3^2-", "scope": "precipitation",
-      "why": "O ZnCO3 existe como mineral, mas misturar soluções de Zn²⁺ e carbonato costuma precipitar um carbonato básico de zinco (com OH⁻), não ZnCO3 puro." },
-    { "cation": "Mg^2+", "anion": "CO3^2-", "scope": "precipitation",
-      "why": "O MgCO3 existe como mineral, mas misturar soluções de Mg²⁺ e carbonato precipita um carbonato básico de magnésio (com OH⁻), não MgCO3 puro." },
-    { "cation": "Fe^2+", "anion": "CO3^2-", "scope": "precipitation",
-      "why": "O FeCO3 existe (mineral siderita), mas em contato com o ar o ferro(II) se oxida rapidamente e o precipitado muda de composição." }
+    {
+      "cation": "Ag+",
+      "anion": "OH-",
+      "scope": "never",
+      "why": "O hidróxido de prata não existe como sólido: misturar íons Ag⁺ e OH⁻ forma óxido de prata, Ag2O, um sólido marrom-escuro.",
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Autoteste 10.3A: 2 AgNO3 + 2 NaOH → Ag2O(s) + 2 NaNO3 + H2O",
+        "pages": "389"
+      }
+    },
+    {
+      "cation": "NH4+",
+      "anion": "OH-",
+      "scope": "never",
+      "why": "Não existe 'hidróxido de amônio' sólido: NH4⁺ e OH⁻ formam amônia (NH3) e água. A amônia é uma base fraca, quase toda na forma de moléculas de NH3 em água.",
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Capítulo 11 (seção 11.1 e equilíbrio da amônia em água): NH4⁺ + OH⁻ ⇌ NH3 + H2O",
+        "pages": "425, 436"
+      }
+    },
+    {
+      "cation": "NH4+",
+      "anion": "O^2-",
+      "scope": "never",
+      "why": "O amônio não forma óxido."
+    },
+    {
+      "cation": "Cu^2+",
+      "anion": "CO3^2-",
+      "scope": "never",
+      "why": "Misturar íons Cu²⁺ e carbonato precipita um carbonato BÁSICO de cobre (que contém também íons OH⁻, como a malaquita), não CuCO3 simples.",
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Seção 16.4: o carbonato de cobre natural é básico (malaquita, CuCO3·Cu(OH)2; pátina Cu2(OH)2CO3)",
+        "pages": "677–678"
+      }
+    },
+    {
+      "cation": "Fe^3+",
+      "anion": "CO3^2-",
+      "scope": "never",
+      "why": "O carbonato de ferro(III) não existe: o íon Fe³⁺ é ácido o bastante para transformar o carbonato em CO2, e precipita hidróxido de ferro(III).",
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Seção 11.13: Al³⁺ e Fe³⁺ são cátions ácidos em água",
+        "pages": "450"
+      }
+    },
+    {
+      "cation": "Al^3+",
+      "anion": "CO3^2-",
+      "scope": "never",
+      "why": "O carbonato de alumínio não existe em condições comuns: o íon Al³⁺ transforma o carbonato em CO2 e precipita hidróxido de alumínio.",
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Seção 11.13: Al³⁺ e Fe³⁺ são cátions ácidos em água",
+        "pages": "450"
+      }
+    },
+    {
+      "cation": "Fe^3+",
+      "anion": "CH3COO-",
+      "scope": "never",
+      "why": "O acetato de ferro(III) simples não se forma: em água o Fe³⁺ dá acetatos 'básicos', com íons OH⁻ na estrutura.",
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Seção 11.13: Fe³⁺ é um cátion ácido em água (a formação dos acetatos básicos em si não está no livro)",
+        "pages": "450"
+      }
+    },
+    {
+      "cation": "Al^3+",
+      "anion": "CH3COO-",
+      "scope": "never",
+      "why": "O acetato de alumínio simples não se forma: em água o Al³⁺ dá acetatos 'básicos', com íons OH⁻ na estrutura.",
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Seção 11.13: Al³⁺ é um cátion ácido em água (a formação dos acetatos básicos em si não está no livro)",
+        "pages": "450"
+      }
+    },
+    {
+      "cation": "Zn^2+",
+      "anion": "CO3^2-",
+      "scope": "precipitation",
+      "why": "O ZnCO3 existe como mineral, mas misturar soluções de Zn²⁺ e carbonato costuma precipitar um carbonato básico de zinco (com OH⁻), não ZnCO3 puro.",
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Seção 16.4: o zinco forma carbonato básico, Zn2(OH)2CO3",
+        "pages": "679"
+      }
+    },
+    {
+      "cation": "Mg^2+",
+      "anion": "CO3^2-",
+      "scope": "precipitation",
+      "why": "O MgCO3 existe como mineral, mas misturar soluções de Mg²⁺ e carbonato precipita um carbonato básico de magnésio (com OH⁻), não MgCO3 puro."
+    },
+    {
+      "cation": "Fe^2+",
+      "anion": "CO3^2-",
+      "scope": "precipitation",
+      "why": "O FeCO3 existe (mineral siderita), mas em contato com o ar o ferro(II) se oxida rapidamente e o precipitado muda de composição."
+    }
   ],
   "hazards": [
-    { "cation": "Ba^2+", "when": "soluble", "text": "Compostos solúveis de bário são tóxicos se ingeridos." },
-    { "cation": "Ag+", "text": "Mancha a pele de preto; tóxico se ingerido." },
-    { "cation": "Cu^2+", "text": "Tóxico se ingerido; irritante para pele e olhos." },
-    { "anion": "OH-", "when": "soluble", "text": "Base forte: corrosiva para pele e olhos." },
-    { "anion": "O^2-", "group": [1, 2], "text": "Reage com a umidade formando uma base forte: corrosivo." },
-    { "cation": "NH4+", "anion": "NO3-", "text": "Oxidante; pode se decompor de forma explosiva quando aquecido ou contaminado." }
+    {
+      "cation": "Ba^2+",
+      "when": "soluble",
+      "text": "Compostos solúveis de bário são tóxicos se ingeridos."
+    },
+    {
+      "cation": "Ag+",
+      "text": "Mancha a pele de preto; tóxico se ingerido."
+    },
+    {
+      "cation": "Cu^2+",
+      "text": "Tóxico se ingerido; irritante para pele e olhos."
+    },
+    {
+      "anion": "OH-",
+      "when": "soluble",
+      "text": "Base forte: corrosiva para pele e olhos."
+    },
+    {
+      "anion": "O^2-",
+      "group": [
+        1,
+        2
+      ],
+      "text": "Reage com a umidade formando uma base forte: corrosivo."
+    },
+    {
+      "cation": "NH4+",
+      "anion": "NO3-",
+      "text": "Oxidante; pode se decompor de forma explosiva quando aquecido ou contaminado."
+    }
   ],
   "description": {
     "salt": "Composto iônico formado por íons {cation} e {anion}, na proporção que deixa a carga total zero.",

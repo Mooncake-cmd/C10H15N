@@ -49,7 +49,9 @@ test('sem precipitado, íon em comum, pouco solúvel', () => {
 });
 
 test('anomalias: o composto "da troca" não é o que se forma', () => {
-  assert.equal(reasonOf('AgNO3', 'NaOH'), 'rule:anomalia'); // forma Ag2O
+  assert.equal(reasonOf('AgNO3', 'KOH'), 'rule:anomalia'); // forma Ag2O
+  assert.equal(combine('AgNO3', 'KOH').source?.pages, '389', 'a exceção cita a página do livro');
+  assert.equal(combine('AgNO3', 'NaOH').reaction?.id, 'agno3-naoh', 'com NaOH é a reação curada do livro (p. 389)');
   assert.equal(reasonOf('NH4Cl', 'NaOH'), 'rule:anomalia'); // forma NH3
   assert.equal(reasonOf('CuSO4', 'Na2CO3'), 'rule:anomalia'); // carbonato básico
   assert.equal(combine('CaCO3', 'NaCl').reasonId, 'rule:reagente-insoluvel');
@@ -75,12 +77,14 @@ test('metais: série eletroquímica (seção 13.7) e as exceções', () => {
   assert.equal(eq(reactionOf('Al', 'HCl')), '2 Al(s) + 6 HCl(aq) → 2 AlCl3(aq) + 3 H2(g)');
   assert.equal(eq(reactionOf('Cu', 'AgNO3')), '1 Cu(s) + 2 AgNO3(aq) → 1 Cu(NO3)2(aq) + 2 Ag(s)');
   assert.equal(reactionOf('K', 'HCl').safety.level, 'perigo');
-  assert.equal(reasonOf('Cu', 'HNO3'), 'rule:acido-oxidante'); // forma NO, não H2 (p. 519)
+  assert.equal(reasonOf('Zn', 'HNO3'), 'rule:acido-oxidante'); // produtos dependem da concentração
+  assert.equal(combine('Cu', 'HNO3').reaction?.id, 'cu-hno3'); // o caso do livro (p. 519) é curado
   assert.equal(reasonOf('Al', 'CH3COOH'), 'rule:acido-fraco-metal'); // película de óxido
   assert.equal(reasonOf('Zn', 'NaOH'), 'rule:metal-anfotero-base'); // não é "não reage"!
   assert.equal(reasonOf('Be', 'NaOH'), 'rule:metal-anfotero-base'); // p. 626
   assert.equal(rules.evaluate(['Cu', 'H2O']).outcome.reasonId, 'rule:metal-nobre-agua'); // também é curada (nr-cu-h2o)
   assert.equal(reasonOf('Ca', 'CuSO4'), 'rule:reage-com-agua');
+  assert.equal(reasonOf('Mg', 'CuSO4') ?? 'reação', 'reação', 'Mg não está na lista do livro de metais que atacam a água fria');
   assert.equal(reasonOf('Mg', 'Al2(SO4)3'), 'rule:nao-deposita'); // Al não se deposita de solução aquosa
   assert.notEqual(combine('Be', 'HCl').reasonId, 'rule:anomalia');
 });
@@ -136,7 +140,7 @@ test(`varredura: as regras geram muitas reações (${generated.size}) e explica�
 });
 
 test('varredura: toda reação gerada é química válida e completa', () => {
-  const TYPES = ['sintese', 'decomposicao', 'simples_troca', 'dupla_troca', 'combustao', 'acido_base'];
+  const TYPES = ['sintese', 'decomposicao', 'simples_troca', 'dupla_troca', 'combustao', 'acido_base', 'oxirreducao'];
   for (const r of generated.values()) {
     const L = resolveSide(r.reactants, data.substancesById);
     const P = resolveSide(r.products, data.substancesById);
@@ -171,4 +175,12 @@ test('varredura: toda explicação de regra é completa', () => {
 test('bicarbonato é anfiprótico: com OH⁻ forma carbonato (p. 627)', () => {
   assert.equal(eq(reactionOf('NaHCO3', 'NaOH')), '1 NaHCO3(aq) + 1 NaOH(aq) → 1 Na2CO3(aq) + 1 H2O(l)');
   assert.equal(combine('NaHCO3', 'KOH').kind, 'unknown');
+});
+
+test('metal alcalino + cloro (seção 15.5) e exceções com fonte', () => {
+  assert.equal(eq(reactionOf('K', 'Cl2')), '2 K(s) + 1 Cl2(g) → 2 KCl(s)');
+  assert.equal(eq(reactionOf('Cs', 'Cl2')), '2 Cs(s) + 1 Cl2(g) → 2 CsCl(s)');
+  assert.notEqual(combine('Fe', 'Cl2').kind, 'reaction', 'Fe + Cl2 não tem regra (o produto depende)');
+  assert.equal(combine('CuSO4', 'Na2CO3').source?.pages, '677–678');
+  assert.equal(combine('NH4Cl', 'KOH').source?.pages, '425, 436');
 });
