@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Elementar — jogo de química</title>
+  <meta name="description" content="Combine elementos e compostos, veja reações químicas reais com equação balanceada e entenda o porquê.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚗️</text></svg>">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><span class="logo" aria-hidden="true">⚗️</span><span>Elementar</span></div>
+    <div class="level">
+      <span id="level-name">Carregando…</span>
+      <div class="progress" role="progressbar" aria-label="Progresso da Fase 1" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div id="progress-bar"></div></div>
+    </div>
+    <button id="btn-reset" class="btn btn-ghost" type="button" title="Apagar progresso">Recomeçar</button>
+  </header>
+
+  <p id="app-error" class="app-error" hidden></p>
+
+  <main class="layout">
+    <section id="objectives-panel" class="panel objectives-panel" aria-label="Objetivos">
+      <div id="objectives"></div>
+    </section>
+
+    <section id="inventory" class="panel inventory" aria-label="Inventário">
+      <div class="panel-head">
+        <h2>Inventário</h2>
+        <span id="inv-count" class="muted small"></span>
+      </div>
+      <input id="inv-search" type="search" placeholder="Buscar (nome ou fórmula)" aria-label="Buscar no inventário">
+      <h3>Ferramentas</h3>
+      <div id="inv-items" class="chips"></div>
+      <h3>Elementos</h3>
+      <div id="inv-elements" class="chips"></div>
+      <h3>Compostos</h3>
+      <div id="inv-compounds" class="chips"></div>
+    </section>
+
+    <section class="center">
+      <div id="bench" class="panel bench" aria-label="Bancada de combinação">
+        <div class="panel-head"><h2>Bancada</h2><span class="muted small">Ctrl+Enter reage</span></div>
+        <div id="bench-slots" class="bench-slots"></div>
+        <div class="bench-actions">
+          <button id="btn-clear" class="btn btn-ghost" type="button">Limpar</button>
+          <button id="btn-react" class="btn btn-primary" type="button">⚗️ Reagir</button>
+        </div>
+      </div>
+      <article id="result" class="panel result" aria-live="polite"></article>
+    </section>
+
+    <section id="periodic-table" class="panel periodic" aria-label="Tabela periódica">
+      <div class="panel-head"><h2>Tabela periódica</h2><span class="muted small">Clique para ver detalhes · duplo clique coloca na bancada</span></div>
+      <div class="pt-wrap">
+        <div class="pt-scroll"><div class="pt-grid"></div></div>
+        <aside class="pt-info"><p class="muted small">Selecione um elemento para ver número atômico, massa, grupo, período, eletronegatividade e configuração eletrônica.</p></aside>
+      </div>
+      <div class="pt-legend"></div>
+      <p class="small muted">Dados dos elementos: <a href="https://github.com/Bowserinator/Periodic-Table-JSON" target="_blank" rel="noopener">Periodic-Table-JSON</a> (compilado da Wikipédia, CC BY-SA); massas atômicas conferidas com a IUPAC nos testes.</p>
+    </section>
+  </main>
+
+  <dialog id="level-dialog" class="level-dialog">
+    <div id="level-dialog-body"></div>
+    <div class="dialog-actions"><button id="level-dialog-close" class="btn btn-primary" type="button">Continuar</button></div>
+  </dialog>
+
+  <div id="toasts" class="toasts" aria-live="polite"></div>
+
+  <script type="module" src="src/main.js"></script>
+</body>
+</html>

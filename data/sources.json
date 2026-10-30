@@ -1,0 +1,12 @@
+{
+  "_meta": {
+    "description": "Referências citadas por reactions.json e non-reactions.json (campo 'source.ref'). Os tópicos indicados em cada reação estão presentes nesses livros-texto (em capítulos sobre reações em solução aquosa, estequiometria, eletroquímica, química descritiva dos elementos etc.); conferir pela seção/índice remissivo da edição que você tiver."
+  },
+  "sources": {
+    "brown": "BROWN, T. L.; LEMAY, H. E.; BURSTEN, B. E.; MURPHY, C. J.; WOODWARD, P. M. Química: a ciência central. 13. ed. São Paulo: Pearson, 2016.",
+    "atkins": "ATKINS, P.; JONES, L.; LAVERMAN, L. Princípios de Química: questionando a vida moderna e o meio ambiente. 7. ed. Porto Alegre: Bookman, 2018.",
+    "kotz": "KOTZ, J. C.; TREICHEL, P. M.; TOWNSEND, J. R.; TREICHEL, D. A. Química Geral e Reações Químicas. 9. ed. São Paulo: Cengage Learning, 2015.",
+    "greenwood": "GREENWOOD, N. N.; EARNSHAW, A. Chemistry of the Elements. 2nd ed. Oxford: Butterworth-Heinemann, 1997.",
+    "crc": "HAYNES, W. M. (ed.). CRC Handbook of Chemistry and Physics. 97th ed. Boca Raton: CRC Press, 2016. Seção 'Electrochemical Series' (potenciais-padrão de redução)."
+  }
+}

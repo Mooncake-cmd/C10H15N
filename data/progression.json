@@ -1,0 +1,111 @@
+{
+  "_meta": {
+    "description": "Níveis da Fase 1. Ao completar todos os objetivos de um nível, o próximo é liberado e seus 'unlocks' entram no inventário. Os testes verificam que todo objetivo é alcançável com o que já foi desbloqueado até aquele nível.",
+    "unlocks": "elements: símbolos (entra a forma elementar, de substances.json); substances: reagentes entregues prontos; items: ferramentas",
+    "objectiveTypes": {
+      "produce": "{ substance } — obter a substância como PRODUTO de uma reação",
+      "produceCategory": "{ category } — obter como produto qualquer substância daquela categoria",
+      "reactionType": "{ reactionType, withReactant? } — fazer uma reação daquele tipo (opcionalmente usando um reagente específico)",
+      "nonReaction": "{ reasonId } — tentar uma combinação que não reage e ver o porquê. reasonId é o id em non-reactions.json ou 'rule:<id>' de uma regra genérica"
+    }
+  },
+  "levels": [
+    {
+      "id": "n1",
+      "title": "Elementos e compostos",
+      "intro": "Tudo à sua volta é feito de elementos químicos — os quadradinhos da tabela periódica. Quando elementos se combinam, formam compostos com propriedades novas. Comece com quatro: hidrogênio, oxigênio, sódio e cloro. Clique para colocar na bancada e aperte 'Reagir'.",
+      "unlocks": { "elements": ["H", "O", "Na", "Cl"], "items": ["calor", "faisca"] },
+      "objectives": [
+        { "id": "n1-agua", "type": "produce", "substance": "H2O", "text": "Produza água",
+          "hint": "Hidrogênio + oxigênio. Será que basta misturar? Talvez precise de uma faísca..." },
+        { "id": "n1-sal", "type": "produceCategory", "category": "sal", "text": "Produza um sal",
+          "hint": "Sais são formados por íons. Um metal que perde elétron fácil + um ametal que quer ganhar elétron..." }
+      ],
+      "lesson": "Na equação, o número de cada tipo de átomo é igual nos dois lados: na química nada se cria nem se perde, os átomos só se rearranjam (Lavoisier). Por isso existem os coeficientes, como o 2 em 2 H2O."
+    },
+    {
+      "id": "n2",
+      "title": "Fogo: combustão",
+      "intro": "Combustão é uma reação rápida com oxigênio que libera energia como calor e luz. Novos elementos: carbono, enxofre, magnésio, ferro e cobre — e o gás natural (metano).",
+      "unlocks": { "elements": ["C", "S", "Mg", "Fe", "Cu"], "substances": ["CH4"] },
+      "objectives": [
+        { "id": "n2-co2", "type": "produce", "substance": "CO2", "text": "Produza gás carbônico (CO2)",
+          "hint": "Queime algo que contenha carbono." },
+        { "id": "n2-mgo", "type": "produce", "substance": "MgO", "text": "Queime um metal que brilha muito",
+          "hint": "O magnésio era usado em flashes de fotografia antigos." },
+        { "id": "n2-ch4", "type": "reactionType", "reactionType": "combustao", "withReactant": "CH4", "text": "Acenda o gás natural",
+          "hint": "Metano + oxigênio + uma fonte de ignição." }
+      ],
+      "lesson": "Compare as queimas: magnésio pega fogo com luz ofuscante, cobre só escurece. Metais diferentes têm reatividades diferentes — isso vai ser importante adiante."
+    },
+    {
+      "id": "n3",
+      "title": "Famílias: metais alcalinos",
+      "intro": "Elementos da mesma coluna (grupo ou família) da tabela periódica se comportam de forma parecida, porque têm o mesmo número de elétrons na última camada. Teste lítio e potássio — vizinhos do sódio no grupo 1 — e o cálcio, do grupo 2.",
+      "unlocks": { "elements": ["Li", "K", "Ca"], "items": ["luz"] },
+      "objectives": [
+        { "id": "n3-na", "type": "produce", "substance": "NaOH", "text": "Coloque sódio na água",
+          "hint": "Você já tem sódio e já sabe fazer água." },
+        { "id": "n3-li", "type": "produce", "substance": "LiOH", "text": "Faça o mesmo com o lítio" },
+        { "id": "n3-k", "type": "produce", "substance": "KOH", "text": "E com o potássio" },
+        { "id": "n3-ca", "type": "produce", "substance": "Ca(OH)2", "text": "Agora o cálcio (grupo 2): qual a diferença?",
+          "hint": "Repare na fórmula do hidróxido formado." }
+      ],
+      "lesson": "Todo metal do grupo 1 + água → hidróxido + hidrogênio, e a violência aumenta descendo a coluna (Li < Na < K). No grupo 2 os metais perdem 2 elétrons — por isso Ca(OH)2 tem dois OH."
+    },
+    {
+      "id": "n4",
+      "title": "Ácidos e bases",
+      "intro": "Ácidos liberam H⁺ na água; bases liberam OH⁻. Juntos, eles se neutralizam. Novos reagentes do cotidiano: calcário (CaCO3), bicarbonato de sódio e vinagre.",
+      "unlocks": { "substances": ["CaCO3", "NaHCO3", "CH3COOH"] },
+      "objectives": [
+        { "id": "n4-hcl", "type": "produce", "substance": "HCl", "text": "Produza ácido clorídrico",
+          "hint": "Hidrogênio + cloro. No escuro, quase nada acontece..." },
+        { "id": "n4-neutraliza", "type": "reactionType", "reactionType": "acido_base", "withReactant": "HCl", "text": "Neutralize o ácido clorídrico",
+          "hint": "Ácido + base → sal + água. Que base você produziu no nível anterior?" },
+        { "id": "n4-vulcao", "type": "reactionType", "reactionType": "acido_base", "withReactant": "NaHCO3", "text": "Faça o 'vulcão' da feira de ciências" }
+      ],
+      "lesson": "Ácido + base → sal + água. E carbonatos/bicarbonatos + ácido → sal + água + CO2 (efervescência)."
+    },
+    {
+      "id": "n5",
+      "title": "Série de reatividade",
+      "intro": "Alguns metais 'empurram' outros (ou o hidrogênio) para fora de seus compostos; outros não conseguem. Quem decide é a série de reatividade. Novos: zinco e sulfato de cobre.",
+      "unlocks": { "elements": ["Zn"], "substances": ["CuSO4"] },
+      "objectives": [
+        { "id": "n5-h2", "type": "reactionType", "reactionType": "simples_troca", "withReactant": "HCl", "text": "Use um metal para liberar hidrogênio de um ácido" },
+        { "id": "n5-cu", "type": "produce", "substance": "Cu", "text": "Extraia cobre metálico do sulfato de cobre",
+          "hint": "Um metal mais reativo que o cobre pode tomar o lugar dele." },
+        { "id": "n5-nao", "type": "nonReaction", "reasonId": "nr-cu-hcl", "text": "Tente dissolver cobre em ácido clorídrico — e descubra por que não funciona" }
+      ],
+      "lesson": "Um metal só desloca outro (ou o H⁺ de um ácido) se for MAIS reativo: K > Ca > Na > Mg > Al > Zn > Fe > (H) > Cu > Ag > Au."
+    },
+    {
+      "id": "n6",
+      "title": "Os nobres",
+      "intro": "Gases nobres quase não reagem; metais nobres resistem à corrosão. Por quê? Novos: hélio, neônio, argônio, prata, ouro e nitrato de prata.",
+      "unlocks": { "elements": ["He", "Ne", "Ar", "Ag", "Au"], "substances": ["AgNO3"] },
+      "objectives": [
+        { "id": "n6-gas", "type": "nonReaction", "reasonId": "rule:gas-nobre", "text": "Tente fazer um gás nobre reagir" },
+        { "id": "n6-ouro", "type": "nonReaction", "reasonId": "nr-au-o2", "text": "Tente oxidar (enferrujar) o ouro" },
+        { "id": "n6-agcl", "type": "produce", "substance": "AgCl", "text": "Forme um precipitado (um sólido que surge de duas soluções)",
+          "hint": "Nitrato de prata + uma solução com íons cloreto." }
+      ],
+      "lesson": "Gases nobres já têm a camada de valência completa: não ganham nem perdem elétrons com facilidade. Metais nobres seguram seus elétrons com força (ficam no fim da série de reatividade)."
+    },
+    {
+      "id": "n7",
+      "title": "Laboratório avançado",
+      "intro": "Energia e catalisadores: algumas reações só acontecem com eletricidade, outras precisam de um catalisador. Novos: nitrogênio, alumínio, água oxigenada, eletricidade e catalisador.",
+      "unlocks": { "elements": ["N", "Al"], "substances": ["H2O2"], "items": ["eletricidade", "catalisador"] },
+      "objectives": [
+        { "id": "n7-eletrolise", "type": "reactionType", "reactionType": "decomposicao", "withReactant": "H2O", "text": "Separe a água em hidrogênio e oxigênio" },
+        { "id": "n7-h2o2", "type": "reactionType", "reactionType": "decomposicao", "withReactant": "H2O2", "text": "Decomponha a água oxigenada" },
+        { "id": "n7-nh3", "type": "produce", "substance": "NH3", "text": "Produza amônia, a base dos fertilizantes" },
+        { "id": "n7-termita", "type": "produce", "substance": "Al2O3", "text": "Faça a reação termita (com muito cuidado... no jogo!)",
+          "hint": "Alumínio + ferrugem (Fe2O3). Como se obtém ferrugem?" }
+      ],
+      "lesson": "Catalisadores aceleram reações sem serem consumidos; eletricidade pode forçar reações 'morro acima'. Você concluiu a Fase 1! Continue explorando no modo livre."
+    }
+  ]
+}

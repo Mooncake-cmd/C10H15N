@@ -1,0 +1,17 @@
+{
+  "_meta": {
+    "description": "Ferramentas/condições. Não são substâncias: não entram na equação, mas algumas reações só acontecem com elas (energia de ativação, eletrólise, catálise)."
+  },
+  "items": [
+    { "id": "calor", "name": "Calor", "icon": "🔥",
+      "description": "Aquecer fornece a energia de ativação: a 'empurrada' inicial que quebra ligações para a reação começar." },
+    { "id": "faisca", "name": "Faísca", "icon": "✨",
+      "description": "Uma faísca aquece um ponto minúsculo o suficiente para iniciar reações que depois se mantêm sozinhas (como a explosão de H2 com O2)." },
+    { "id": "luz", "name": "Luz intensa", "icon": "☀️",
+      "description": "Fótons de luz (principalmente ultravioleta) podem quebrar ligações, como a do Cl2, iniciando reações em cadeia." },
+    { "id": "eletricidade", "name": "Eletricidade", "icon": "⚡",
+      "description": "Corrente elétrica força reações que não aconteceriam sozinhas (eletrólise), como separar a água em H2 e O2." },
+    { "id": "catalisador", "name": "Catalisador", "icon": "🧪",
+      "description": "Substância que acelera uma reação sem ser consumida. Ela oferece um 'caminho' com energia de ativação menor. Cada reação tem o seu catalisador (ex.: MnO2 para a água oxigenada, ferro para a amônia)." }
+  ]
+}

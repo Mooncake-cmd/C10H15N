@@ -1,0 +1,20 @@
+{
+  "_meta": {
+    "description": "Série de reatividade dos metais, ordenada pelo potencial-padrão de redução E° (V, 25 °C) do par Mⁿ⁺/M. Quanto MAIS NEGATIVO o E°, mais facilmente o metal perde elétrons, ou seja, mais reativo ele é. Um metal desloca de uma solução o cátion de outro metal (ou o H⁺ de um ácido) se o seu E° for menor que o do cátion. Previsão termodinâmica: alguns casos são lentos na prática (camada de óxido protetora, por exemplo).",
+    "source": { "ref": "crc", "note": "Valores também tabelados no apêndice de potenciais-padrão de Atkins e de Brown." }
+  },
+  "series": [
+    { "metal": "Li", "cation": "Li+", "E0": -3.04 },
+    { "metal": "K", "cation": "K+", "E0": -2.93 },
+    { "metal": "Ca", "cation": "Ca^2+", "E0": -2.87 },
+    { "metal": "Na", "cation": "Na+", "E0": -2.71 },
+    { "metal": "Mg", "cation": "Mg^2+", "E0": -2.37 },
+    { "metal": "Al", "cation": "Al^3+", "E0": -1.66 },
+    { "metal": "Zn", "cation": "Zn^2+", "E0": -0.76 },
+    { "metal": "Fe", "cation": "Fe^2+", "E0": -0.44 },
+    { "metal": "H", "cation": "H+", "E0": 0.0 },
+    { "metal": "Cu", "cation": "Cu^2+", "E0": 0.34 },
+    { "metal": "Ag", "cation": "Ag+", "E0": 0.80 },
+    { "metal": "Au", "cation": "Au^3+", "E0": 1.50 }
+  ]
+}

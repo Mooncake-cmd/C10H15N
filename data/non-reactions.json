@@ -1,0 +1,120 @@
+{
+  "_meta": {
+    "description": "Combinações que NÃO reagem (nas condições do jogo), com o motivo. Servem para dar feedback que ensina — 'não reage porque...' — em vez de só 'nada aconteceu'. A comparação considera só as substâncias: as ferramentas (calor etc.) não mudam o resultado — se mudassem, o caso seria uma reação com condição, em reactions.json. Regras genéricas (gás nobre, só metais, série de reatividade) ficam em src/core/rules/ e cobrem casos não listados aqui.",
+    "fields": "id, substances (ids de substances.json), title, reason, source { ref, topic, justification }"
+  },
+  "nonReactions": [
+    {
+      "id": "nr-cu-hcl",
+      "substances": ["Cu", "HCl"],
+      "title": "Cobre não reage com ácido clorídrico",
+      "reason": "Na série de reatividade o cobre fica ABAIXO do hidrogênio (E° do Cu²⁺/Cu = +0,34 V, contra 0 V do H⁺/H2). Isso quer dizer que o cobre segura seus elétrons com mais força do que o H2: ele não consegue entregá-los ao H⁺ do ácido, então nenhum H2 é liberado. É por isso que encanamentos e panelas de cobre não são corroídos por ácidos diluídos comuns. (Ácidos oxidantes, como o nítrico, atacam o cobre por outro mecanismo — fora do escopo desta fase.)",
+      "source": { "ref": "kotz", "topic": "Série de atividade dos metais", "justification": "Metais abaixo do hidrogênio na série de atividade não deslocam H2 de ácidos não oxidantes como o HCl." }
+    },
+    {
+      "id": "nr-ag-hcl",
+      "substances": ["Ag", "HCl"],
+      "title": "Prata não reage com ácido clorídrico",
+      "reason": "A prata (E° = +0,80 V) está abaixo do hidrogênio na série de reatividade: não consegue reduzir o H⁺ a H2. Metais 'nobres' como prata e ouro resistem aos ácidos comuns — uma das razões de serem usados em joias e moedas.",
+      "source": { "ref": "kotz", "topic": "Série de atividade dos metais", "justification": "Ag não desloca H2 de HCl (E° Ag⁺/Ag > 0)." }
+    },
+    {
+      "id": "nr-au-hcl",
+      "substances": ["Au", "HCl"],
+      "title": "Ouro não reage com ácido clorídrico",
+      "reason": "O ouro é o menos reativo dos metais do jogo (E° do Au³⁺/Au ≈ +1,50 V). Ele não é atacado por ácido clorídrico nem por ácido nítrico isoladamente; só pela 'água régia' (mistura dos dois), por um mecanismo especial.",
+      "source": { "ref": "greenwood", "topic": "Ouro: reatividade; água régia", "justification": "O ouro é inerte a ácidos minerais isolados e se dissolve em água régia pela formação do complexo [AuCl4]⁻." }
+    },
+    {
+      "id": "nr-au-o2",
+      "substances": ["Au", "O2"],
+      "title": "Ouro não reage com oxigênio",
+      "reason": "O óxido de ouro é instável: formá-lo custaria energia em vez de liberar. Por isso o ouro não enferruja nem escurece, nem aquecido ao ar. Moedas e objetos de ouro de milhares de anos são encontrados brilhando.",
+      "source": { "ref": "greenwood", "topic": "Ouro: propriedades químicas", "justification": "Au não forma óxido por aquecimento ao ar; Au2O3 se decompõe acima de ~160 °C." }
+    },
+    {
+      "id": "nr-ag-o2",
+      "substances": ["Ag", "O2"],
+      "title": "Prata praticamente não reage com o oxigênio",
+      "reason": "A prata é um metal nobre: o oxigênio do ar não a oxida de forma apreciável. O escurecimento das pratarias vem de outra reação — com compostos de ENXOFRE do ar (H2S), formando sulfeto de prata (Ag2S), que é preto.",
+      "source": { "ref": "greenwood", "topic": "Prata: reatividade; escurecimento (tarnish)", "justification": "A prata não é oxidada pelo O2 em condições ambientes; o escurecimento é Ag2S formado com H2S." }
+    },
+    {
+      "id": "nr-cu-feso4",
+      "substances": ["Cu", "FeSO4"],
+      "title": "Cobre não desloca o ferro",
+      "reason": "É o inverso do 'prego no sulfato de cobre'. O ferro é mais reativo que o cobre (E° −0,44 V contra +0,34 V), então quem tem 'vontade' de perder elétrons é o ferro, não o cobre. Um metal só desloca de um sal outro metal MENOS reativo que ele.",
+      "source": { "ref": "brown", "topic": "Série de atividade (deslocamento de metais)", "justification": "Cu não reduz Fe²⁺ (E° Cu²⁺/Cu > E° Fe²⁺/Fe)." }
+    },
+    {
+      "id": "nr-cu-zncl2",
+      "substances": ["Cu", "ZnCl2"],
+      "title": "Cobre não desloca o zinco",
+      "reason": "O zinco é bem mais reativo que o cobre (E° −0,76 V contra +0,34 V). O cobre não consegue entregar elétrons aos íons Zn²⁺; a reação só aconteceria no sentido contrário (zinco num sal de cobre).",
+      "source": { "ref": "brown", "topic": "Série de atividade (deslocamento de metais)", "justification": "Cu não reduz Zn²⁺." }
+    },
+    {
+      "id": "nr-ag-cuso4",
+      "substances": ["Ag", "CuSO4"],
+      "title": "Prata não desloca o cobre",
+      "reason": "A prata (E° = +0,80 V) é menos reativa que o cobre (E° = +0,34 V), então não consegue deslocá-lo da solução. Já o contrário acontece: um fio de cobre numa solução de nitrato de prata fica coberto de cristais de prata.",
+      "source": { "ref": "brown", "topic": "Série de atividade (deslocamento de metais)", "justification": "Ag não reduz Cu²⁺; Cu reduz Ag⁺ (demonstração da 'árvore de prata')." }
+    },
+    {
+      "id": "nr-cu-h2o",
+      "substances": ["Cu", "H2O"],
+      "title": "Cobre não reage com água",
+      "reason": "Só metais muito reativos (grupos 1 e 2, como sódio e cálcio) reagem com água fria liberando hidrogênio. O cobre está abaixo até do hidrogênio na série de reatividade — por isso é usado em encanamentos.",
+      "source": { "ref": "kotz", "topic": "Série de atividade: reação de metais com água", "justification": "Apenas metais ativos deslocam H2 da água fria; Cu não reage." }
+    },
+    {
+      "id": "nr-au-h2o",
+      "substances": ["Au", "H2O"],
+      "title": "Ouro não reage com água",
+      "reason": "O ouro é o metal menos reativo do jogo. Fica no fundo de rios por milhões de anos sem mudar — é assim que garimpeiros o encontram em bateias.",
+      "source": { "ref": "greenwood", "topic": "Ouro: propriedades químicas", "justification": "Au é inerte à água." }
+    },
+    {
+      "id": "nr-ag-h2o",
+      "substances": ["Ag", "H2O"],
+      "title": "Prata não reage com água",
+      "reason": "Como o cobre e o ouro, a prata fica abaixo do hidrogênio na série de reatividade e não consegue liberar H2 da água.",
+      "source": { "ref": "kotz", "topic": "Série de atividade: reação de metais com água", "justification": "Ag não reage com água." }
+    },
+    {
+      "id": "nr-nacl-h2o",
+      "substances": ["NaCl", "H2O"],
+      "title": "Sal na água: dissolve, mas não reage",
+      "reason": "O sal some na água, mas isso é uma DISSOLUÇÃO (transformação física), não uma reação química: os íons Na⁺ e Cl⁻ apenas se separam e ficam rodeados por moléculas de água — NaCl(s) → Na⁺(aq) + Cl⁻(aq). Nenhuma substância nova se forma: se a água evaporar, o sal volta. (Esse sal dissolvido é usado em outras reações do jogo como NaCl(aq).)",
+      "source": { "ref": "brown", "topic": "Soluções aquosas; eletrólitos; dissociação", "justification": "A dissolução de compostos iônicos é dissociação física; o soluto é recuperado por evaporação." }
+    },
+    {
+      "id": "nr-nacl-koh",
+      "substances": ["NaCl", "KOH"],
+      "title": "NaCl + KOH: troca de íons sem reação",
+      "reason": "Uma dupla troca daria KCl + NaOH, mas os quatro compostos são solúveis: os íons Na⁺, K⁺, Cl⁻ e OH⁻ continuam todos soltos na água, misturados, exatamente como antes. Sem formação de precipitado, gás ou água, não há reação química de fato.",
+      "source": { "ref": "brown", "topic": "Reações de troca (metátese); regras de solubilidade", "justification": "Reações de metátese só ocorrem com formação de precipitado, gás ou eletrólito fraco (como água); sais de metais alcalinos e hidróxidos alcalinos são solúveis." }
+    },
+    {
+      "id": "nr-caco3-h2o",
+      "substances": ["CaCO3", "H2O"],
+      "title": "Calcário quase não se dissolve em água",
+      "reason": "O carbonato de cálcio é praticamente insolúvel em água pura e não reage com ela. Por isso conchas e estátuas de mármore resistem à chuva normal — já a chuva ÁCIDA as desgasta (teste ácido + calcário).",
+      "source": { "ref": "brown", "topic": "Regras de solubilidade (carbonatos)", "justification": "Carbonatos são insolúveis, exceto os de metais alcalinos e de amônio." }
+    },
+    {
+      "id": "nr-agcl-h2o",
+      "substances": ["AgCl", "H2O"],
+      "title": "Cloreto de prata é insolúvel",
+      "reason": "O AgCl é uma das exceções da regra 'cloretos são solúveis' (junto com os cloretos de chumbo e de mercúrio(I)). Ele não se dissolve nem reage com água — é justamente por isso que precipita.",
+      "source": { "ref": "brown", "topic": "Regras de solubilidade (haletos)", "justification": "Cloretos são solúveis, exceto os de Ag⁺, Hg2²⁺ e Pb²⁺." }
+    },
+    {
+      "id": "nr-nacl-cl2",
+      "substances": ["NaCl", "Cl2"],
+      "title": "NaCl + Cl2: nada a ganhar",
+      "reason": "No NaCl o sódio já entregou seu elétron ao cloro e o cloro já completou seu octeto. Não sobra elétron fácil de transferir, então mais cloro não tem com o que reagir.",
+      "source": { "ref": "brown", "topic": "Ligação iônica; regra do octeto", "justification": "Na⁺ e Cl⁻ já têm configuração de gás nobre; não há transferência eletrônica favorável adicional." }
+    }
+  ]
+}

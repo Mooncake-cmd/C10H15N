@@ -1,0 +1,551 @@
+{
+  "_meta": {
+    "description": "Base curada de reações da Fase 1. Para adicionar uma reação, acrescente um objeto à lista 'reactions' e rode 'npm test': os testes conferem conservação de átomos e de carga (equação completa e iônica), se todas as substâncias e condições existem, se há fonte/justificativa e se reações perigosas explicam o perigo.",
+    "fields": {
+      "reactants/products": "lista de { id (de substances.json), coef (inteiro ≥ 1), state? (s/l/g/aq — sobrescreve o estado padrão da substância) }",
+      "types": "um ou mais de: sintese, decomposicao, simples_troca, dupla_troca, combustao, acido_base",
+      "tags": "marcadores livres: redox, precipitacao, neutralizacao, exotermica, endotermica, reversivel, efervescencia, cotidiano",
+      "conditions": "lista de requisitos; cada requisito é uma lista de ids de items.json dos quais BASTA UM (ex.: [[\"calor\",\"faisca\"]] = calor OU faísca). Lista vazia = acontece só de misturar.",
+      "netIonic": "opcional: equação iônica líquida, com fórmulas (e cargas) explícitas. Também é testada.",
+      "safety.level": "seguro | cuidado | perigo. Para cuidado/perigo, 'why' e 'home' são obrigatórios.",
+      "source": "{ ref (chave de sources.json), topic, justification }"
+    }
+  },
+  "reactions": [
+    {
+      "id": "na-cl2",
+      "name": "Formação do sal de cozinha",
+      "reactants": [{ "id": "Na", "coef": 2 }, { "id": "Cl2", "coef": 1 }],
+      "products": [{ "id": "NaCl", "coef": 2 }],
+      "types": ["sintese"],
+      "tags": ["redox", "exotermica"],
+      "conditions": [],
+      "conditionNote": "Na demonstração clássica o sódio costuma ser levemente aquecido para a reação começar mais rápido; depois ela se mantém sozinha, com chama amarela intensa.",
+      "explanation": "Cada átomo de sódio entrega 1 elétron a um átomo de cloro. Formam-se íons Na⁺ e Cl⁻, que se atraem fortemente e se organizam num cristal: o sal de cozinha.",
+      "why": "O sódio (grupo 1) tem 1 elétron sobrando na camada de valência e o perde com facilidade; o cloro (grupo 17) precisa de 1 elétron para completar 8. A transferência deixa os dois com a configuração eletrônica de um gás nobre. Um metal venenoso e um gás venenoso viram algo que você coloca na comida — compostos têm propriedades completamente diferentes dos elementos que os formam.",
+      "safety": {
+        "level": "perigo",
+        "why": "O cloro é um gás tóxico (já foi usado como arma química na Primeira Guerra Mundial). O sódio metálico reage violentamente com a umidade da pele e da água. A reação libera muito calor e luz.",
+        "home": "Não faça em casa: exige capela de exaustão, sódio guardado em óleo e cilindro de cloro — material de laboratório profissional."
+      },
+      "source": { "ref": "brown", "topic": "Ligação iônica e formação do NaCl a partir dos elementos", "justification": "Exemplo clássico de reação entre metal alcalino e halogênio; 2 Na(s) + Cl2(g) → 2 NaCl(s) aparece como modelo de ligação iônica em praticamente todo livro de química geral." }
+    },
+    {
+      "id": "h2-o2",
+      "name": "Síntese da água",
+      "reactants": [{ "id": "H2", "coef": 2 }, { "id": "O2", "coef": 1 }],
+      "products": [{ "id": "H2O", "coef": 2 }],
+      "types": ["sintese", "combustao"],
+      "tags": ["redox", "exotermica"],
+      "conditions": [["faisca", "calor"]],
+      "explanation": "Duas moléculas de hidrogênio e uma de oxigênio se rearranjam em duas moléculas de água. É também a combustão do hidrogênio: o único produto é água.",
+      "why": "Misturar H2 e O2 à temperatura ambiente não faz nada visível: é preciso energia de ativação para quebrar as primeiras ligações H–H e O=O. Depois disso, as ligações O–H formadas liberam mais energia do que foi gasta, e a reação se propaga sozinha, muito rápido.",
+      "safety": {
+        "level": "perigo",
+        "why": "Mistura de hidrogênio e oxigênio (ou ar) é explosiva: uma faísca basta. Foi o hidrogênio que queimou no desastre do dirigível Hindenburg (1937).",
+        "home": "Não faça em casa. Laboratórios só fazem isso com quantidades minúsculas, proteção e equipamento próprio."
+      },
+      "source": { "ref": "atkins", "topic": "Combustão do hidrogênio; entalpia de formação da água", "justification": "2 H2(g) + O2(g) → 2 H2O(l) é a reação de formação da água, usada como exemplo de estequiometria e de reação exotérmica." }
+    },
+    {
+      "id": "c-o2",
+      "name": "Queima do carvão",
+      "reactants": [{ "id": "C", "coef": 1 }, { "id": "O2", "coef": 1 }],
+      "products": [{ "id": "CO2", "coef": 1 }],
+      "types": ["combustao", "sintese"],
+      "tags": ["redox", "exotermica"],
+      "conditions": [["calor", "faisca"]],
+      "explanation": "O carbono se combina com o oxigênio do ar formando dióxido de carbono e liberando calor — é o que acontece numa churrasqueira.",
+      "why": "Combustão é a reação rápida de uma substância com oxigênio, liberando energia. Com oxigênio suficiente a combustão é completa e forma CO2.",
+      "safety": {
+        "level": "cuidado",
+        "why": "Com pouco oxigênio a combustão fica incompleta e forma monóxido de carbono (CO), um gás sem cheiro que impede o sangue de transportar oxigênio e pode matar.",
+        "home": "Queimar carvão é comum, mas NUNCA em ambiente fechado (dentro de casa, barraca, garagem): o risco é intoxicação por CO."
+      },
+      "source": { "ref": "brown", "topic": "Reações de combustão", "justification": "C(s) + O2(g) → CO2(g) é a combustão completa do carbono; a formação de CO com O2 insuficiente é discutida no mesmo tópico." }
+    },
+    {
+      "id": "mg-o2",
+      "name": "Magnésio queimando",
+      "reactants": [{ "id": "Mg", "coef": 2 }, { "id": "O2", "coef": 1 }],
+      "products": [{ "id": "MgO", "coef": 2 }],
+      "types": ["combustao", "sintese"],
+      "tags": ["redox", "exotermica"],
+      "conditions": [["calor"]],
+      "explanation": "Uma fita de magnésio aquecida pega fogo com luz branca ofuscante e vira um pó branco: óxido de magnésio.",
+      "why": "O magnésio (grupo 2) perde 2 elétrons para o oxigênio, formando Mg²⁺ e O²⁻. A energia liberada é tão grande que boa parte sai como luz — por isso o magnésio era usado em flashes de fotografia antigos e em fogos de artifício.",
+      "safety": {
+        "level": "cuidado",
+        "why": "A luz é intensa e rica em ultravioleta: olhar diretamente pode machucar os olhos. Fogo de magnésio não se apaga com água (o metal quente reage com ela e libera hidrogênio).",
+        "home": "Não faça em casa: é uma demonstração de laboratório, feita com pinça, óculos de proteção e sem olhar direto para a chama."
+      },
+      "source": { "ref": "kotz", "topic": "Reações de metais com oxigênio; combustão do magnésio", "justification": "2 Mg(s) + O2(g) → 2 MgO(s) é exemplo padrão de reação de síntese/combinação e de oxirredução." }
+    },
+    {
+      "id": "fe-o2",
+      "name": "Ferro queimando (palha de aço)",
+      "reactants": [{ "id": "Fe", "coef": 4 }, { "id": "O2", "coef": 3 }],
+      "products": [{ "id": "Fe2O3", "coef": 2 }],
+      "types": ["sintese", "combustao"],
+      "tags": ["redox", "exotermica"],
+      "conditions": [["calor", "faisca"]],
+      "conditionNote": "Um bloco de ferro não pega fogo, mas a palha de aço (fios finíssimos, com muita superfície exposta ao ar) queima soltando faíscas. A ferrugem comum é a mesma oxidação, só que lenta e com participação de água.",
+      "explanation": "O ferro se combina com o oxigênio formando óxido de ferro(III), o pó avermelhado da ferrugem.",
+      "why": "O ferro perde elétrons para o oxigênio (oxidação). Quanto maior a superfície de contato, mais rápida a reação: em fios finos ela é rápida o bastante para virar uma queima visível.",
+      "safety": {
+        "level": "cuidado",
+        "why": "Palha de aço queimando solta faíscas e pode iniciar incêndios; é também inflamável perto de pilhas e baterias.",
+        "home": "Não faça em casa sem supervisão de um professor; longe de materiais inflamáveis e com óculos de proteção."
+      },
+      "source": { "ref": "brown", "topic": "Corrosão do ferro; oxidação de metais", "justification": "4 Fe(s) + 3 O2(g) → 2 Fe2O3(s) é a equação simplificada de oxidação do ferro usada nos livros (a ferrugem real é Fe2O3 hidratado)." }
+    },
+    {
+      "id": "cu-o2",
+      "name": "Cobre escurecendo no fogo",
+      "reactants": [{ "id": "Cu", "coef": 2 }, { "id": "O2", "coef": 1 }],
+      "products": [{ "id": "CuO", "coef": 2 }],
+      "types": ["sintese"],
+      "tags": ["redox"],
+      "conditions": [["calor"]],
+      "explanation": "Um fio de cobre aquecido na chama fica coberto por uma camada preta de óxido de cobre(II).",
+      "why": "O cobre é pouco reativo: à temperatura ambiente oxida muito devagar, mas com calor a reação com o oxigênio fica rápida. Não pega fogo como o magnésio — compare as duas reações e veja a série de reatividade em ação.",
+      "safety": {
+        "level": "cuidado",
+        "why": "O risco aqui é o da própria chama e do metal muito quente.",
+        "home": "Só com supervisão: segure o fio com pinça, nunca com a mão."
+      },
+      "source": { "ref": "greenwood", "topic": "Cobre: óxidos", "justification": "2 Cu(s) + O2(g) → 2 CuO(s) por aquecimento ao ar é a preparação usual do CuO." }
+    },
+    {
+      "id": "s-o2",
+      "name": "Enxofre queimando",
+      "reactants": [{ "id": "S", "coef": 1 }, { "id": "O2", "coef": 1 }],
+      "products": [{ "id": "SO2", "coef": 1 }],
+      "types": ["combustao", "sintese"],
+      "tags": ["redox", "exotermica"],
+      "conditions": [["calor"]],
+      "explanation": "O enxofre queima com uma chama azul fraca formando dióxido de enxofre, um gás de cheiro sufocante.",
+      "why": "Como o carbono, o enxofre é um ametal que forma um óxido gasoso ao queimar. Óxidos de ametais, quando dissolvidos na água, formam ácidos — é assim que o SO2 de fábricas e vulcões gera chuva ácida.",
+      "safety": {
+        "level": "perigo",
+        "why": "O SO2 é tóxico: irrita fortemente olhos e pulmões e pode causar crise em quem tem asma.",
+        "home": "Não faça em casa. Só em laboratório, em capela com exaustão."
+      },
+      "source": { "ref": "brown", "topic": "Óxidos de enxofre; chuva ácida", "justification": "S(s) + O2(g) → SO2(g) é a combustão do enxofre (escrita com S em vez de S8, como é comum)." }
+    },
+    {
+      "id": "ch4-o2",
+      "name": "Queima do gás natural",
+      "reactants": [{ "id": "CH4", "coef": 1 }, { "id": "O2", "coef": 2 }],
+      "products": [{ "id": "CO2", "coef": 1 }, { "id": "H2O", "coef": 2 }],
+      "types": ["combustao"],
+      "tags": ["redox", "exotermica", "cotidiano"],
+      "conditions": [["calor", "faisca"]],
+      "explanation": "A chama azul do fogão a gás: o metano reage com o oxigênio produzindo gás carbônico, água (em vapor) e calor.",
+      "why": "Na combustão completa de um hidrocarboneto (composto de C e H), todo o carbono vira CO2 e todo o hidrogênio vira H2O. É de onde vem a energia da maior parte dos combustíveis.",
+      "safety": {
+        "level": "perigo",
+        "why": "Gás vazando + faísca = explosão. Com pouco oxigênio a queima é incompleta e forma CO (tóxico) e fuligem.",
+        "home": "O fogão de casa já faz essa reação de forma controlada. Nunca teste vazamentos com fogo; se sentir cheiro de gás, não acione interruptores, abra janelas e feche o registro."
+      },
+      "source": { "ref": "brown", "topic": "Reações de combustão de hidrocarbonetos", "justification": "CH4(g) + 2 O2(g) → CO2(g) + 2 H2O(g) é o exemplo-padrão de combustão completa de hidrocarboneto." }
+    },
+    {
+      "id": "h2o-eletrolise",
+      "name": "Eletrólise da água",
+      "reactants": [{ "id": "H2O", "coef": 2 }],
+      "products": [{ "id": "H2", "coef": 2 }, { "id": "O2", "coef": 1 }],
+      "types": ["decomposicao"],
+      "tags": ["redox", "endotermica"],
+      "conditions": [["eletricidade"]],
+      "conditionNote": "Água pura conduz muito mal; na prática dissolve-se um eletrólito (como Na2SO4) para a corrente passar.",
+      "explanation": "A corrente elétrica separa a água em hidrogênio (no polo negativo) e oxigênio (no positivo). Sai o dobro de volume de H2 em relação ao O2 — exatamente a proporção 2:1 da fórmula H2O.",
+      "why": "É a reação inversa da síntese da água. Como a síntese libera energia, desfazê-la exige receber energia — aqui, energia elétrica. Decomposições geralmente precisam de energia externa (calor, luz ou eletricidade).",
+      "safety": {
+        "level": "cuidado",
+        "why": "Os gases produzidos (H2 e O2), se juntos, formam mistura explosiva. Nunca use a tomada da parede.",
+        "home": "Com uma bateria de 9 V, água com um pouco de sal de Epsom ou bicarbonato e supervisão de um adulto é uma demonstração conhecida — em pequena escala e local ventilado, longe de chamas. Evite usar sal de cozinha: com NaCl sai gás cloro no polo positivo."
+      },
+      "source": { "ref": "atkins", "topic": "Eletrólise", "justification": "2 H2O(l) → 2 H2(g) + O2(g) é o exemplo clássico de eletrólise, com a razão de volumes 2:1 confirmando a fórmula da água." }
+    },
+    {
+      "id": "na-h2o",
+      "name": "Sódio na água",
+      "reactants": [{ "id": "Na", "coef": 2 }, { "id": "H2O", "coef": 2 }],
+      "products": [{ "id": "NaOH", "coef": 2, "state": "aq" }, { "id": "H2", "coef": 1 }],
+      "types": ["simples_troca"],
+      "tags": ["redox", "exotermica"],
+      "conditions": [],
+      "explanation": "O sódio corre pela superfície da água chiando, solta gás hidrogênio e deixa a água básica (soda cáustica dissolvida).",
+      "why": "Metais alcalinos (grupo 1) têm só 1 elétron de valência, fácil de perder. O sódio 'empurra' o hidrogênio para fora da água: Na vira Na⁺ e o H da água vira H2. O calor liberado pode até acender o hidrogênio.",
+      "safety": {
+        "level": "perigo",
+        "why": "A reação é violenta, pode espirrar soda cáustica (corrosiva) e o hidrogênio liberado pode pegar fogo ou explodir.",
+        "home": "Não faça em casa. Mesmo em laboratório usa-se um pedaço do tamanho de um grão de arroz, atrás de uma proteção."
+      },
+      "source": { "ref": "brown", "topic": "Metais alcalinos: reação com água", "justification": "2 Na(s) + 2 H2O(l) → 2 NaOH(aq) + H2(g) é a reação característica do grupo 1." }
+    },
+    {
+      "id": "li-h2o",
+      "name": "Lítio na água",
+      "reactants": [{ "id": "Li", "coef": 2 }, { "id": "H2O", "coef": 2 }],
+      "products": [{ "id": "LiOH", "coef": 2, "state": "aq" }, { "id": "H2", "coef": 1 }],
+      "types": ["simples_troca"],
+      "tags": ["redox", "exotermica"],
+      "conditions": [],
+      "explanation": "O lítio borbulha na água liberando hidrogênio e formando hidróxido de lítio — mesma reação do sódio, só que mais calma.",
+      "why": "Mesma família, mesmo comportamento: todo metal do grupo 1 reage com água formando hidróxido e H2. A diferença é a intensidade: descendo o grupo (Li → Na → K) o elétron de valência fica mais longe do núcleo e sai com mais facilidade, então a reação fica mais violenta.",
+      "safety": {
+        "level": "cuidado",
+        "why": "Libera hidrogênio inflamável e forma uma solução corrosiva. Baterias de lítio danificadas podem pegar fogo justamente por reações desse tipo.",
+        "home": "Não faça em casa. Nunca perfure ou molhe baterias de lítio."
+      },
+      "source": { "ref": "greenwood", "topic": "Lítio: reatividade com água; tendências no grupo 1", "justification": "2 Li(s) + 2 H2O(l) → 2 LiOH(aq) + H2(g); o lítio reage de forma mais lenta que Na e K, ilustrando a tendência do grupo." }
+    },
+    {
+      "id": "k-h2o",
+      "name": "Potássio na água",
+      "reactants": [{ "id": "K", "coef": 2 }, { "id": "H2O", "coef": 2 }],
+      "products": [{ "id": "KOH", "coef": 2, "state": "aq" }, { "id": "H2", "coef": 1 }],
+      "types": ["simples_troca"],
+      "tags": ["redox", "exotermica"],
+      "conditions": [],
+      "explanation": "O potássio reage tão rápido que o hidrogênio liberado pega fogo na hora, com chama lilás.",
+      "why": "O potássio está abaixo do sódio no grupo 1: seu elétron de valência está numa camada mais externa, mais longe do núcleo, e escapa com ainda mais facilidade. Mais reativo = reação mais violenta.",
+      "safety": {
+        "level": "perigo",
+        "why": "Reação violenta, com fogo e respingos de base corrosiva; pode explodir.",
+        "home": "Não faça em casa em nenhuma hipótese."
+      },
+      "source": { "ref": "brown", "topic": "Metais alcalinos: tendência de reatividade no grupo", "justification": "2 K(s) + 2 H2O(l) → 2 KOH(aq) + H2(g); o K reage mais vigorosamente que o Na, com ignição do H2 (chama lilás pela emissão do potássio)." }
+    },
+    {
+      "id": "ca-h2o",
+      "name": "Cálcio na água",
+      "reactants": [{ "id": "Ca", "coef": 1 }, { "id": "H2O", "coef": 2 }],
+      "products": [{ "id": "Ca(OH)2", "coef": 1, "state": "aq" }, { "id": "H2", "coef": 1 }],
+      "types": ["simples_troca"],
+      "tags": ["redox"],
+      "conditions": [],
+      "explanation": "O cálcio afunda e solta bolhas de hidrogênio constantemente, deixando a água turva com hidróxido de cálcio.",
+      "why": "O cálcio está no grupo 2: precisa perder 2 elétrons (vira Ca²⁺), o que é mais difícil que perder 1. Por isso reage com água de forma mais branda que os metais alcalinos — e note que a fórmula do hidróxido muda para Ca(OH)2, porque Ca²⁺ precisa de dois OH⁻.",
+      "safety": {
+        "level": "cuidado",
+        "why": "Libera hidrogênio inflamável e forma solução básica irritante.",
+        "home": "Não faça em casa; o cálcio metálico é material de laboratório."
+      },
+      "source": { "ref": "kotz", "topic": "Metais alcalino-terrosos: reação com água", "justification": "Ca(s) + 2 H2O(l) → Ca(OH)2(aq) + H2(g); o hidróxido de cálcio é pouco solúvel, por isso a turvação." }
+    },
+    {
+      "id": "h2-cl2",
+      "name": "Síntese do cloreto de hidrogênio",
+      "reactants": [{ "id": "H2", "coef": 1 }, { "id": "Cl2", "coef": 1 }],
+      "products": [{ "id": "HCl", "coef": 2, "state": "g" }],
+      "types": ["sintese"],
+      "tags": ["redox", "exotermica"],
+      "conditions": [["luz", "calor", "faisca"]],
+      "explanation": "Hidrogênio e cloro formam cloreto de hidrogênio, um gás que, dissolvido em água, é o ácido clorídrico.",
+      "why": "No escuro a mistura quase não reage. A luz quebra a ligação Cl–Cl em dois átomos de cloro muito reativos, que iniciam uma reação em cadeia: cada átomo de Cl arranca um H do H2, gerando um átomo de H que ataca outro Cl2, e assim por diante.",
+      "safety": {
+        "level": "perigo",
+        "why": "Sob luz forte a mistura explode. O cloro é tóxico e o HCl é corrosivo.",
+        "home": "Não faça em casa. Atenção também a um perigo real e doméstico: misturar água sanitária com produtos ácidos (ou com amônia) libera gases tóxicos como o cloro. Nunca misture produtos de limpeza."
+      },
+      "source": { "ref": "atkins", "topic": "Reações em cadeia; fotoquímica do H2 + Cl2", "justification": "H2(g) + Cl2(g) → 2 HCl(g), iniciada por luz, é o exemplo clássico de reação em cadeia via radicais." }
+    },
+    {
+      "id": "hcl-naoh",
+      "name": "Neutralização: ácido + base",
+      "reactants": [{ "id": "HCl", "coef": 1, "state": "aq" }, { "id": "NaOH", "coef": 1, "state": "aq" }],
+      "products": [{ "id": "NaCl", "coef": 1, "state": "aq" }, { "id": "H2O", "coef": 1 }],
+      "types": ["acido_base", "dupla_troca"],
+      "tags": ["neutralizacao", "exotermica"],
+      "conditions": [],
+      "netIonic": {
+        "reactants": [{ "formula": "H+", "coef": 1, "state": "aq" }, { "formula": "OH-", "coef": 1, "state": "aq" }],
+        "products": [{ "formula": "H2O", "coef": 1, "state": "l" }],
+        "note": "Na⁺ e Cl⁻ não mudam: ficam dissolvidos antes e depois (são 'íons espectadores'). A reação de verdade é H⁺ + OH⁻ → H2O."
+      },
+      "explanation": "Um ácido forte e uma base forte se anulam: o resultado é água salgada (NaCl dissolvido) e um pouco de calor.",
+      "why": "Ácidos liberam H⁺ na água; bases liberam OH⁻. Os dois se juntam formando água, e o que sobra (o cátion da base e o ânion do ácido) é um sal. Por isso toda neutralização ácido + base produz sal + água.",
+      "safety": {
+        "level": "cuidado",
+        "why": "Antes de reagir, os dois são corrosivos (queimam pele e olhos). A reação libera calor e, com soluções concentradas, pode espirrar.",
+        "home": "Não faça com ácido muriático e soda cáustica em casa. Para ver neutralização com segurança, use vinagre + bicarbonato, ou repolho roxo como indicador."
+      },
+      "source": { "ref": "brown", "topic": "Reações ácido-base e neutralização; equações iônicas líquidas", "justification": "HCl(aq) + NaOH(aq) → NaCl(aq) + H2O(l), com equação iônica líquida H⁺(aq) + OH⁻(aq) → H2O(l), é o exemplo-padrão de neutralização." }
+    },
+    {
+      "id": "zn-hcl",
+      "name": "Zinco no ácido",
+      "reactants": [{ "id": "Zn", "coef": 1 }, { "id": "HCl", "coef": 2, "state": "aq" }],
+      "products": [{ "id": "ZnCl2", "coef": 1, "state": "aq" }, { "id": "H2", "coef": 1 }],
+      "types": ["simples_troca"],
+      "tags": ["redox", "efervescencia"],
+      "conditions": [],
+      "netIonic": {
+        "reactants": [{ "formula": "Zn", "coef": 1, "state": "s" }, { "formula": "H+", "coef": 2, "state": "aq" }],
+        "products": [{ "formula": "Zn^2+", "coef": 1, "state": "aq" }, { "formula": "H2", "coef": 1, "state": "g" }],
+        "note": "O Cl⁻ é espectador. O zinco entrega 2 elétrons a dois H⁺, que viram uma molécula de H2."
+      },
+      "explanation": "O zinco é corroído pelo ácido e solta bolhas de gás hidrogênio.",
+      "why": "Na série de reatividade, o zinco está acima do hidrogênio (E° = −0,76 V): ele perde elétrons com mais facilidade que o H2. Por isso consegue 'roubar o lugar' do hidrogênio no ácido.",
+      "safety": {
+        "level": "cuidado",
+        "why": "O ácido clorídrico é corrosivo e o hidrogênio liberado é inflamável.",
+        "home": "Não faça em casa com ácido muriático: é corrosivo e solta vapores irritantes."
+      },
+      "source": { "ref": "kotz", "topic": "Reações de deslocamento; metais com ácidos; série de atividade", "justification": "Zn(s) + 2 HCl(aq) → ZnCl2(aq) + H2(g) é o exemplo mais citado de metal ativo deslocando H⁺ de um ácido." }
+    },
+    {
+      "id": "mg-hcl",
+      "name": "Magnésio no ácido",
+      "reactants": [{ "id": "Mg", "coef": 1 }, { "id": "HCl", "coef": 2, "state": "aq" }],
+      "products": [{ "id": "MgCl2", "coef": 1, "state": "aq" }, { "id": "H2", "coef": 1 }],
+      "types": ["simples_troca"],
+      "tags": ["redox", "efervescencia", "exotermica"],
+      "conditions": [],
+      "netIonic": {
+        "reactants": [{ "formula": "Mg", "coef": 1, "state": "s" }, { "formula": "H+", "coef": 2, "state": "aq" }],
+        "products": [{ "formula": "Mg^2+", "coef": 1, "state": "aq" }, { "formula": "H2", "coef": 1, "state": "g" }]
+      },
+      "explanation": "O magnésio some no ácido em poucos segundos, com efervescência intensa de hidrogênio.",
+      "why": "O magnésio (E° = −2,37 V) está bem acima do zinco na série de reatividade, então reage com o ácido bem mais rápido. Compare as duas reações: mesmo tipo, velocidades diferentes, explicadas pela posição na série.",
+      "safety": {
+        "level": "cuidado",
+        "why": "Ácido corrosivo, hidrogênio inflamável e a solução esquenta.",
+        "home": "Não faça em casa."
+      },
+      "source": { "ref": "kotz", "topic": "Série de atividade dos metais", "justification": "Mg(s) + 2 HCl(aq) → MgCl2(aq) + H2(g); Mg reage mais vigorosamente que Zn, coerente com seu E° mais negativo." }
+    },
+    {
+      "id": "fe-cuso4",
+      "name": "Prego no sulfato de cobre",
+      "reactants": [{ "id": "Fe", "coef": 1 }, { "id": "CuSO4", "coef": 1, "state": "aq" }],
+      "products": [{ "id": "FeSO4", "coef": 1, "state": "aq" }, { "id": "Cu", "coef": 1 }],
+      "types": ["simples_troca"],
+      "tags": ["redox"],
+      "conditions": [],
+      "netIonic": {
+        "reactants": [{ "formula": "Fe", "coef": 1, "state": "s" }, { "formula": "Cu^2+", "coef": 1, "state": "aq" }],
+        "products": [{ "formula": "Fe^2+", "coef": 1, "state": "aq" }, { "formula": "Cu", "coef": 1, "state": "s" }],
+        "note": "O sulfato é espectador. Os elétrons passam do ferro para o íon cobre."
+      },
+      "explanation": "Um prego de ferro mergulhado na solução azul fica coberto de cobre avermelhado, e a solução vai perdendo o azul.",
+      "why": "O ferro (E° = −0,44 V) é mais reativo que o cobre (E° = +0,34 V): ele cede elétrons aos íons Cu²⁺, que viram cobre metálico, enquanto o ferro passa para a solução como Fe²⁺. O contrário (cobre num sal de ferro) não acontece — teste!",
+      "safety": {
+        "level": "cuidado",
+        "why": "O sulfato de cobre é tóxico se ingerido e irrita pele e olhos.",
+        "home": "É um experimento escolar comum, mas use luvas e óculos, não deixe ao alcance de crianças ou animais e não descarte na pia em grande quantidade."
+      },
+      "source": { "ref": "brown", "topic": "Reações de oxirredução; série de atividade (deslocamento de metais)", "justification": "Fe(s) + CuSO4(aq) → FeSO4(aq) + Cu(s) é experimento clássico de deslocamento, com Fe formando Fe²⁺ nessas condições." }
+    },
+    {
+      "id": "agno3-nacl",
+      "name": "Precipitação do cloreto de prata",
+      "reactants": [{ "id": "AgNO3", "coef": 1, "state": "aq" }, { "id": "NaCl", "coef": 1, "state": "aq" }],
+      "products": [{ "id": "AgCl", "coef": 1, "state": "s" }, { "id": "NaNO3", "coef": 1, "state": "aq" }],
+      "types": ["dupla_troca"],
+      "tags": ["precipitacao"],
+      "conditions": [],
+      "netIonic": {
+        "reactants": [{ "formula": "Ag+", "coef": 1, "state": "aq" }, { "formula": "Cl-", "coef": 1, "state": "aq" }],
+        "products": [{ "formula": "AgCl", "coef": 1, "state": "s" }],
+        "note": "Na⁺ e NO3⁻ são espectadores."
+      },
+      "explanation": "Duas soluções transparentes, ao se misturarem, formam na hora um sólido branco: o cloreto de prata.",
+      "why": "Numa dupla troca os cátions 'trocam de par'. Ela só acontece de verdade se algum produto sair da solução: um sólido insolúvel (precipitado), um gás ou água. Aqui, AgCl é praticamente insolúvel (todos os nitratos e sais de sódio são solúveis), então Ag⁺ e Cl⁻ se juntam e precipitam.",
+      "safety": {
+        "level": "cuidado",
+        "why": "O nitrato de prata é corrosivo e mancha a pele de preto por dias.",
+        "home": "Não é um reagente doméstico. Em laboratório escolar: luvas e óculos."
+      },
+      "source": { "ref": "brown", "topic": "Reações de precipitação; regras de solubilidade", "justification": "AgNO3(aq) + NaCl(aq) → AgCl(s) + NaNO3(aq), com iônica líquida Ag⁺ + Cl⁻ → AgCl(s), é exemplo padrão das regras de solubilidade." }
+    },
+    {
+      "id": "caco3-calor",
+      "name": "Calcinação do calcário",
+      "reactants": [{ "id": "CaCO3", "coef": 1 }],
+      "products": [{ "id": "CaO", "coef": 1 }, { "id": "CO2", "coef": 1 }],
+      "types": ["decomposicao"],
+      "tags": ["endotermica"],
+      "conditions": [["calor"]],
+      "conditionNote": "Precisa de forno a mais de ~800 °C.",
+      "explanation": "Aquecido em forno, o calcário se decompõe em cal virgem e gás carbônico. É assim que se fabrica a cal (e uma das grandes fontes industriais de CO2, junto com a fabricação de cimento).",
+      "why": "O íon carbonato (CO3²⁻) se 'quebra' em O²⁻ (que fica com o cálcio) e CO2 (que escapa como gás). A reação absorve energia, por isso só acontece com muito calor.",
+      "safety": {
+        "level": "cuidado",
+        "why": "Temperaturas de forno industrial, e o produto (cal virgem) é cáustico.",
+        "home": "Não dá para fazer em casa: um fogão não atinge a temperatura necessária."
+      },
+      "source": { "ref": "kotz", "topic": "Reações de decomposição; produção de cal", "justification": "CaCO3(s) → CaO(s) + CO2(g) por aquecimento é o exemplo industrial clássico de decomposição térmica." }
+    },
+    {
+      "id": "cao-h2o",
+      "name": "Extinção da cal",
+      "reactants": [{ "id": "CaO", "coef": 1 }, { "id": "H2O", "coef": 1 }],
+      "products": [{ "id": "Ca(OH)2", "coef": 1 }],
+      "types": ["sintese"],
+      "tags": ["exotermica", "cotidiano"],
+      "conditions": [],
+      "explanation": "Cal virgem + água vira cal hidratada (usada em argamassa e pintura a cal), liberando tanto calor que a água pode ferver.",
+      "why": "O óxido de cálcio é um óxido básico: óxidos de metais reagem com água formando hidróxidos (bases). Compare com o CO2 + H2O, em que um óxido de ametal forma um ácido.",
+      "safety": {
+        "level": "cuidado",
+        "why": "Libera muito calor e o produto é cáustico; pode espirrar e queimar pele e olhos.",
+        "home": "Pedreiros fazem isso em obra, com luvas e óculos. Não faça por diversão."
+      },
+      "source": { "ref": "kotz", "topic": "Óxidos básicos; cal virgem e cal hidratada", "justification": "CaO(s) + H2O(l) → Ca(OH)2(s), fortemente exotérmica, é a 'extinção' ou hidratação da cal." }
+    },
+    {
+      "id": "caoh2-co2",
+      "name": "Água de cal turvando (teste do CO2)",
+      "reactants": [{ "id": "Ca(OH)2", "coef": 1, "state": "aq" }, { "id": "CO2", "coef": 1 }],
+      "products": [{ "id": "CaCO3", "coef": 1, "state": "s" }, { "id": "H2O", "coef": 1 }],
+      "types": ["acido_base"],
+      "tags": ["precipitacao", "cotidiano"],
+      "conditions": [],
+      "explanation": "Soprar com um canudo na água de cal deixa a solução branca e turva: forma-se carbonato de cálcio de novo. É o teste clássico que mostra que expiramos CO2.",
+      "why": "O CO2 é um óxido ácido e o Ca(OH)2 é uma base: eles se neutralizam formando um sal (CaCO3) e água. Como o CaCO3 é insolúvel, aparece como sólido. Repare no ciclo: calcário → cal virgem → cal hidratada → calcário de novo — é por isso que a argamassa endurece com o tempo.",
+      "safety": {
+        "level": "seguro",
+        "why": "A água de cal diluída é levemente irritante; evite contato com os olhos.",
+        "home": "Pode ser feito com supervisão (água de cal é vendida em farmácias). Sopre — nunca aspire — pelo canudo."
+      },
+      "source": { "ref": "brown", "topic": "Óxidos ácidos; carbonatos; teste da água de cal", "justification": "Ca(OH)2(aq) + CO2(g) → CaCO3(s) + H2O(l) é o teste qualitativo tradicional para CO2." }
+    },
+    {
+      "id": "co2-h2o",
+      "name": "Gás carbônico na água (refrigerante)",
+      "reactants": [{ "id": "CO2", "coef": 1 }, { "id": "H2O", "coef": 1 }],
+      "products": [{ "id": "H2CO3", "coef": 1 }],
+      "reversible": true,
+      "types": ["sintese"],
+      "tags": ["reversivel", "cotidiano"],
+      "conditions": [],
+      "explanation": "Parte do CO2 dissolvido na água forma ácido carbônico, um ácido fraco. É o que dá o gostinho ácido da água com gás.",
+      "why": "Óxidos de ametais formam ácidos com água. Essa reação é reversível (⇌): quando você abre a garrafa, a pressão cai, o equilíbrio volta para o lado do CO2 e o gás escapa em bolhas. (Equilíbrio químico será tema da Fase 3.)",
+      "safety": {
+        "level": "seguro",
+        "why": "É o que existe em qualquer água com gás.",
+        "home": "Seguro: você faz isso cada vez que abre um refrigerante."
+      },
+      "source": { "ref": "atkins", "topic": "Ácidos fracos; equilíbrio do ácido carbônico", "justification": "CO2(aq) + H2O(l) ⇌ H2CO3(aq), equilíbrio deslocado para a esquerda; base do sistema tampão do sangue e da química dos refrigerantes." }
+    },
+    {
+      "id": "caco3-hcl",
+      "name": "Ácido no calcário (efervescência)",
+      "reactants": [{ "id": "CaCO3", "coef": 1, "state": "s" }, { "id": "HCl", "coef": 2, "state": "aq" }],
+      "products": [{ "id": "CaCl2", "coef": 1, "state": "aq" }, { "id": "H2O", "coef": 1 }, { "id": "CO2", "coef": 1 }],
+      "types": ["acido_base", "dupla_troca"],
+      "tags": ["efervescencia"],
+      "conditions": [],
+      "netIonic": {
+        "reactants": [{ "formula": "CaCO3", "coef": 1, "state": "s" }, { "formula": "H+", "coef": 2, "state": "aq" }],
+        "products": [{ "formula": "Ca^2+", "coef": 1, "state": "aq" }, { "formula": "H2O", "coef": 1, "state": "l" }, { "formula": "CO2", "coef": 1, "state": "g" }],
+        "note": "O CaCO3 aparece inteiro porque é sólido (não está dissolvido em íons)."
+      },
+      "explanation": "Ácido sobre mármore ou giz faz espuma: é gás carbônico escapando. Geólogos pingam ácido em rochas para identificar calcário exatamente assim.",
+      "why": "Carbonatos reagem com ácidos formando ácido carbônico, que se decompõe imediatamente em água e CO2. É também por isso que a chuva ácida desgasta estátuas de mármore.",
+      "safety": {
+        "level": "cuidado",
+        "why": "O ácido clorídrico é corrosivo.",
+        "home": "Versão segura em casa: vinagre sobre casca de ovo ou giz (mais lento, mas a mesma ideia)."
+      },
+      "source": { "ref": "brown", "topic": "Reações de carbonatos com ácidos; formação de gás", "justification": "CaCO3(s) + 2 HCl(aq) → CaCl2(aq) + H2O(l) + CO2(g) é exemplo padrão de reação com formação de gás." }
+    },
+    {
+      "id": "nahco3-vinagre",
+      "name": "Vulcão de bicarbonato e vinagre",
+      "reactants": [{ "id": "NaHCO3", "coef": 1, "state": "s" }, { "id": "CH3COOH", "coef": 1, "state": "aq" }],
+      "products": [{ "id": "CH3COONa", "coef": 1, "state": "aq" }, { "id": "H2O", "coef": 1 }, { "id": "CO2", "coef": 1 }],
+      "types": ["acido_base"],
+      "tags": ["efervescencia", "cotidiano"],
+      "conditions": [],
+      "netIonic": {
+        "reactants": [{ "formula": "HCO3-", "coef": 1, "state": "aq" }, { "formula": "CH3COOH", "coef": 1, "state": "aq" }],
+        "products": [{ "formula": "CH3COO-", "coef": 1, "state": "aq" }, { "formula": "H2O", "coef": 1, "state": "l" }, { "formula": "CO2", "coef": 1, "state": "g" }],
+        "note": "O ácido acético é fraco e fica quase todo na forma de moléculas, por isso aparece inteiro. Na⁺ é espectador."
+      },
+      "explanation": "A espuma do 'vulcão' da feira de ciências: o bicarbonato reage com o ácido do vinagre e libera muito gás carbônico.",
+      "why": "O bicarbonato (HCO3⁻) aceita o H⁺ do ácido acético, formando ácido carbônico, que se desfaz em água e CO2. É a mesma química do fermento químico fazendo o bolo crescer.",
+      "safety": {
+        "level": "seguro",
+        "why": "Os dois ingredientes são de cozinha. O único cuidado é não fechar a mistura em recipiente tampado (a pressão do gás pode estourá-lo).",
+        "home": "Pode fazer em casa! Use um copo aberto, de preferência dentro de uma bandeja."
+      },
+      "source": { "ref": "kotz", "topic": "Reações ácido-base com formação de gás", "justification": "NaHCO3(s) + CH3COOH(aq) → CH3COONa(aq) + H2O(l) + CO2(g); demonstração usual de reação ácido-base com efervescência." }
+    },
+    {
+      "id": "haber",
+      "name": "Síntese da amônia (Haber-Bosch)",
+      "reactants": [{ "id": "N2", "coef": 1 }, { "id": "H2", "coef": 3 }],
+      "products": [{ "id": "NH3", "coef": 2 }],
+      "reversible": true,
+      "types": ["sintese"],
+      "tags": ["reversivel", "exotermica", "redox"],
+      "conditions": [["calor"], ["catalisador"]],
+      "conditionNote": "Na indústria: ~400–450 °C, ~200 atm e catalisador de ferro.",
+      "explanation": "Nitrogênio do ar + hidrogênio formam amônia. Essa reação produz os fertilizantes que alimentam cerca de metade da população mundial.",
+      "why": "A ligação tripla do N2 é fortíssima, então sem catalisador a reação é lenta demais. O calor acelera, mas como a reação é reversível e exotérmica, calor demais desloca o equilíbrio de volta para N2 e H2 — a indústria equilibra temperatura, pressão alta e catalisador. (Equilíbrio e cinética serão aprofundados na Fase 3.)",
+      "safety": {
+        "level": "cuidado",
+        "why": "Hidrogênio inflamável a altíssima pressão e amônia tóxica.",
+        "home": "Processo exclusivamente industrial."
+      },
+      "source": { "ref": "atkins", "topic": "Equilíbrio químico; processo Haber", "justification": "N2(g) + 3 H2(g) ⇌ 2 NH3(g) é o exemplo central de equilíbrio e catálise industrial." }
+    },
+    {
+      "id": "nh3-hcl",
+      "name": "Fumaça branca de cloreto de amônio",
+      "reactants": [{ "id": "NH3", "coef": 1 }, { "id": "HCl", "coef": 1, "state": "g" }],
+      "products": [{ "id": "NH4Cl", "coef": 1, "state": "s" }],
+      "types": ["sintese", "acido_base"],
+      "tags": ["neutralizacao"],
+      "conditions": [],
+      "explanation": "Dois gases invisíveis se encontram no ar e formam uma fumaça branca: minúsculos cristais de cloreto de amônio.",
+      "why": "A amônia é uma base (seu átomo de N tem um par de elétrons livre) e aceita o H⁺ do HCl, virando o íon NH4⁺. É uma neutralização sem água — mostra que a ideia de ácido e base é mais ampla que 'H⁺ e OH⁻'.",
+      "safety": {
+        "level": "cuidado",
+        "why": "Os dois gases são tóxicos e irritantes.",
+        "home": "Não faça em casa. E nunca misture produtos de limpeza com amônia e com cloro/ácido: os vapores são perigosos."
+      },
+      "source": { "ref": "atkins", "topic": "Ácidos e bases de Brønsted-Lowry", "justification": "NH3(g) + HCl(g) → NH4Cl(s) é a demonstração clássica de reação ácido-base em fase gasosa." }
+    },
+    {
+      "id": "termita",
+      "name": "Termita",
+      "reactants": [{ "id": "Al", "coef": 2 }, { "id": "Fe2O3", "coef": 1 }],
+      "products": [{ "id": "Al2O3", "coef": 1 }, { "id": "Fe", "coef": 2, "state": "l" }],
+      "types": ["simples_troca"],
+      "tags": ["redox", "exotermica"],
+      "conditions": [["calor"]],
+      "explanation": "Alumínio em pó arranca o oxigênio do óxido de ferro numa reação tão quente (~2500 °C) que o ferro sai derretido. É usada para soldar trilhos de trem.",
+      "why": "O alumínio (E° = −1,66 V) é bem mais reativo que o ferro e forma um óxido extremamente estável. Por isso 'toma' o oxigênio do ferro. Precisa de muito calor para começar, mas depois libera energia enorme.",
+      "safety": {
+        "level": "perigo",
+        "why": "Temperatura altíssima, metal derretido espirrando, luz cegante; não se apaga com água (que piora a situação).",
+        "home": "Não faça em casa em nenhuma hipótese. Só profissionais, ao ar livre, com proteção."
+      },
+      "source": { "ref": "brown", "topic": "Reação termita; oxirredução", "justification": "2 Al(s) + Fe2O3(s) → Al2O3(s) + 2 Fe(l), fortemente exotérmica, é o exemplo-padrão de reação termita." }
+    },
+    {
+      "id": "h2o2-decomposicao",
+      "name": "Decomposição da água oxigenada",
+      "reactants": [{ "id": "H2O2", "coef": 2 }],
+      "products": [{ "id": "H2O", "coef": 2 }, { "id": "O2", "coef": 1 }],
+      "types": ["decomposicao"],
+      "tags": ["redox", "exotermica"],
+      "conditions": [["catalisador"]],
+      "conditionNote": "Catalisadores comuns: dióxido de manganês (MnO2), iodeto de potássio ou a enzima catalase (presente na batata e no sangue).",
+      "explanation": "Com um catalisador, a água oxigenada borbulha liberando oxigênio. É por isso que ela espuma quando colocada num machucado: a catalase do sangue é o catalisador.",
+      "why": "A decomposição do H2O2 é favorável, mas lenta sem ajuda (o frasco dura meses na farmácia). O catalisador oferece um caminho com energia de ativação menor e não é consumido — está no fim igual estava no começo, por isso não aparece na equação.",
+      "safety": {
+        "level": "seguro",
+        "why": "Na concentração de farmácia (3%) é segura. Concentrada (acima de ~30%) é corrosiva e perigosa.",
+        "home": "Pode fazer em casa com água oxigenada 10 volumes (3%) e um pedaço de batata crua. Não use concentrações maiores."
+      },
+      "source": { "ref": "atkins", "topic": "Catálise; decomposição do peróxido de hidrogênio", "justification": "2 H2O2(aq) → 2 H2O(l) + O2(g), catalisada por MnO2, I⁻ ou catalase, é o exemplo padrão de catálise." }
+    }
+  ]
+}
