@@ -1586,7 +1586,8 @@
       "term": "Número de oxidação",
       "aliases": [
         "números de oxidação",
-        "estado de oxidação"
+        "estado de oxidação",
+        "nox"
       ],
       "definition": "A 'carga efetiva' de um átomo num composto, calculada por regras. Serve para acompanhar quem perde e quem ganha elétrons. É o número romano em nomes como ferro(III).",
       "example": "No Fe₂O₃, o ferro tem número de oxidação +3; no FeCl₂, +2.",
@@ -2032,12 +2033,17 @@
       "term": "Catalisador",
       "aliases": [
         "catalisadores",
-        "catálise"
+        "catálise",
+        "catalisador homogêneo",
+        "catalisador heterogêneo",
+        "catalisadores homogêneos",
+        "catalisadores heterogêneos"
       ],
-      "definition": "Substância que acelera uma reação sem ser consumida: oferece um caminho com energia de ativação menor. No fim, está igual ao começo.",
+      "definition": "Substância que acelera uma reação sem ser consumida: oferece um caminho com energia de ativação menor. No fim, está igual ao começo. O catalisador é homogêneo quando está na mesma fase dos reagentes (bromo dissolvido na água oxigenada) e heterogêneo quando está em outra (ferro sólido com gases, no processo Haber).",
       "example": "A enzima catalase do sangue decompõe a água oxigenada; o ferro acelera a síntese da amônia.",
       "related": [
-        "energia-de-ativacao"
+        "energia-de-ativacao",
+        "enzima"
       ],
       "source": {
         "ref": "atkins-jones",
@@ -2623,10 +2629,11 @@
       "aliases": [
         "meias-vidas"
       ],
-      "definition": "O tempo para metade de uma amostra se transformar. Na radioatividade, é o tempo para metade dos núcleos radioativos se desintegrar; depois de mais uma meia-vida, sobra um quarto, e assim por diante.",
-      "example": "A meia-vida do radônio-222 é de 3,8 dias.",
+      "definition": "O tempo para metade de uma amostra se transformar. Na cinética, é o tempo para a concentração de um reagente cair à metade (na 1ª ordem, t½ = ln 2/k, sem depender da concentração inicial). Na radioatividade, é o tempo para metade dos núcleos radioativos se desintegrar.",
+      "example": "A 65 °C, metade do N2O5 se decompõe em 133 s; a meia-vida do radônio-222 é de 3,8 dias.",
       "related": [
-        "radioatividade"
+        "radioatividade",
+        "lei-integrada"
       ],
       "source": {
         "ref": "atkins-jones",
@@ -2797,6 +2804,515 @@
         "ref": "atkins-jones",
         "topic": "Glossário: spectrum; spectral line",
         "pages": "B25"
+      }
+    },
+    {
+      "id": "velocidade-de-reacao",
+      "term": "Velocidade de reação",
+      "aliases": [
+        "velocidade da reação",
+        "velocidades de reação",
+        "velocidade das reações",
+        "rapidez da reação",
+        "taxa de reação",
+        "velocidade instantânea"
+      ],
+      "definition": "Quanto a concentração de um reagente cai (ou a de um produto sobe) por unidade de tempo, em mol/L por segundo. Para que o valor não dependa de qual substância se mede, o livro divide pelo coeficiente estequiométrico.",
+      "example": "Na decomposição do N2O5, quanto mais N2O5 ainda resta, maior a velocidade de reação.",
+      "related": [
+        "lei-de-velocidade",
+        "constante-de-velocidade"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: reaction rate; instantaneous rate",
+        "pages": "B23"
+      }
+    },
+    {
+      "id": "lei-de-velocidade",
+      "term": "Lei de velocidade",
+      "aliases": [
+        "leis de velocidade"
+      ],
+      "definition": "Equação que diz como a velocidade de reação depende das concentrações num instante: taxa = k[A]ⁿ… Ela é medida em laboratório — não dá para tirá-la dos coeficientes da equação balanceada.",
+      "example": "Para 2 N2O5 → 4 NO2 + O2, a lei é taxa = k[N2O5], de 1ª ordem, embora o coeficiente seja 2.",
+      "related": [
+        "ordem-de-reacao",
+        "constante-de-velocidade",
+        "velocidade-de-reacao"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: rate law",
+        "pages": "B23"
+      }
+    },
+    {
+      "id": "constante-de-velocidade",
+      "term": "Constante de velocidade (k)",
+      "aliases": [
+        "constante de velocidade",
+        "constantes de velocidade"
+      ],
+      "definition": "O número k da lei de velocidade. Não muda com a concentração, mas cresce com a temperatura (equação de Arrhenius). Quanto maior o k, mais rápida a reação.",
+      "example": "A 65 °C, o k da decomposição do N2O5 é 5,2 × 10⁻³ s⁻¹; a 25 °C é 3,7 × 10⁻⁵ s⁻¹.",
+      "related": [
+        "lei-de-velocidade",
+        "equacao-de-arrhenius"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: rate constant",
+        "pages": "B23"
+      }
+    },
+    {
+      "id": "ordem-de-reacao",
+      "term": "Ordem de reação",
+      "aliases": [
+        "ordem da reação",
+        "primeira ordem",
+        "segunda ordem",
+        "1ª ordem",
+        "2ª ordem"
+      ],
+      "definition": "O expoente da concentração na lei de velocidade. Na 1ª ordem, dobrar a concentração dobra a taxa; na 2ª ordem, quadruplica. A ordem total é a soma dos expoentes.",
+      "example": "taxa = k[H2][I2] é de 1ª ordem em H2, de 1ª ordem em I2 e de 2ª ordem no total.",
+      "related": [
+        "lei-de-velocidade",
+        "lei-integrada"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: order of reaction; overall order",
+        "pages": "B20"
+      }
+    },
+    {
+      "id": "lei-integrada",
+      "term": "Lei de velocidade integrada",
+      "aliases": [
+        "lei integrada",
+        "leis integradas"
+      ],
+      "definition": "Fórmula que dá a concentração de um reagente em qualquer instante, obtida da lei de velocidade. Na 1ª ordem: [A] = [A]₀·e^(−kt); na 2ª ordem: 1/[A] = 1/[A]₀ + kt.",
+      "example": "Com 0,040 mol/L de N2O5 a 65 °C, depois de 600 s restam 0,040·e^(−5,2×10⁻³·600) ≈ 1,8 mmol/L.",
+      "related": [
+        "ordem-de-reacao",
+        "meia-vida"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: integrated rate law",
+        "pages": "B15"
+      }
+    },
+    {
+      "id": "equacao-de-arrhenius",
+      "term": "Equação de Arrhenius",
+      "aliases": [
+        "arrhenius",
+        "parâmetros de arrhenius",
+        "reta de arrhenius"
+      ],
+      "definition": "k = A·e^(−Ea/RT): mostra como a constante de velocidade cresce com a temperatura. Ea é a energia de ativação e A, o fator pré-exponencial. Quanto maior a Ea, mais a velocidade depende da temperatura.",
+      "example": "Com Ea = 103 kJ/mol, o k do N2O5 fica quase 4 vezes maior de 25 °C para 35 °C.",
+      "related": [
+        "energia-de-ativacao",
+        "constante-de-velocidade"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Seção 14.11: o efeito da temperatura (equação de Arrhenius)",
+        "pages": "587–588"
+      }
+    },
+    {
+      "id": "teoria-das-colisoes",
+      "term": "Teoria das colisões",
+      "aliases": [
+        "colisões efetivas"
+      ],
+      "definition": "Ideia de que as moléculas só reagem quando se chocam com energia suficiente (pelo menos a energia de ativação) e, em geral, na orientação certa. Mais concentração ou mais temperatura = mais choques eficazes.",
+      "example": "Aquecer o gás faz as moléculas se moverem mais rápido, e uma fração maior dos choques passa a ter a energia necessária.",
+      "related": [
+        "energia-de-ativacao",
+        "complexo-ativado"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: collision theory",
+        "pages": "B6"
+      }
+    },
+    {
+      "id": "complexo-ativado",
+      "term": "Complexo ativado (estado de transição)",
+      "aliases": [
+        "complexo ativado",
+        "estado de transição"
+      ],
+      "definition": "O arranjo instável dos átomos no topo da barreira de energia, no meio do caminho entre reagentes e produtos: pode seguir para os produtos ou se desfazer de volta nos reagentes.",
+      "example": "No diagrama de energia, o complexo ativado fica no ponto mais alto da \"montanha\".",
+      "related": [
+        "energia-de-ativacao",
+        "teoria-das-colisoes"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: activated complex; transition state",
+        "pages": "B1"
+      }
+    },
+    {
+      "id": "mecanismo-de-reacao",
+      "term": "Mecanismo de reação",
+      "aliases": [
+        "mecanismo",
+        "mecanismos",
+        "mecanismos de reação"
+      ],
+      "definition": "A sequência de etapas simples (reações elementares) que se propõe para explicar como uma reação acontece de verdade e por que ela tem a lei de velocidade medida.",
+      "example": "A decomposição do H2O2 com bromo ocorre em duas etapas: o Br2 é consumido na primeira e refeito na segunda.",
+      "related": [
+        "reacao-elementar",
+        "etapa-determinante",
+        "intermediario"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: reaction mechanism",
+        "pages": "B23"
+      }
+    },
+    {
+      "id": "reacao-elementar",
+      "term": "Reação elementar",
+      "aliases": [
+        "reações elementares",
+        "etapa elementar",
+        "etapas elementares"
+      ],
+      "definition": "Cada etapa individual de um mecanismo de reação: um choque ou uma quebra que acontece de uma vez só, do jeito que está escrito.",
+      "example": "2 CH₃ → C₂H₆: dois radicais metila se juntam numa única etapa.",
+      "related": [
+        "mecanismo-de-reacao"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: elementary reaction",
+        "pages": "B10"
+      }
+    },
+    {
+      "id": "etapa-determinante",
+      "term": "Etapa determinante da velocidade",
+      "aliases": [
+        "etapa determinante",
+        "etapa lenta"
+      ],
+      "definition": "A etapa mais lenta de um mecanismo: como um gargalo, ela decide a velocidade da reação inteira.",
+      "example": "Numa fila com um caixa lento, o tempo total depende desse caixa — é a etapa determinante.",
+      "related": [
+        "mecanismo-de-reacao"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: rate-determining step",
+        "pages": "B23"
+      }
+    },
+    {
+      "id": "intermediario",
+      "term": "Intermediário de reação",
+      "aliases": [
+        "intermediário",
+        "intermediários",
+        "intermediários de reação"
+      ],
+      "definition": "Espécie que se forma numa etapa do mecanismo e é consumida numa etapa seguinte, por isso não aparece na equação global.",
+      "example": "Na decomposição do H2O2 catalisada por bromo, o Br⁻ formado na primeira etapa é um intermediário.",
+      "related": [
+        "mecanismo-de-reacao",
+        "catalisador"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: reaction intermediate",
+        "pages": "B23"
+      }
+    },
+    {
+      "id": "enzima",
+      "term": "Enzima",
+      "aliases": [
+        "enzimas"
+      ],
+      "definition": "Catalisador biológico: uma proteína que acelera uma reação específica dentro dos seres vivos.",
+      "example": "A catalase do sangue e da batata faz a água oxigenada espumar, liberando oxigênio.",
+      "related": [
+        "catalisador"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: enzyme",
+        "pages": "B11"
+      }
+    },
+    {
+      "id": "superficie-de-contato",
+      "term": "Superfície de contato",
+      "aliases": [
+        "área de superfície"
+      ],
+      "definition": "A área do sólido exposta ao outro reagente. Quando um reagente é sólido, quebrá-lo em pedaços menores (ou em pó) aumenta a superfície de contato e a reação fica mais rápida.",
+      "example": "Um comprimido efervescente moído dissolve e borbulha mais rápido que o comprimido inteiro.",
+      "related": [
+        "velocidade-de-reacao"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Seção 14.14: catálise (área de superfície em reações heterogêneas)",
+        "pages": "595"
+      }
+    },
+    {
+      "id": "raio-atomico",
+      "term": "Raio atômico",
+      "aliases": [
+        "raios atômicos",
+        "raio covalente"
+      ],
+      "definition": "O \"tamanho\" de um átomo: metade da distância entre os centros de dois átomos vizinhos ligados. Cresce descendo um grupo (mais camadas de elétrons) e diminui ao longo de um período (o núcleo puxa mais forte).",
+      "example": "O césio (232 pm) é bem maior que o lítio (133 pm), que está no mesmo grupo, duas camadas acima.",
+      "related": [
+        "tabela-periodica",
+        "energia-de-ionizacao"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: atomic radius",
+        "pages": "B3"
+      }
+    },
+    {
+      "id": "energia-de-ionizacao",
+      "term": "Energia de ionização",
+      "aliases": [
+        "energias de ionização",
+        "1ª energia de ionização",
+        "primeira energia de ionização"
+      ],
+      "definition": "A energia mínima para arrancar um elétron de um átomo isolado (em estado gasoso). Quanto menor, mais fácil o átomo vira cátion: por isso os metais alcalinos, com as menores energias de ionização, são tão reativos.",
+      "example": "Arrancar um elétron do sódio custa 496 kJ/mol; do neônio, 2081 kJ/mol.",
+      "related": [
+        "cation",
+        "raio-atomico",
+        "afinidade-eletronica"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: ionization energy",
+        "pages": "B15"
+      }
+    },
+    {
+      "id": "afinidade-eletronica",
+      "term": "Afinidade eletrônica",
+      "aliases": [
+        "afinidades eletrônicas"
+      ],
+      "definition": "A energia liberada quando um átomo isolado (gasoso) ganha um elétron. Quanto maior, mais o átomo \"quer\" o elétron: os halogênios têm as maiores. Um valor negativo indica que é preciso gastar energia para o átomo aceitar o elétron.",
+      "example": "O cloro libera 349 kJ/mol ao virar Cl⁻ — é a maior afinidade eletrônica da tabela.",
+      "related": [
+        "anion",
+        "energia-de-ionizacao",
+        "eletronegatividade"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Seção 1.18: electron affinity",
+        "pages": "45"
+      }
+    },
+    {
+      "id": "desproporcionamento",
+      "term": "Desproporcionamento",
+      "aliases": [
+        "desproporciona",
+        "desproporcionam",
+        "dismutação"
+      ],
+      "definition": "Oxirredução em que o mesmo elemento, na mesma substância, ao mesmo tempo oxida e reduz: parte dos átomos sobe de NOX e parte desce.",
+      "example": "Na decomposição da água oxigenada, o oxigênio (−1) vira −2 na água e 0 no O2.",
+      "related": [
+        "redox",
+        "numero-de-oxidacao"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: disproportionation",
+        "pages": "B9"
+      }
+    },
+    {
+      "id": "lei-de-proust",
+      "term": "Lei de Proust (proporções definidas)",
+      "aliases": [
+        "lei de proust",
+        "proporções definidas",
+        "lei das proporções definidas",
+        "composição constante"
+      ],
+      "definition": "Um composto tem sempre a mesma composição em massa, venha de onde vier: a razão entre as massas dos seus elementos é fixa.",
+      "example": "Em qualquer amostra de água, há 7,94 g de oxigênio para cada 1 g de hidrogênio.",
+      "related": [
+        "composto",
+        "lei-de-dalton",
+        "composicao-percentual"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: law of constant composition",
+        "pages": "B16"
+      }
+    },
+    {
+      "id": "lei-de-dalton",
+      "term": "Lei de Dalton (proporções múltiplas)",
+      "aliases": [
+        "lei de dalton",
+        "proporções múltiplas",
+        "lei das proporções múltiplas"
+      ],
+      "definition": "Quando dois elementos formam mais de um composto, fixada a massa de um deles, as massas do outro ficam numa razão de números inteiros pequenos. Foi uma das pistas de que a matéria é feita de átomos.",
+      "example": "Água (H2O) e água oxigenada (H2O2): para a mesma massa de hidrogênio, a massa de oxigênio está na razão 1 : 2.",
+      "related": [
+        "lei-de-proust",
+        "atomo"
+      ],
+      "source": {
+        "ref": "bernoulli",
+        "topic": "v. 1, Frente C, Módulo 01: leis das reações químicas",
+        "pages": "36"
+      }
+    },
+    {
+      "id": "composicao-percentual",
+      "term": "Composição percentual em massa",
+      "aliases": [
+        "composição centesimal",
+        "composição percentual",
+        "porcentagem em massa",
+        "composição em massa"
+      ],
+      "definition": "Quanto de cada elemento há num composto, em porcentagem da massa total. Calcula-se pela fórmula: massa do elemento na fórmula ÷ massa molar × 100.",
+      "example": "A água tem 11,2% de hidrogênio e 88,8% de oxigênio em massa.",
+      "related": [
+        "massa-molar",
+        "formula-minima"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: mass percentage composition",
+        "pages": "B17"
+      }
+    },
+    {
+      "id": "formula-minima",
+      "term": "Fórmula mínima (empírica)",
+      "aliases": [
+        "fórmula mínima",
+        "fórmula empírica",
+        "fórmulas mínimas"
+      ],
+      "definition": "A fórmula com a menor proporção inteira entre os átomos. É o que a análise da composição em massa revela; para saber a fórmula molecular é preciso também a massa molar.",
+      "example": "A água oxigenada, H2O2, tem fórmula mínima HO; o ácido acético, CH3COOH, tem CH2O.",
+      "related": [
+        "formula-molecular",
+        "composicao-percentual"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: empirical formula",
+        "pages": "B10"
+      }
+    },
+    {
+      "id": "formula-molecular",
+      "term": "Fórmula molecular",
+      "aliases": [
+        "fórmulas moleculares"
+      ],
+      "definition": "A fórmula com o número real de átomos de cada elemento numa molécula. É sempre um múltiplo inteiro da fórmula mínima.",
+      "example": "A vitamina C tem fórmula mínima C3H4O3 e fórmula molecular C6H8O6 (o dobro).",
+      "related": [
+        "formula-minima"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: molecular formula",
+        "pages": "B18"
+      }
+    },
+    {
+      "id": "diluicao",
+      "term": "Diluição",
+      "aliases": [
+        "diluir",
+        "diluições"
+      ],
+      "definition": "Acrescentar solvente a uma solução para baixar a concentração. A quantidade de soluto não muda — só passa a ocupar um volume maior —, por isso c₁·V₁ = c₂·V₂.",
+      "example": "Para fazer 250 mL de NaOH 0,00125 mol/L a partir de uma solução 0,0380 mol/L, pegam-se 8,22 mL e completa-se com água.",
+      "related": [
+        "concentracao-molar",
+        "solucao"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Seção G.4: diluição (Exemplo G.4)",
+        "pages": "F57"
+      }
+    },
+    {
+      "id": "ppm",
+      "term": "Partes por milhão (ppm)",
+      "aliases": [
+        "ppm",
+        "partes por milhão"
+      ],
+      "definition": "Quantos gramas de soluto há em um milhão de gramas de solução. Serve para quantidades muito pequenas; em água diluída, 1 ppm ≈ 1 mg por litro.",
+      "example": "A água tratada costuma ter cerca de 1 ppm de cloro: 1 mg em cada litro.",
+      "related": [
+        "concentracao-molar",
+        "concentracao-em-massa"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: parts per million",
+        "pages": "B20"
+      }
+    },
+    {
+      "id": "concentracao-em-massa",
+      "term": "Concentração em massa (g/L)",
+      "aliases": [
+        "concentração comum",
+        "concentração em g/l",
+        "g/l"
+      ],
+      "definition": "Massa de soluto (em gramas) dissolvida em cada litro de solução. Para passar para mol/L, divide-se pela massa molar do soluto.",
+      "example": "Um refrigerante com 0,358 g/L de sacarina tem 0,358 g dela dissolvidos em cada litro.",
+      "related": [
+        "concentracao-molar",
+        "ppm",
+        "massa-molar"
+      ],
+      "source": {
+        "ref": "bernoulli",
+        "topic": "v. 5, Frente A, Módulo 09: concentração das soluções",
+        "pages": "3"
       }
     }
   ]

@@ -2,6 +2,8 @@
   "_meta": {
     "description": "Referências citadas por reactions.json e non-reactions.json (campo 'source.ref'). Os tópicos indicados em cada reação estão presentes nesses livros-texto (em capítulos sobre reações em solução aquosa, estequiometria, eletroquímica, química descritiva dos elementos etc.); conferir pela seção/índice remissivo da edição que você tiver.",
     "complementaryOnly": ["dk-elements"],
+    "secondary": ["bernoulli"],
+    "secondaryNote": "Fonte secundária, para linguagem de iniciante e convenções do ensino médio brasileiro. O que vier dela é conferido em Atkins & Jones; quando o livro-texto tem o assunto, ele é citado junto.",
     "complementaryOnlyNote": "Fontes de divulgação: só podem aparecer em 'seeAlso' (contexto, curiosidades), nunca como fonte principal de uma reação ou não-reação. Os testes conferem isso. dk-elements: livro completo recebido; as páginas citadas são as impressas no livro."
   },
   "sources": {
@@ -12,6 +14,7 @@
     "atkins-fq": "ATKINS, P.; DE PAULA, J.; KEELER, J. Atkins' Physical Chemistry. 12th ed. Oxford: Oxford University Press, 2023. ISBN 978-0-19-884781-6.",
     "atkins-jones": "ATKINS, P.; JONES, L. Chemical Principles: the quest for insight. 5th ed. New York: W. H. Freeman, 2010. ISBN 978-1-4292-1955-6.",
     "dk-elements": "JACKSON, T. The Periodic Table Book: a visual encyclopedia of the elements. Consultor: Jack Challoner. London: Dorling Kindersley (DK), 2017. ISBN 978-0-2412-4043-4.",
+    "bernoulli": "BERNOULLI SISTEMA DE ENSINO. Coleção Estudo: Química. v. 1–6. Belo Horizonte: Editora Bernoulli. Apostilas de ensino médio (a cópia consultada não traz ISBN nem ano; os exercícios citam vestibulares até 2010). Citadas como v. X, Frente Y, Módulo Z, página impressa.",
     "crc": "HAYNES, W. M. (ed.). CRC Handbook of Chemistry and Physics. 97th ed. Boca Raton: CRC Press, 2016. Seção 'Electrochemical Series' (potenciais-padrão de redução)."
   }
 }

@@ -3,22 +3,71 @@
 
 import { html, raw, esc, FAMILY_LABEL, PHASE_LABEL } from './dom.js';
 
+// Propriedades periódicas (Bernoulli v. 2, Frente C, Módulo 06; Atkins & Jones, seções 1.15–1.18):
+// a tabela pode ser colorida pelo valor de cada elemento, para enxergar as tendências.
+export const PROPERTIES = {
+  covalentRadius: {
+    label: 'Raio atômico',
+    unit: 'pm',
+    trend: 'Cresce descendo um grupo (mais camadas de elétrons) e diminui da esquerda para a direita num período (o núcleo, com mais prótons, puxa mais os elétrons).',
+    note: 'raio covalente (metade da distância entre dois átomos ligados)',
+  },
+  ionizationEnergy: {
+    label: 'Energia de ionização',
+    unit: 'kJ/mol',
+    trend: 'Diminui descendo um grupo (o elétron externo está mais longe do núcleo) e cresce num período; os gases nobres têm as maiores, os metais alcalinos as menores.',
+    note: '1ª energia de ionização',
+  },
+  electronAffinity: {
+    label: 'Afinidade eletrônica',
+    unit: 'kJ/mol',
+    trend: 'Os halogênios liberam mais energia ao ganhar um elétron (completam a camada); gases nobres e alguns metais não ganham elétrons com facilidade (valor negativo).',
+    note: 'energia liberada quando o átomo ganha um elétron',
+  },
+  electronegativity: {
+    label: 'Eletronegatividade',
+    unit: '(Pauling)',
+    trend: 'Cresce para a direita e para cima: o flúor é o mais eletronegativo; o césio e o frâncio, os menos.',
+    note: 'escala de Pauling',
+  },
+};
+
+const fmt = (v) => String(Math.round(v * 100) / 100).replace('.', ',');
+
 export function renderPeriodicTable(root, data, { getStatus, onPick }) {
   let highlightFamily = null;
   let selected = null;
+  let colorBy = 'family';
+  // Faixa de cada propriedade (para a escala de cores).
+  const ranges = Object.fromEntries(
+    Object.keys(PROPERTIES).map((k) => {
+      const vals = data.elements.map((e) => e[k]).filter((v) => v != null);
+      return [k, [Math.min(...vals), Math.max(...vals)]];
+    }),
+  );
+  // Escala clara → escura, sempre legível com texto escuro (como as cores das famílias).
+  const scale = (k, v) => {
+    const [lo, hi] = ranges[k];
+    const t = (v - lo) / (hi - lo || 1);
+    return `hsl(${Math.round(50 - 42 * t)} ${Math.round(85 - 10 * t)}% ${Math.round(88 - 28 * t)}%)`;
+  };
 
   const grid = root.querySelector('.pt-grid');
   const legend = root.querySelector('.pt-legend');
   const info = root.querySelector('.pt-info');
 
   function draw() {
+    grid.classList.toggle('by-prop', colorBy !== 'family');
     grid.innerHTML = data.elements
       .map((e) => {
         const st = getStatus(e.symbol);
-        const dim = highlightFamily && e.family !== highlightFamily ? ' is-dim' : '';
+        const dim = colorBy === 'family' && highlightFamily && e.family !== highlightFamily ? ' is-dim' : '';
         const sel = selected === e.symbol ? ' is-selected' : '';
-        return html`<button class="pt-cell fam-${e.family} st-${st.kind}${raw(dim)}${raw(sel)}" style="grid-column:${e.xpos};grid-row:${e.ypos + 1}"
-          data-symbol="${e.symbol}" title="${e.name} (${e.Z})${st.kind === 'locked' ? ' — desbloqueia no nível ' + (st.level + 1) : st.kind === 'future' ? ' — fases futuras' : ''}">
+        const prop = colorBy !== 'family' ? e[colorBy] : undefined;
+        const color = colorBy === 'family' ? '' : prop == null ? ';--fam:var(--panel-2)' : `;--fam:${scale(colorBy, prop)}`;
+        const value = prop == null ? '' : ` — ${PROPERTIES[colorBy].label}: ${fmt(prop)} ${PROPERTIES[colorBy].unit}`;
+        return html`<button class="pt-cell fam-${e.family} st-${st.kind}${raw(dim)}${raw(sel)}${raw(colorBy !== 'family' && prop == null ? ' no-data' : '')}" style="grid-column:${e.xpos};grid-row:${e.ypos + 1}${raw(color)}"
+          data-symbol="${e.symbol}" title="${e.name} (${e.Z})${value}${st.kind === 'locked' ? ' — desbloqueia no nível ' + (st.level + 1) : st.kind === 'future' ? ' — fases futuras' : ''}">
           <span class="pt-z">${e.Z}</span><span class="pt-sym">${e.symbol}</span>${raw(st.kind === 'locked' ? '<span class="pt-lock" aria-hidden="true">🔒</span>' : '')}
         </button>`;
       })
@@ -28,11 +77,25 @@ export function renderPeriodicTable(root, data, { getStatus, onPick }) {
   }
 
   function drawLegend() {
-    const fams = [...new Set(data.elements.map((e) => e.family))];
-    legend.innerHTML =
-      fams
-        .map((f) => html`<button class="legend-item fam-${f}${raw(highlightFamily === f ? ' is-active' : '')}" data-family="${f}"><span class="swatch"></span>${FAMILY_LABEL[f] ?? f}</button>`)
-        .join('') + '<span class="legend-hint">Clique numa família para destacá-la</span>';
+    const options = [['family', 'Família'], ...Object.entries(PROPERTIES).map(([k, p]) => [k, p.label])]
+      .map(([v, t]) => `<option value="${v}"${v === colorBy ? ' selected' : ''}>${esc(t)}</option>`)
+      .join('');
+    const picker = `<label class="pt-colorby">Colorir por <select data-colorby aria-label="Colorir a tabela por">${options}</select></label>`;
+    if (colorBy === 'family') {
+      const fams = [...new Set(data.elements.map((e) => e.family))];
+      legend.innerHTML =
+        picker +
+        fams
+          .map((f) => html`<button class="legend-item fam-${f}${raw(highlightFamily === f ? ' is-active' : '')}" data-family="${f}"><span class="swatch"></span>${FAMILY_LABEL[f] ?? f}</button>`)
+          .join('') + '<span class="legend-hint">Clique numa família para destacá-la</span>';
+      return;
+    }
+    const P = PROPERTIES[colorBy];
+    const [lo, hi] = ranges[colorBy];
+    const missing = data.elements.filter((e) => e[colorBy] == null).length;
+    legend.innerHTML = html`${raw(picker)}
+      <span class="pt-scale"><span>${fmt(lo)}</span><span class="pt-scale-bar" style="background:linear-gradient(90deg, ${scale(colorBy, lo)}, ${scale(colorBy, (lo + hi) / 2)}, ${scale(colorBy, hi)})"></span><span>${fmt(hi)} ${P.unit}</span></span>
+      <p class="pt-trend small"><strong>${P.label}</strong> — ${P.note}. ${P.trend}${missing ? ` Sem dado para ${missing} elementos (em cinza).` : ''}</p>`;
   }
 
   function showInfo(symbol) {
@@ -58,6 +121,9 @@ export function renderPeriodicTable(root, data, { getStatus, onPick }) {
         ${raw(row('Configuração', e.electronConfiguration))}
         ${raw(row('Elétrons de valência', (e.block === 's' || e.block === 'p') && valence ? valence : null))}
         ${raw(row('Eletronegatividade', e.electronegativity ? String(e.electronegativity).replace('.', ',') + ' (Pauling)' : null))}
+        ${raw(row('Raio atômico', e.covalentRadius != null ? `${e.covalentRadius} pm` : null))}
+        ${raw(row('Energia de ionização', e.ionizationEnergy != null ? `${fmt(e.ionizationEnergy)} kJ/mol` : null))}
+        ${raw(row('Afinidade eletrônica', e.electronAffinity != null ? `${fmt(e.electronAffinity)} kJ/mol` : null))}
         ${raw(row('Estado (0 °C, 1 atm)', PHASE_LABEL[e.phaseAtSTP]))}
         ${raw(row('Forma no jogo', elemental ? elemental.formula : null))}
       </dl>
@@ -92,6 +158,14 @@ export function renderPeriodicTable(root, data, { getStatus, onPick }) {
   info.addEventListener('click', (ev) => {
     const btn = ev.target.closest('[data-add]');
     if (btn) onPick(btn.dataset.add);
+  });
+  legend.addEventListener('change', (ev) => {
+    const s = ev.target.closest('[data-colorby]');
+    if (!s) return;
+    colorBy = s.value;
+    highlightFamily = null;
+    draw();
+    drawLegend();
   });
   legend.addEventListener('click', (ev) => {
     const b = ev.target.closest('[data-family]');

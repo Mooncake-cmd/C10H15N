@@ -4,10 +4,14 @@
 import { html, raw, esc, TYPE_LABEL } from './dom.js';
 import { formatFormulaHTML } from '../core/formula.js';
 import { resolveSide, checkConservation, formatEquationHTML } from '../core/equation.js';
-import { molarMass, formatFormulaText } from '../core/formula.js';
+import { molarMass, formatFormulaText, parseFormula } from '../core/formula.js';
 import { mountReactionStage, mountBounceStage } from './reaction-stage.js';
 import { stoichiometry, percentYield } from '../core/stoichiometry.js';
 import { reactionThermo, heatFor } from '../core/thermo.js';
+import { kineticsLink, kAt, halfLife } from '../core/kinetics.js';
+import { redoxAnalysis, formatOx, frac } from '../core/oxidation.js';
+import { massComposition, empiricalFormula, massRatio, sameElementsPartners, multipleProportions } from '../core/composition.js';
+import { formatSci, formatDuration, sourceText } from './kinetics-lab.js';
 
 let stopStage = () => {};
 
@@ -58,6 +62,34 @@ function conservationHTML(data, reactants, products) {
       </table>
       <p class="small muted">Massas para os coeficientes lidos em mol (ex.: 2 mol de Na = ${fmtNum(2 * data.atomicMasses.Na)} g). Estequiometria completa chega na Fase 2.</p>
     </details>`;
+}
+
+/** Composição em massa, fórmula mínima e as leis de Proust e Dalton para os produtos compostos. */
+function compositionHTML(data, products) {
+  const M = data.atomicMasses;
+  const seen = new Set();
+  const items = products
+    .filter((sp) => Object.keys(parseFormula(sp.formula).atoms).length > 1 && !seen.has(sp.formula) && seen.add(sp.formula))
+    .map((sp) => {
+      const F = formatFormulaHTML(sp.formula);
+      const comp = massComposition(sp.formula, M).map((x) => `${esc(x.el)} ${fmtNum(x.pct, 1)}%`).join(' · ');
+      const emp = empiricalFormula(sp.formula);
+      const empTxt = emp.factor > 1 ? ` Fórmula mínima: <strong>${formatFormulaHTML(emp.formula)}</strong> (a fórmula do composto, ${F}, é ${emp.factor} × ${formatFormulaHTML(emp.formula)}).` : '';
+      const ratio = massRatio(sp.formula, M);
+      const proust = ratio
+        ? ` <em>Proust:</em> em qualquer amostra de ${F}, há sempre ${ratio.others.map((o) => `${fmtNum(o.perGram, 2)} g de ${esc(o.el)}`).join(' e ')} para cada 1 g de ${esc(ratio.base.el)}.`
+        : '';
+      const partner = sameElementsPartners(sp.formula, data.substances)[0];
+      const mp = partner && multipleProportions(sp.formula, partner.formula);
+      const dalton = mp
+        ? ` <em>Dalton:</em> ${F} e ${formatFormulaHTML(partner.formula)} têm os mesmos elementos; para a mesma massa de ${esc(mp.a)}, as massas de ${esc(mp.b)} estão na razão ${mp.ratio[0]} : ${mp.ratio[1]}.`
+        : '';
+      return `<li><strong>${F}</strong>: ${comp}.${empTxt}${proust}${dalton}</li>`;
+    });
+  if (!items.length) return '';
+  return `<details class="composition"><summary>Composição dos produtos e leis ponderais</summary>
+    <ul class="small">${items.join('')}</ul>
+    <p class="small muted">Composição percentual e fórmula mínima: Atkins &amp; Jones, seção F, p. F45–F51. Leis de Proust (proporções definidas) e de Dalton (proporções múltiplas): Bernoulli, Química, v. 1, Frente C, Módulo 01, p. 36.</p></details>`;
 }
 
 /** Calculadora de estequiometria (seções G, L e M de Atkins & Jones; gases pela lei dos gases ideais). */
@@ -193,6 +225,104 @@ function energyHTML(data, r) {
     <p class="small muted">Calculado pela lei de Hess com entalpias e energias livres de formação (${srcText()}).</p></section>`;
 }
 
+/** "Como confirmar que saiu H2/O2/CO2?" — testes de identificação de gases (Bernoulli v. 5, p. 49). */
+function gasTestsHTML(data, r) {
+  const gases = r.products.filter((e) => data.gasTests[e.id] && (e.state ?? data.substancesById.get(e.id).state) === 'g');
+  return gases
+    .map((e) => {
+      const g = data.gasTests[e.id];
+      const F = formatFormulaHTML(data.substancesById.get(e.id).formula);
+      const play = g.reaction && g.reaction !== r.id ? lookupName(data, g.reaction) : null;
+      return html`<aside class="gas-test"><h3>🧪 Como confirmar que saiu ${raw(F)}?</h3>
+        <p><strong>Teste:</strong> ${g.test} <strong>Resultado:</strong> ${g.result}</p>
+        <p class="small">${g.why}${raw(play ? ` Dá para fazer no jogo: <em>${esc(play)}</em>.` : '')}</p>
+        <p class="small"><strong>Segurança:</strong> ${g.safety}</p>
+        <p class="small muted">Fonte: ${raw(g.source.map((s) => `${esc(SHORT_SRC[s.ref] ?? s.ref)}, ${esc(s.topic)}, p. ${esc(s.pages)}`).join('; '))}.</p></aside>`;
+    })
+    .join('');
+}
+const SHORT_SRC = { bernoulli: 'Bernoulli, Química', 'atkins-jones': 'Atkins & Jones, Chemical Principles, 5. ed.' };
+const lookupName = (data, id) => data.reactionsById.get(id)?.name ?? null;
+
+/** Seção "Oxidação e redução": NOX de cada substância e quem oxida/reduz (Toolbox K.1, p. F80). */
+function redoxHTML(data, r) {
+  const a = redoxAnalysis(r, data);
+  if (!a.known) return '';
+  const F = (id) => formatFormulaHTML(data.substancesById.get(id).formula);
+  const list = (ids) => [...new Set(ids)].map(F).join(', ');
+  const table = a.species
+    .filter((s, i, arr) => arr.findIndex((x) => x.id === s.id) === i)
+    .map((s) => `<li>${F(s.id)}: ${Object.entries(s.ox).map(([el, v]) => `${esc(el)} ${v.map(formatOx).join(' e ')}`).join(', ')}</li>`)
+    .join('');
+  const details = `<details class="nox-table"><summary>NOX de cada substância</summary><ul class="small">${table}</ul>
+    <p class="small muted">Regras: substância simples = 0; a soma dá a carga; F −1; grupos 1 e 2: +1 e +2; H +1 (−1 com metais); O −2 (−1 nos peróxidos); halogênios −1 (exceto com oxigênio). Fonte: Atkins &amp; Jones, Toolbox K.1, p. F80.</p></details>`;
+  if (!a.changes.length) {
+    return `<section class="redox"><h3>Oxidação e redução</h3><p class="small">Nenhum número de oxidação muda: não é uma oxirredução. Os átomos só trocam de parceiro.</p>${details}</section>`;
+  }
+  const lines = a.changes
+    .flatMap((c) =>
+      c.transitions.map((t) => {
+        const d = frac(t.to.n * t.from.d - t.from.n * t.to.d, t.to.d * t.from.d);
+        const e = `${Math.abs(d.n)}${d.d > 1 ? `/${d.d}` : ''}`;
+        // "(em NO)" quando o elemento aparece em mais de um produto (Cu + HNO3) ou se desproporciona.
+        const inProducts = r.products.filter((e) => a.species.find((x) => x.id === e.id).ox[c.el]).length;
+        const where = c.transitions.length > 1 || inProducts > t.out.length ? ` (em ${list(t.out)})` : '';
+        const avg = t.from.d > 1 || t.to.d > 1 ? ' (NOX médio: os átomos não são todos iguais)' : '';
+        return `<li><strong>${esc(c.el)}</strong>: ${formatOx(t.from)} → ${formatOx(t.to)}${where}${avg} — ${t.dir === 'oxida' ? `perde ${e} elétron${e === '1' ? '' : 's'} por átomo: <strong>oxida</strong>` : `ganha ${e} elétron${e === '1' ? '' : 's'} por átomo: <strong>reduz</strong>`}</li>`;
+      }),
+    )
+    .join('');
+  const dispro = a.changes.some((c) => c.transitions.some((t) => t.dir === 'oxida') && c.transitions.some((t) => t.dir === 'reduz'));
+  return `<section class="redox"><h3>Oxidação e redução (NOX)</h3><ul>${lines}</ul>
+    <p class="small">Agente redutor: ${list(a.reducers)} (contém o elemento que oxida). Agente oxidante: ${list(a.oxidizers)} (contém o elemento que reduz).${dispro ? ' O mesmo elemento oxida e reduz ao mesmo tempo: é um desproporcionamento.' : ''}</p>${details}</section>`;
+}
+
+/** Barreira de energia (energia de ativação); com catalisador, o caminho mais baixo tracejado. */
+function barrierSVG(exo, catalyzed) {
+  const yR = exo ? 70 : 92;
+  const yP = exo ? 92 : 70;
+  const hump = (top) => `M10,${yR} L60,${yR} C95,${yR} 100,${top} 130,${top} C160,${top} 165,${yP} 200,${yP} L250,${yP}`;
+  return `<svg class="energy-svg barrier-svg" viewBox="0 0 260 112" role="img" aria-label="Diagrama: os reagentes precisam subir uma barreira de energia (energia de ativação) antes de virar produtos${catalyzed ? '; com catalisador, a barreira é mais baixa' : ''}">
+    <path class="barrier" d="${hump(14)}"/>${catalyzed ? `<path class="barrier-cat" d="${hump(46)}"/><text x="130" y="42" class="cat-label">com catalisador</text>` : ''}
+    <line class="ea" x1="64" y1="${yR}" x2="64" y2="14"/><text x="58" y="${(yR + 14) / 2 + 4}" text-anchor="end">Ea</text>
+    <text x="35" y="${yR + 15}">reagentes</text><text x="225" y="${yP + 15}">produtos</text><text x="130" y="10" class="ts-label">complexo ativado</text></svg>`;
+}
+
+/** Seção "Velocidade" (Fase 3B): dado medido, catálise ou barreira de ativação — nunca um número inventado. */
+function kineticsHTML(data, r) {
+  const link = kineticsLink(r, data);
+  const conds = new Set((r.conditions ?? []).flat());
+  const t = reactionThermo(r, data);
+  const exo = t.dH == null ? r.tags.includes('exotermica') || !r.tags.includes('endotermica') : t.dH < 0;
+  const labBtn = (id, label = 'Abrir no laboratório de velocidade') => `<button type="button" class="btn btn-ghost btn-small" data-open-kinetics="${esc(id ?? '')}">⏱️ ${esc(label)}</button>`;
+  if (link?.kinetics) {
+    const e = data.kinetics.byId.get(link.kinetics);
+    const k = kAt(e, 298);
+    const ex = k ? halfLife(e.order, k.k, 0.1) : null;
+    return html`<section class="kinetics"><h3>Velocidade</h3>
+      <p>${link.note}</p>
+      <p class="small"><strong>Lei de velocidade:</strong> taxa = ${e.rateLaw}${raw(k ? ` · k = ${formatSci(k.k)} ${esc(e.kUnit)} a 25 °C${k.how === 'tabela' ? '' : ' (calculado pela equação de Arrhenius)'}` : '')}${raw(e.arrhenius ? ` · Ea = ${formatSci(e.arrhenius.Ea, 3)} kJ/mol` : '')}.
+      ${raw(ex != null ? `Com 0,10 mol/L de cada, metade reage em ${esc(formatDuration(ex))}.` : '')}</p>
+      ${raw(labBtn(e.id))}
+      <p class="small muted">Fonte: ${raw(sourceText(data, [link.source]))}.</p></section>`;
+  }
+  if (link?.catalysis) {
+    return html`<section class="kinetics"><h3>Velocidade: o papel do catalisador</h3>
+      <div class="energy-row">${raw(barrierSVG(exo, true))}<p>${link.note}</p></div>
+      ${raw(labBtn('sacarose', 'Ver outro catalisador no laboratório: ácido na hidrólise do açúcar'))}
+      <p class="small muted">Fonte: ${raw(sourceText(data, [link.source]))}.</p></section>`;
+  }
+  const igniter = ['faisca', 'calor', 'luz'].find((c) => conds.has(c));
+  if (igniter && exo) {
+    const who = { faisca: 'uma faísca', calor: 'o aquecimento', luz: 'a luz' }[igniter];
+    return html`<section class="kinetics"><h3>Velocidade: por que precisa de ${who}?</h3>
+      <div class="energy-row">${raw(barrierSVG(true, false))}<p>Mesmo liberando energia no fim, os reagentes precisam primeiro subir uma barreira: a energia de ativação (Ea). À temperatura ambiente, quase nenhuma colisão tem energia para isso, e a reação fica parada. ${who[0].toUpperCase() + who.slice(1)} dá essa energia a uma parte das moléculas.${r.types.includes('combustao') ? ' Numa combustão, o calor liberado aquece as moléculas vizinhas, e a reação se espalha sozinha.' : ''}</p></div>
+      ${raw(labBtn('n2o5', 'Ver no laboratório como a temperatura acelera uma reação'))}
+      <p class="small muted">Fonte: ${raw(sourceText(data, [{ ref: 'atkins-jones', topic: 'Seções 14.11–14.13: temperatura, teoria das colisões e complexo ativado', pages: '587–595' }]))}.</p></section>`;
+  }
+  return `<section class="kinetics"><h3>Velocidade</h3><p class="small muted">Sem dado de velocidade conferido para esta reação: o jogo não estima quanto tempo ela leva. ${labBtn(null)}</p></section>`;
+}
+
 const itemLabel = (data, id) => {
   const it = data.itemsById.get(id);
   return `${it.icon} ${it.name}`;
@@ -221,6 +351,7 @@ export function renderResult(root, data, result, { newSubstances = [] } = {}) {
       <h3>Por quê?</h3>
       <p>${r.why}</p>
       ${raw(energyHTML(data, r))}
+      ${raw(kineticsHTML(data, r))}
       ${raw(r.conditionNote ? `<p class="small"><strong>Nota:</strong> ${esc(r.conditionNote)}</p>` : '')}
       ${raw(
         r.netIonic
@@ -229,12 +360,15 @@ export function renderResult(root, data, result, { newSubstances = [] } = {}) {
             ${raw(r.netIonic.note ? `<p class="small">${esc(r.netIonic.note)}</p>` : '')}`
           : '',
       )}
+      ${raw(redoxHTML(data, r))}
+      ${raw(gasTestsHTML(data, r))}
       <aside class="safety safety-${r.safety.level}">
         <strong>${SAFETY_LABEL[r.safety.level]}</strong>
         ${raw(r.safety.why ? `<p>${esc(r.safety.why)}</p>` : '')}
         ${raw(r.safety.home ? `<p><strong>Em casa?</strong> ${esc(r.safety.home)}</p>` : '')}
       </aside>
       ${raw(conservationHTML(data, reactants, products))}
+      ${raw(compositionHTML(data, products))}
       ${raw(calculatorHTML(data, reactants, products))}
       ${raw(r.generated ? '<p class="small muted rule-note">⚙️ Esta reação não está na lista conferida uma a uma: o motor de regras escolheu os produtos por uma regra geral (fonte abaixo) e calculou os coeficientes pelo balanceamento automático. Os testes do jogo conferem átomos, cargas e estados de todas as reações que as regras podem gerar.</p>' : '')}
       ${raw(sourceHTML(data, r.source))}`;

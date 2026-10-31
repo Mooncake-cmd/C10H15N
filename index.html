@@ -16,6 +16,8 @@
       <div class="progress" role="progressbar" aria-label="Progresso no jogo" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div id="progress-bar"></div></div>
     </div>
     <button class="btn btn-ghost" type="button" data-glossary-open="" title="O que significa cada palavra da química">📖 <span class="hide-narrow">Glossário</span></button>
+    <button id="btn-kinetics" class="btn btn-ghost" type="button" title="Laboratório de velocidade das reações">⏱️ <span class="hide-narrow">Velocidade</span></button>
+    <button id="btn-calcs" class="btn btn-ghost" type="button" title="Concentração, diluição, mistura e fórmula mínima">🧮 <span class="hide-narrow">Calculadoras</span></button>
     <button id="btn-reset" class="btn btn-ghost" type="button" title="Apagar progresso">Recomeçar</button>
   </header>
 
@@ -80,6 +82,69 @@
     <p class="glossary-count small muted"></p>
     <div class="glossary-list"></div>
     <p class="small muted">Definições escritas para o jogo, com base no glossário de Atkins &amp; Jones, <em>Chemical Principles</em>, 5. ed. Nos textos do jogo, as palavras <button type="button" class="term" data-term="ion" tabindex="-1">sublinhadas</button> abrem a definição.</p>
+  </dialog>
+
+  <dialog id="kinetics-dialog" class="level-dialog kinetics-dialog" aria-labelledby="kinetics-title">
+    <div class="glossary-head">
+      <h2 id="kinetics-title">⏱️ Laboratório de velocidade</h2>
+      <button class="btn btn-ghost kin-close" type="button" aria-label="Fechar o laboratório">×</button>
+    </div>
+    <p class="small">Reações medidas no livro: mude a temperatura e a concentração e veja a constante de velocidade, a meia-vida e a curva de concentração.</p>
+    <div class="kin-controls">
+      <label>Reação <select id="kin-reaction"></select></label>
+      <label>Temperatura <input id="kin-temp" type="range" step="1"> <output id="kin-temp-out"></output></label>
+      <label>Concentração inicial <input id="kin-conc" type="number" min="0" step="any" value="0.10" inputmode="decimal"> mol/L</label>
+      <label class="kin-fixed" hidden><span class="kin-fixed-label"></span> <input id="kin-fixed" type="number" min="0" step="any" inputmode="decimal"> mol/L</label>
+    </div>
+    <div class="kin-body" aria-live="polite"></div>
+  </dialog>
+
+  <dialog id="calc-dialog" class="level-dialog kinetics-dialog" aria-labelledby="calc-title">
+    <div class="glossary-head">
+      <h2 id="calc-title">🧮 Calculadoras</h2>
+      <button class="btn btn-ghost calc-close" type="button" aria-label="Fechar as calculadoras">×</button>
+    </div>
+    <div class="calc-body">
+      <details open data-calc="conc"><summary>Concentração em outras unidades</summary>
+        <div class="kin-controls">
+          <label>Soluto <select id="calc-solute"></select></label>
+          <label>Concentração <input id="calc-conc" type="number" min="0" step="any" value="0.1" inputmode="decimal"> <select id="calc-unit"></select></label>
+        </div>
+        <div id="calc-conc-out" aria-live="polite"></div>
+        <p class="small muted">Atkins &amp; Jones, seção G (p. F54) e glossário (ppm, p. B20); Bernoulli, Química, v. 5, Frente A, Módulo 09, p. 3.</p>
+      </details>
+      <details data-calc="dil"><summary>Diluição: c₁·V₁ = c₂·V₂</summary>
+        <div class="calc-grid">
+          <label>c₁ (mol/L) <input data-dil="c1" type="number" min="0" step="any" inputmode="decimal" value="0.038"></label>
+          <label>V₁ (mL) <input data-dil="V1" type="number" min="0" step="any" inputmode="decimal"></label>
+          <label>c₂ (mol/L) <input data-dil="c2" type="number" min="0" step="any" inputmode="decimal" value="0.00125"></label>
+          <label>V₂ (mL) <input data-dil="V2" type="number" min="0" step="any" inputmode="decimal" value="250"></label>
+        </div>
+        <div id="calc-dil-out" aria-live="polite"></div>
+        <p class="small muted">Atkins &amp; Jones, seção G.4, Exemplo G.4 (p. F57) — os valores iniciais são os do exemplo.</p>
+      </details>
+      <details data-calc="mix"><summary>Mistura de soluções do mesmo soluto</summary>
+        <div class="calc-grid">
+          <label>Solução 1: c (mol/L) <input data-mix="c1" type="number" min="0" step="any" inputmode="decimal" value="1"></label>
+          <label>V (mL) <input data-mix="V1" type="number" min="0" step="any" inputmode="decimal" value="100"></label>
+          <label>Solução 2: c (mol/L) <input data-mix="c2" type="number" min="0" step="any" inputmode="decimal" value="0.5"></label>
+          <label>V (mL) <input data-mix="V2" type="number" min="0" step="any" inputmode="decimal" value="300"></label>
+        </div>
+        <div id="calc-mix-out" aria-live="polite"></div>
+        <p class="small muted">Bernoulli, Química, v. 5, Frente A, Módulo 10, p. 11.</p>
+      </details>
+      <details data-calc="formula"><summary>Fórmula mínima a partir da composição em massa</summary>
+        <div class="calc-grid">
+          <label class="calc-el-row">Elemento <input data-el value="C" size="3" autocomplete="off"> % <input data-pct type="number" min="0" step="any" inputmode="decimal" value="40.9"></label>
+          <label class="calc-el-row">Elemento <input data-el value="H" size="3" autocomplete="off"> % <input data-pct type="number" min="0" step="any" inputmode="decimal" value="4.58"></label>
+          <label class="calc-el-row">Elemento <input data-el value="O" size="3" autocomplete="off"> % <input data-pct type="number" min="0" step="any" inputmode="decimal" value="54.5"></label>
+          <label class="calc-el-row">Elemento <input data-el size="3" autocomplete="off"> % <input data-pct type="number" min="0" step="any" inputmode="decimal"></label>
+          <label>Massa molar, se souber (g/mol) <input id="calc-molar" type="number" min="0" step="any" inputmode="decimal" value="176.12"></label>
+        </div>
+        <div id="calc-formula-out" aria-live="polite"></div>
+        <p class="small muted">Atkins &amp; Jones, seção F, Exemplos F.2–F.4 (p. F47–F49): os valores iniciais são os da vitamina C.</p>
+      </details>
+    </div>
   </dialog>
 
   <div id="toasts" class="toasts" aria-live="polite"></div>

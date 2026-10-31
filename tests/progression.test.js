@@ -6,6 +6,7 @@ import assert from 'node:assert/strict';
 import { loadData } from './helpers.js';
 import { createEngine } from '../src/core/engine.js';
 import { initialState, applyResult, inventory, restoreState, STATE_VERSION, OBJECTIVE_TYPES, answerObjective, stoichAnswer } from '../src/core/progression.js';
+import { kineticsAnswer, kAt } from '../src/core/kinetics.js';
 import { lookupReaction } from '../src/core/engine.js';
 
 const data = loadData();
@@ -37,6 +38,13 @@ test('referências da progressão existem', () => {
         else if (o.ask === 'heat') assert.ok(Number.isFinite(stoichAnswer(o, data)), `${o.id}: reação sem ΔH° conhecido`);
         else assert.ok(r.products.some((e) => e.id === o.ask), `${o.id}: pergunta inválida`);
         assert.ok(Number.isFinite(stoichAnswer(o, data)) || typeof stoichAnswer(o, data) === 'string', `${o.id}: sem resposta calculável`);
+      }
+      if (o.type === 'kinetics') {
+        const e = data.kinetics.byId.get(o.kinetics);
+        assert.ok(e, `${o.id}: cinética ${o.kinetics}`);
+        assert.ok(['halfLife', 'concentration', 'ratio', 'k'].includes(o.ask) && o.unitLabel, `${o.id}: pergunta`);
+        if (o.ask !== 'ratio') assert.ok(kAt(e, o.T), `${o.id}: sem k conferido a ${o.T} K`);
+        assert.ok(Number.isFinite(kineticsAnswer(o, data.kinetics)), `${o.id}: sem resposta calculável`);
       }
       if (o.type === 'nonReaction' && !o.reasonId.startsWith('rule:')) assert.ok(nrIds.has(o.reasonId), o.id);
     }
@@ -75,10 +83,11 @@ function playLevel(state) {
       if (state.levelIndex !== startLevel || state.finished) break;
     }
     // Perguntas de estequiometria: o jogador "faz a conta" (a resposta certa calculada).
-    for (const o of data.progression.levels[startLevel].objectives.filter((x) => x.type === 'stoich')) {
+    for (const o of data.progression.levels[startLevel].objectives.filter((x) => x.type === 'stoich' || x.type === 'kinetics')) {
       if (state.levelIndex !== startLevel || state.finished) break;
       const before = JSON.stringify(state);
-      state = answerObjective(state, o.id, stoichAnswer(o, data), data).state;
+      const answer = o.type === 'kinetics' ? kineticsAnswer(o, data.kinetics) : stoichAnswer(o, data);
+      state = answerObjective(state, o.id, answer, data).state;
       if (JSON.stringify(state) !== before) changed = true;
     }
   }

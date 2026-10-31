@@ -3,6 +3,7 @@
 
 import { deriveSubstances, buildIonCatalog } from './ions.js';
 import { createGlossary } from './glossary.js';
+import { buildKinetics } from './kinetics.js';
 
 export function buildGameData(raw) {
   const elements = raw.elements.elements;
@@ -35,6 +36,10 @@ export function buildGameData(raw) {
     // Curiosidades dos elementos (leitura complementar, livro da DK), por símbolo.
     elementFacts: raw.elementFacts?.elements ?? {},
     elementFactsMeta: raw.elementFacts?._meta ?? null,
+    // Velocidade das reações (Fase 3B): dados das Tabelas 14.1 e 14.4 de Atkins & Jones.
+    kinetics: buildKinetics(raw.kinetics),
+    // Testes de identificação de gases (H2, O2, CO2).
+    gasTests: raw.gasTests?.gases ?? {},
     sources: raw.sources.sources,
     complementarySources: raw.sources._meta.complementaryOnly ?? [],
     reactivitySeries: raw.reactivitySeries.series,
