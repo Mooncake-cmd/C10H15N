@@ -2594,6 +2594,210 @@
         "topic": "Glossário: thermochemistry; thermochemical equation",
         "pages": "B28"
       }
+    },
+    {
+      "id": "radioatividade",
+      "term": "Radioatividade",
+      "aliases": [
+        "radioativo",
+        "radioativa",
+        "radioativos",
+        "radioativas"
+      ],
+      "definition": "A emissão espontânea de radiação por núcleos instáveis. Ao emitir radiação, o núcleo muda — e o átomo pode virar outro elemento. É um fenômeno do núcleo, não dos elétrons: por isso não depende das reações químicas do elemento.",
+      "example": "O rádio é radioativo: seus núcleos se desintegram e formam radônio.",
+      "related": [
+        "nucleo",
+        "isotopo",
+        "meia-vida"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: radioactivity; radioactive",
+        "pages": "B23"
+      }
+    },
+    {
+      "id": "meia-vida",
+      "term": "Meia-vida",
+      "aliases": [
+        "meias-vidas"
+      ],
+      "definition": "O tempo para metade de uma amostra se transformar. Na radioatividade, é o tempo para metade dos núcleos radioativos se desintegrar; depois de mais uma meia-vida, sobra um quarto, e assim por diante.",
+      "example": "A meia-vida do radônio-222 é de 3,8 dias.",
+      "related": [
+        "radioatividade"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: half-life",
+        "pages": "B13"
+      }
+    },
+    {
+      "id": "fissao-nuclear",
+      "term": "Fissão nuclear",
+      "aliases": [
+        "fissão"
+      ],
+      "definition": "A quebra de um núcleo grande em dois núcleos menores, liberando muita energia (e nêutrons). É a reação que funciona nos reatores nucleares.",
+      "example": "Um núcleo de urânio-235 atingido por um nêutron se parte em dois e libera energia.",
+      "related": [
+        "nucleo",
+        "reator-nuclear",
+        "radioatividade"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Seção 17.10: Nuclear Fission",
+        "pages": "724"
+      }
+    },
+    {
+      "id": "reator-nuclear",
+      "term": "Reator nuclear",
+      "aliases": [
+        "reatores nucleares"
+      ],
+      "definition": "Aparelho em que a fissão nuclear acontece de forma controlada, contínua e segura, para gerar calor (e eletricidade) ou produzir elementos e isótopos.",
+      "example": "O plutônio e o amerício são produzidos em reatores nucleares.",
+      "related": [
+        "fissao-nuclear"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: nuclear reactor",
+        "pages": "B19"
+      }
+    },
+    {
+      "id": "acelerador-de-particulas",
+      "term": "Acelerador de partículas",
+      "aliases": [
+        "aceleradores de partículas",
+        "acelerador",
+        "aceleradores",
+        "cíclotron"
+      ],
+      "definition": "Máquina que acelera núcleos ou partículas até velocidades altíssimas e os faz colidir com um alvo. Na colisão, núcleos podem se fundir e formar um elemento novo — é assim que os elementos superpesados são criados.",
+      "example": "O fleróvio foi criado lançando núcleos de cálcio contra átomos de plutônio num acelerador.",
+      "related": [
+        "nucleo",
+        "elemento-transuranico"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Seção 17.5: Nucleosynthesis (transmutação em aceleradores)",
+        "pages": "713"
+      }
+    },
+    {
+      "id": "elemento-transuranico",
+      "term": "Elemento transurânico",
+      "aliases": [
+        "elementos transurânicos",
+        "transurânico",
+        "transurânicos"
+      ],
+      "definition": "Qualquer elemento com número atômico maior que o do urânio (Z > 92). Quase todos só existem porque foram produzidos em reatores ou aceleradores.",
+      "example": "O netúnio (Z = 93) foi o primeiro transurânico identificado, em 1940.",
+      "related": [
+        "numero-atomico",
+        "reator-nuclear",
+        "acelerador-de-particulas"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: transuranium elements",
+        "pages": "B28"
+      }
+    },
+    {
+      "id": "lantanideo",
+      "term": "Lantanídeo",
+      "aliases": [
+        "lantanídeos"
+      ],
+      "definition": "Elemento da primeira fileira do bloco f — a primeira das duas linhas separadas embaixo da tabela, que começa no lantânio. São metais muito parecidos entre si, por isso foi difícil separá-los. O livro (que os chama de lantanoides) conta do cério ao itérbio; na tabela do jogo, a fileira vai do lantânio ao lutécio.",
+      "example": "Neodímio, európio e gadolínio são lantanídeos.",
+      "related": [
+        "actinideo",
+        "tabela-periodica"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: lanthanoid",
+        "pages": "B16"
+      }
+    },
+    {
+      "id": "actinideo",
+      "term": "Actinídeo",
+      "aliases": [
+        "actinídeos"
+      ],
+      "definition": "Elemento da segunda fileira do bloco f — a segunda linha separada embaixo da tabela, que começa no actínio. Todos são radioativos, e a maioria só existe porque foi produzida artificialmente. O livro (que os chama de actinoides) conta do tório ao nobélio.",
+      "example": "Urânio, plutônio e amerício são actinídeos.",
+      "related": [
+        "lantanideo",
+        "radioatividade"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: actinoid",
+        "pages": "B1"
+      }
+    },
+    {
+      "id": "minerio",
+      "term": "Minério",
+      "aliases": [
+        "minérios"
+      ],
+      "definition": "O mineral natural do qual se extrai um metal (ou outro elemento) de forma vantajosa.",
+      "example": "A hematita, Fe₂O₃, é um minério de ferro; a bauxita é o minério do alumínio.",
+      "related": [
+        "metal"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: ore; minerals",
+        "pages": "B20"
+      }
+    },
+    {
+      "id": "semicondutor",
+      "term": "Semicondutor",
+      "aliases": [
+        "semicondutores"
+      ],
+      "definition": "Material que conduz eletricidade melhor que um isolante e pior que um metal — e, ao contrário dos metais, conduz melhor quando esquenta. É a base dos chips, LEDs e células solares.",
+      "example": "O silício e o germânio são semicondutores.",
+      "related": [
+        "semimetal"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Seção 6.12: Bonding in the Solid State (semicondutores)",
+        "pages": "219"
+      }
+    },
+    {
+      "id": "espectro",
+      "term": "Espectro",
+      "aliases": [
+        "espectros"
+      ],
+      "definition": "As cores (comprimentos de onda) da luz que uma substância emite ou absorve. Cada elemento emite um conjunto próprio de linhas coloridas, como uma impressão digital — foi assim que se descobriram o hélio, o césio e o rubídio.",
+      "example": "Na chama, o sódio emite uma luz amarela forte, que aparece como linhas amarelas no seu espectro.",
+      "related": [
+        "elemento"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: spectrum; spectral line",
+        "pages": "B25"
+      }
     }
   ]
 }

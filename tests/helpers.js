@@ -21,6 +21,7 @@ export function loadRaw() {
     rules: read('rules.json'),
     glossary: read('glossary.json'),
     thermo: read('thermo.json'),
+    elementFacts: read('element-facts.json'),
   };
 }
 

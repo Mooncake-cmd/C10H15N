@@ -32,6 +32,9 @@ export function buildGameData(raw) {
     rules: raw.rules ?? null,
     glossary: createGlossary(raw.glossary),
     thermo: raw.thermo?.species ?? {},
+    // Curiosidades dos elementos (leitura complementar, livro da DK), por símbolo.
+    elementFacts: raw.elementFacts?.elements ?? {},
+    elementFactsMeta: raw.elementFacts?._meta ?? null,
     sources: raw.sources.sources,
     complementarySources: raw.sources._meta.complementaryOnly ?? [],
     reactivitySeries: raw.reactivitySeries.series,

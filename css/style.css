@@ -353,6 +353,12 @@ sub, sup { font-size: 0.7em; line-height: 0; }
 .pt-props { display: grid; grid-template-columns: auto 1fr; gap: 0.1rem 0.7rem; margin: 0.4rem 0; font-size: 0.85rem; }
 .pt-props dt { color: var(--muted); }
 .pt-props dd { margin: 0; }
+.pt-facts { margin-top: 0.8rem; border-top: 1px solid var(--border); padding-top: 0.6rem; }
+.pt-facts h3 { font-size: 0.95rem; margin: 0 0 0.3rem; }
+.pt-facts p { margin: 0.3rem 0; }
+.pt-facts ul { margin: 0.3rem 0; padding-left: 1.1rem; }
+.pt-facts li { margin: 0.25rem 0; }
+.pt-facts-source { font-size: 0.75rem; color: var(--muted); }
 .pt-legend { display: flex; flex-wrap: wrap; gap: 0.3rem 0.8rem; margin: 0.7rem 0 0.3rem; align-items: center; }
 .legend-item { font: inherit; font-size: 0.78rem; display: inline-flex; align-items: center; gap: 0.3rem; background: none; border: 1px solid transparent; border-radius: 6px; padding: 0.1rem 0.3rem; color: var(--text); cursor: pointer; }
 .legend-item.is-active { border-color: var(--accent); }

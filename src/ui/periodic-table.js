@@ -62,7 +62,22 @@ export function renderPeriodicTable(root, data, { getStatus, onPick }) {
         ${raw(row('Forma no jogo', elemental ? elemental.formula : null))}
       </dl>
       ${raw(elemental ? `<p class="small">${esc(elemental.description)}</p>` : '')}
-      ${raw(action)}`;
+      ${raw(action)}
+      ${raw(factsHTML(symbol))}`;
+  }
+
+  // Curiosidades: leitura complementar (livro de divulgação), sempre com a página.
+  function factsHTML(symbol) {
+    const f = data.elementFacts?.[symbol];
+    if (!f) return '';
+    const ref = data.elementFactsMeta?.ref;
+    const pages = f.pages.length > 1 ? `p. ${f.pages[0]}–${f.pages[f.pages.length - 1]}` : `p. ${f.pages[0]}`;
+    return html`<section class="pt-facts" aria-label="Curiosidades">
+        <h3>Curiosidades</h3>
+        <p>${f.summary}</p>
+        ${raw(f.facts.length ? `<ul>${f.facts.map((t) => `<li>${esc(t)}</li>`).join('')}</ul>` : '')}
+        <p class="pt-facts-source">Leitura complementar: ${(data.sources[ref] ?? ref).replace(/\.$/, '')}, ${pages}. Texto escrito para o jogo, com palavras próprias.</p>
+      </section>`;
   }
 
   grid.addEventListener('click', (ev) => {

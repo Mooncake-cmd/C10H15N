@@ -35,9 +35,10 @@ Detalhes de arquitetura, estrutura de pastas e "como adicionar conteúdo" estão
     o caractere `\x06` — trocar por "-" antes de ler números.
   - 3B Cinética (Atkins & Jones cap. 14; Atkins FQ Focus 17), 3C Equilíbrio (caps. 10–12), 3D
     Moléculas 3D (cap. 3, VSEPR), 3E Orgânica (caps. 18–19), 3F Missões (decidir com o usuário).
-  - Proposta pendente de aprovação: curiosidades/descrições dos elementos a partir do livro da DK
-    (*The Periodic Table Book*, 2017), escritas com palavras próprias (sem copiar o texto), como
-    leitura complementar com página.
+  - **Curiosidades dos elementos — CONCLUÍDA**: os 118 elementos têm descrição e curiosidades no
+    painel da tabela periódica (`data/element-facts.json`), escritas com palavras próprias a partir
+    do livro da DK (*The Periodic Table Book*, 2017), como leitura complementar com página. Erros do
+    livro foram corrigidos e registrados em `_meta.corrections`; o livro nunca é fonte de reação.
 
 ## Requisitos que valem para qualquer mudança
 
