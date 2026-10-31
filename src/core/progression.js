@@ -6,6 +6,7 @@
 
 import { lookupReaction } from './engine.js';
 import { stoichiometry, percentYield } from './stoichiometry.js';
+import { reactionThermo, heatFor } from './thermo.js';
 
 export const STATE_VERSION = 2;
 // v1 → v2: um nível novo (metais alcalino-terrosos) entrou no meio da Fase 1, então o
@@ -62,6 +63,14 @@ const OBJECTIVE_CHECKS = {
   nonReaction: (o, h) => h.nonReactionsSeen.has(o.reasonId),
   reaction: (o, h) => h.reactionsDone.has(o.reaction),
   stoich: (o, h) => h.stoichSolved.has(o.id),
+  // Fase 3A: ter feito uma reação que libera (exo) ou absorve (endo) calor, opcionalmente com |ΔH°| mínimo.
+  thermo: (o, h, data) =>
+    [...h.reactionsDone].some((rid) => {
+      const r = lookupReaction(data, rid);
+      const dH = r ? reactionThermo(r, data).dH : null;
+      if (dH == null) return false;
+      return (o.sign === 'endo' ? dH > 0 : dH < 0) && (!o.minKJ || Math.abs(dH) >= o.minKJ);
+    }),
 };
 
 export function isObjectiveDone(objective, state, data) {
@@ -138,11 +147,16 @@ function advance(s, data, events) {
  * Resposta certa de um objetivo de estequiometria:
  *   ask 'limiting' → id do reagente limitante;
  *   ask 'yield'    → rendimento percentual (actual: { id, g } é a massa obtida de verdade);
+ *   ask 'heat'     → calor liberado em kJ (Fase 3A; precisa de ΔH° conhecido);
  *   ask <produto>  → quantidade do produto na unidade `unit` ('g' padrão, 'mol' ou 'L' de gás a 25 °C e 1 atm).
  */
 export function stoichAnswer(objective, data) {
   const res = stoichiometry(lookupReaction(data, objective.reaction), data, objective.given);
   if (objective.ask === 'limiting') return res.limiting;
+  if (objective.ask === 'heat') {
+    // calor LIBERADO, em kJ (positivo numa reação exotérmica): −ξ·ΔH°
+    return -heatFor(res.extent, reactionThermo(lookupReaction(data, objective.reaction), data).dH);
+  }
   if (objective.ask === 'yield') {
     const p = res.products.find((x) => x.id === objective.actual.id);
     return percentYield(objective.actual.g, p.grams);

@@ -2018,6 +2018,7 @@
       "example": "Hidrogênio e oxigênio misturados não reagem até receberem uma faísca.",
       "related": [
         "catalisador",
+        "espontaneo",
         "exotermica"
       ],
       "source": {
@@ -2056,8 +2057,9 @@
       "definition": "Reação ou processo que LIBERA calor para o ambiente: a vizinhança esquenta.",
       "example": "Combustões; a cal virgem com água.",
       "related": [
+        "calor",
         "endotermica",
-        "calor"
+        "entalpia-de-reacao"
       ],
       "source": {
         "ref": "atkins-jones",
@@ -2076,8 +2078,9 @@
       "definition": "Reação ou processo que ABSORVE calor do ambiente: precisa de aquecimento constante, ou a vizinhança esfria.",
       "example": "A decomposição do calcário em cal virgem, que só acontece num forno.",
       "related": [
-        "exotermica",
-        "calor"
+        "calor",
+        "entalpia-de-reacao",
+        "exotermica"
       ],
       "source": {
         "ref": "atkins-jones",
@@ -2398,6 +2401,198 @@
         "ref": "atkins-jones",
         "topic": "Glossário: radical",
         "pages": "B23"
+      }
+    },
+    {
+      "id": "entalpia",
+      "term": "Entalpia",
+      "aliases": [],
+      "definition": "Grandeza que mede o 'conteúdo de energia' de um sistema de um jeito conveniente para a química: a variação de entalpia é igual ao calor trocado quando a pressão é constante, como num tubo de ensaio aberto.",
+      "example": "Quando o metano queima, a entalpia dos produtos é 890 kJ menor que a dos reagentes: essa diferença sai como calor.",
+      "related": [
+        "entalpia-de-reacao",
+        "entalpia-de-formacao",
+        "calor"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: enthalpy",
+        "pages": "B10"
+      }
+    },
+    {
+      "id": "entalpia-de-reacao",
+      "term": "Entalpia de reação (ΔH)",
+      "aliases": [
+        "entalpia de reação",
+        "δh",
+        "calor de reação"
+      ],
+      "definition": "Quanto de calor uma reação libera ou absorve, para as quantidades escritas na equação (em kJ). Negativo: libera calor (exotérmica). Positivo: absorve (endotérmica). O ° indica condições padrão (1 bar, 25 °C).",
+      "example": "CH₄ + 2 O₂ → CO₂ + 2 H₂O: ΔH° = −890 kJ.",
+      "related": [
+        "entalpia",
+        "exotermica",
+        "endotermica",
+        "lei-de-hess"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: reaction enthalpy; standard reaction enthalpy",
+        "pages": "B23, B26"
+      }
+    },
+    {
+      "id": "entalpia-de-formacao",
+      "term": "Entalpia padrão de formação",
+      "aliases": [
+        "entalpia de formação",
+        "entalpias de formação"
+      ],
+      "definition": "O calor envolvido em formar 1 mol de uma substância a partir dos seus elementos na forma mais estável, em condições padrão. Para os próprios elementos nessa forma, vale zero por definição. É o que as tabelas trazem.",
+      "example": "Água líquida: −285,83 kJ/mol (formar água a partir de H₂ e O₂ libera calor).",
+      "related": [
+        "entalpia-de-reacao",
+        "lei-de-hess",
+        "estado-padrao"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: standard enthalpy of formation",
+        "pages": "B26"
+      }
+    },
+    {
+      "id": "lei-de-hess",
+      "term": "Lei de Hess",
+      "aliases": [],
+      "definition": "A entalpia de uma reação é a soma das entalpias das etapas em que ela pode ser dividida, não importa o caminho. Na prática: ΔH° = Σ(formação dos produtos) − Σ(formação dos reagentes).",
+      "example": "É assim que o jogo calcula o ΔH° de cada reação a partir de uma tabela de entalpias de formação.",
+      "related": [
+        "entalpia-de-formacao",
+        "entalpia-de-reacao"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: Hess’s law",
+        "pages": "B13"
+      }
+    },
+    {
+      "id": "entropia",
+      "term": "Entropia (S)",
+      "aliases": [
+        "entropia",
+        "δs"
+      ],
+      "definition": "Uma medida da 'desordem' ou do número de maneiras de arrumar as partículas e a energia. Gases têm muito mais entropia que líquidos, e líquidos mais que sólidos.",
+      "example": "Quando 3 mols de gás viram 2 mols de água líquida, a entropia diminui (ΔS° negativo).",
+      "related": [
+        "energia-livre",
+        "espontaneo"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: entropy",
+        "pages": "B11"
+      }
+    },
+    {
+      "id": "energia-livre",
+      "term": "Energia livre de Gibbs (ΔG)",
+      "aliases": [
+        "energia livre",
+        "energia livre de gibbs",
+        "δg"
+      ],
+      "definition": "Combina calor e entropia (G = H − TS) e diz se uma reação é espontânea a temperatura e pressão constantes: ΔG° < 0 favorece os produtos; ΔG° > 0, não. Não diz nada sobre a velocidade.",
+      "example": "A eletrólise da água tem ΔG° = +474 kJ: só acontece porque a eletricidade empurra.",
+      "related": [
+        "espontaneo",
+        "entropia",
+        "entalpia"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: Gibbs free energy",
+        "pages": "B12"
+      }
+    },
+    {
+      "id": "espontaneo",
+      "term": "Espontâneo",
+      "aliases": [
+        "espontânea",
+        "espontâneas",
+        "espontâneos"
+      ],
+      "definition": "Que tende a acontecer sozinho, sem precisar ser empurrado por algo externo. Espontâneo NÃO quer dizer rápido: o diamante virar grafite é espontâneo, mas leva bilhões de anos.",
+      "example": "A queima do metano é espontânea, mas precisa de uma faísca para começar.",
+      "related": [
+        "energia-livre",
+        "energia-de-ativacao"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: spontaneous change",
+        "pages": "B26"
+      }
+    },
+    {
+      "id": "estado-padrao",
+      "term": "Estado padrão",
+      "aliases": [
+        "estados padrão",
+        "condições padrão"
+      ],
+      "definition": "A referência das tabelas: a substância pura a 1 bar (para um soluto, 1 mol/L). As tabelas do jogo são para 25 °C (298 K). Indicado pelo símbolo °, como em ΔH°.",
+      "example": "ΔfH°(H₂O, líquida) = −285,83 kJ/mol vale para água pura a 1 bar e 25 °C.",
+      "related": [
+        "entalpia-de-formacao"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: standard state",
+        "pages": "B26"
+      }
+    },
+    {
+      "id": "joule",
+      "term": "Joule (J) e quilojoule (kJ)",
+      "aliases": [
+        "joule",
+        "joules",
+        "quilojoule",
+        "quilojoules",
+        "kj"
+      ],
+      "definition": "A unidade de energia do Sistema Internacional. 1 kJ = 1000 J. Uma caloria vale 4,184 J.",
+      "example": "Queimar 1 mol de metano (16 g) libera cerca de 890 kJ.",
+      "related": [
+        "calor",
+        "entalpia"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: joule",
+        "pages": "B16"
+      }
+    },
+    {
+      "id": "termoquimica",
+      "term": "Termoquímica",
+      "aliases": [
+        "equação termoquímica"
+      ],
+      "definition": "O estudo do calor liberado ou absorvido nas reações químicas. Uma equação termoquímica é a equação balanceada junto com o seu ΔH.",
+      "example": "C₂H₅OH(l) + 3 O₂ → 2 CO₂ + 3 H₂O(l), ΔH° = −1368 kJ.",
+      "related": [
+        "entalpia-de-reacao"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: thermochemistry; thermochemical equation",
+        "pages": "B28"
       }
     }
   ]

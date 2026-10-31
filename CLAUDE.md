@@ -28,8 +28,16 @@ Detalhes de arquitetura, estrutura de pastas e "como adicionar conteúdo" estão
   3. Regras só para pares; combinações de 3+ substâncias não passam pelo motor (é decisão de
      projeto, não de fonte).
   4. Ácido nítrico + outros metais continua "não sei" (produtos dependem da concentração).
-- **Fase 3 (avançado) — próxima**: termodinâmica e cinética, equilíbrio, moléculas 3D, introdução à química
-  orgânica, missões e progressão mais elaborada.
+- **Fase 3 (avançado) — EM ANDAMENTO**, em etapas publicadas uma a uma:
+  - **3A Energia — CONCLUÍDA**: ΔH°/ΔS°/ΔG° pela lei de Hess (`data/thermo.json`, `src/core/thermo.js`),
+    painel "Energia", calor na calculadora, nível "Energia das reações". Dados: Atkins FQ 12. ed.
+    (Tabela 2C.7) + Atkins & Jones (Apêndice 2A). No PDF do Atkins & Jones o sinal de menos vem como
+    o caractere `\x06` — trocar por "-" antes de ler números.
+  - 3B Cinética (Atkins & Jones cap. 14; Atkins FQ Focus 17), 3C Equilíbrio (caps. 10–12), 3D
+    Moléculas 3D (cap. 3, VSEPR), 3E Orgânica (caps. 18–19), 3F Missões (decidir com o usuário).
+  - Proposta pendente de aprovação: curiosidades/descrições dos elementos a partir do livro da DK
+    (*The Periodic Table Book*, 2017), escritas com palavras próprias (sem copiar o texto), como
+    leitura complementar com página.
 
 ## Requisitos que valem para qualquer mudança
 

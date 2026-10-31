@@ -31,6 +31,7 @@ export function buildGameData(raw) {
     ions: raw.ions ? buildIonCatalog(raw.ions) : null,
     rules: raw.rules ?? null,
     glossary: createGlossary(raw.glossary),
+    thermo: raw.thermo?.species ?? {},
     sources: raw.sources.sources,
     complementarySources: raw.sources._meta.complementaryOnly ?? [],
     reactivitySeries: raw.reactivitySeries.series,

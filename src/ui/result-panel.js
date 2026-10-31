@@ -7,6 +7,7 @@ import { resolveSide, checkConservation, formatEquationHTML } from '../core/equa
 import { molarMass, formatFormulaText } from '../core/formula.js';
 import { mountReactionStage, mountBounceStage } from './reaction-stage.js';
 import { stoichiometry, percentYield } from '../core/stoichiometry.js';
+import { reactionThermo, heatFor } from '../core/thermo.js';
 
 let stopStage = () => {};
 
@@ -89,6 +90,7 @@ function calculatorHTML(data, reactants, products) {
 function mountCalculator(root, data, reaction) {
   const box = root.querySelector('.stoich-calc');
   if (!box) return;
+  const thermo = reactionThermo(reaction, data);
   const out = box.querySelector('.calc-out');
   const yOut = box.querySelector('.calc-yield-out');
   const f = (n) => (n >= 100 ? n.toFixed(1) : n.toFixed(2)).replace('.', ',');
@@ -114,6 +116,7 @@ function mountCalculator(root, data, reaction) {
       return;
     }
     const res = stoichiometry(reaction, data, given);
+    const q = heatFor(res.extent, thermo.dH);
     last = res;
     const name = (id) => formatFormulaHTML(data.substancesById.get(id).formula);
     const rows = res.products
@@ -123,6 +126,7 @@ function mountCalculator(root, data, reaction) {
       .map((r) => `<tr><td>${name(r.id)}</td><td>${f(r.used / r.molarMass)} mol</td><td>${f(r.used)} g usados${r.left ? ` · sobram ${f(r.left)} g` : r.given === null ? ' (necessários)' : ''}</td></tr>`)
       .join('');
     out.innerHTML =
+      (q != null ? `<p><strong>Calor:</strong> ${q < 0 ? 'libera' : 'absorve'} ${f(Math.abs(q))} kJ (ΔH° × ${f(res.extent)} mol de reação).</p>` : '') +
       (res.limiting ? `<p><strong>Reagente limitante:</strong> ${name(res.limiting)} — ele acaba primeiro e decide quanto produto sai.</p>` : '') +
       `<table class="calc-table"><thead><tr><th>Produto</th><th>Quantidade</th><th>Massa (e volume, se gás)</th></tr></thead><tbody>${rows}</tbody></table>` +
       `<table class="calc-table"><thead><tr><th>Reagente</th><th>Quantidade</th><th>Massa</th></tr></thead><tbody>${used}</tbody></table>`;
@@ -135,6 +139,58 @@ function mountCalculator(root, data, reaction) {
   };
   box.addEventListener('input', update);
   box.addEventListener('change', update);
+}
+
+
+/** Seção "Energia" (Fase 3A): ΔH°, ΔS°, ΔG° a 25 °C, com diagrama de níveis de energia. */
+function energyHTML(data, r) {
+  const t = reactionThermo(r, data);
+  const kj = (x) => `${x < 0 ? '−' : x > 0 ? '+' : ''}${fmtNum(Math.abs(x), Math.abs(x) >= 100 ? 0 : 1)} kJ`;
+  const srcText = () => {
+    const by = new Map();
+    for (const { ref, page } of t.refs) (by.get(ref) ?? by.set(ref, new Set()).get(ref)).add(page);
+    const name = { 'atkins-fq': "Atkins' Physical Chemistry, 12. ed.", 'atkins-jones': 'Atkins & Jones, Chemical Principles, 5. ed.' };
+    return [...by].map(([ref, pages]) => `${name[ref] ?? ref}, p. ${[...pages].sort().join(', ')}`).join('; ');
+  };
+  if (t.dH == null) {
+    return html`<section class="energy"><h3>Energia</h3>
+      <p class="small muted">Sem dado conferido para ${t.missing.join(', ')}: o jogo não estima o calor desta reação.</p></section>`;
+  }
+  const exo = t.dH < 0;
+  const first = r.reactants[0];
+  const firstF = formatFormulaHTML(data.substancesById.get(first.id).formula);
+  const perMol = first.coef > 1 ? ` (${kj(t.dH / first.coef)} por mol de ${firstF})` : '';
+  const ART = { calor: 'o calor', faisca: 'uma faísca', eletricidade: 'a eletricidade', luz: 'a luz intensa', catalisador: 'um catalisador' };
+  const ids = [...new Set((r.conditions ?? []).flat())];
+  const condTxt = ids.map((id) => data.itemsById.get(id)?.name.toLowerCase()).filter(Boolean).join(' ou ');
+  const condWho = ids.map((id) => ART[id] ?? data.itemsById.get(id)?.name.toLowerCase()).join(' ou ');
+  let gibbs = '';
+  if (t.dG != null) {
+    if (t.dG < 0) {
+      gibbs = `<strong>ΔG° = ${kj(t.dG)}</strong>: a reação é <strong>espontânea</strong> — os produtos são favorecidos.` +
+        (condTxt ? ` Mesmo assim, ela precisa de ${esc(condTxt)} para começar: espontânea não quer dizer rápida. Falta vencer a energia de ativação.` : '');
+    } else {
+      gibbs = `<strong>ΔG° = ${kj(t.dG)}</strong>: a 25 °C a reação <strong>não é espontânea</strong>` +
+        (condTxt ? ` — só acontece porque ${esc(condWho)} fornece a energia que falta.` : '.') +
+        (t.dH > 0 && t.dS > 0 ? ' Como ΔS° > 0, aquecendo bastante o termo −TΔS° vence o ΔH° e ela passa a ser espontânea — é por isso que se usa um forno.' : '');
+    }
+  }
+  const entropy = t.dS == null ? '' : `<p class="small">ΔS° = ${t.dS > 0 ? '+' : t.dS < 0 ? '−' : ''}${fmtNum(Math.abs(t.dS), 0)} J/K: a desordem ${t.dS > 0 ? 'aumenta (por exemplo, forma-se gás)' : t.dS < 0 ? 'diminui (por exemplo, gás vira líquido ou sólido)' : 'quase não muda'}.</p>`;
+  // Diagrama: reagentes à esquerda, produtos à direita; altura proporcional a ΔH (com mínimo visível).
+  const h = Math.max(40, Math.min(90, Math.abs(t.dH) / 10));
+  const yR = exo ? 22 : 22 + h;
+  const yP = exo ? 22 + h : 22;
+  const svg = `<svg class="energy-svg" viewBox="0 0 260 ${h + 40}" role="img" aria-label="Diagrama de energia: os produtos ficam ${exo ? 'abaixo' : 'acima'} dos reagentes">
+    <line class="lvl" x1="10" y1="${yR}" x2="90" y2="${yR}"/><text x="50" y="${yR - 6}">reagentes</text>
+    <line class="lvl" x1="170" y1="${yP}" x2="250" y2="${yP}"/><text x="210" y="${yP - 6}">produtos</text>
+    <line class="arrow-${exo ? 'exo' : 'endo'}" x1="130" y1="${yR}" x2="130" y2="${yP + (exo ? -9 : 9)}"/>
+    <path class="head-${exo ? 'exo' : 'endo'}" d="${exo ? `M124,${yP - 10} L136,${yP - 10} L130,${yP} z` : `M124,${yP + 10} L136,${yP + 10} L130,${yP} z`}"/>
+    <text class="dh" x="138" y="${(yR + yP) / 2 + 5}" text-anchor="start">ΔH° ${exo ? '< 0' : '> 0'}</text></svg>`;
+  return html`<section class="energy"><h3>Energia (a 25 °C)</h3>
+    <div class="energy-row">${raw(svg)}
+      <div><p><strong>ΔH° = ${kj(t.dH)}</strong>: ${exo ? 'libera' : 'absorve'} ${fmtNum(Math.abs(t.dH), 0)} kJ de calor para as quantidades da equação${raw(perMol)}. Reação ${exo ? 'exotérmica' : 'endotérmica'}.</p>
+      ${raw(entropy)}${raw(gibbs ? `<p class="small">${gibbs}</p>` : '')}</div></div>
+    <p class="small muted">Calculado pela lei de Hess com entalpias e energias livres de formação (${srcText()}).</p></section>`;
 }
 
 const itemLabel = (data, id) => {
@@ -164,6 +220,7 @@ export function renderResult(root, data, result, { newSubstances = [] } = {}) {
       <p>${r.explanation}</p>
       <h3>Por quê?</h3>
       <p>${r.why}</p>
+      ${raw(energyHTML(data, r))}
       ${raw(r.conditionNote ? `<p class="small"><strong>Nota:</strong> ${esc(r.conditionNote)}</p>` : '')}
       ${raw(
         r.netIonic
