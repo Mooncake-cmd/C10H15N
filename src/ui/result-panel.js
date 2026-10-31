@@ -74,7 +74,7 @@ function compositionHTML(data, products) {
       const F = formatFormulaHTML(sp.formula);
       const comp = massComposition(sp.formula, M).map((x) => `${esc(x.el)} ${fmtNum(x.pct, 1)}%`).join(' · ');
       const emp = empiricalFormula(sp.formula);
-      const empTxt = emp.factor > 1 ? ` Fórmula mínima: <strong>${formatFormulaHTML(emp.formula)}</strong> (a molecular, ${F}, é ${emp.factor} × ${formatFormulaHTML(emp.formula)}).` : '';
+      const empTxt = emp.factor > 1 ? ` Fórmula mínima: <strong>${formatFormulaHTML(emp.formula)}</strong> (a fórmula do composto, ${F}, é ${emp.factor} × ${formatFormulaHTML(emp.formula)}).` : '';
       const ratio = massRatio(sp.formula, M);
       const proust = ratio
         ? ` <em>Proust:</em> em qualquer amostra de ${F}, há sempre ${ratio.others.map((o) => `${fmtNum(o.perGram, 2)} g de ${esc(o.el)}`).join(' e ')} para cada 1 g de ${esc(ratio.base.el)}.`
@@ -301,7 +301,7 @@ function kineticsHTML(data, r) {
     const ex = k ? halfLife(e.order, k.k, 0.1) : null;
     return html`<section class="kinetics"><h3>Velocidade</h3>
       <p>${link.note}</p>
-      <p class="small"><strong>Lei de velocidade:</strong> taxa = ${e.rateLaw}${raw(k ? ` · k = ${formatSci(k.k)} ${esc(e.kUnit)} a 25 °C` : '')}${raw(e.arrhenius ? ` · Ea = ${formatSci(e.arrhenius.Ea, 3)} kJ/mol` : '')}.
+      <p class="small"><strong>Lei de velocidade:</strong> taxa = ${e.rateLaw}${raw(k ? ` · k = ${formatSci(k.k)} ${esc(e.kUnit)} a 25 °C${k.how === 'tabela' ? '' : ' (calculado pela equação de Arrhenius)'}` : '')}${raw(e.arrhenius ? ` · Ea = ${formatSci(e.arrhenius.Ea, 3)} kJ/mol` : '')}.
       ${raw(ex != null ? `Com 0,10 mol/L de cada, metade reage em ${esc(formatDuration(ex))}.` : '')}</p>
       ${raw(labBtn(e.id))}
       <p class="small muted">Fonte: ${raw(sourceText(data, [link.source]))}.</p></section>`;
@@ -316,7 +316,7 @@ function kineticsHTML(data, r) {
   if (igniter && exo) {
     const who = { faisca: 'uma faísca', calor: 'o aquecimento', luz: 'a luz' }[igniter];
     return html`<section class="kinetics"><h3>Velocidade: por que precisa de ${who}?</h3>
-      <div class="energy-row">${raw(barrierSVG(true, false))}<p>Mesmo liberando energia no fim, os reagentes precisam primeiro subir uma barreira: a energia de ativação (Ea). À temperatura ambiente, quase nenhuma colisão tem energia para isso, e a reação fica parada. ${who[0].toUpperCase() + who.slice(1)} dá essa energia a algumas moléculas; o calor que a reação libera aquece as vizinhas, e ela se espalha sozinha.</p></div>
+      <div class="energy-row">${raw(barrierSVG(true, false))}<p>Mesmo liberando energia no fim, os reagentes precisam primeiro subir uma barreira: a energia de ativação (Ea). À temperatura ambiente, quase nenhuma colisão tem energia para isso, e a reação fica parada. ${who[0].toUpperCase() + who.slice(1)} dá essa energia a uma parte das moléculas.${r.types.includes('combustao') ? ' Numa combustão, o calor liberado aquece as moléculas vizinhas, e a reação se espalha sozinha.' : ''}</p></div>
       ${raw(labBtn('n2o5', 'Ver no laboratório como a temperatura acelera uma reação'))}
       <p class="small muted">Fonte: ${raw(sourceText(data, [{ ref: 'atkins-jones', topic: 'Seções 14.11–14.13: temperatura, teoria das colisões e complexo ativado', pages: '587–595' }]))}.</p></section>`;
   }
