@@ -7,6 +7,7 @@
 import { lookupReaction } from './engine.js';
 import { stoichiometry, percentYield } from './stoichiometry.js';
 import { reactionThermo, heatFor } from './thermo.js';
+import { kineticsAnswer } from './kinetics.js';
 
 export const STATE_VERSION = 2;
 // v1 → v2: um nível novo (metais alcalino-terrosos) entrou no meio da Fase 1, então o
@@ -24,7 +25,7 @@ export function initialState(data) {
     reactionsDone: [],
     nonReactionsSeen: [],
     completedObjectives: [],
-    stoichSolved: [], // objetivos de estequiometria respondidos corretamente
+    stoichSolved: [], // objetivos de cálculo (estequiometria, cinética) respondidos corretamente
   };
   return applyUnlocks(state, data.progression.levels[0]);
 }
@@ -63,6 +64,8 @@ const OBJECTIVE_CHECKS = {
   nonReaction: (o, h) => h.nonReactionsSeen.has(o.reasonId),
   reaction: (o, h) => h.reactionsDone.has(o.reaction),
   stoich: (o, h) => h.stoichSolved.has(o.id),
+  // Fase 3B: pergunta de cinética (meia-vida, concentração depois de um tempo, efeito da temperatura).
+  kinetics: (o, h) => h.stoichSolved.has(o.id),
   // Fase 3A: ter feito uma reação que libera (exo) ou absorve (endo) calor, opcionalmente com |ΔH°| mínimo.
   thermo: (o, h, data) =>
     [...h.reactionsDone].some((rid) => {
@@ -173,12 +176,21 @@ export function isStoichAnswerRight(objective, answer, data) {
   return Number.isFinite(x) && Math.abs(x - expected) <= Math.max(0.02 * Math.abs(expected), 0.01);
 }
 
-/** O jogador respondeu a um objetivo de estequiometria. */
+/** Resposta numérica com tolerância de 2% (arredondamentos de k, de ln 2 e de massa molar). */
+export function isKineticsAnswerRight(objective, answer, data) {
+  const expected = kineticsAnswer(objective, data.kinetics);
+  const x = Number(String(answer).replace(/\s/g, '').replace(',', '.'));
+  return Number.isFinite(x) && Math.abs(x - expected) <= 0.02 * Math.abs(expected);
+}
+
+const ANSWER_CHECKS = { stoich: isStoichAnswerRight, kinetics: isKineticsAnswerRight };
+
+/** O jogador respondeu a um objetivo de cálculo (estequiometria ou cinética). */
 export function answerObjective(state, objectiveId, answer, data) {
   const events = [];
   const objective = data.progression.levels.flatMap((l) => l.objectives).find((o) => o.id === objectiveId);
-  if (!objective || objective.type !== 'stoich') return { state, events, correct: false };
-  const correct = isStoichAnswerRight(objective, answer, data);
+  if (!objective || !ANSWER_CHECKS[objective.type]) return { state, events, correct: false };
+  const correct = ANSWER_CHECKS[objective.type](objective, answer, data);
   let s = state;
   if (correct && !(s.stoichSolved ?? []).includes(objectiveId)) {
     s = { ...s, stoichSolved: [...(s.stoichSolved ?? []), objectiveId] };

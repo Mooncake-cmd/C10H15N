@@ -40,6 +40,41 @@ Detalhes de arquitetura, estrutura de pastas e "como adicionar conteúdo" estão
     do livro da DK (*The Periodic Table Book*, 2017), como leitura complementar com página. Erros do
     livro foram corrigidos e registrados em `_meta.corrections`; o livro nunca é fonte de reação.
 
+## Apostilas Bernoulli (ensino médio) — mapeamento
+
+O usuário enviou *Coleção Estudo – Química*, v. 1–6 (Editora Bernoulli; sem ISBN/ano na cópia, os
+exercícios citam vestibulares até 2010). Citar como "Bernoulli, Química, v. X, Frente Y, Módulo Z,
+p. N" (página impressa = página do PDF). Papel: **fonte secundária** para linguagem de iniciante e
+convenções brasileiras (NOX, nomenclatura, "síntese/análise"); reação ou dado tirado delas tem de
+ser conferido no Atkins & Jones (há erros: v. 5 p. 52 dá Al₂O₃ + 3 CO → 2 Al + 3 CO₂, mas o Al sai
+por eletrólise; o quadro do v. 5 p. 49 generaliza demais a decomposição de oxissais).
+
+- **Já no jogo**: reações e classificação, solubilidade, ácido-base de Arrhenius, série de
+  reatividade (v. 4–5 Frente C); estequiometria (v. 1 D01–D03); termoquímica/Hess (v. 2–4 Frente A).
+- **No plano**: 3B cinética (v. 2 B04; v. 3 B05–B06; v. 4 B07–B08); 3C equilíbrio (v. 5 C20;
+  v. 6 C21–C24); 3D geometria/polaridade (v. 3 C10); 3E orgânica (v. 1 D04; v. 2 D05–D08;
+  v. 3 D09–D12 com isomeria plana; v. 4 D13–D16 com isomeria espacial; v. 5 D17–D20; v. 6 D21–D22).
+- **Itens baratos (aprovados para fazer com a 3B)**: propriedades periódicas — raio, energia de
+  ionização, afinidade eletrônica (v. 2 C06; dados já no dataset aberto); fórmula mínima/molecular
+  e composição centesimal (v. 1 D02); concentração g/L, %, ppm, diluição e mistura (v. 5 A09–A10);
+  leis de Proust e Dalton (v. 1 C01); NOX em cada oxirredução (v. 4 C13); testes de identificação
+  de H₂, O₂ e CO₂ (v. 5 p. 49).
+- **Médios (fora do plano)**: balanceamento manual pelo jogador (v. 5 C19); nomenclatura de
+  ácidos, bases, sais e óxidos (v. 4 C14–C16, v. 5 C17); mudanças de estado e densidade
+  (v. 1 A02); modelos atômicos e distribuição eletrônica (v. 1 C01–C04); ligação metálica e
+  interações intermoleculares (v. 3 C11–C12, junto da 3D); energia de ligação (v. 3 A06, só como
+  estimativa explícita); coeficiente/curvas de solubilidade (v. 4 A08); efusão e difusão
+  (v. 2 B03); ácidos e bases de Lewis (v. 4 D15).
+- **Etapas novas possíveis (depois da 3E, ordem a decidir)**: eletroquímica — pilhas, ddp,
+  eletrólise, Faraday (v. 5 B09–B10, v. 6 B11; aqui entraria a pilha de mercúrio); coligativas e
+  coloides (v. 6 A11–A12); reações nucleares (v. 6 B12; A&J cap. 17); química ambiental
+  (v. 6 D23–D24, tema para as missões 3F); metalurgia (v. 5 p. 52–53).
+- **Adiado pelo usuário**: utensílios de laboratório e separação de misturas (v. 2 A03 —
+  filtração, decantação, destilação, centrifugação).
+- **Pendências da Fase 2**: o quadro do v. 5 p. 49 dá pistas (hidreto/peróxido/superóxido + água,
+  decomposição de hidróxidos e oxissais, ustulação), mas cada regra precisa de confirmação no
+  A&J/Greenwood; HNO₃ + metais e carbonatos básicos não são resolvidos pelas apostilas.
+
 ## Requisitos que valem para qualquer mudança
 
 1. **Correção química acima de tudo.** Dados dos elementos vêm de dataset aberto

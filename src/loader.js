@@ -16,6 +16,7 @@ const FILES = {
   glossary: 'glossary.json',
   thermo: 'thermo.json',
   elementFacts: 'element-facts.json',
+  kinetics: 'kinetics.json',
 };
 
 export async function loadGameData(base = './data/') {

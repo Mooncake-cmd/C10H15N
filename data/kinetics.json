@@ -1,0 +1,218 @@
+{
+  "_meta": {
+    "description": "Velocidade das reações (Fase 3B). Constantes de velocidade e parâmetros de Arrhenius transcritos de Atkins & Jones, Chemical Principles, 5. ed.: Tabela 14.1 (leis de velocidade e k, p. 567) e Tabela 14.4 (parâmetros de Arrhenius, p. 589).",
+    "fields": "reactions[]: id; name; phase (g|aq); reactants/products [{ formula, coef, name? }] (conferidos pelo teste de conservação); species (a espécie cujo consumo a lei descreve); order (1 ou 2; 2 também para k[A][B], supondo [A]₀ = [B]₀); rateLaw; kUnit; points [[T (K), k]] da Tabela 14.1; arrhenius { A, Ea (kJ/mol) } da Tabela 14.4; range [Tmín, Tmáx] em K: faixa em que o jogo calcula k — a das medidas da Tabela 14.1 ou, para dados só de Arrhenius, uma faixa escolhida pelo jogo em torno de temperaturas usuais; pseudoFirstOrder { species, label, default } quando a lei tem uma espécie de concentração fixa (catalisador); about (texto do jogo); source [{ ref, topic, pages }]. game: { idDaReaçãoDoJogo: { kinetics?, note, source } } liga as reações do jogo aos dados ou às páginas sobre catálise.",
+    "convention": "O k dá a taxa de consumo da espécie acompanhada, −d[A]/dt = k[A]ⁿ, como nos exemplos resolvidos do livro (p. 573: decomposição do N2O5 a 65 °C com k = 5,2 × 10⁻³ s⁻¹; p. 578: 2ª ordem)."
+  },
+  "reactions": [
+    {
+      "id": "n2o5",
+      "name": "Decomposição do pentóxido de dinitrogênio",
+      "phase": "g",
+      "reactants": [{ "formula": "N2O5", "coef": 2 }],
+      "products": [{ "formula": "NO2", "coef": 4 }, { "formula": "O2", "coef": 1 }],
+      "species": "N2O5",
+      "order": 1,
+      "rateLaw": "k[N2O5]",
+      "kUnit": "s⁻¹",
+      "points": [[298, 3.7e-5], [318, 5.1e-4], [328, 1.7e-3], [338, 5.2e-3]],
+      "arrhenius": { "A": 4.0e13, "Ea": 103 },
+      "about": "O exemplo do livro para a 1ª ordem: o N2O5 sólido vira gás e se decompõe em NO2, castanho. A taxa é proporcional à concentração de N2O5 que ainda resta, e cada 10 °C a mais deixa a reação várias vezes mais rápida.",
+      "source": [
+        { "ref": "atkins-jones", "topic": "Seção 14.3 e Tabela 14.1: leis de velocidade e constantes", "pages": "566–567" },
+        { "ref": "atkins-jones", "topic": "Tabela 14.4: parâmetros de Arrhenius", "pages": "589" }
+      ]
+    },
+    {
+      "id": "hi",
+      "name": "Decomposição do iodeto de hidrogênio",
+      "phase": "g",
+      "reactants": [{ "formula": "HI", "coef": 2 }],
+      "products": [{ "formula": "H2", "coef": 1 }, { "formula": "I2", "coef": 1 }],
+      "species": "HI",
+      "order": 2,
+      "rateLaw": "k[HI]²",
+      "kUnit": "L·mol⁻¹·s⁻¹",
+      "points": [[500, 6.4e-9], [600, 9.7e-6], [700, 1.8e-3], [800, 9.7e-2]],
+      "about": "Reação de 2ª ordem: a taxa depende do quadrado da concentração de HI (duas moléculas precisam se encontrar). Por isso, ao contrário da 1ª ordem, a meia-vida fica mais longa conforme o HI vai acabando.",
+      "source": [{ "ref": "atkins-jones", "topic": "Tabela 14.1: leis de velocidade e constantes", "pages": "567" }]
+    },
+    {
+      "id": "h2-i2",
+      "name": "Síntese do iodeto de hidrogênio",
+      "phase": "g",
+      "reactants": [{ "formula": "H2", "coef": 1 }, { "formula": "I2", "coef": 1 }],
+      "products": [{ "formula": "HI", "coef": 2 }],
+      "species": "H2",
+      "order": 2,
+      "mixed": true,
+      "rateLaw": "k[H2][I2]",
+      "kUnit": "L·mol⁻¹·s⁻¹",
+      "points": [[500, 4.3e-7], [600, 4.4e-4], [700, 6.3e-2], [800, 2.6]],
+      "about": "A reação inversa da anterior. A taxa é de 1ª ordem em H2 e de 1ª ordem em I2 (2ª ordem no total). O jogo supõe quantidades iguais de H2 e I2 no começo.",
+      "source": [{ "ref": "atkins-jones", "topic": "Tabela 14.1: leis de velocidade e constantes", "pages": "567" }]
+    },
+    {
+      "id": "n2o",
+      "name": "Decomposição do óxido de dinitrogênio",
+      "phase": "g",
+      "reactants": [{ "formula": "N2O", "coef": 2 }],
+      "products": [{ "formula": "N2", "coef": 2 }, { "formula": "O2", "coef": 1 }],
+      "species": "N2O",
+      "order": 1,
+      "rateLaw": "k[N2O]",
+      "kUnit": "s⁻¹",
+      "points": [[1000, 0.76], [1050, 3.4]],
+      "about": "O N2O (gás hilariante) é estável à temperatura ambiente, mas a mil graus se decompõe em frações de segundo: só 50 °C a mais multiplicam k por mais de quatro.",
+      "source": [{ "ref": "atkins-jones", "topic": "Tabela 14.1: leis de velocidade e constantes", "pages": "567" }]
+    },
+    {
+      "id": "c2h6",
+      "name": "Quebra do etano em radicais metila",
+      "phase": "g",
+      "reactants": [{ "formula": "C2H6", "coef": 1 }],
+      "products": [{ "formula": "CH3", "coef": 2, "name": "radical metila" }],
+      "species": "C2H6",
+      "order": 1,
+      "rateLaw": "k[C2H6]",
+      "kUnit": "s⁻¹",
+      "points": [[973, 5.5e-4]],
+      "arrhenius": { "A": 2.5e17, "Ea": 384 },
+      "range": [923, 1023],
+      "about": "Romper a ligação C–C do etano exige muita energia (Ea = 384 kJ/mol): por isso a reação só acontece perto de 700 °C, e qualquer variação de temperatura muda muito a velocidade.",
+      "source": [
+        { "ref": "atkins-jones", "topic": "Tabela 14.1: leis de velocidade e constantes", "pages": "567" },
+        { "ref": "atkins-jones", "topic": "Tabela 14.4: parâmetros de Arrhenius", "pages": "589" }
+      ]
+    },
+    {
+      "id": "ciclopropano",
+      "name": "Ciclopropano → propeno",
+      "phase": "g",
+      "reactants": [{ "formula": "C3H6", "coef": 1, "name": "ciclopropano" }],
+      "products": [{ "formula": "C3H6", "coef": 1, "name": "propeno" }],
+      "species": "ciclopropano",
+      "order": 1,
+      "rateLaw": "k[ciclopropano]",
+      "kUnit": "s⁻¹",
+      "points": [[773, 6.7e-4]],
+      "arrhenius": { "A": 1.6e15, "Ea": 272 },
+      "range": [723, 823],
+      "about": "Uma reação em que nada entra nem sai: o anel de três carbonos, muito tenso, se abre e os mesmos átomos se rearranjam em propeno (isômeros têm a mesma fórmula, C3H6).",
+      "source": [
+        { "ref": "atkins-jones", "topic": "Tabela 14.1: leis de velocidade e constantes", "pages": "567" },
+        { "ref": "atkins-jones", "topic": "Tabela 14.4: parâmetros de Arrhenius", "pages": "589" }
+      ]
+    },
+    {
+      "id": "ch3nc",
+      "name": "Isocianeto de metila → acetonitrila",
+      "phase": "g",
+      "reactants": [{ "formula": "CH3NC", "coef": 1, "name": "isocianeto de metila" }],
+      "products": [{ "formula": "CH3CN", "coef": 1, "name": "acetonitrila" }],
+      "species": "CH3NC",
+      "order": 1,
+      "rateLaw": "k[CH3NC]",
+      "kUnit": "s⁻¹",
+      "arrhenius": { "A": 4.0e13, "Ea": 160 },
+      "range": [450, 550],
+      "about": "Outra reação de rearranjo: o grupo –NC gira e vira –CN. Como a Ea é menor que a do ciclopropano, ela acontece a temperaturas bem mais baixas.",
+      "source": [{ "ref": "atkins-jones", "topic": "Tabela 14.4: parâmetros de Arrhenius", "pages": "589" }]
+    },
+    {
+      "id": "h3o-oh",
+      "name": "Neutralização: H3O⁺ + OH⁻",
+      "phase": "aq",
+      "reactants": [{ "formula": "H3O+", "coef": 1 }, { "formula": "OH-", "coef": 1 }],
+      "products": [{ "formula": "H2O", "coef": 2 }],
+      "species": "H3O+",
+      "order": 2,
+      "mixed": true,
+      "rateLaw": "k[H3O⁺][OH⁻]",
+      "kUnit": "L·mol⁻¹·s⁻¹",
+      "points": [[298, 1.5e11]],
+      "range": [298, 298],
+      "about": "A reação do ácido com a base é uma das mais rápidas que existem: k = 1,5 × 10¹¹ L·mol⁻¹·s⁻¹. Os íons reagem praticamente a cada encontro.",
+      "source": [{ "ref": "atkins-jones", "topic": "Tabela 14.1: leis de velocidade e constantes (solução aquosa)", "pages": "567" }]
+    },
+    {
+      "id": "co2-oh",
+      "name": "CO2 + OH⁻ → HCO3⁻",
+      "phase": "aq",
+      "reactants": [{ "formula": "CO2", "coef": 1 }, { "formula": "OH-", "coef": 1 }],
+      "products": [{ "formula": "HCO3-", "coef": 1 }],
+      "species": "CO2",
+      "order": 2,
+      "mixed": true,
+      "rateLaw": "k[CO2][OH⁻]",
+      "kUnit": "L·mol⁻¹·s⁻¹",
+      "arrhenius": { "A": 1.5e10, "Ea": 38 },
+      "range": [278, 318],
+      "about": "É o primeiro passo quando o gás carbônico é absorvido por uma base, como na água de cal. A Ea é baixa (38 kJ/mol), por isso a reação é rápida já à temperatura ambiente.",
+      "source": [{ "ref": "atkins-jones", "topic": "Tabela 14.4: parâmetros de Arrhenius (solução aquosa)", "pages": "589" }]
+    },
+    {
+      "id": "c2h5br-oh",
+      "name": "Bromoetano + OH⁻ → etanol + Br⁻",
+      "phase": "aq",
+      "reactants": [{ "formula": "C2H5Br", "coef": 1 }, { "formula": "OH-", "coef": 1 }],
+      "products": [{ "formula": "C2H5OH", "coef": 1 }, { "formula": "Br-", "coef": 1 }],
+      "species": "C2H5Br",
+      "order": 2,
+      "mixed": true,
+      "rateLaw": "k[C2H5Br][OH⁻]",
+      "kUnit": "L·mol⁻¹·s⁻¹",
+      "arrhenius": { "A": 4.3e11, "Ea": 90 },
+      "range": [283, 343],
+      "about": "Uma troca na química orgânica: o OH⁻ entra no lugar do bromo. As duas espécies participam da etapa lenta, por isso a taxa depende das duas concentrações.",
+      "source": [{ "ref": "atkins-jones", "topic": "Tabela 14.4: parâmetros de Arrhenius (solução aquosa)", "pages": "589" }]
+    },
+    {
+      "id": "sacarose",
+      "name": "Hidrólise da sacarose (açúcar comum)",
+      "phase": "aq",
+      "reactants": [{ "formula": "C12H22O11", "coef": 1, "name": "sacarose" }, { "formula": "H2O", "coef": 1 }],
+      "products": [{ "formula": "C6H12O6", "coef": 2, "name": "glicose e frutose" }],
+      "species": "C12H22O11",
+      "order": 2,
+      "rateLaw": "k[C12H22O11][H3O⁺]",
+      "kUnit": "L·mol⁻¹·s⁻¹",
+      "points": [[298, 1.8e-4]],
+      "arrhenius": { "A": 1.5e15, "Ea": 108 },
+      "range": [288, 333],
+      "pseudoFirstOrder": { "species": "H3O+", "label": "ácido (H3O⁺)", "default": 0.1 },
+      "about": "O açúcar comum se quebra em glicose e frutose, mas só com ácido: o H3O⁺ aparece na lei de velocidade e não é consumido — é um catalisador. Como sua concentração fica fixa, a reação se comporta como de 1ª ordem na sacarose, com k' = k[H3O⁺].",
+      "source": [
+        { "ref": "atkins-jones", "topic": "Tabela 14.1: leis de velocidade e constantes (solução aquosa)", "pages": "567" },
+        { "ref": "atkins-jones", "topic": "Tabela 14.4: parâmetros de Arrhenius", "pages": "589" }
+      ]
+    }
+  ],
+  "game": {
+    "hcl-naoh": {
+      "kinetics": "h3o-oh",
+      "note": "O que reage de verdade é H3O⁺ + OH⁻ → 2 H2O, uma das reações mais rápidas que existem.",
+      "source": { "ref": "atkins-jones", "topic": "Tabela 14.1: leis de velocidade e constantes", "pages": "567" }
+    },
+    "caoh2-co2": {
+      "kinetics": "co2-oh",
+      "note": "O primeiro passo é o CO2 capturado pelo OH⁻ (CO2 + OH⁻ → HCO3⁻), com energia de ativação baixa: por isso a água de cal turva logo que o gás borbulha.",
+      "source": { "ref": "atkins-jones", "topic": "Tabela 14.4: parâmetros de Arrhenius", "pages": "589" }
+    },
+    "lioh-co2": {
+      "kinetics": "co2-oh",
+      "note": "O primeiro passo é o CO2 capturado pelo OH⁻ (CO2 + OH⁻ → HCO3⁻), rápido à temperatura ambiente — é o que permite usar LiOH para limpar o ar de naves espaciais.",
+      "source": { "ref": "atkins-jones", "topic": "Tabela 14.4: parâmetros de Arrhenius", "pages": "589" }
+    },
+    "h2o2-decomposicao": {
+      "catalysis": true,
+      "note": "Sem catalisador, uma solução de água oxigenada dura muito tempo. Um pouco de iodeto de potássio (ou de bromo) oferece um caminho com energia de ativação menor, e o O2 passa a sair rápido. O catalisador participa das etapas, mas é refeito no fim.",
+      "source": { "ref": "atkins-jones", "topic": "Seção 14.14: catálise (H2O2 com KI e com Br2)", "pages": "595–596" }
+    },
+    "haber": {
+      "catalysis": true,
+      "note": "Na indústria, o catalisador é ferro: as moléculas de N2 grudam na superfície do metal (adsorção), a ligação tripla N≡N enfraquece e a reação com o H2 fica muito mais rápida. É um catalisador heterogêneo (sólido, com reagentes gasosos).",
+      "source": { "ref": "atkins-jones", "topic": "Seção 14.15: catalisadores industriais (processo Haber)", "pages": "597" }
+    }
+  }
+}

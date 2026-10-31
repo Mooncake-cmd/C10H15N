@@ -12,6 +12,7 @@ import { $, html, raw, esc, mainCategory } from './ui/dom.js';
 import { displayStructure } from './core/structure.js';
 import { structureSVG } from './ui/structure-svg.js';
 import { initGlossaryUI } from './ui/glossary-ui.js';
+import { mountKineticsLab } from './ui/kinetics-lab.js';
 
 const SAVE_KEY = 'elementar:v1';
 const MAX_SUBSTANCES = 4;
@@ -184,7 +185,7 @@ async function main() {
               .map((o) => {
                 const ok = state.completedObjectives.includes(o.id) || isObjectiveDone(o, state, data);
                 return html`<li class="${ok ? 'is-done' : ''}"><span class="check" aria-hidden="true">${ok ? '✔' : '○'}</span>
-                  <div><span>${o.text}</span>${raw(!ok && o.type === 'stoich' ? stoichForm(o) : '')}${raw(!ok && o.hint ? `<details class="hint"><summary>Dica</summary>${esc(o.hint)}</details>` : '')}</div></li>`;
+                  <div><span>${o.text}</span>${raw(!ok && o.type === 'stoich' ? stoichForm(o) : '')}${raw(!ok && o.type === 'kinetics' ? kineticsForm(o) : '')}${raw(!ok && o.hint ? `<details class="hint"><summary>Dica</summary>${esc(o.hint)}</details>` : '')}</div></li>`;
               })
               .join(''),
           )}
@@ -215,11 +216,20 @@ async function main() {
       <button class="btn btn-primary" type="submit">Conferir</button></div></form>`;
   }
 
+  /** Pergunta de cinética (Fase 3B): campo numérico e atalho para o laboratório. */
+  function kineticsForm(o) {
+    return html`<form class="stoich-form" data-objective="${o.id}">
+      <div class="stoich-row"><input name="answer" inputmode="decimal" autocomplete="off" aria-label="Resposta (${o.unitLabel})" placeholder="${o.unitLabel}"><span class="small">${o.unitLabel}</span>
+      <button class="btn btn-primary" type="submit">Conferir</button></div>
+      <button type="button" class="btn btn-ghost btn-small" data-open-kinetics="${o.kinetics}">⏱️ Abrir ${data.kinetics.byId.get(o.kinetics).name.toLowerCase()} no laboratório</button></form>`;
+  }
+
   function submitStoich(objectiveId, answer) {
     const prevLevel = state.levelIndex;
     const { state: next, events, correct } = answerObjective(state, objectiveId, answer, data);
     if (!correct) {
-      toast('Ainda não. Confira a conversão gramas → mol → gramas (a dica ajuda).');
+      const kind = data.progression.levels.flatMap((l) => l.objectives).find((o) => o.id === objectiveId)?.type;
+      toast(kind === 'kinetics' ? 'Ainda não. Confira a fórmula e as unidades (a dica ajuda).' : 'Ainda não. Confira a conversão gramas → mol → gramas (a dica ajuda).');
       return;
     }
     state = next;
@@ -305,6 +315,13 @@ async function main() {
     const b = ev.target.closest('.stoich-choice');
     if (b) submitStoich(b.closest('.stoich-form').dataset.objective, b.dataset.answer);
   });
+  // Laboratório de velocidade (Fase 3B): abre pelo topo, pelo painel de resultado ou pelos objetivos.
+  const kineticsLab = mountKineticsLab($('#kinetics-dialog'), data);
+  $('#btn-kinetics').addEventListener('click', () => kineticsLab.open());
+  document.addEventListener('click', (ev) => {
+    const b = ev.target.closest('[data-open-kinetics]');
+    if (b) kineticsLab.open(b.dataset.openKinetics || null);
+  });
   $('#btn-react').addEventListener('click', react);
   $('#btn-clear').addEventListener('click', () => {
     bench = [];
@@ -328,7 +345,7 @@ async function main() {
   renderWelcome($('#result'));
   renderAll();
   // Glossário: termos dos textos explicativos viram links para a definição.
-  initGlossaryUI(data, ['#result', '#objectives', '.pt-info', '#level-dialog-body']);
+  initGlossaryUI(data, ['#result', '#objectives', '.pt-info', '#level-dialog-body', '#kinetics-dialog .kin-body']);
 }
 
 main();

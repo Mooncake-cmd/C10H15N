@@ -8,6 +8,8 @@ import { molarMass, formatFormulaText } from '../core/formula.js';
 import { mountReactionStage, mountBounceStage } from './reaction-stage.js';
 import { stoichiometry, percentYield } from '../core/stoichiometry.js';
 import { reactionThermo, heatFor } from '../core/thermo.js';
+import { kineticsLink, kAt, halfLife } from '../core/kinetics.js';
+import { formatSci, formatDuration, sourceText } from './kinetics-lab.js';
 
 let stopStage = () => {};
 
@@ -193,6 +195,52 @@ function energyHTML(data, r) {
     <p class="small muted">Calculado pela lei de Hess com entalpias e energias livres de formação (${srcText()}).</p></section>`;
 }
 
+/** Barreira de energia (energia de ativação); com catalisador, o caminho mais baixo tracejado. */
+function barrierSVG(exo, catalyzed) {
+  const yR = exo ? 70 : 92;
+  const yP = exo ? 92 : 70;
+  const hump = (top) => `M10,${yR} L60,${yR} C95,${yR} 100,${top} 130,${top} C160,${top} 165,${yP} 200,${yP} L250,${yP}`;
+  return `<svg class="energy-svg barrier-svg" viewBox="0 0 260 112" role="img" aria-label="Diagrama: os reagentes precisam subir uma barreira de energia (energia de ativação) antes de virar produtos${catalyzed ? '; com catalisador, a barreira é mais baixa' : ''}">
+    <path class="barrier" d="${hump(14)}"/>${catalyzed ? `<path class="barrier-cat" d="${hump(46)}"/><text x="130" y="42" class="cat-label">com catalisador</text>` : ''}
+    <line class="ea" x1="64" y1="${yR}" x2="64" y2="14"/><text x="58" y="${(yR + 14) / 2 + 4}" text-anchor="end">Ea</text>
+    <text x="35" y="${yR + 15}">reagentes</text><text x="225" y="${yP + 15}">produtos</text><text x="130" y="10" class="ts-label">complexo ativado</text></svg>`;
+}
+
+/** Seção "Velocidade" (Fase 3B): dado medido, catálise ou barreira de ativação — nunca um número inventado. */
+function kineticsHTML(data, r) {
+  const link = kineticsLink(r, data);
+  const conds = new Set((r.conditions ?? []).flat());
+  const t = reactionThermo(r, data);
+  const exo = t.dH == null ? r.tags.includes('exotermica') || !r.tags.includes('endotermica') : t.dH < 0;
+  const labBtn = (id, label = 'Abrir no laboratório de velocidade') => `<button type="button" class="btn btn-ghost btn-small" data-open-kinetics="${esc(id ?? '')}">⏱️ ${esc(label)}</button>`;
+  if (link?.kinetics) {
+    const e = data.kinetics.byId.get(link.kinetics);
+    const k = kAt(e, 298);
+    const ex = k ? halfLife(e.order, k.k, 0.1) : null;
+    return html`<section class="kinetics"><h3>Velocidade</h3>
+      <p>${link.note}</p>
+      <p class="small"><strong>Lei de velocidade:</strong> taxa = ${e.rateLaw}${raw(k ? ` · k = ${formatSci(k.k)} ${esc(e.kUnit)} a 25 °C` : '')}${raw(e.arrhenius ? ` · Ea = ${formatSci(e.arrhenius.Ea, 3)} kJ/mol` : '')}.
+      ${raw(ex != null ? `Com 0,10 mol/L de cada, metade reage em ${esc(formatDuration(ex))}.` : '')}</p>
+      ${raw(labBtn(e.id))}
+      <p class="small muted">Fonte: ${raw(sourceText(data, [link.source]))}.</p></section>`;
+  }
+  if (link?.catalysis) {
+    return html`<section class="kinetics"><h3>Velocidade: o papel do catalisador</h3>
+      <div class="energy-row">${raw(barrierSVG(exo, true))}<p>${link.note}</p></div>
+      ${raw(labBtn('sacarose', 'Ver outro catalisador no laboratório: ácido na hidrólise do açúcar'))}
+      <p class="small muted">Fonte: ${raw(sourceText(data, [link.source]))}.</p></section>`;
+  }
+  const igniter = ['faisca', 'calor', 'luz'].find((c) => conds.has(c));
+  if (igniter && exo) {
+    const who = { faisca: 'uma faísca', calor: 'o aquecimento', luz: 'a luz' }[igniter];
+    return html`<section class="kinetics"><h3>Velocidade: por que precisa de ${who}?</h3>
+      <div class="energy-row">${raw(barrierSVG(true, false))}<p>Mesmo liberando energia no fim, os reagentes precisam primeiro subir uma barreira: a energia de ativação (Ea). À temperatura ambiente, quase nenhuma colisão tem energia para isso, e a reação fica parada. ${who[0].toUpperCase() + who.slice(1)} dá essa energia a algumas moléculas; o calor que a reação libera aquece as vizinhas, e ela se espalha sozinha.</p></div>
+      ${raw(labBtn('n2o5', 'Ver no laboratório como a temperatura acelera uma reação'))}
+      <p class="small muted">Fonte: ${raw(sourceText(data, [{ ref: 'atkins-jones', topic: 'Seções 14.11–14.13: temperatura, teoria das colisões e complexo ativado', pages: '587–595' }]))}.</p></section>`;
+  }
+  return `<section class="kinetics"><h3>Velocidade</h3><p class="small muted">Sem dado de velocidade conferido para esta reação: o jogo não estima quanto tempo ela leva. ${labBtn(null)}</p></section>`;
+}
+
 const itemLabel = (data, id) => {
   const it = data.itemsById.get(id);
   return `${it.icon} ${it.name}`;
@@ -221,6 +269,7 @@ export function renderResult(root, data, result, { newSubstances = [] } = {}) {
       <h3>Por quê?</h3>
       <p>${r.why}</p>
       ${raw(energyHTML(data, r))}
+      ${raw(kineticsHTML(data, r))}
       ${raw(r.conditionNote ? `<p class="small"><strong>Nota:</strong> ${esc(r.conditionNote)}</p>` : '')}
       ${raw(
         r.netIonic

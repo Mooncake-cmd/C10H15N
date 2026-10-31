@@ -2032,12 +2032,17 @@
       "term": "Catalisador",
       "aliases": [
         "catalisadores",
-        "catálise"
+        "catálise",
+        "catalisador homogêneo",
+        "catalisador heterogêneo",
+        "catalisadores homogêneos",
+        "catalisadores heterogêneos"
       ],
-      "definition": "Substância que acelera uma reação sem ser consumida: oferece um caminho com energia de ativação menor. No fim, está igual ao começo.",
+      "definition": "Substância que acelera uma reação sem ser consumida: oferece um caminho com energia de ativação menor. No fim, está igual ao começo. O catalisador é homogêneo quando está na mesma fase dos reagentes (bromo dissolvido na água oxigenada) e heterogêneo quando está em outra (ferro sólido com gases, no processo Haber).",
       "example": "A enzima catalase do sangue decompõe a água oxigenada; o ferro acelera a síntese da amônia.",
       "related": [
-        "energia-de-ativacao"
+        "energia-de-ativacao",
+        "enzima"
       ],
       "source": {
         "ref": "atkins-jones",
@@ -2623,10 +2628,11 @@
       "aliases": [
         "meias-vidas"
       ],
-      "definition": "O tempo para metade de uma amostra se transformar. Na radioatividade, é o tempo para metade dos núcleos radioativos se desintegrar; depois de mais uma meia-vida, sobra um quarto, e assim por diante.",
-      "example": "A meia-vida do radônio-222 é de 3,8 dias.",
+      "definition": "O tempo para metade de uma amostra se transformar. Na cinética, é o tempo para a concentração de um reagente cair à metade (na 1ª ordem, t½ = ln 2/k, sem depender da concentração inicial). Na radioatividade, é o tempo para metade dos núcleos radioativos se desintegrar.",
+      "example": "A 65 °C, metade do N2O5 se decompõe em 133 s; a meia-vida do radônio-222 é de 3,8 dias.",
       "related": [
-        "radioatividade"
+        "radioatividade",
+        "lei-integrada"
       ],
       "source": {
         "ref": "atkins-jones",
@@ -2797,6 +2803,277 @@
         "ref": "atkins-jones",
         "topic": "Glossário: spectrum; spectral line",
         "pages": "B25"
+      }
+    },
+    {
+      "id": "velocidade-de-reacao",
+      "term": "Velocidade de reação",
+      "aliases": [
+        "velocidade da reação",
+        "velocidades de reação",
+        "velocidade das reações",
+        "rapidez da reação",
+        "taxa de reação",
+        "velocidade instantânea"
+      ],
+      "definition": "Quanto a concentração de um reagente cai (ou a de um produto sobe) por unidade de tempo, em mol/L por segundo. Para que o valor não dependa de qual substância se mede, o livro divide pelo coeficiente estequiométrico.",
+      "example": "Na decomposição do N2O5, quanto mais N2O5 ainda resta, maior a velocidade de reação.",
+      "related": [
+        "lei-de-velocidade",
+        "constante-de-velocidade"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: reaction rate; instantaneous rate",
+        "pages": "B23"
+      }
+    },
+    {
+      "id": "lei-de-velocidade",
+      "term": "Lei de velocidade",
+      "aliases": [
+        "leis de velocidade"
+      ],
+      "definition": "Equação que diz como a velocidade de reação depende das concentrações num instante: taxa = k[A]ⁿ… Ela é medida em laboratório — não dá para tirá-la dos coeficientes da equação balanceada.",
+      "example": "Para 2 N2O5 → 4 NO2 + O2, a lei é taxa = k[N2O5], de 1ª ordem, embora o coeficiente seja 2.",
+      "related": [
+        "ordem-de-reacao",
+        "constante-de-velocidade",
+        "velocidade-de-reacao"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: rate law",
+        "pages": "B23"
+      }
+    },
+    {
+      "id": "constante-de-velocidade",
+      "term": "Constante de velocidade (k)",
+      "aliases": [
+        "constante de velocidade",
+        "constantes de velocidade"
+      ],
+      "definition": "O número k da lei de velocidade. Não muda com a concentração, mas cresce com a temperatura (equação de Arrhenius). Quanto maior o k, mais rápida a reação.",
+      "example": "A 65 °C, o k da decomposição do N2O5 é 5,2 × 10⁻³ s⁻¹; a 25 °C é 3,7 × 10⁻⁵ s⁻¹.",
+      "related": [
+        "lei-de-velocidade",
+        "equacao-de-arrhenius"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: rate constant",
+        "pages": "B23"
+      }
+    },
+    {
+      "id": "ordem-de-reacao",
+      "term": "Ordem de reação",
+      "aliases": [
+        "ordem da reação",
+        "primeira ordem",
+        "segunda ordem",
+        "1ª ordem",
+        "2ª ordem"
+      ],
+      "definition": "O expoente da concentração na lei de velocidade. Na 1ª ordem, dobrar a concentração dobra a taxa; na 2ª ordem, quadruplica. A ordem total é a soma dos expoentes.",
+      "example": "taxa = k[H2][I2] é de 1ª ordem em H2, de 1ª ordem em I2 e de 2ª ordem no total.",
+      "related": [
+        "lei-de-velocidade",
+        "lei-integrada"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: order of reaction; overall order",
+        "pages": "B20"
+      }
+    },
+    {
+      "id": "lei-integrada",
+      "term": "Lei de velocidade integrada",
+      "aliases": [
+        "lei integrada",
+        "leis integradas"
+      ],
+      "definition": "Fórmula que dá a concentração de um reagente em qualquer instante, obtida da lei de velocidade. Na 1ª ordem: [A] = [A]₀·e^(−kt); na 2ª ordem: 1/[A] = 1/[A]₀ + kt.",
+      "example": "Com 0,040 mol/L de N2O5 a 65 °C, depois de 600 s restam 0,040·e^(−5,2×10⁻³·600) ≈ 1,8 mmol/L.",
+      "related": [
+        "ordem-de-reacao",
+        "meia-vida"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: integrated rate law",
+        "pages": "B15"
+      }
+    },
+    {
+      "id": "equacao-de-arrhenius",
+      "term": "Equação de Arrhenius",
+      "aliases": [
+        "arrhenius",
+        "parâmetros de arrhenius",
+        "reta de arrhenius"
+      ],
+      "definition": "k = A·e^(−Ea/RT): mostra como a constante de velocidade cresce com a temperatura. Ea é a energia de ativação e A, o fator pré-exponencial. Quanto maior a Ea, mais a velocidade depende da temperatura.",
+      "example": "Com Ea = 103 kJ/mol, o k do N2O5 fica quase 4 vezes maior de 25 °C para 35 °C.",
+      "related": [
+        "energia-de-ativacao",
+        "constante-de-velocidade"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Seção 14.11: o efeito da temperatura (equação de Arrhenius)",
+        "pages": "587–588"
+      }
+    },
+    {
+      "id": "teoria-das-colisoes",
+      "term": "Teoria das colisões",
+      "aliases": [
+        "colisões efetivas"
+      ],
+      "definition": "Ideia de que as moléculas só reagem quando se chocam com energia suficiente (pelo menos a energia de ativação) e, em geral, na orientação certa. Mais concentração ou mais temperatura = mais choques eficazes.",
+      "example": "Aquecer o gás faz as moléculas se moverem mais rápido, e uma fração maior dos choques passa a ter a energia necessária.",
+      "related": [
+        "energia-de-ativacao",
+        "complexo-ativado"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: collision theory",
+        "pages": "B6"
+      }
+    },
+    {
+      "id": "complexo-ativado",
+      "term": "Complexo ativado (estado de transição)",
+      "aliases": [
+        "complexo ativado",
+        "estado de transição"
+      ],
+      "definition": "O arranjo instável dos átomos no topo da barreira de energia, no meio do caminho entre reagentes e produtos: pode seguir para os produtos ou se desfazer de volta nos reagentes.",
+      "example": "No diagrama de energia, o complexo ativado fica no ponto mais alto da \"montanha\".",
+      "related": [
+        "energia-de-ativacao",
+        "teoria-das-colisoes"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: activated complex; transition state",
+        "pages": "B1"
+      }
+    },
+    {
+      "id": "mecanismo-de-reacao",
+      "term": "Mecanismo de reação",
+      "aliases": [
+        "mecanismo",
+        "mecanismos",
+        "mecanismos de reação"
+      ],
+      "definition": "A sequência de etapas simples (reações elementares) que se propõe para explicar como uma reação acontece de verdade e por que ela tem a lei de velocidade medida.",
+      "example": "A decomposição do H2O2 com bromo ocorre em duas etapas: o Br2 é consumido na primeira e refeito na segunda.",
+      "related": [
+        "reacao-elementar",
+        "etapa-determinante",
+        "intermediario"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: reaction mechanism",
+        "pages": "B23"
+      }
+    },
+    {
+      "id": "reacao-elementar",
+      "term": "Reação elementar",
+      "aliases": [
+        "reações elementares",
+        "etapa elementar",
+        "etapas elementares"
+      ],
+      "definition": "Cada etapa individual de um mecanismo de reação: um choque ou uma quebra que acontece de uma vez só, do jeito que está escrito.",
+      "example": "2 CH₃ → C₂H₆: dois radicais metila se juntam numa única etapa.",
+      "related": [
+        "mecanismo-de-reacao"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: elementary reaction",
+        "pages": "B10"
+      }
+    },
+    {
+      "id": "etapa-determinante",
+      "term": "Etapa determinante da velocidade",
+      "aliases": [
+        "etapa determinante",
+        "etapa lenta"
+      ],
+      "definition": "A etapa mais lenta de um mecanismo: como um gargalo, ela decide a velocidade da reação inteira.",
+      "example": "Numa fila com um caixa lento, o tempo total depende desse caixa — é a etapa determinante.",
+      "related": [
+        "mecanismo-de-reacao"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: rate-determining step",
+        "pages": "B23"
+      }
+    },
+    {
+      "id": "intermediario",
+      "term": "Intermediário de reação",
+      "aliases": [
+        "intermediário",
+        "intermediários",
+        "intermediários de reação"
+      ],
+      "definition": "Espécie que se forma numa etapa do mecanismo e é consumida numa etapa seguinte, por isso não aparece na equação global.",
+      "example": "Na decomposição do H2O2 catalisada por bromo, o Br⁻ formado na primeira etapa é um intermediário.",
+      "related": [
+        "mecanismo-de-reacao",
+        "catalisador"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: reaction intermediate",
+        "pages": "B23"
+      }
+    },
+    {
+      "id": "enzima",
+      "term": "Enzima",
+      "aliases": [
+        "enzimas"
+      ],
+      "definition": "Catalisador biológico: uma proteína que acelera uma reação específica dentro dos seres vivos.",
+      "example": "A catalase do sangue e da batata faz a água oxigenada espumar, liberando oxigênio.",
+      "related": [
+        "catalisador"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: enzyme",
+        "pages": "B11"
+      }
+    },
+    {
+      "id": "superficie-de-contato",
+      "term": "Superfície de contato",
+      "aliases": [
+        "área de superfície"
+      ],
+      "definition": "A área do sólido exposta ao outro reagente. Quando um reagente é sólido, quebrá-lo em pedaços menores (ou em pó) aumenta a superfície de contato e a reação fica mais rápida.",
+      "example": "Um comprimido efervescente moído dissolve e borbulha mais rápido que o comprimido inteiro.",
+      "related": [
+        "velocidade-de-reacao"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Seção 14.14: catálise (área de superfície em reações heterogêneas)",
+        "pages": "595"
       }
     }
   ]

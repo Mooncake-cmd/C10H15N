@@ -230,6 +230,29 @@
           "hint": "O calor é proporcional à quantidade: meio mol libera metade do ΔH° da equação." }
       ],
       "lesson": "ΔH° < 0: a reação libera calor (exotérmica); ΔH° > 0: absorve (endotérmica). Pela lei de Hess, ΔH° = soma das entalpias de formação dos produtos − soma das dos reagentes. Já ΔG° < 0 diz que a reação é espontânea — o que não quer dizer rápida: o metano é estável no ar até uma faísca vencer a energia de ativação."
+    },
+    {
+      "id": "n13",
+      "phase": 3,
+      "title": "Velocidade das reações",
+      "intro": "Fase 3B: ΔG° diz se uma reação pode acontecer; a cinética diz em quanto tempo. A velocidade de reação depende da concentração (pela lei de velocidade), da temperatura (pela equação de Arrhenius) e de catalisadores. Use o ⏱️ Laboratório de velocidade, no topo da página, para fazer as contas com os dados do livro.",
+      "objectives": [
+        { "id": "n13-catalise", "type": "reaction", "reaction": "h2o2-decomposicao", "text": "Faça a água oxigenada liberar oxigênio com um catalisador",
+          "hint": "Sozinha, a água oxigenada dura meses no frasco. Junte H2O2 e a ferramenta 🧪 Catalisador na bancada." },
+        { "id": "n13-meia-vida", "type": "kinetics", "kinetics": "n2o5", "ask": "halfLife", "T": 338, "unitLabel": "segundos",
+          "text": "A 65 °C, o N2O5 se decompõe com k = 5,2 × 10⁻³ s⁻¹ (1ª ordem). Qual é a meia-vida?",
+          "hint": "Na 1ª ordem, t½ = ln 2 ÷ k = 0,693 ÷ k, e não depende da concentração inicial." },
+        { "id": "n13-exemplo", "type": "kinetics", "kinetics": "n2o5", "ask": "concentration", "T": 338, "A0": 0.04, "t": 600, "unit": "mmol/L", "unitLabel": "mmol/L de N2O5",
+          "text": "Começando com 0,040 mol/L de N2O5 a 65 °C, quanto resta depois de 10 minutos (600 s)?",
+          "hint": "Lei integrada de 1ª ordem: [A] = [A]₀ · e^(−kt). Responda em mmol/L (1 mol/L = 1000 mmol/L)." },
+        { "id": "n13-temperatura", "type": "kinetics", "kinetics": "n2o5", "ask": "ratio", "T": 298, "T2": 308, "unitLabel": "vezes",
+          "text": "A energia de ativação do N2O5 é 103 kJ/mol. Quantas vezes k aumenta de 25 °C para 35 °C?",
+          "hint": "Arrhenius: k₂/k₁ = e^[(Ea/R)·(1/T₁ − 1/T₂)], com Ea em J/mol, R = 8,314 J/(K·mol) e T em kelvin (25 °C = 298 K)." },
+        { "id": "n13-segunda-ordem", "type": "kinetics", "kinetics": "hi", "ask": "halfLife", "T": 700, "A0": 0.1, "unitLabel": "segundos",
+          "text": "A 700 K, o HI se decompõe em 2ª ordem com k = 1,8 × 10⁻³ L·mol⁻¹·s⁻¹. Qual é a meia-vida começando com 0,10 mol/L?",
+          "hint": "Na 2ª ordem, t½ = 1 ÷ (k·[A]₀): ela depende da concentração inicial." }
+      ],
+      "lesson": "A velocidade de reação segue uma lei de velocidade: na 1ª ordem, a taxa é k[A] e a meia-vida (ln 2/k) não depende da concentração; na 2ª ordem, a taxa é k[A]² e a meia-vida cresce conforme o reagente acaba. Pela equação de Arrhenius, k = A·e^(−Ea/RT): quanto maior a energia de ativação, mais a temperatura pesa. Um catalisador abre um caminho com Ea menor e sai intacto no fim."
     }
   ]
 }
