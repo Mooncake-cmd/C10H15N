@@ -1,0 +1,1036 @@
+{
+  "_meta": {
+    "description": "Curiosidades e descrições dos 118 elementos, mostradas no painel da tabela periódica como leitura complementar. Escritas com palavras próprias para o jogo a partir da leitura do livro da DK — não são tradução nem cópia do texto. Cada elemento cita as páginas do livro onde o assunto aparece.",
+    "ref": "dk-elements",
+    "fields": "elements: { símbolo: { pages: [páginas do livro], summary: descrição curta, facts: [curiosidades] } }",
+    "policy": "Livro de divulgação, usado só como leitura complementar. Quando ele diverge de um livro-texto (Atkins & Jones, Greenwood) ou de dados conferidos, vale o livro-texto: a afirmação é corrigida ou omitida, e a correção fica registrada em corrections.",
+    "corrections": [
+      "He: o livro atribui a descoberta de 1868 a William Ramsay. Em 1868 o hélio foi notado no espectro do Sol (Janssen e Lockyer); Ramsay o isolou na Terra em 1895.",
+      "Ar e Kr: o livro diz que o argônio não reage com nenhum elemento. Gases nobres formam compostos (XeF₂, KrF₂; HArF a baixíssima temperatura); escrevemos ‘praticamente não reage’.",
+      "Ca: o livro chama o carbonato de cálcio de ‘álcali’. Ele é uma base que neutraliza ácidos, mas não é um álcali (hidróxido solúvel).",
+      "Mg: o livro chama a dolomita de carbonato de magnésio; ela é carbonato de cálcio e magnésio, CaMg(CO₃)₂.",
+      "Fe: o livro diz que o ferro puro é quebradiço e dá 2,5 bilhões de toneladas de ferro purificado por ano (número que corresponde ao minério extraído). Omitidos.",
+      "I: o livro diz que o iodo sólido não derrete quando aquecido. Ele derrete a 114 °C, mas sublima com facilidade; escrevemos ‘passa facilmente a vapor’.",
+      "Bi: o livro diz que os átomos de bismuto duram ‘milhões de anos’. A meia-vida do ²⁰⁹Bi é de cerca de 2 × 10¹⁹ anos — na prática, é estável.",
+      "Ce: o livro diz que o cério puro é altamente tóxico; omitido. Lu: o livro diz que o lutécio pega fogo com facilidade; omitido.",
+      "Gd: o livro diz que Johan Gadolin descobriu o gadolínio; o elemento só homenageia Gadolin (que descobriu o ítrio).",
+      "Ge: o livro fala em ‘quase 20 anos’ entre a previsão de Mendeleev (1871) e a descoberta (1886); são 15 anos.",
+      "W: o livro dá 3 414 °C como ponto de fusão; os dados de referência dão cerca de 3 422 °C. Escrevemos ‘mais de 3 400 °C’.",
+      "Es: o livro diz que a explosão ‘fundiu átomos menores’. O einstênio se formou porque núcleos de urânio capturaram muitos nêutrons de uma vez.",
+      "Rf: o livro data de 1913 a proposta do núcleo atômico por Rutherford; o artigo é de 1911.",
+      "Cm: o nome homenageia Marie e Pierre Curie (o livro cita só Marie).",
+      "Cf: o livro diz que o califórnio é feito bombardeando berquélio com nêutrons num acelerador; foi obtido em 1950 bombardeando cúrio com partículas alfa, e hoje é produzido em reatores.",
+      "Re: o livro diz que o rênio tem o ponto de ebulição mais alto de todos; as tabelas divergem (o dataset do jogo dá o maior ao tungstênio). Escrevemos ‘um dos mais altos’.",
+      "Al: o livro fala em 80 anos entre o isolamento (1825) e a produção em grande escala; a eletrólise da alumina (obtida da bauxita), que barateou o alumínio, é de 1886.",
+      "Fr: o livro diz que a maior amostra de frâncio ‘durou alguns dias’; a meia-vida do isótopo mais estável é de cerca de 22 minutos. Omitido."
+    ]
+  },
+  "elements": {
+    "H": {
+      "pages": [20, 21],
+      "summary": "O elemento mais simples: cada átomo tem só um próton e um elétron. É o elemento mais comum do Universo, embora quase não exista livre no ar da Terra.",
+      "facts": [
+        "A maior parte do Sol é hidrogênio, e planetas gigantes como Júpiter são enormes bolas de hidrogênio misturado com hélio e outros gases.",
+        "Na Terra, quase todo o hidrogênio está preso em compostos — o principal é a água, em que cada molécula tem dois átomos de hidrogênio e um de oxigênio.",
+        "Num tubo de vidro com hidrogênio, uma descarga elétrica faz o gás brilhar num tom arroxeado."
+      ]
+    },
+    "He": {
+      "pages": [190, 191],
+      "summary": "Gás nobre transparente, o segundo elemento mais leve. Cerca de um quarto dos átomos do Universo são de hélio, mas na Terra ele é raro: de tão leve, escapa da atmosfera para o espaço.",
+      "facts": [
+        "Foi notado primeiro na luz do Sol, em 1868, por uma linha amarela no espectro — daí o nome, de hélios, ‘Sol’ em grego. Só em 1895 William Ramsay o coletou na Terra, saindo de um mineral de urânio.",
+        "Boa parte do hélio que usamos vem de jazidas de gás natural.",
+        "O hélio líquido, muito frio, resfria os ímãs dos aparelhos de ressonância magnética e de aceleradores de partículas como o LHC."
+      ]
+    },
+    "Li": {
+      "pages": [24, 25],
+      "summary": "O metal mais leve de todos: é tão pouco denso que flutua na água — mas reage com ela, liberando hidrogênio.",
+      "facts": [
+        "Na natureza só aparece combinado, em minerais como a lepidolita e a petalita; a água dos oceanos guarda milhões de toneladas de lítio dissolvido.",
+        "É o coração das baterias de íons de lítio de celulares, notebooks e carros elétricos.",
+        "Compostos de lítio entram em vidros resistentes ao calor, em graxas lubrificantes e em remédios."
+      ]
+    },
+    "Be": {
+      "pages": [38, 39],
+      "summary": "O mais leve dos metais alcalino-terrosos, mas foge do padrão do grupo: é bem mais duro que os outros e não reage com a água.",
+      "facts": [
+        "O nome vem do mineral berilo (beryllos, em grego); a esmeralda e a água-marinha são variedades de berilo.",
+        "Leve e rígido, quase não encolhe no frio extremo — por isso é usado em espelhos de telescópios espaciais.",
+        "Ligas de berílio fazem molas e peças que não soltam faíscas, e há helicópteros militares com janelas de berílio."
+      ]
+    },
+    "B": {
+      "pages": [130, 131],
+      "summary": "Semimetal muito duro. Alguns compostos de boro estão entre as substâncias artificiais mais duras que existem, perdendo só para o diamante.",
+      "facts": [
+        "Fica ainda mais duro quando combinado com carbono ou nitrogênio, formando o carbeto e o nitreto de boro.",
+        "É extraído de minerais como a ulexita e o bórax; o Vale da Morte, um deserto escaldante dos EUA, já teve grandes minas de boro.",
+        "Pequenas quantidades de boro no solo são essenciais para as plantas crescerem saudáveis."
+      ]
+    },
+    "C": {
+      "pages": [142, 143],
+      "summary": "O elemento com mais compostos — são milhões —, porque cada átomo de carbono pode se ligar a outros quatro e formar cadeias e anéis. É a base da química orgânica e da vida.",
+      "facts": [
+        "O carbono puro tem várias formas (alótropos): o grafite, macio, do lápis; o diamante, o material natural mais duro; e o fulereno, uma ‘bola’ de 60 átomos.",
+        "Lâminas de serra revestidas de diamante cortam pedra e concreto.",
+        "Petróleo, carvão e gás natural são misturas de compostos de carbono formadas ao longo de milhões de anos."
+      ]
+    },
+    "N": {
+      "pages": [154, 155],
+      "summary": "O gás transparente que forma quase três quartos do ar. Como a molécula N₂ reage muito pouco, ele nos cerca o tempo todo sem efeito.",
+      "facts": [
+        "O nitrogênio líquido, a cerca de −196 °C, congela e conserva amostras de sangue e de tecidos.",
+        "Bactérias que vivem em nódulos nas raízes de plantas como o feijão ‘fixam’ o nitrogênio do ar e o entregam à planta.",
+        "Explosivos como o TNT e a nitroglicerina são compostos de nitrogênio: ao detonar, formam N₂, muito estável, e liberam muita energia de uma vez."
+      ]
+    },
+    "O": {
+      "pages": [166, 167],
+      "summary": "O elemento mais abundante da crosta terrestre: junto com seus compostos forma metade das rochas e minerais. No ar, o gás oxigênio é cerca de um quinto.",
+      "facts": [
+        "As plantas liberam oxigênio na fotossíntese, e nossas células o usam para tirar energia dos alimentos.",
+        "O fogo precisa de oxigênio: uma vela coberta por um copo se apaga quando falta oxigênio dentro dele.",
+        "Quase 90 % da massa da água é oxigênio."
+      ]
+    },
+    "F": {
+      "pages": [178, 179],
+      "summary": "O elemento mais reativo de todos: um gás amarelo-claro tão agressivo que ataca vidro, tijolo e aço. Puro, é extremamente tóxico.",
+      "facts": [
+        "De tão reativo, só foi isolado em 1886, pelo químico francês Henri Moissan, depois de décadas de tentativas perigosas.",
+        "Costuma ser guardado em recipientes de níquel, que resistem ao seu ataque.",
+        "O ácido fluorídrico grava desenhos no vidro; já os fluoretos, bem menos perigosos, protegem os dentes nas pastas de dente."
+      ]
+    },
+    "Ne": {
+      "pages": [194],
+      "summary": "Gás nobre raro: menos de 0,002 % do ar. Parte dele ficou presa nas rochas quando a Terra se formou e volta ao ar nas erupções vulcânicas.",
+      "facts": [
+        "É obtido resfriando o ar até cerca de −190 °C, quando ele vira líquido e seus componentes podem ser separados.",
+        "Com eletricidade, brilha em vermelho-alaranjado — a cor clássica dos letreiros de neon (as outras cores usam outros gases ou pós no tubo).",
+        "Também está nos lasers de hélio-neônio, de luz vermelha."
+      ]
+    },
+    "Na": {
+      "pages": [26, 27],
+      "summary": "Metal macio e brilhante, tão reativo que nunca aparece puro na natureza; no laboratório é guardado longe do ar e da água.",
+      "facts": [
+        "Seu composto mais comum é o cloreto de sódio, o sal de cozinha, que forma o mineral halita.",
+        "Salares gigantes, como o de Uyuni, na Bolívia, são crostas brancas de sal deixadas pela evaporação da água.",
+        "O símbolo Na vem de natrium, nome latino do elemento."
+      ]
+    },
+    "Mg": {
+      "pages": [40, 41],
+      "summary": "Metal leve e resistente, cujo nome vem da região de Magnésia, na Grécia. Grande parte do magnésio da Terra está no manto, mas ele também existe na água do mar e em minerais como a dolomita.",
+      "facts": [
+        "Ligas de magnésio, fortes e leves, aparecem em rodas de carro e em corpos de câmeras fotográficas.",
+        "No centro de cada molécula de clorofila há um átomo de magnésio — sem ele, as plantas não fariam fotossíntese.",
+        "O sal de Epsom (sulfato de magnésio) é usado há séculos em banhos e remédios caseiros."
+      ]
+    },
+    "Al": {
+      "pages": [132, 133],
+      "summary": "Metal leve e muito comum na crosta, mas difícil de extrair: foi isolado em 1825 e só cerca de 60 anos depois surgiu um jeito de obtê-lo em grande quantidade a partir da bauxita.",
+      "facts": [
+        "Reciclar alumínio gasta só uma pequena parte da energia necessária para produzi-lo do minério — por isso latas usadas viram latas novas.",
+        "Laminado bem fino, vira o papel-alumínio, que dobra e torce sem rasgar.",
+        "Não enferruja como o ferro: forma na superfície uma película fina de óxido que o protege."
+      ]
+    },
+    "Si": {
+      "pages": [146, 147],
+      "summary": "Quase todas as rochas da Terra contêm silício, em geral ligado ao oxigênio: a areia é sobretudo quartzo, o dióxido de silício (SiO₂).",
+      "facts": [
+        "As argilas da cerâmica e o vidro comum também são feitos de compostos de silício.",
+        "Fatias finíssimas de silício purificado são a base dos chips de computador e das células solares.",
+        "Os pelos da urtiga têm pontas de sílica que se quebram na pele e liberam a substância que arde."
+      ]
+    },
+    "P": {
+      "pages": [158, 159],
+      "summary": "O primeiro elemento com descobridor conhecido: em 1669, o alquimista alemão Hennig Brand ferveu urina por dias em busca da pedra filosofal e obteve uma substância que brilhava no escuro.",
+      "facts": [
+        "O nome significa ‘portador de luz’, em grego.",
+        "O fósforo branco brilha e pega fogo sozinho no ar; o vermelho é bem mais estável — é ele que fica na lixa das caixas de fósforo.",
+        "Fosfatos são essenciais à vida (estão nos ossos e no DNA) e são um dos ingredientes principais dos fertilizantes."
+      ]
+    },
+    "S": {
+      "pages": [168, 169],
+      "summary": "Conhecido desde a Antiguidade, é um dos poucos ametais encontrados puros na natureza, em cristais amarelos perto de crateras de vulcões.",
+      "facts": [
+        "Ao queimar, derrete num líquido vermelho-escuro e arde com chama azulada, formando dióxido de enxofre, de cheiro sufocante.",
+        "Compostos de enxofre dão o cheiro do spray do gambá e fazem os olhos lacrimejarem quando cortamos cebola.",
+        "Em algumas minas, o enxofre é derretido no subsolo e bombeado para cima ainda líquido."
+      ]
+    },
+    "Cl": {
+      "pages": [180, 181],
+      "summary": "Gás amarelo-esverdeado, venenoso e muito reativo — por isso não existe puro na natureza. Seu composto mais comum é o cloreto de sódio, o sal.",
+      "facts": [
+        "É mais denso que o ar e foi usado como arma química na Primeira Guerra Mundial; os soldados precisavam de máscaras.",
+        "Em pequenas doses, mata micróbios: a cloração torna segura a água das cidades e das piscinas.",
+        "Compostos de cloro são importantes no corpo, por exemplo para nervos e músculos funcionarem."
+      ]
+    },
+    "Ar": {
+      "pages": [195],
+      "summary": "O terceiro gás mais abundante do ar (cerca de 1 %), depois do nitrogênio e do oxigênio. O nome vem do grego argos, ‘preguiçoso’, porque ele praticamente não reage.",
+      "facts": [
+        "Conduz mal o calor, por isso enche o espaço entre os vidros de janelas duplas e algumas roupas de mergulho em água fria.",
+        "Na soldagem, uma ‘capa’ de argônio impede que o metal quente reaja com o oxigênio.",
+        "Documentos históricos como a Magna Carta são guardados em argônio, que afasta o oxigênio e a umidade."
+      ]
+    },
+    "K": {
+      "pages": [30, 31],
+      "summary": "Foi isolado em 1807 por Humphry Davy, por eletrólise, a partir da potassa — substância obtida das cinzas de plantas, que deu nome ao elemento. O símbolo K vem de kalium.",
+      "facts": [
+        "Como o sódio, é tão reativo que nunca aparece puro; está em minerais como a silvita (cloreto de potássio), de gosto salgado.",
+        "É essencial para nervos e músculos; banana, batata e feijão são ricos em potássio.",
+        "Sais de potássio são um dos nutrientes principais dos fertilizantes (o ‘K’ do NPK)."
+      ]
+    },
+    "Ca": {
+      "pages": [42, 43],
+      "summary": "O metal mais abundante do corpo humano — está nos ossos e nos dentes — e um dos cinco elementos mais comuns da crosta terrestre.",
+      "facts": [
+        "O calcário, o mármore, a calcita e as conchas são feitos de carbonato de cálcio (CaCO₃).",
+        "Cavernas com estalactites se formam quando a água com gás carbônico dissolve o calcário e depois o deposita de novo, gota a gota.",
+        "Comprimidos antiácidos de carbonato de cálcio neutralizam o excesso de ácido do estômago."
+      ]
+    },
+    "Sc": {
+      "pages": [54],
+      "summary": "Metal leve e macio, parecido com o alumínio. Está tão espalhado nas rochas que é difícil juntar uma quantidade grande dele.",
+      "facts": [
+        "Seus minérios principais, como a gadolinita e a euxenita, também têm outros metais raros, como cério e ítrio.",
+        "Ligas de alumínio com escândio são fortes e leves: aparecem em tacos esportivos e em caças como o MiG-29.",
+        "Lâmpadas de iodeto de escândio dão uma luz forte, branco-azulada, usada em estádios."
+      ]
+    },
+    "Ti": {
+      "pages": [55],
+      "summary": "Batizado em homenagem aos Titãs da mitologia grega. É tão resistente quanto o aço, porém bem mais leve, e não é corroído pela água nem pela maioria dos produtos químicos.",
+      "facts": [
+        "Grande parte do titânio vira dióxido de titânio (TiO₂), um pó branco usado em tintas e em protetores solares, onde bloqueia a radiação ultravioleta.",
+        "O corpo o tolera bem — por isso é usado em próteses de quadril e em implantes.",
+        "Ligas de titânio aparecem em brocas, coletes à prova de balas e caixas de relógio."
+      ]
+    },
+    "V": {
+      "pages": [56],
+      "summary": "Metal que pode ser martelado e esticado sem quebrar. Foi obtido puro pela primeira vez em 1869, pelo químico britânico Henry Roscoe.",
+      "facts": [
+        "Ferreiros antigos, sem saber, usavam minérios com traços de vanádio no lendário aço de Damasco, famoso pelas espadas afiadíssimas.",
+        "Ligas de aço com vanádio fazem ferramentas duráveis, como chaves de boca e facas.",
+        "O nome homenageia Vanadis, deusa nórdica da beleza, por causa das cores vivas dos seus compostos."
+      ]
+    },
+    "Cr": {
+      "pages": [57],
+      "summary": "O nome vem do grego chroma, ‘cor’, porque seus compostos têm cores muito variadas. É um metal que continua brilhante mesmo exposto ao ar e à água.",
+      "facts": [
+        "Misturado ao ferro e ao carbono, forma o aço inoxidável, que não enferruja.",
+        "Traços de óxido de cromo dão o vermelho intenso do rubi.",
+        "O ‘amarelo-cromo’ já foi um pigmento comum em tintas, até ser proibido por ser tóxico."
+      ]
+    },
+    "Mn": {
+      "pages": [58, 59],
+      "summary": "Como o magnésio, deve o nome à região grega de Magnésia. É obtido principalmente da pirolusita, um minério de dióxido de manganês (MnO₂).",
+      "facts": [
+        "No fundo do mar há nódulos ricos em manganês que cresceram camada por camada ao longo de milhões de anos.",
+        "O corpo precisa de um pouquinho de manganês; mexilhões e avelãs são boas fontes.",
+        "Durante a Segunda Guerra, os EUA fizeram moedas com manganês e prata porque faltava níquel."
+      ]
+    },
+    "Fe": {
+      "pages": [60, 61],
+      "summary": "O metal mais comum do planeta como um todo — a maior parte está no núcleo da Terra — e, de longe, o metal mais usado pela humanidade, sobretudo na forma de aço.",
+      "facts": [
+        "É obtido de minérios como a hematita (Fe₂O₃) em altos-fornos, onde o carbono retira o oxigênio do óxido.",
+        "Meteoritos de ferro são uma das poucas fontes de ferro puro na natureza.",
+        "A maior parte do ferro do corpo está no sangue, na hemoglobina, que carrega oxigênio; o espinafre e o feijão são fontes de ferro."
+      ]
+    },
+    "Co": {
+      "pages": [64, 65],
+      "summary": "Mineiros alemães medievais confundiam minérios de cobalto com metais preciosos; ao tentar purificá-los, o arsênio liberado os deixava doentes. Daí o nome, de kobold, um duende travesso.",
+      "facts": [
+        "Adicionado ao aço e a outras ligas, deixa-os mais resistentes: ligas de cobalto estão em pás de motores a jato e em próteses de quadril e joelho.",
+        "É um dos poucos elementos que são ímãs naturais, como o ferro e o níquel.",
+        "Compostos de cobalto dão o azul intenso de vidros e porcelanas."
+      ]
+    },
+    "Ni": {
+      "pages": [66, 67],
+      "summary": "No século XVIII, mineiros alemães acharam que um mineral fosse minério de cobre, mas não conseguiram tirar cobre dele e o chamaram de Kupfernickel, ‘cobre do Velho Nick’ (um espírito maligno). Daí o nome do níquel.",
+      "facts": [
+        "Não enferruja com facilidade, por isso reveste outros metais e entra no aço inoxidável.",
+        "Muitas moedas são feitas de ligas de níquel com cobre.",
+        "Além da nicolita, aparece em minérios como a garnierita e a pentlandita."
+      ]
+    },
+    "Cu": {
+      "pages": [68, 69],
+      "summary": "Metal macio e maleável, ótimo condutor de eletricidade e de calor, e o único metal de cor avermelhada quando puro.",
+      "facts": [
+        "É um dos poucos metais encontrados puros na natureza, mas a maior parte vem de minérios como a calcopirita.",
+        "Fios de cobre enrolados num núcleo de ferro formam eletroímãs, que podem ser ligados e desligados.",
+        "O sangue de muitos crustáceos é azul porque usa um composto de cobre para carregar oxigênio."
+      ]
+    },
+    "Zn": {
+      "pages": [72, 73],
+      "summary": "Já era usado na Índia e na China séculos antes de o químico alemão Andreas Marggraf identificá-lo como elemento, no século XVIII.",
+      "facts": [
+        "Nunca aparece puro; a principal fonte é a esfalerita, um mineral de sulfeto de zinco.",
+        "Uma camada de zinco protege o aço da ferrugem (galvanização): o zinco se oxida no lugar do ferro.",
+        "O óxido de zinco aparece em pomadas e esparadrapos que ajudam a evitar infecções."
+      ]
+    },
+    "Ga": {
+      "pages": [136],
+      "summary": "Derrete a cerca de 30 °C — um pedaço vira líquido na palma da mão.",
+      "facts": [
+        "Existe em pequenas quantidades em minérios de zinco e de alumínio e é obtido como subproduto.",
+        "Com índio e estanho, forma o galinstan, uma liga líquida usada em termômetros no lugar do mercúrio.",
+        "Compostos de gálio estão em LEDs, em lasers de Blu-ray e em painéis solares de robôs que exploram Marte."
+      ]
+    },
+    "Ge": {
+      "pages": [148],
+      "summary": "Semimetal batizado em homenagem à Alemanha, onde Clemens Winkler o descobriu em 1886 — 15 anos depois de Mendeleev prever sua existência e suas propriedades.",
+      "facts": [
+        "Brilha como metal, mas é quebradiço.",
+        "É extraído sobretudo de minérios de prata, cobre e chumbo.",
+        "O óxido de germânio entra em lentes de câmeras grande-angulares, e o germânio aparece em chips e em sensores de carros."
+      ]
+    },
+    "As": {
+      "pages": [160],
+      "summary": "Chamado de ‘rei dos venenos’: todas as suas formas, puras ou em compostos, são tóxicas para os animais.",
+      "facts": [
+        "Aquecido, não derrete: passa direto de sólido a gás.",
+        "Aparece em minerais de cores fortes, como o ouropigmento (amarelo) e o realgar (vermelho-alaranjado).",
+        "Pequenas quantidades endurecem o chumbo das baterias de carro."
+      ]
+    },
+    "Se": {
+      "pages": [172],
+      "summary": "O nome homenageia Selene, deusa grega da Lua. Tem duas formas principais: o selênio cinza, duro e com brilho metálico, e o vermelho, um pó macio.",
+      "facts": [
+        "É sensível à luz, por isso foi usado em fotocopiadoras e em células solares.",
+        "Seu uso mais comum é dar cor a vidros e cerâmicas.",
+        "A castanha-do-pará é muito rica em selênio, de que o corpo precisa em pequenas doses; um composto de selênio também trata a caspa em xampus."
+      ]
+    },
+    "Br": {
+      "pages": [184, 185],
+      "summary": "Um dos dois únicos elementos líquidos à temperatura ambiente (o outro é o mercúrio): um líquido vermelho-escuro que solta um vapor tóxico de cheiro forte. O nome vem do grego brômos, ‘mau cheiro’.",
+      "facts": [
+        "Sais de bromo estão dissolvidos na água do mar e em lagos salgadíssimos como o Mar Morto, de onde ele é extraído.",
+        "Compostos de bromo deixam tecidos à prova de fogo e já foram muito usados em extintores.",
+        "No século XIX, o brometo de potássio era receitado para ajudar a dormir, e brometos de prata foram a base dos filmes fotográficos."
+      ]
+    },
+    "Kr": {
+      "pages": [196],
+      "summary": "Gás nobre transparente e raro no ar, que brilha em branco-azulado quando atravessado por eletricidade. O nome vem do grego kryptós, ‘escondido’.",
+      "facts": [
+        "Quase não reage, mas com o flúor forma compostos — e misturas de criptônio e flúor são usadas em alguns lasers.",
+        "Sua luz branca e intensa é usada em flashes fotográficos.",
+        "William Ramsay, que descobriu o criptônio e outros gases nobres, ganhou o Prêmio Nobel de Química de 1904."
+      ]
+    },
+    "Rb": {
+      "pages": [32, 33],
+      "summary": "O nome vem do latim rubidius, ‘vermelho-escuro’, pela cor das linhas que ele emite na luz de uma chama. Em contato com a água, reage com violência, liberando hidrogênio e muito calor.",
+      "facts": [
+        "No ar pode pegar fogo, por isso é guardado em ampolas de vidro sem ar.",
+        "Não se concentra num mineral só: aparece espalhado em pequenas quantidades em vários, como a leucita e a polucita.",
+        "É usado em alguns relógios atômicos."
+      ]
+    },
+    "Sr": {
+      "pages": [46, 47],
+      "summary": "O nome vem de Strontian, vila da Escócia onde foi achada a estroncianita, o principal minério do elemento. Humphry Davy isolou o metal puro em 1808, usando eletricidade.",
+      "facts": [
+        "Seus compostos dão chama vermelho-carmim — é o vermelho dos fogos de artifício e dos sinalizadores.",
+        "Uma forma radioativa (isótopo) de estrôncio já foi usada para gerar eletricidade em boias e faróis isolados.",
+        "O óxido de estrôncio dá acabamento liso a esmaltes de cerâmica."
+      ]
+    },
+    "Y": {
+      "pages": [74, 75],
+      "summary": "As rochas trazidas da Lua pelas missões Apollo têm mais ítrio que as da Terra. O nome vem de Ytterby, vila sueca que batizou quatro elementos.",
+      "facts": [
+        "Foi descoberto num mineral em 1794 pelo químico finlandês Johan Gadolin, mas só foi isolado em 1828.",
+        "Nunca aparece puro: está em minerais como a monazita e a xenotima.",
+        "Compostos de ítrio são usados em LEDs, lasers e cerâmicas especiais."
+      ]
+    },
+    "Zr": {
+      "pages": [76],
+      "summary": "O nome vem do mineral zircão, palavra ligada ao persa e que lembra ‘cor de ouro’. O sueco Jöns Jacob Berzelius isolou o zircônio puro pela primeira vez, em 1824.",
+      "facts": [
+        "Hoje é usado sobretudo como dióxido de zircônio (zircônia), uma cerâmica dura de facas que quase não perdem o fio e de coroas dentárias.",
+        "A zircônia cúbica imita diamantes em joias.",
+        "Antigos flashes de câmera queimavam fios de zircônio para produzir o clarão."
+      ]
+    },
+    "Nb": {
+      "pages": [77],
+      "summary": "É tão parecido com o tântalo que os dois foram confundidos por muito tempo. Seu principal minério é a columbita.",
+      "facts": [
+        "Como não faz mal ao corpo, é usado em implantes, como marca-passos.",
+        "Ligas de nióbio aguentam calor extremo: o bocal do motor do módulo de comando da Apollo 15 era de nióbio.",
+        "Lentes de óculos finas e potentes usam compostos de nióbio."
+      ]
+    },
+    "Mo": {
+      "pages": [78, 79],
+      "summary": "Metal cinza-prateado com ponto de fusão altíssimo, cerca de 2 620 °C.",
+      "facts": [
+        "A molibdenita (sulfeto de molibdênio) em pó, misturada ao óleo, é um lubrificante que protege peças rápidas de motores.",
+        "Aços com molibdênio e cromo fazem quadros de bicicleta leves e rígidos.",
+        "Ligas de molibdênio que não enferrujam aparecem até em carros esportivos experimentais."
+      ]
+    },
+    "Tc": {
+      "pages": [79],
+      "summary": "Foi o primeiro elemento obtido artificialmente (1937) — o nome vem do grego technetós, ‘artificial’. Quase não existe na natureza: os átomos que a Terra tinha se desintegraram há muito tempo.",
+      "facts": [
+        "Hoje é obtido de resíduos de reatores nucleares e em geradores nos hospitais.",
+        "Uma forma radioativa de tecnécio, injetada no corpo, emite radiação por pouco tempo e permite fazer imagens de órgãos e ossos."
+      ]
+    },
+    "Ru": {
+      "pages": [80],
+      "summary": "Metal raro, obtido da pentlandita, um minério de níquel. O nome vem de Ruthenia, nome latino da Rússia.",
+      "facts": [
+        "Um pouco de rutênio deixa metais macios, como a platina e o paládio, muito mais duros — útil em contatos elétricos.",
+        "O dióxido de rutênio está em resistores e chips de computadores e outros aparelhos digitais.",
+        "Compostos de rutênio são usados em células solares de baixo custo, como as da fachada de um centro de convenções na Suíça."
+      ]
+    },
+    "Rh": {
+      "pages": [81],
+      "summary": "O nome vem do grego rhodon, ‘rosa’, pela cor rosada de um dos seus compostos.",
+      "facts": [
+        "O principal uso é nos catalisadores dos carros, que transformam gases poluentes em gases menos nocivos.",
+        "Duro e brilhante, reveste joias, espelhos e peças de microscópios contra a corrosão.",
+        "Fibras de vidro são fabricadas passando vidro derretido por placas com ródio, que aguentam o calor."
+      ]
+    },
+    "Pd": {
+      "pages": [82, 83],
+      "summary": "Metal precioso, dez vezes mais raro que a prata, brilhante e resistente à corrosão. Absorve hidrogênio como uma esponja absorve água — até centenas de vezes o próprio volume.",
+      "facts": [
+        "Seu principal uso é nos catalisadores dos carros.",
+        "Detectores de monóxido de carbono usam compostos de paládio que mudam de cor na presença do gás e disparam o alarme.",
+        "Às vezes aparece puro na natureza, mas em geral é separado de minérios de cobre e níquel."
+      ]
+    },
+    "Ag": {
+      "pages": [84, 85],
+      "summary": "O símbolo Ag vem do latim argentum, ‘branco brilhante’. Metal precioso: é o melhor condutor de eletricidade entre todos os elementos e um ótimo condutor de calor.",
+      "facts": [
+        "Valiosa e fácil de moldar, foi usada por séculos para fazer moedas e joias.",
+        "Escurece com o tempo porque reage com compostos de enxofre do ar, formando sulfeto de prata, que é preto.",
+        "O iodeto de prata em pó é lançado nas nuvens: gotículas de água se formam em volta dele e podem provocar chuva."
+      ]
+    },
+    "Cd": {
+      "pages": [86],
+      "summary": "Metal muito tóxico, que pode causar câncer. É obtido sobretudo como subproduto da extração do zinco, com o qual aparece misturado.",
+      "facts": [
+        "Camadas de cádmio e níquel geram eletricidade nas antigas pilhas recarregáveis de níquel-cádmio.",
+        "Parafusos revestidos de cádmio não enferrujam.",
+        "Um composto de cádmio e enxofre é usado em sensores de luz de circuitos eletrônicos e em tintas amarelas e vermelhas."
+      ]
+    },
+    "In": {
+      "pages": [137],
+      "summary": "O nome vem do índigo (anil), a cor da luz que seus átomos emitem quando recebem energia elétrica. É um metal tão macio que pode ser riscado com a unha.",
+      "facts": [
+        "O óxido de índio e estanho é transparente e conduz eletricidade: forma a grade invisível das telas sensíveis ao toque.",
+        "Vidros revestidos de óxido de índio refletem calor, mas deixam a luz passar — como nos óculos de soldador.",
+        "Vem principalmente de minérios de zinco, como a esfalerita."
+      ]
+    },
+    "Sn": {
+      "pages": [149],
+      "summary": "Um dos primeiros metais usados pela humanidade: há uns 5 000 anos já se misturava estanho com cobre para fazer bronze, uma liga metálica mais dura que os dois metais puros.",
+      "facts": [
+        "Latas de alimentos são de aço revestido com uma camada fina de estanho, que impede a corrosão.",
+        "Os grandes tubos de órgãos de igreja costumam ser de ligas de estanho e chumbo; o peltre, das estatuetas e canecas, é quase todo estanho.",
+        "Por muito tempo, o estanho e o chumbo foram considerados formas do mesmo metal."
+      ]
+    },
+    "Sb": {
+      "pages": [161],
+      "summary": "O símbolo Sb vem de stibium, nome latino do kohl, um pó escuro de maquiagem para os olhos usado desde o antigo Egito.",
+      "facts": [
+        "Quase sempre aparece combinado, como no mineral estibina (sulfeto de antimônio).",
+        "Endurece o chumbo — por isso foi usado nos tipos metálicos das antigas prensas de impressão.",
+        "Fósforos de segurança com antimônio na cabeça queimam com mais brilho."
+      ]
+    },
+    "Te": {
+      "pages": [173],
+      "summary": "Um dos dez elementos mais raros da Terra. O nome vem do latim tellus, ‘Terra’.",
+      "facts": [
+        "Costuma aparecer combinado com metais, como no minério melonita (com níquel), e junto de ouro e prata.",
+        "É obtido como subproduto do refino do cobre e do chumbo.",
+        "Grandes usinas solares, como a Topaz, na Califórnia, usam painéis feitos com telúrio."
+      ]
+    },
+    "I": {
+      "pages": [186],
+      "summary": "Sólido preto-arroxeado e brilhante que, aquecido, passa facilmente a um vapor violeta — o nome vem do grego iodes, ‘violeta’.",
+      "facts": [
+        "Foi descoberto em algas marinhas, e muitos seres do mar são ricos em iodo.",
+        "O corpo precisa de um pouco de iodo para produzir a tiroxina, hormônio da tireoide que ajuda no crescimento.",
+        "Soluções de iodo desinfetam feridas, e compostos de iodo entram em tintas de impressão e corantes de alimentos."
+      ]
+    },
+    "Xe": {
+      "pages": [197],
+      "summary": "Gás nobre raríssimo: há só um átomo de xenônio para cada 10 milhões de partículas do ar. O nome vem do grego xénos, ‘estranho’.",
+      "facts": [
+        "Com eletricidade e sob alta pressão, brilha muito forte — é usado em faróis de carro e projetores de cinema.",
+        "É inofensivo de respirar e pode ser usado como anestésico.",
+        "Motores de algumas sondas espaciais lançam xenônio eletrizado em alta velocidade para empurrar a nave."
+      ]
+    },
+    "Cs": {
+      "pages": [34],
+      "summary": "Um dos metais mais reativos que existem: pega fogo no ar e reage de forma explosiva com a água, por isso é guardado em ampolas de vidro sem ar.",
+      "facts": [
+        "Foi descoberto em 1860 por Robert Bunsen e Gustav Kirchhoff, que viram uma linha azul nova no espectro da luz da chama de uma água mineral — o nome vem do latim caesius, ‘azul-celeste’.",
+        "Relógios atômicos de césio medem o tempo com precisão de bilionésimos de segundo.",
+        "Vem principalmente do mineral polucita."
+      ]
+    },
+    "Ba": {
+      "pages": [48, 49],
+      "summary": "O nome vem do grego barys, ‘pesado’, porque o bário e seus minerais são densos. Humphry Davy o isolou em 1808, a partir de um óxido de bário.",
+      "facts": [
+        "O sulfato de bário é tão insolúvel que pode ser engolido com segurança antes de uma radiografia: ele aparece branco e contorna o estômago e o intestino. Já os sais solúveis de bário são tóxicos.",
+        "Compostos de bário dão a cor verde dos fogos de artifício.",
+        "No deserto, a barita misturada à areia forma cristais em forma de pétalas, as ‘rosas do deserto’."
+      ]
+    },
+    "La": {
+      "pages": [110],
+      "summary": "O nome significa ‘estar escondido’, em grego, mas ele é mais abundante que muitos metais — cerca de três vezes mais comum que o chumbo.",
+      "facts": [
+        "Foi descoberto em 1839 no mineral cerita, mas só quase 100 anos depois foi obtido puro; hoje vem sobretudo da bastnasita.",
+        "O óxido de lantânio melhora o vidro de lentes de câmeras.",
+        "O carbonato de lantânio é um remédio para pacientes com doença nos rins."
+      ]
+    },
+    "Ce": {
+      "pages": [111],
+      "summary": "O primeiro lantanídeo descoberto (1803). Homenageia Ceres, hoje considerado planeta anão, descoberto dois anos antes.",
+      "facts": [
+        "Seu principal uso é em substâncias que emitem luz colorida nas telas e lâmpadas.",
+        "O sulfeto de cério é um pigmento vermelho.",
+        "O metal puro escurece em contato com o ar."
+      ]
+    },
+    "Pr": {
+      "pages": [111],
+      "summary": "O nome vem em parte do grego prasinos, ‘verde’: o metal, cinzento, forma aos poucos uma camada verde em contato com o ar.",
+      "facts": [
+        "É guardado em óleo mineral para não reagir com o oxigênio.",
+        "Compostos de praseodímio dão cor amarela a vidros e cerâmicas e verde a pedras artificiais, como a zircônia cúbica.",
+        "Deixa mais fortes os ímãs que o contêm."
+      ]
+    },
+    "Nd": {
+      "pages": [112],
+      "summary": "Descoberto em 1885 pelo químico austríaco Carl Auer von Welsbach; no começo, servia para colorir vidro.",
+      "facts": [
+        "Ímãs de neodímio são fortíssimos: levantam milhares de vezes a própria massa e estão em fones, motores elétricos e discos rígidos.",
+        "Lasers com neodímio são usados em cirurgias nos olhos.",
+        "O metal puro escurece ao reagir com o ar."
+      ]
+    },
+    "Pm": {
+      "pages": [112],
+      "summary": "O lantanídeo mais raro: todos os seus isótopos são radioativos, e o promécio que havia nas rochas da Terra já se desintegrou.",
+      "facts": [
+        "O nome homenageia Prometeu, o titã que roubou o fogo dos deuses.",
+        "Sua radioatividade pode ser convertida em eletricidade em pequenas baterias nucleares.",
+        "Já foi usado em tintas que brilham no escuro."
+      ]
+    },
+    "Sm": {
+      "pages": [113],
+      "summary": "O nome vem do mineral samarskita, de onde foi purificado pela primeira vez. Hoje a principal fonte é a monazita, outro mineral rico em lantanídeos.",
+      "facts": [
+        "Misturado com cobalto, forma ímãs permanentes usados nos captadores de guitarras elétricas."
+      ]
+    },
+    "Eu": {
+      "pages": [113],
+      "summary": "Batizado em homenagem à Europa — mas a maior parte vem dos EUA e da China, onde se minera a bastnasita.",
+      "facts": [
+        "O óxido de európio brilha em vermelho sob luz ultravioleta e protege cédulas de euro contra falsificação.",
+        "O metal amarelado costuma ter manchas escuras de óxido."
+      ]
+    },
+    "Gd": {
+      "pages": [114],
+      "summary": "Ele e seu mineral, a gadolinita, homenageiam o químico finlandês Johan Gadolin.",
+      "facts": [
+        "Compostos de gadolínio injetados no sangue servem de ‘contraste’ e deixam as imagens de ressonância magnética mais nítidas.",
+        "Também é usado em eletrônicos e em aços resistentes à corrosão."
+      ]
+    },
+    "Tb": {
+      "pages": [114],
+      "summary": "Mais um elemento com nome da vila sueca de Ytterby. Metal prateado, macio a ponto de ser cortado com faca, obtido da monazita.",
+      "facts": [
+        "Compostos de térbio revestem lâmpadas de mercúrio e transformam a luz ultravioleta em luz visível amarelada.",
+        "Ligas com térbio fazem ímãs que transformam uma janela ou uma mesa em alto-falante."
+      ]
+    },
+    "Dy": {
+      "pages": [115],
+      "summary": "Reage com o ar e a água mais facilmente que a maioria dos lantanídeos. Foi descoberto em 1886, mas só foi obtido puro nos anos 1950 — o nome vem do grego dysprositos, ‘difícil de obter’.",
+      "facts": [
+        "Junto com o neodímio, faz ímãs de motores de carros híbridos, turbinas eólicas e geradores."
+      ]
+    },
+    "Ho": {
+      "pages": [115],
+      "summary": "O químico sueco Per Teodor Cleve deu ao elemento o nome de Estocolmo (Holmia, em latim).",
+      "facts": [
+        "Pode produzir campos magnéticos fortíssimos e é usado em ímãs.",
+        "Compostos de hólmio servem em lasers e dão cor a vidros e a pedras artificiais, como a zircônia cúbica."
+      ]
+    },
+    "Er": {
+      "pages": [116],
+      "summary": "Como o térbio e o itérbio, deve o nome à vila sueca de Ytterby, perto da qual foi descoberto. É obtido da monazita.",
+      "facts": [
+        "Muitos compostos de érbio são cor-de-rosa e colorem cerâmicas e vidros.",
+        "Vidros com érbio protegem os olhos dos soldadores do calor e da luz forte."
+      ]
+    },
+    "Tm": {
+      "pages": [116],
+      "summary": "O menos abundante dos lantanídeos naturais. O nome vem de Thule, nome antigo das terras do extremo norte.",
+      "facts": [
+        "Lasers de túlio são usados por cirurgiões para remover tecidos danificados.",
+        "Uma forma radioativa de túlio emite raios X e é usada em aparelhos portáteis de raio X."
+      ]
+    },
+    "Yb": {
+      "pages": [117],
+      "summary": "O quarto elemento com nome de Ytterby. É mais reativo que a maioria dos lantanídeos e é guardado em recipientes fechados.",
+      "facts": [
+        "Brilhante e maleável, pode ser martelado em lâminas finas.",
+        "Lasers de itérbio cortam metais e plásticos."
+      ]
+    },
+    "Lu": {
+      "pages": [117],
+      "summary": "O último dos lantanídeos naturais a ser descoberto (1907), e o mais duro e denso deles. O nome vem de Lutetia, nome latino de Paris.",
+      "facts": [
+        "É raro e tem poucos usos; um deles é como catalisador em refinarias, para quebrar o petróleo em combustíveis como gasolina e diesel."
+      ]
+    },
+    "Hf": {
+      "pages": [87],
+      "summary": "O nome vem de Hafnia, nome latino de Copenhague. Foi difícil separá-lo do zircônio: os dois aparecem juntos no zircão e têm átomos quase do mesmo tamanho.",
+      "facts": [
+        "Resiste à corrosão no ar.",
+        "Cortadores a plasma usam háfnio para perfurar metais com um jato muito quente.",
+        "É usado em componentes minúsculos de chips, de poucos milionésimos de milímetro."
+      ]
+    },
+    "Ta": {
+      "pages": [88],
+      "summary": "Metal duro batizado em homenagem a Tântalo, personagem da mitologia grega castigado pelos deuses. Quase não reage com o ar e permanece brilhante.",
+      "facts": [
+        "Como não faz mal ao corpo, é usado em articulações artificiais e outros implantes.",
+        "O pó de tântalo forma os capacitores minúsculos de celulares e computadores, que armazenam carga elétrica.",
+        "Também faz pás de turbinas que não se corroem."
+      ]
+    },
+    "W": {
+      "pages": [89],
+      "summary": "O metal com o ponto de fusão mais alto: só derrete acima de 3 400 °C. O nome vem do sueco tung sten, ‘pedra pesada’; o símbolo W vem de wolfram, outro nome do elemento.",
+      "facts": [
+        "Por aguentar tanto calor, formava o filamento das lâmpadas incandescentes.",
+        "O carbeto de tungstênio, duríssimo, reveste brocas e ferramentas de corte.",
+        "Pigmentos de tungstênio já eram usados em porcelanas chinesas há cerca de 350 anos."
+      ]
+    },
+    "Re": {
+      "pages": [90],
+      "summary": "Um dos elementos mais raros da crosta: só um átomo em cada bilhão é de rênio. Descoberto na Alemanha em 1925 e batizado em homenagem ao rio Reno, foi o último elemento estável a ser encontrado.",
+      "facts": [
+        "Tem um dos pontos de fusão e de ebulição mais altos de todos os elementos, só abaixo do tungstênio e do carbono na fusão.",
+        "Ligas com rênio aguentam o calor dos motores a jato de caças como o F-22.",
+        "Tubos de raios X usam ligas de rênio, que produzem os raios quando atingidas por um feixe de elétrons."
+      ]
+    },
+    "Os": {
+      "pages": [91],
+      "summary": "O elemento natural mais denso: um copo de 250 mL cheio de ósmio pesaria mais de 5 kg.",
+      "facts": [
+        "Puro, reage com o oxigênio do ar e forma um óxido venenoso — por isso é usado em ligas.",
+        "Ligas duríssimas de ósmio formam as pontas de canetas-tinteiro e as antigas agulhas de toca-discos.",
+        "Óxidos de ósmio tingem células para o microscópio e revelam impressões digitais."
+      ]
+    },
+    "Ir": {
+      "pages": [92, 93],
+      "summary": "O segundo metal mais denso, depois do ósmio, e um dos mais resistentes à corrosão. Aparece puro na natureza e em minérios de níquel e cobre.",
+      "facts": [
+        "No mundo todo há uma camada fina de argila rica em irídio, de 66 milhões de anos; acredita-se que veio da poeira do impacto do grande meteorito daquela época.",
+        "Velas de ignição com irídio aguentam as altas temperaturas das faíscas nos motores.",
+        "O espelho do observatório espacial de raios X Chandra, da NASA, é revestido de irídio."
+      ]
+    },
+    "Pt": {
+      "pages": [94, 95],
+      "summary": "Metal precioso e denso que quase não reage, mesmo em altas temperaturas — o que torna difícil extraí-lo dos minérios. Na América do Sul, foi chamado de platina, ‘pequena prata’.",
+      "facts": [
+        "Já aparece num estojo egípcio do século VII a.C.",
+        "Joias de platina não perdem o brilho; como não faz mal ao corpo, é usada em stents e coroas dentárias.",
+        "Compostos de platina são remédios contra o câncer, e a platina também está nos catalisadores dos carros."
+      ]
+    },
+    "Au": {
+      "pages": [96, 97],
+      "summary": "Talvez o primeiro metal a ser identificado: há mais de 6 000 anos já se faziam enfeites de ouro, muito antes de se saber purificar cobre ou ferro.",
+      "facts": [
+        "Denso e pouco reativo, aparece puro na natureza, em pepitas ou em grãozinhos presos nas rochas; quase não forma compostos (a calaverita, com telúrio, é uma exceção).",
+        "Uma camada finíssima de ouro no visor dos astronautas protege do calor do Sol.",
+        "A máscara mortuária de Tutancâmon continua brilhante depois de mais de 3 000 anos."
+      ]
+    },
+    "Hg": {
+      "pages": [100, 101],
+      "summary": "O único metal líquido à temperatura ambiente. Os romanos aqueciam o cinábrio para obtê-lo e o chamavam de hydrargyrum, ‘água de prata’ — daí o símbolo Hg.",
+      "facts": [
+        "Também foi chamado de ‘prata viva’, pela rapidez com que escorre.",
+        "Barômetros e termômetros de mercúrio foram usados por séculos; hoje são substituídos porque o mercúrio é tóxico.",
+        "Já houve pílulas de mercúrio contra dor de dente e prisão de ventre — um tratamento perigoso."
+      ]
+    },
+    "Tl": {
+      "pages": [138, 139],
+      "summary": "O nome vem do grego thallos, ‘broto verde’, pela linha verde brilhante que aparece no espectro da sua chama. Dois químicos o descobriram de forma independente, na década de 1860.",
+      "facts": [
+        "É muito tóxico: até os anos 1970, sais de tálio eram usados como veneno contra formigas.",
+        "Macio e reativo, é guardado em ampolas fechadas.",
+        "Um composto de tálio injetado no sangue permite fazer exames de imagem da circulação e do coração."
+      ]
+    },
+    "Pb": {
+      "pages": [150, 151],
+      "summary": "O símbolo Pb vem do latim plumbum — a mesma origem de plumber (encanador, em inglês), porque os romanos faziam canos de chumbo.",
+      "facts": [
+        "Seu principal minério é a galena (sulfeto de chumbo).",
+        "Já foi comum em tintas, tinturas de cabelo e inseticidas, mas saiu de uso quando se descobriu que é venenoso.",
+        "Ainda é usado em baterias de carro, pesos de mergulho e placas que vedam telhados."
+      ]
+    },
+    "Bi": {
+      "pages": [162],
+      "summary": "Metal pesado e quebradiço. Na crosta terrestre, é cerca de duas vezes mais abundante que o ouro.",
+      "facts": [
+        "Os incas o adicionavam ao bronze das armas para endurecê-lo, e os antigos egípcios usavam um mineral de bismuto para dar brilho a cosméticos.",
+        "Ao contrário da maioria das substâncias, o bismuto líquido é mais denso que o sólido.",
+        "Um composto de bismuto é remédio para mal-estar no estômago; outros dão brilho perolado a esmaltes de unha."
+      ]
+    },
+    "Po": {
+      "pages": [174],
+      "summary": "Muito radioativo: um grama de polônio esquenta sozinho a centenas de graus, só com a energia da radiação que emite.",
+      "facts": [
+        "É raro na natureza e normalmente é produzido em reatores nucleares.",
+        "O calor do polônio manteve aquecidos os robôs soviéticos Lunokhod na Lua, nos anos 1970.",
+        "Pequenas fontes de polônio, em escovas especiais, eliminam a eletricidade estática de lentes e discos."
+      ]
+    },
+    "At": {
+      "pages": [187],
+      "summary": "Um dos elementos naturais mais raros: forma-se em quantidades minúsculas na desintegração de elementos mais pesados, em minérios de urânio, e em poucas horas se transforma em outros elementos, como o bismuto.",
+      "facts": [
+        "O físico italiano Emilio Segrè participou da primeira obtenção de astato, num acelerador de partículas, em 1940.",
+        "O nome vem do grego astatos, ‘instável’."
+      ]
+    },
+    "Rn": {
+      "pages": [198],
+      "summary": "O único gás nobre natural radioativo. Forma-se quando o urânio e outros metais radioativos das rochas se desintegram, e escapa delas para o ar.",
+      "facts": [
+        "Respirar muito radônio aumenta o risco de câncer de pulmão; em regiões onde ele é abundante, casas são testadas com kits de medição.",
+        "Metade dos átomos de uma amostra de radônio-222, o isótopo mais comum, vira outros elementos em só 3,8 dias — essa é a sua meia-vida.",
+        "Aparece em maior quantidade perto de fontes termais e lamas vulcânicas."
+      ]
+    },
+    "Fr": {
+      "pages": [35],
+      "summary": "Descoberto em 1939 pela química francesa Marguerite Perey, ao estudar como o actínio se desintegra — e batizado em homenagem à França.",
+      "facts": [
+        "É tão instável que, segundo estimativas, há só cerca de 30 g de frâncio em todas as rochas da Terra a cada momento.",
+        "A maior amostra já produzida tinha só uns 300 mil átomos."
+      ]
+    },
+    "Ra": {
+      "pages": [50, 51],
+      "summary": "O alcalino-terroso mais raro. Marie e Pierre Curie o descobriram em 1898, ao notar que minérios de urânio eram mais radioativos do que o urânio sozinho explicaria.",
+      "facts": [
+        "Uma tonelada de minério tem menos de um grama de rádio.",
+        "No começo do século XX, tinta de rádio fazia os ponteiros de relógios brilharem no escuro, e até cosméticos e ‘águas radioativas’ eram vendidos — até se descobrir o mal que a radiação causa.",
+        "Ao se desintegrar, forma o radônio, um gás nobre radioativo."
+      ]
+    },
+    "Ac": {
+      "pages": [120],
+      "summary": "Metal radioativo raro, formado pela desintegração do urânio e encontrado em traços nos seus minérios. Deu nome à série dos actinídeos.",
+      "facts": [
+        "Seus átomos instáveis se transformam em outros elementos, como frâncio e radônio.",
+        "Alguns isótopos de actínio são usados na radioterapia contra o câncer.",
+        "Sondas com actínio medem a quantidade de água no solo."
+      ]
+    },
+    "Th": {
+      "pages": [120],
+      "summary": "O metal radioativo natural mais comum. O nome homenageia Thor, o deus nórdico do trovão.",
+      "facts": [
+        "Pode sofrer fissão nuclear; cientistas estudam reatores a tório para gerar eletricidade.",
+        "Revestimentos de tório liberam elétrons com facilidade e foram usados em válvulas eletrônicas."
+      ]
+    },
+    "Pa": {
+      "pages": [121],
+      "summary": "Forma-se quando o urânio se desintegra e logo depois se transforma em actínio — daí o nome, ‘antes do actínio’.",
+      "facts": [
+        "Pequenas quantidades em areias e lamas antigas ajudam geólogos a calcular a idade desses sedimentos."
+      ]
+    },
+    "U": {
+      "pages": [122],
+      "summary": "Batizado em homenagem ao planeta Urano, foi o primeiro elemento em que se descobriu a radioatividade.",
+      "facts": [
+        "O urânio-235 é o combustível dos reatores nucleares: seus núcleos se partem (fissão) liberando muita energia.",
+        "No começo do século XX, vidros e esmaltes com urânio brilhavam em verde sob luz ultravioleta — até se perceber que o metal é nocivo.",
+        "O principal minério é a uraninita, rica em dióxido de urânio."
+      ]
+    },
+    "Np": {
+      "pages": [122],
+      "summary": "Vizinho do urânio na tabela, foi batizado em homenagem a Netuno, o planeta depois de Urano. Foi o primeiro elemento transurânico identificado, em 1940, com a ajuda de um cíclotron em Berkeley.",
+      "facts": [
+        "Existe em traços em minérios radioativos e também se forma em explosões e reatores nucleares.",
+        "Edwin McMillan e Glenn Seaborg ganharam o Prêmio Nobel de Química de 1951 pelos trabalhos com os elementos além do urânio."
+      ]
+    },
+    "Pu": {
+      "pages": [123],
+      "summary": "Descoberto em 1940, durante o desenvolvimento das bombas nucleares da Segunda Guerra; o nome segue a ordem dos planetas: Urano, Netuno, Plutão.",
+      "facts": [
+        "Quase não existe na natureza: é produzido em reatores.",
+        "O calor da radioatividade do plutônio gera a eletricidade do jipe-robô Curiosity, em Marte.",
+        "Baterias de plutônio alimentaram alguns dos primeiros marca-passos, nos anos 1970."
+      ]
+    },
+    "Am": {
+      "pages": [123],
+      "summary": "Elemento artificial produzido em reatores nucleares, quando átomos de urânio ou plutônio são bombardeados com nêutrons. O nome homenageia as Américas.",
+      "facts": [
+        "É o elemento radioativo mais comum dentro de casa: está nos detectores de fumaça, em quantidade minúscula.",
+        "Sua radiação faz o ar dentro do detector conduzir eletricidade; quando a fumaça entra, a corrente cai e o alarme dispara."
+      ]
+    },
+    "Cm": {
+      "pages": [124],
+      "summary": "Metal prateado e radioativo que brilha num tom vermelho-arroxeado no escuro. Foi descoberto pela equipe de Glenn Seaborg e homenageia Marie e Pierre Curie.",
+      "facts": [
+        "Sondas espaciais, como o módulo Philae, que pousou num cometa, usaram instrumentos com cúrio para analisar o solo."
+      ]
+    },
+    "Bk": {
+      "pages": [124],
+      "summary": "Batizado em homenagem à cidade de Berkeley, na Califórnia, onde foi criado em 1949.",
+      "facts": [
+        "Não tem uso fora da pesquisa: serve para produzir elementos mais pesados, como o tenesso.",
+        "Glenn Seaborg, da equipe que o criou, ajudou a desenvolver a bomba atômica, mas se opôs a usá-la na guerra."
+      ]
+    },
+    "Cf": {
+      "pages": [125],
+      "summary": "Batizado em homenagem ao estado da Califórnia. Não existe na natureza: é produzido artificialmente.",
+      "facts": [
+        "Um isótopo de califórnio emite muitos nêutrons e é usado em aparelhos que procuram água no subsolo.",
+        "Também é usado no tratamento de alguns tipos de câncer."
+      ]
+    },
+    "Es": {
+      "pages": [125],
+      "summary": "Descoberto nos resíduos do primeiro teste de bomba de hidrogênio, em 1952, e batizado em homenagem a Albert Einstein.",
+      "facts": [
+        "Na explosão, núcleos de urânio capturaram muitos nêutrons de uma vez e viraram núcleos bem mais pesados, entre eles o einstênio.",
+        "Só se produzem alguns miligramas por ano, usados para fabricar elementos mais pesados, como o mendelévio."
+      ]
+    },
+    "Fm": {
+      "pages": [126],
+      "summary": "Batizado em homenagem ao físico italiano Enrico Fermi, que construiu o primeiro reator nuclear, em 1942.",
+      "facts": [
+        "Foi identificado nos resíduos de um teste de bomba nuclear no início dos anos 1950.",
+        "Fermi é chamado por alguns de ‘pai da era atômica’."
+      ]
+    },
+    "Md": {
+      "pages": [126],
+      "summary": "Homenageia Dmitri Mendeleev, o químico russo que organizou a tabela periódica, em 1869.",
+      "facts": [
+        "É produzido em quantidades minúsculas, disparando núcleos de hélio contra átomos de einstênio num acelerador de partículas.",
+        "Mendeleev deixou espaços vazios na tabela para elementos ainda desconhecidos e previu as propriedades deles — como as do germânio."
+      ]
+    },
+    "No": {
+      "pages": [127],
+      "summary": "Homenageia Alfred Nobel, o químico sueco que criou o Prêmio Nobel.",
+      "facts": [
+        "Foi produzido disparando núcleos de carbono contra átomos de cúrio num acelerador; os átomos formados se desintegram em minutos."
+      ]
+    },
+    "Lr": {
+      "pages": [127],
+      "summary": "Homenageia o físico americano Ernest Lawrence, que inventou o cíclotron, um acelerador que faz partículas girarem em círculos cada vez mais rápido.",
+      "facts": [
+        "Foi produzido disparando núcleos de boro contra átomos de califórnio, no laboratório de Berkeley fundado por Lawrence."
+      ]
+    },
+    "Rf": {
+      "pages": [102],
+      "summary": "O primeiro elemento ‘superpesado’ (com 104 prótons ou mais). Homenageia Ernest Rutherford, que em 1911 propôs que o átomo tem um núcleo.",
+      "facts": [
+        "Foi criado nos anos 1960, em aceleradores de partículas."
+      ]
+    },
+    "Db": {
+      "pages": [102],
+      "summary": "Homenageia Dubna, cidade russa onde seus primeiros átomos foram criados, em 1968; uma equipe americana liderada por Albert Ghiorso o produziu na mesma época.",
+      "facts": [
+        "A disputa sobre a descoberta fez os cientistas levarem quase 30 anos para escolher o nome.",
+        "Albert Ghiorso participou da descoberta de 12 elementos."
+      ]
+    },
+    "Sg": {
+      "pages": [103],
+      "summary": "Homenageia Glenn Seaborg, químico americano que participou da descoberta de vários elementos além do urânio.",
+      "facts": [
+        "Foi obtido em 1974 num acelerador do Laboratório Lawrence Berkeley.",
+        "Seus átomos se desintegram em minutos, por isso se sabe pouco sobre ele."
+      ]
+    },
+    "Bh": {
+      "pages": [104],
+      "summary": "Homenageia o físico dinamarquês Niels Bohr, autor do modelo de átomo com elétrons em camadas.",
+      "facts": [
+        "Foi produzido disparando átomos de cromo contra átomos de bismuto num acelerador.",
+        "No isótopo de bóhrio mais duradouro medido, metade da amostra se desintegra em cerca de um minuto."
+      ]
+    },
+    "Hs": {
+      "pages": [104],
+      "summary": "Homenageia o estado alemão de Hesse, onde fica o centro de pesquisa em Darmstadt que o criou, em 1984, numa equipe liderada por Peter Armbruster.",
+      "facts": [
+        "Muito radioativo: a maioria dos átomos se desintegra em segundos, e nunca se produziu o bastante para estudá-lo em detalhe."
+      ]
+    },
+    "Mt": {
+      "pages": [105],
+      "summary": "Homenageia a física austríaca Lise Meitner, que ajudou a explicar a fissão nuclear.",
+      "facts": [
+        "Segundo previsões, pode ser o elemento mais denso de todos — mas seus átomos duram só segundos."
+      ]
+    },
+    "Ds": {
+      "pages": [106],
+      "summary": "Homenageia a cidade alemã de Darmstadt, sede do instituto onde foi criado, em 1994, por uma equipe liderada por Sigurd Hofmann.",
+      "facts": [
+        "Foi produzido lançando átomos de níquel contra átomos de chumbo num acelerador."
+      ]
+    },
+    "Rg": {
+      "pages": [106],
+      "summary": "Homenageia Wilhelm Röntgen, o cientista alemão que descobriu os raios X em 1895.",
+      "facts": [
+        "Fica abaixo do ouro e da prata na tabela e deve se parecer com esses metais preciosos — mas seus átomos duram segundos, e isso ainda não foi confirmado."
+      ]
+    },
+    "Cn": {
+      "pages": [107],
+      "summary": "Homenageia Nicolau Copérnico, o astrônomo polonês que propôs que a Terra gira em torno do Sol.",
+      "facts": [
+        "É criado em aceleradores lançando átomos de zinco contra átomos de chumbo; só alguns átomos foram produzidos.",
+        "Alguns cientistas acham que pode ser um metal gasoso à temperatura ambiente."
+      ]
+    },
+    "Nh": {
+      "pages": [139],
+      "summary": "O nome vem de Nihon, ‘Japão’ em japonês. Em 2004, Kosuke Morita e sua equipe no centro de pesquisas RIKEN o criaram fundindo átomos de bismuto e zinco.",
+      "facts": [
+        "Também apareceu como produto da desintegração do moscóvio (elemento 115)."
+      ]
+    },
+    "Fl": {
+      "pages": [151],
+      "summary": "Homenageia o físico russo Georgy Flerov, fundador do Instituto Conjunto de Pesquisa Nuclear de Dubna, onde foi criado.",
+      "facts": [
+        "Foi produzido lançando átomos de cálcio contra átomos de plutônio; é muito radioativo e seus átomos duram segundos."
+      ]
+    },
+    "Mc": {
+      "pages": [163],
+      "summary": "Homenageia Moscou, a capital da Rússia. Foi criado em Dubna por uma equipe liderada por Yuri Oganessian, lançando cálcio contra amerício.",
+      "facts": [
+        "Só cerca de cem átomos foram produzidos, e eles se desintegram em frações de segundo; acredita-se que seja um metal denso."
+      ]
+    },
+    "Lv": {
+      "pages": [175],
+      "summary": "Homenageia o Laboratório Nacional Lawrence Livermore, nos EUA, que forneceu material para a equipe de Dubna, na Rússia, que o criou em 2000.",
+      "facts": [
+        "Foi produzido lançando cálcio contra cúrio; os primeiros átomos se desintegraram em frações de segundo."
+      ]
+    },
+    "Ts": {
+      "pages": [187],
+      "summary": "Um dos elementos mais novos, criado em Dubna por volta de 2010. Homenageia o estado do Tennessee, nos EUA, onde fica o Laboratório Nacional de Oak Ridge.",
+      "facts": [
+        "Está na coluna dos halogênios, mas previsões indicam que se comportaria mais como um semimetal.",
+        "Só alguns átomos foram feitos."
+      ]
+    },
+    "Og": {
+      "pages": [199],
+      "summary": "O elemento mais pesado já criado. Homenageia Yuri Oganessian, líder da equipe russo-americana que o produziu em Dubna lançando cálcio contra califórnio.",
+      "facts": [
+        "Está na coluna dos gases nobres, mas cálculos sugerem que seria sólido à temperatura ambiente.",
+        "Só alguns átomos foram feitos, então suas propriedades são quase todas previsões."
+      ]
+    }
+  }
+}

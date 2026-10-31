@@ -10,8 +10,9 @@ curados e mais 81 gerados a partir de íons, 41 reações curadas, 17 "não-rea�
 **motor de regras** que monta e balanceia sozinho cerca de 750 reações a partir de regras gerais
 (solubilidade, ácido-base, série eletroquímica, combustão, decomposição), com explicação, fonte e
 segurança. Há também uma calculadora de estequiometria (massa, mol, litros de gás, solução em
-mol/L e rendimento), 13 níveis de progressão e um **glossário** com mais de 130 termos: nos textos, as palavras de química ficam sublinhadas e mostram a
-definição ao toque.
+mol/L e rendimento), 13 níveis de progressão e um **glossário** com mais de 140 termos: nos textos, as palavras de química ficam sublinhadas e mostram a
+definição ao toque. Na tabela periódica, cada um dos 118 elementos tem **curiosidades** (leitura
+complementar, com a página do livro da DK).
 
 ## Como rodar
 
@@ -75,6 +76,7 @@ data/                       TODO o conteúdo (JSON) — dá para editar sem mexe
   rules.json                textos, fontes e segurança das regras da Fase 2
   glossary.json             glossário (definição, exemplo, relacionados, página do glossário do livro)
   thermo.json               ΔfH°, ΔfG° e S° a 298 K por espécie e estado (Fase 3A), com livro e página
+  element-facts.json        curiosidades dos 118 elementos (leitura complementar, livro da DK, com página)
   items.json                ferramentas (calor, faísca, luz, eletricidade, catalisador)
   reactivity-series.json    série de reatividade (E°), usada pelas regras
   progression.json          níveis, desbloqueios e objetivos
@@ -167,6 +169,13 @@ Em `aliases` vão as formas que aparecem nos textos (plural, gênero); em `exclu
 que a palavra não tem sentido químico. Nenhuma forma pode pertencer a dois termos (o teste
 avisa). Os links nos textos são automáticos: não é preciso marcar nada.
 
+**Curiosidade de elemento**: em `data/element-facts.json`, pelo símbolo: `summary` (descrição
+curta), `facts` (1 a 4 curiosidades) e `pages` (páginas do livro da DK). Escreva com suas
+palavras — nada de tradução ou cópia do livro. O livro é de divulgação: quando ele divergir de um
+livro-texto ou do dataset dos elementos, vale o livro-texto, e a correção vai para
+`_meta.corrections`. Os testes conferem cobertura, páginas e algumas afirmações numéricas contra
+`data/source/`.
+
 **Novo elemento jogável**: crie a forma elementar em `substances.json` (campo `elementOf`) e
 desbloqueie-o em algum nível de `progression.json`. Os dados físicos já estão em `elements.json`.
 
@@ -210,6 +219,18 @@ dissolvidos sem linha própria são a soma dos íons. Quando falta o dado de uma
 (pega colunas trocadas), combustões calculadas contra as entalpias de combustão medidas, exemplos
 dos livros (metano −890 kJ, etanol −1368 kJ) e que nenhuma reação marcada como exotérmica ou
 endotérmica — curada ou gerada pelas regras — tenha o sinal de ΔH° trocado.
+
+## Curiosidades dos elementos
+
+Ao clicar num elemento da tabela periódica, o painel mostra uma descrição curta e algumas
+curiosidades (origem do nome, descoberta, onde aparece, para que serve), escritas para o jogo a
+partir da leitura de *The Periodic Table Book* (DK, 2017) e citadas com a página. É **leitura
+complementar**: o livro não é fonte de nenhuma reação nem dado do jogo. Onde ele erra ou simplifica
+demais (ex.: data de descoberta do hélio, "o argônio não reage com nada", carbonato de cálcio
+chamado de álcali, meia-vida do bismuto), o texto foi corrigido e a correção está registrada em
+`data/element-facts.json` (`_meta.corrections`). Termos novos que as curiosidades usam
+(radioatividade, meia-vida, fissão nuclear, minério, lantanídeo, actinídeo, espectro…) entraram no
+glossário com a página de Atkins & Jones.
 
 ## Roteiro: como a Fase 3 se encaixa
 
