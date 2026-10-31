@@ -10,9 +10,17 @@ curados e mais 81 gerados a partir de íons, 41 reações curadas, 17 "não-rea�
 **motor de regras** que monta e balanceia sozinho cerca de 750 reações a partir de regras gerais
 (solubilidade, ácido-base, série eletroquímica, combustão, decomposição), com explicação, fonte e
 segurança. Há também uma calculadora de estequiometria (massa, mol, litros de gás, solução em
-mol/L e rendimento), 13 níveis de progressão e um **glossário** com mais de 140 termos: nos textos, as palavras de química ficam sublinhadas e mostram a
+mol/L e rendimento), 14 níveis de progressão e um **glossário** com mais de 160 termos: nos textos, as palavras de química ficam sublinhadas e mostram a
 definição ao toque. Na tabela periódica, cada um dos 118 elementos tem **curiosidades** (leitura
-complementar, com a página do livro da DK).
+complementar, com a página do livro da DK), e a tabela pode ser colorida por raio atômico,
+energia de ionização, afinidade eletrônica ou eletronegatividade.
+
+**Fase 3 em andamento**: energia das reações (3A) e velocidade das reações (3B) prontas. Cada
+reação mostra ΔH°/ΔS°/ΔG°, a velocidade (dado medido, catálise ou barreira de ativação), os
+números de oxidação (quem oxida e quem reduz), a composição em massa dos produtos com as leis de
+Proust e Dalton e, quando sai H₂, O₂ ou CO₂, como identificar o gás. No topo da página ficam o
+**laboratório de velocidade** e as **calculadoras** (concentração, diluição, mistura de soluções e
+fórmula mínima).
 
 ## Como rodar
 
@@ -77,6 +85,8 @@ data/                       TODO o conteúdo (JSON) — dá para editar sem mexe
   glossary.json             glossário (definição, exemplo, relacionados, página do glossário do livro)
   thermo.json               ΔfH°, ΔfG° e S° a 298 K por espécie e estado (Fase 3A), com livro e página
   element-facts.json        curiosidades dos 118 elementos (leitura complementar, livro da DK, com página)
+  kinetics.json             leis de velocidade, k e parâmetros de Arrhenius (Tabelas 14.1 e 14.4) (Fase 3B)
+  gas-tests.json            testes de identificação de H2, O2 e CO2
   items.json                ferramentas (calor, faísca, luz, eletricidade, catalisador)
   reactivity-series.json    série de reatividade (E°), usada pelas regras
   progression.json          níveis, desbloqueios e objetivos
@@ -92,6 +102,10 @@ src/core/                   química e regras do jogo — sem DOM, testável no 
   ions.js                   solubilidade, fórmula e nome de compostos iônicos, compostos derivados
   stoichiometry.js          massas, mol, litros de gás, solução, reagente limitante e rendimento
   thermo.js                 ΔH°, ΔG° e ΔS° das reações pela lei de Hess (Fase 3A)
+  kinetics.js               Arrhenius, leis integradas, meia-vida; ligação com as reações do jogo (Fase 3B)
+  oxidation.js              número de oxidação (Toolbox K.1) e análise de oxirredução
+  composition.js            composição em massa, fórmula mínima/molecular, leis de Proust e Dalton
+  solutions.js              conversão de concentração, diluição e mistura de soluções
   rules/reaction-rules.js   motor de regras da Fase 2
   glossary.js               acha os termos do glossário num texto (forma mais longa, palavra inteira)
   structure.js              estruturas 2D: desenho, unidade-fórmula, montagem dos lados da equação,
@@ -100,6 +114,8 @@ src/ui/, src/main.js        interface
   structure-svg.js          desenha as estruturas em SVG (cores CPK)
   reaction-stage.js         animação: rearranjo dos átomos, efeitos e "não reage"
   glossary-ui.js            termos clicáveis nos textos, balão com a definição e o diálogo do glossário
+  kinetics-lab.js           laboratório de velocidade (curva de concentração, meia-vida, +10 °C)
+  calculators.js            calculadoras: concentração, diluição, mistura, fórmula mínima
 tests/                      testes (node:test)
 ```
 
@@ -176,6 +192,11 @@ livro-texto ou do dataset dos elementos, vale o livro-texto, e a correção vai 
 `_meta.corrections`. Os testes conferem cobertura, páginas e algumas afirmações numéricas contra
 `data/source/`.
 
+**Dado de cinética**: em `data/kinetics.json`, a reação com `reactants`/`products` (o teste confere
+átomos e cargas), `order`, `rateLaw`, `kUnit`, os pontos `[[T, k]]` da tabela e/ou `arrhenius {A, Ea}`
+e a fonte com página. Se houver os dois, o teste confere um contra o outro. Para ligar a uma reação
+do jogo, use `game`.
+
 **Novo elemento jogável**: crie a forma elementar em `substances.json` (campo `elementOf`) e
 desbloqueie-o em algum nível de `progression.json`. Os dados físicos já estão em `elements.json`.
 
@@ -220,6 +241,48 @@ dissolvidos sem linha própria são a soma dos íons. Quando falta o dado de uma
 dos livros (metano −890 kJ, etanol −1368 kJ) e que nenhuma reação marcada como exotérmica ou
 endotérmica — curada ou gerada pelas regras — tenha o sinal de ΔH° trocado.
 
+## Fase 3B: velocidade das reações
+
+`data/kinetics.json` traz as reações das Tabelas 14.1 (leis de velocidade e constantes, p. 567) e
+14.4 (parâmetros de Arrhenius, p. 589) de Atkins & Jones. Com elas, `src/core/kinetics.js` calcula
+k(T) pela equação de Arrhenius, as leis integradas de 1ª e 2ª ordem e a meia-vida — seguindo a
+convenção dos exemplos resolvidos do livro (o k dá a taxa de consumo da espécie acompanhada).
+O jogo **nunca extrapola**: fora da faixa de temperatura medida, não há k.
+
+- **Painel "Velocidade"** em cada reação: dado medido quando existe (neutralização H₃O⁺ + OH⁻,
+  CO₂ + OH⁻ — inclusive nas reações geradas pelas regras, reconhecidas pela equação iônica), o
+  papel do catalisador (H₂O₂ com KI/Br₂, p. 596; ferro no processo Haber, p. 597) ou, para
+  reações que precisam de faísca/calor, a barreira de energia de ativação. Sem dado: o jogo diz que
+  não estima.
+- **Laboratório de velocidade**: escolha a reação, a temperatura e a concentração; veja k, a
+  meia-vida, a curva [A] × t e quanto +10 °C acelera.
+- **Nível 14** com perguntas de cálculo (meia-vida, lei integrada, efeito da temperatura, 2ª ordem).
+- Testes: as duas tabelas do livro conferem uma à outra (k medido ≈ A·e^(−Ea/RT)), a reta de
+  Arrhenius pelos pontos do N₂O₅ dá os 103 kJ/mol da Tabela 14.4, e o exemplo resolvido da p. 573
+  (N₂O₅ a 65 °C) é reproduzido.
+
+## Itens das apostilas do ensino médio
+
+O mapeamento das apostilas Bernoulli (v. 1–6) está no `CLAUDE.md`. Já entraram:
+
+- **Propriedades periódicas** (v. 2, Módulo 06): a tabela pode ser colorida por raio atômico
+  (covalente), energia de ionização, afinidade eletrônica e eletronegatividade, com escala e a
+  tendência explicada. Os dados vêm do dataset aberto; os testes conferem as tendências.
+- **NOX** (v. 4, Módulo 13; Atkins & Jones, Toolbox K.1, p. F80): cada reação mostra o número de
+  oxidação de cada substância e quem oxida e quem reduz. Compostos iônicos são resolvidos íon por
+  íon. Um teste varre as ~700 reações (curadas e geradas) e confirma: NOX muda ⇔ a reação está
+  marcada como oxirredução.
+- **Testes de gases** (v. 5, p. 49): palito aceso para H₂, palito em brasa para O₂, água de cal
+  para CO₂ (`data/gas-tests.json`).
+- **Leis de Proust e Dalton, composição centesimal, fórmula mínima** (v. 1, Módulos 01 e D02;
+  Atkins & Jones, seção F): no painel de cada reação e na calculadora; os testes reproduzem os
+  Exemplos F.1–F.4.
+- **Concentração (g/L, mg/L ≈ ppm, % m/V), diluição e mistura** (v. 5, Módulos 09–10; Atkins &
+  Jones, seção G.4): nas calculadoras; o teste reproduz o Exemplo G.4.
+
+As apostilas são **fonte secundária** (`sources.json`, `_meta.secondary`): linguagem de iniciante e
+convenções brasileiras; o que vem delas é conferido em Atkins & Jones.
+
 ## Curiosidades dos elementos
 
 Ao clicar num elemento da tabela periódica, o painel mostra uma descrição curta e algumas
@@ -239,10 +302,9 @@ em `createEngine`, o balanceamento devolve o mesmo formato de equação, e a est
 massas molares que já existiam. A Fase 3 segue o mesmo caminho:
 
 **Fase 3 — conteúdo avançado**
-- Termodinâmica/cinética/equilíbrio: campos opcionais nas reações (`deltaH`, `Ea`, `K`) e painéis
-  novos em `src/ui/`. Os testes de conservação não mudam. As tabelas de dados do Atkins de
-  físico-química (12. ed., p. 884–909) já foram conferidas e cobrem ΔfH° de 22 das 38 reações
-  curadas; o Apêndice 2A de Atkins & Jones completa o resto.
+- Termodinâmica (3A) e cinética (3B): prontas, como dados à parte (`thermo.json`,
+  `kinetics.json`) e painéis novos em `src/ui/`, sem mudar as reações nem os testes de conservação.
+- Equilíbrio (3C): mesmo caminho — um `equilibrium.json` com K do livro e um painel/objetivo novo.
 - Moléculas 3D: um componente de UI à parte (ex.: 3Dmol.js) alimentado por um `data/structures/`.
 - Química orgânica: novas substâncias/reações nos mesmos JSON (o leitor de fórmulas já aceita
   `CH3COOH` e similares).

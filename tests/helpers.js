@@ -23,6 +23,7 @@ export function loadRaw() {
     thermo: read('thermo.json'),
     elementFacts: read('element-facts.json'),
     kinetics: read('kinetics.json'),
+    gasTests: read('gas-tests.json'),
   };
 }
 

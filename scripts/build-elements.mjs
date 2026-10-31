@@ -73,6 +73,12 @@ const elements = src.elements
       electronConfiguration: e.electron_configuration_semantic,
       shells: e.shells,
       phaseAtSTP: FASE[e.phase] ?? null,
+      // Propriedades periódicas (Bernoulli v. 2, Frente C, Módulo 06; Atkins & Jones, seções 1.15–1.18):
+      // raio covalente simples (Pyykkö), em pm; 1ª energia de ionização e afinidade eletrônica, em kJ/mol
+      // (afinidade > 0 = energia liberada ao ganhar o elétron, a convenção de Atkins & Jones).
+      covalentRadius: e.atomic_radii?.covalent_single?.[0] ?? null,
+      ionizationEnergy: e.ionization_energies?.[0] ?? null,
+      electronAffinity: e.electron_affinity ?? null,
       // Posição na grade de 18 colunas (linhas 9–10 = lantanídeos/actinídeos, como no dataset).
       xpos: e.xpos,
       ypos: e.ypos,
@@ -90,6 +96,7 @@ const out = {
       'atomicMass arredondada a 5 algarismos significativos (estilo IUPAC abridged).',
       'group = null para lantanídeos e actinídeos.',
       'phaseAtSTP: s/l/g a 0 °C e 1 atm.',
+      'covalentRadius (pm, raio covalente simples), ionizationEnergy e electronAffinity (kJ/mol); null = sem dado.',
     ],
   },
   elements,

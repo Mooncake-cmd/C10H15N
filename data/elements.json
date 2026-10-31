@@ -5,7 +5,8 @@
   "notes": [
    "atomicMass arredondada a 5 algarismos significativos (estilo IUPAC abridged).",
    "group = null para lantanídeos e actinídeos.",
-   "phaseAtSTP: s/l/g a 0 °C e 1 atm."
+   "phaseAtSTP: s/l/g a 0 °C e 1 atm.",
+   "covalentRadius (pm, raio covalente simples), ionizationEnergy e electronAffinity (kJ/mol); null = sem dado."
   ]
  },
  "elements": [
@@ -25,6 +26,9 @@
     1
    ],
    "phaseAtSTP": "g",
+   "covalentRadius": 32,
+   "ionizationEnergy": 1312,
+   "electronAffinity": 72.769,
    "xpos": 1,
    "ypos": 1
   },
@@ -44,6 +48,9 @@
     2
    ],
    "phaseAtSTP": "g",
+   "covalentRadius": 46,
+   "ionizationEnergy": 2372.3,
+   "electronAffinity": -48,
    "xpos": 18,
    "ypos": 1
   },
@@ -64,6 +71,9 @@
     1
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": 133,
+   "ionizationEnergy": 520.2,
+   "electronAffinity": 59.6326,
    "xpos": 1,
    "ypos": 2
   },
@@ -84,6 +94,9 @@
     2
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": 102,
+   "ionizationEnergy": 899.5,
+   "electronAffinity": -48,
    "xpos": 2,
    "ypos": 2
   },
@@ -104,6 +117,9 @@
     3
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": 85,
+   "ionizationEnergy": 800.6,
+   "electronAffinity": 26.989,
    "xpos": 13,
    "ypos": 2
   },
@@ -124,6 +140,9 @@
     4
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": 75,
+   "ionizationEnergy": 1086.5,
+   "electronAffinity": 121.7763,
    "xpos": 14,
    "ypos": 2
   },
@@ -144,6 +163,9 @@
     5
    ],
    "phaseAtSTP": "g",
+   "covalentRadius": 71,
+   "ionizationEnergy": 1402.3,
+   "electronAffinity": -6.8,
    "xpos": 15,
    "ypos": 2
   },
@@ -164,6 +186,9 @@
     6
    ],
    "phaseAtSTP": "g",
+   "covalentRadius": 63,
+   "ionizationEnergy": 1313.9,
+   "electronAffinity": 140.976,
    "xpos": 16,
    "ypos": 2
   },
@@ -184,6 +209,9 @@
     7
    ],
    "phaseAtSTP": "g",
+   "covalentRadius": 64,
+   "ionizationEnergy": 1681,
+   "electronAffinity": 328.1649,
    "xpos": 17,
    "ypos": 2
   },
@@ -204,6 +232,9 @@
     8
    ],
    "phaseAtSTP": "g",
+   "covalentRadius": 67,
+   "ionizationEnergy": 2080.7,
+   "electronAffinity": -116,
    "xpos": 18,
    "ypos": 2
   },
@@ -225,6 +256,9 @@
     1
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": 155,
+   "ionizationEnergy": 495.8,
+   "electronAffinity": 52.867,
    "xpos": 1,
    "ypos": 3
   },
@@ -246,6 +280,9 @@
     2
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": 139,
+   "ionizationEnergy": 737.7,
+   "electronAffinity": -40,
    "xpos": 2,
    "ypos": 3
   },
@@ -267,6 +304,9 @@
     3
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": 126,
+   "ionizationEnergy": 577.5,
+   "electronAffinity": 41.762,
    "xpos": 13,
    "ypos": 3
   },
@@ -288,6 +328,9 @@
     4
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": 116,
+   "ionizationEnergy": 786.5,
+   "electronAffinity": 134.0684,
    "xpos": 14,
    "ypos": 3
   },
@@ -309,6 +352,9 @@
     5
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": 111,
+   "ionizationEnergy": 1011.8,
+   "electronAffinity": 72.037,
    "xpos": 15,
    "ypos": 3
   },
@@ -330,6 +376,9 @@
     6
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": 103,
+   "ionizationEnergy": 999.6,
+   "electronAffinity": 200.4101,
    "xpos": 16,
    "ypos": 3
   },
@@ -351,6 +400,9 @@
     7
    ],
    "phaseAtSTP": "g",
+   "covalentRadius": 99,
+   "ionizationEnergy": 1251.2,
+   "electronAffinity": 348.575,
    "xpos": 17,
    "ypos": 3
   },
@@ -372,6 +424,9 @@
     8
    ],
    "phaseAtSTP": "g",
+   "covalentRadius": 96,
+   "ionizationEnergy": 1520.6,
+   "electronAffinity": -96,
    "xpos": 18,
    "ypos": 3
   },
@@ -394,6 +449,9 @@
     1
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": 196,
+   "ionizationEnergy": 418.8,
+   "electronAffinity": 48.383,
    "xpos": 1,
    "ypos": 4
   },
@@ -416,6 +474,9 @@
     2
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": 171,
+   "ionizationEnergy": 589.8,
+   "electronAffinity": 2.37,
    "xpos": 2,
    "ypos": 4
   },
@@ -438,6 +499,9 @@
     2
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": 148,
+   "ionizationEnergy": 633.1,
+   "electronAffinity": 18,
    "xpos": 3,
    "ypos": 4
   },
@@ -460,6 +524,9 @@
     2
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": 136,
+   "ionizationEnergy": 658.8,
+   "electronAffinity": 7.289,
    "xpos": 4,
    "ypos": 4
   },
@@ -482,6 +549,9 @@
     2
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": 134,
+   "ionizationEnergy": 650.9,
+   "electronAffinity": 50.911,
    "xpos": 5,
    "ypos": 4
   },
@@ -504,6 +574,9 @@
     1
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": 122,
+   "ionizationEnergy": 652.9,
+   "electronAffinity": 65.21,
    "xpos": 6,
    "ypos": 4
   },
@@ -526,6 +599,9 @@
     2
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": 119,
+   "ionizationEnergy": 717.3,
+   "electronAffinity": -50,
    "xpos": 7,
    "ypos": 4
   },
@@ -548,6 +624,9 @@
     2
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": 116,
+   "ionizationEnergy": 762.5,
+   "electronAffinity": 14.785,
    "xpos": 8,
    "ypos": 4
   },
@@ -570,6 +649,9 @@
     2
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": 111,
+   "ionizationEnergy": 760.4,
+   "electronAffinity": 63.898,
    "xpos": 9,
    "ypos": 4
   },
@@ -592,6 +674,9 @@
     2
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": 110,
+   "ionizationEnergy": 737.1,
+   "electronAffinity": 111.65,
    "xpos": 10,
    "ypos": 4
   },
@@ -614,6 +699,9 @@
     1
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": 112,
+   "ionizationEnergy": 745.5,
+   "electronAffinity": 119.235,
    "xpos": 11,
    "ypos": 4
   },
@@ -636,6 +724,9 @@
     2
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": 118,
+   "ionizationEnergy": 906.4,
+   "electronAffinity": -58,
    "xpos": 12,
    "ypos": 4
   },
@@ -658,6 +749,9 @@
     3
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": 124,
+   "ionizationEnergy": 578.8,
+   "electronAffinity": 41,
    "xpos": 13,
    "ypos": 4
   },
@@ -680,6 +774,9 @@
     4
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": 121,
+   "ionizationEnergy": 762,
+   "electronAffinity": 118.9352,
    "xpos": 14,
    "ypos": 4
   },
@@ -702,6 +799,9 @@
     5
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": 121,
+   "ionizationEnergy": 947,
+   "electronAffinity": 77.65,
    "xpos": 15,
    "ypos": 4
   },
@@ -724,6 +824,9 @@
     6
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": 116,
+   "ionizationEnergy": 941,
+   "electronAffinity": 194.9587,
    "xpos": 16,
    "ypos": 4
   },
@@ -746,6 +849,9 @@
     7
    ],
    "phaseAtSTP": "l",
+   "covalentRadius": 114,
+   "ionizationEnergy": 1139.9,
+   "electronAffinity": 324.537,
    "xpos": 17,
    "ypos": 4
   },
@@ -768,6 +874,9 @@
     8
    ],
    "phaseAtSTP": "g",
+   "covalentRadius": 117,
+   "ionizationEnergy": 1350.8,
+   "electronAffinity": -96,
    "xpos": 18,
    "ypos": 4
   },
@@ -791,6 +900,9 @@
     1
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": 210,
+   "ionizationEnergy": 403,
+   "electronAffinity": 46.884,
    "xpos": 1,
    "ypos": 5
   },
@@ -814,6 +926,9 @@
     2
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": 185,
+   "ionizationEnergy": 549.5,
+   "electronAffinity": 5.023,
    "xpos": 2,
    "ypos": 5
   },
@@ -837,6 +952,9 @@
     2
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": 163,
+   "ionizationEnergy": 600,
+   "electronAffinity": 29.6,
    "xpos": 3,
    "ypos": 5
   },
@@ -860,6 +978,9 @@
     2
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": 154,
+   "ionizationEnergy": 640.1,
+   "electronAffinity": 41.806,
    "xpos": 4,
    "ypos": 5
   },
@@ -883,6 +1004,9 @@
     1
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": 147,
+   "ionizationEnergy": 652.1,
+   "electronAffinity": 88.516,
    "xpos": 5,
    "ypos": 5
   },
@@ -906,6 +1030,9 @@
     1
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": 138,
+   "ionizationEnergy": 684.3,
+   "electronAffinity": 72.1,
    "xpos": 6,
    "ypos": 5
   },
@@ -929,6 +1056,9 @@
     2
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": 128,
+   "ionizationEnergy": 702,
+   "electronAffinity": 53,
    "xpos": 7,
    "ypos": 5
   },
@@ -952,6 +1082,9 @@
     1
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": 125,
+   "ionizationEnergy": 710.2,
+   "electronAffinity": 100.96,
    "xpos": 8,
    "ypos": 5
   },
@@ -975,6 +1108,9 @@
     1
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": 125,
+   "ionizationEnergy": 719.7,
+   "electronAffinity": 110.27,
    "xpos": 9,
    "ypos": 5
   },
@@ -997,6 +1133,9 @@
     18
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": 120,
+   "ionizationEnergy": 804.4,
+   "electronAffinity": 54.24,
    "xpos": 10,
    "ypos": 5
   },
@@ -1020,6 +1159,9 @@
     1
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": 128,
+   "ionizationEnergy": 731,
+   "electronAffinity": 125.862,
    "xpos": 11,
    "ypos": 5
   },
@@ -1043,6 +1185,9 @@
     2
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": 136,
+   "ionizationEnergy": 867.8,
+   "electronAffinity": -68,
    "xpos": 12,
    "ypos": 5
   },
@@ -1066,6 +1211,9 @@
     3
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": 142,
+   "ionizationEnergy": 558.3,
+   "electronAffinity": 37.043,
    "xpos": 13,
    "ypos": 5
   },
@@ -1089,6 +1237,9 @@
     4
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": 140,
+   "ionizationEnergy": 708.6,
+   "electronAffinity": 107.2984,
    "xpos": 14,
    "ypos": 5
   },
@@ -1112,6 +1263,9 @@
     5
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": 140,
+   "ionizationEnergy": 834,
+   "electronAffinity": 101.059,
    "xpos": 15,
    "ypos": 5
   },
@@ -1135,6 +1289,9 @@
     6
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": 136,
+   "ionizationEnergy": 869.3,
+   "electronAffinity": 190.161,
    "xpos": 16,
    "ypos": 5
   },
@@ -1158,6 +1315,9 @@
     7
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": 133,
+   "ionizationEnergy": 1008.4,
+   "electronAffinity": 295.1531,
    "xpos": 17,
    "ypos": 5
   },
@@ -1181,6 +1341,9 @@
     8
    ],
    "phaseAtSTP": "g",
+   "covalentRadius": 131,
+   "ionizationEnergy": 1170.4,
+   "electronAffinity": -77,
    "xpos": 18,
    "ypos": 5
   },
@@ -1205,6 +1368,9 @@
     1
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": 232,
+   "ionizationEnergy": 375.7,
+   "electronAffinity": 45.505,
    "xpos": 1,
    "ypos": 6
   },
@@ -1229,6 +1395,9 @@
     2
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": 196,
+   "ionizationEnergy": 502.9,
+   "electronAffinity": 13.954,
    "xpos": 2,
    "ypos": 6
   },
@@ -1253,6 +1422,9 @@
     2
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": 180,
+   "ionizationEnergy": 538.1,
+   "electronAffinity": 53,
    "xpos": 3,
    "ypos": 9
   },
@@ -1277,6 +1449,9 @@
     2
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": 163,
+   "ionizationEnergy": 534.4,
+   "electronAffinity": 55,
    "xpos": 4,
    "ypos": 9
   },
@@ -1301,6 +1476,9 @@
     2
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": 176,
+   "ionizationEnergy": 527,
+   "electronAffinity": 93,
    "xpos": 5,
    "ypos": 9
   },
@@ -1325,6 +1503,9 @@
     2
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": 174,
+   "ionizationEnergy": 533.1,
+   "electronAffinity": 184.87,
    "xpos": 6,
    "ypos": 9
   },
@@ -1349,6 +1530,9 @@
     2
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": 173,
+   "ionizationEnergy": 540,
+   "electronAffinity": 12.45,
    "xpos": 7,
    "ypos": 9
   },
@@ -1373,6 +1557,9 @@
     2
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": 172,
+   "ionizationEnergy": 544.5,
+   "electronAffinity": 15.63,
    "xpos": 8,
    "ypos": 9
   },
@@ -1397,6 +1584,9 @@
     2
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": 168,
+   "ionizationEnergy": 547.1,
+   "electronAffinity": 11.2,
    "xpos": 9,
    "ypos": 9
   },
@@ -1421,6 +1611,9 @@
     2
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": 169,
+   "ionizationEnergy": 593.4,
+   "electronAffinity": 13.22,
    "xpos": 10,
    "ypos": 9
   },
@@ -1445,6 +1638,9 @@
     2
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": 168,
+   "ionizationEnergy": 565.8,
+   "electronAffinity": 112.4,
    "xpos": 11,
    "ypos": 9
   },
@@ -1469,6 +1665,9 @@
     2
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": 167,
+   "ionizationEnergy": 573,
+   "electronAffinity": 33.96,
    "xpos": 12,
    "ypos": 9
   },
@@ -1493,6 +1692,9 @@
     2
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": 166,
+   "ionizationEnergy": 581,
+   "electronAffinity": 32.61,
    "xpos": 13,
    "ypos": 9
   },
@@ -1517,6 +1719,9 @@
     2
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": 165,
+   "ionizationEnergy": 589.3,
+   "electronAffinity": 30.1,
    "xpos": 14,
    "ypos": 9
   },
@@ -1541,6 +1746,9 @@
     2
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": 164,
+   "ionizationEnergy": 596.7,
+   "electronAffinity": 99,
    "xpos": 15,
    "ypos": 9
   },
@@ -1565,6 +1773,9 @@
     2
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": 170,
+   "ionizationEnergy": 603.4,
+   "electronAffinity": -1.93,
    "xpos": 16,
    "ypos": 9
   },
@@ -1589,6 +1800,9 @@
     2
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": 162,
+   "ionizationEnergy": 523.5,
+   "electronAffinity": 33.4,
    "xpos": 17,
    "ypos": 9
   },
@@ -1613,6 +1827,9 @@
     2
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": 152,
+   "ionizationEnergy": 658.5,
+   "electronAffinity": 17.18,
    "xpos": 4,
    "ypos": 6
   },
@@ -1637,6 +1854,9 @@
     2
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": 146,
+   "ionizationEnergy": 761,
+   "electronAffinity": 31,
    "xpos": 5,
    "ypos": 6
   },
@@ -1661,6 +1881,9 @@
     2
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": 137,
+   "ionizationEnergy": 770,
+   "electronAffinity": 78.76,
    "xpos": 6,
    "ypos": 6
   },
@@ -1685,6 +1908,9 @@
     2
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": 131,
+   "ionizationEnergy": 760,
+   "electronAffinity": 5.8273,
    "xpos": 7,
    "ypos": 6
   },
@@ -1709,6 +1935,9 @@
     2
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": 129,
+   "ionizationEnergy": 840,
+   "electronAffinity": 103.99,
    "xpos": 8,
    "ypos": 6
   },
@@ -1733,6 +1962,9 @@
     2
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": 122,
+   "ionizationEnergy": 880,
+   "electronAffinity": 150.94,
    "xpos": 9,
    "ypos": 6
   },
@@ -1757,6 +1989,9 @@
     1
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": 123,
+   "ionizationEnergy": 870,
+   "electronAffinity": 205.041,
    "xpos": 10,
    "ypos": 6
   },
@@ -1781,6 +2016,9 @@
     1
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": 124,
+   "ionizationEnergy": 890.1,
+   "electronAffinity": 222.747,
    "xpos": 11,
    "ypos": 6
   },
@@ -1805,6 +2043,9 @@
     2
    ],
    "phaseAtSTP": "l",
+   "covalentRadius": 133,
+   "ionizationEnergy": 1007.1,
+   "electronAffinity": -48,
    "xpos": 12,
    "ypos": 6
   },
@@ -1829,6 +2070,9 @@
     3
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": 144,
+   "ionizationEnergy": 589.4,
+   "electronAffinity": 36.4,
    "xpos": 13,
    "ypos": 6
   },
@@ -1853,6 +2097,9 @@
     4
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": 144,
+   "ionizationEnergy": 715.6,
+   "electronAffinity": 34.4204,
    "xpos": 14,
    "ypos": 6
   },
@@ -1877,6 +2124,9 @@
     5
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": 151,
+   "ionizationEnergy": 703,
+   "electronAffinity": 90.924,
    "xpos": 15,
    "ypos": 6
   },
@@ -1901,6 +2151,9 @@
     6
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": 145,
+   "ionizationEnergy": 812.1,
+   "electronAffinity": 136,
    "xpos": 16,
    "ypos": 6
   },
@@ -1925,6 +2178,9 @@
     7
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": 147,
+   "ionizationEnergy": 899.003,
+   "electronAffinity": 233,
    "xpos": 17,
    "ypos": 6
   },
@@ -1949,6 +2205,9 @@
     8
    ],
    "phaseAtSTP": "g",
+   "covalentRadius": 142,
+   "ionizationEnergy": 1037,
+   "electronAffinity": -68,
    "xpos": 18,
    "ypos": 6
   },
@@ -1974,6 +2233,9 @@
     1
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": null,
+   "ionizationEnergy": 380,
+   "electronAffinity": 46.89,
    "xpos": 1,
    "ypos": 7
   },
@@ -1999,6 +2261,9 @@
     2
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": 201,
+   "ionizationEnergy": 509.3,
+   "electronAffinity": 9.6485,
    "xpos": 2,
    "ypos": 7
   },
@@ -2024,6 +2289,9 @@
     2
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": 186,
+   "ionizationEnergy": 499,
+   "electronAffinity": 33.77,
    "xpos": 3,
    "ypos": 10
   },
@@ -2049,6 +2317,9 @@
     2
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": 175,
+   "ionizationEnergy": 587,
+   "electronAffinity": 112.72,
    "xpos": 4,
    "ypos": 10
   },
@@ -2074,6 +2345,9 @@
     2
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": 169,
+   "ionizationEnergy": 568,
+   "electronAffinity": 53.03,
    "xpos": 5,
    "ypos": 10
   },
@@ -2099,6 +2373,9 @@
     2
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": 170,
+   "ionizationEnergy": 597.6,
+   "electronAffinity": 50.94,
    "xpos": 6,
    "ypos": 10
   },
@@ -2124,6 +2401,9 @@
     2
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": 171,
+   "ionizationEnergy": 604.5,
+   "electronAffinity": 45.85,
    "xpos": 7,
    "ypos": 10
   },
@@ -2149,6 +2429,9 @@
     2
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": 172,
+   "ionizationEnergy": 584.7,
+   "electronAffinity": -48.33,
    "xpos": 8,
    "ypos": 10
   },
@@ -2174,6 +2457,9 @@
     2
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": 166,
+   "ionizationEnergy": 578,
+   "electronAffinity": 9.93,
    "xpos": 9,
    "ypos": 10
   },
@@ -2199,6 +2485,9 @@
     2
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": 166,
+   "ionizationEnergy": 581,
+   "electronAffinity": 27.17,
    "xpos": 10,
    "ypos": 10
   },
@@ -2224,6 +2513,9 @@
     2
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": null,
+   "ionizationEnergy": 601,
+   "electronAffinity": -165.24,
    "xpos": 11,
    "ypos": 10
   },
@@ -2249,6 +2541,9 @@
     2
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": null,
+   "ionizationEnergy": 608,
+   "electronAffinity": -97.31,
    "xpos": 12,
    "ypos": 10
   },
@@ -2274,6 +2569,9 @@
     2
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": null,
+   "ionizationEnergy": 619,
+   "electronAffinity": -28.6,
    "xpos": 13,
    "ypos": 10
   },
@@ -2299,6 +2597,9 @@
     2
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": null,
+   "ionizationEnergy": 627,
+   "electronAffinity": 33.96,
    "xpos": 14,
    "ypos": 10
   },
@@ -2324,6 +2625,9 @@
     2
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": null,
+   "ionizationEnergy": 635,
+   "electronAffinity": 93.91,
    "xpos": 15,
    "ypos": 10
   },
@@ -2349,6 +2653,9 @@
     2
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": null,
+   "ionizationEnergy": 642,
+   "electronAffinity": -223.22,
    "xpos": 16,
    "ypos": 10
   },
@@ -2374,6 +2681,9 @@
     3
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": null,
+   "ionizationEnergy": 470,
+   "electronAffinity": -30.04,
    "xpos": 17,
    "ypos": 10
   },
@@ -2399,6 +2709,9 @@
     2
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": null,
+   "ionizationEnergy": 580,
+   "electronAffinity": null,
    "xpos": 4,
    "ypos": 7
   },
@@ -2424,6 +2737,9 @@
     2
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": null,
+   "ionizationEnergy": null,
+   "electronAffinity": null,
    "xpos": 5,
    "ypos": 7
   },
@@ -2449,6 +2765,9 @@
     2
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": null,
+   "ionizationEnergy": null,
+   "electronAffinity": null,
    "xpos": 6,
    "ypos": 7
   },
@@ -2474,6 +2793,9 @@
     2
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": null,
+   "ionizationEnergy": null,
+   "electronAffinity": null,
    "xpos": 7,
    "ypos": 7
   },
@@ -2499,6 +2821,9 @@
     2
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": null,
+   "ionizationEnergy": null,
+   "electronAffinity": null,
    "xpos": 8,
    "ypos": 7
   },
@@ -2524,6 +2849,9 @@
     2
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": null,
+   "ionizationEnergy": null,
+   "electronAffinity": null,
    "xpos": 9,
    "ypos": 7
   },
@@ -2549,6 +2877,9 @@
     2
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": null,
+   "ionizationEnergy": null,
+   "electronAffinity": null,
    "xpos": 10,
    "ypos": 7
   },
@@ -2574,6 +2905,9 @@
     2
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": null,
+   "ionizationEnergy": null,
+   "electronAffinity": 151,
    "xpos": 11,
    "ypos": 7
   },
@@ -2599,6 +2933,9 @@
     2
    ],
    "phaseAtSTP": "l",
+   "covalentRadius": null,
+   "ionizationEnergy": null,
+   "electronAffinity": null,
    "xpos": 12,
    "ypos": 7
   },
@@ -2624,6 +2961,9 @@
     3
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": null,
+   "ionizationEnergy": null,
+   "electronAffinity": 66.6,
    "xpos": 13,
    "ypos": 7
   },
@@ -2649,6 +2989,9 @@
     4
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": null,
+   "ionizationEnergy": null,
+   "electronAffinity": null,
    "xpos": 14,
    "ypos": 7
   },
@@ -2674,6 +3017,9 @@
     5
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": null,
+   "ionizationEnergy": null,
+   "electronAffinity": 35.3,
    "xpos": 15,
    "ypos": 7
   },
@@ -2699,6 +3045,9 @@
     6
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": null,
+   "ionizationEnergy": null,
+   "electronAffinity": 74.9,
    "xpos": 16,
    "ypos": 7
   },
@@ -2724,6 +3073,9 @@
     7
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": null,
+   "ionizationEnergy": null,
+   "electronAffinity": 165.9,
    "xpos": 17,
    "ypos": 7
   },
@@ -2749,6 +3101,9 @@
     8
    ],
    "phaseAtSTP": "s",
+   "covalentRadius": null,
+   "ionizationEnergy": null,
+   "electronAffinity": 5.40318,
    "xpos": 18,
    "ypos": 7
   }

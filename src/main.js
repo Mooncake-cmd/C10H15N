@@ -13,6 +13,7 @@ import { displayStructure } from './core/structure.js';
 import { structureSVG } from './ui/structure-svg.js';
 import { initGlossaryUI } from './ui/glossary-ui.js';
 import { mountKineticsLab } from './ui/kinetics-lab.js';
+import { mountCalculators } from './ui/calculators.js';
 
 const SAVE_KEY = 'elementar:v1';
 const MAX_SUBSTANCES = 4;
@@ -318,6 +319,8 @@ async function main() {
   // Laboratório de velocidade (Fase 3B): abre pelo topo, pelo painel de resultado ou pelos objetivos.
   const kineticsLab = mountKineticsLab($('#kinetics-dialog'), data);
   $('#btn-kinetics').addEventListener('click', () => kineticsLab.open());
+  const calculators = mountCalculators($('#calc-dialog'), data);
+  $('#btn-calcs').addEventListener('click', () => calculators.open());
   document.addEventListener('click', (ev) => {
     const b = ev.target.closest('[data-open-kinetics]');
     if (b) kineticsLab.open(b.dataset.openKinetics || null);
@@ -345,7 +348,7 @@ async function main() {
   renderWelcome($('#result'));
   renderAll();
   // Glossário: termos dos textos explicativos viram links para a definição.
-  initGlossaryUI(data, ['#result', '#objectives', '.pt-info', '#level-dialog-body', '#kinetics-dialog .kin-body']);
+  initGlossaryUI(data, ['#result', '#objectives', '.pt-info', '#level-dialog-body', '#kinetics-dialog .kin-body', '#calc-dil-out', '#calc-mix-out', '#calc-formula-out', '#calc-conc-out']);
 }
 
 main();

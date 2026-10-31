@@ -33,8 +33,17 @@ Detalhes de arquitetura, estrutura de pastas e "como adicionar conteúdo" estão
     painel "Energia", calor na calculadora, nível "Energia das reações". Dados: Atkins FQ 12. ed.
     (Tabela 2C.7) + Atkins & Jones (Apêndice 2A). No PDF do Atkins & Jones o sinal de menos vem como
     o caractere `\x06` — trocar por "-" antes de ler números.
-  - 3B Cinética (Atkins & Jones cap. 14; Atkins FQ Focus 17), 3C Equilíbrio (caps. 10–12), 3D
-    Moléculas 3D (cap. 3, VSEPR), 3E Orgânica (caps. 18–19), 3F Missões (decidir com o usuário).
+  - **3B Velocidade — CONCLUÍDA**: `data/kinetics.json` (Tabelas 14.1, p. 567, e 14.4, p. 589 de
+    Atkins & Jones), `src/core/kinetics.js` (Arrhenius, leis integradas, meia-vida; o k é a taxa de
+    consumo da espécie acompanhada, como nos exemplos do livro; nunca extrapola fora da faixa
+    medida), painel "Velocidade", laboratório de velocidade e nível 14.
+  - **Itens baratos das apostilas — FEITOS** (junto da 3B): propriedades periódicas na tabela, NOX
+    em cada reação (`src/core/oxidation.js`; teste: NOX muda ⇔ marcação redox em todas as ~700
+    reações), testes de gases (`data/gas-tests.json`), Proust/Dalton/composição/fórmula mínima
+    (`src/core/composition.js`), concentração/diluição/mistura (`src/core/solutions.js`) e o
+    diálogo de calculadoras.
+  - Próximas: 3C Equilíbrio (caps. 10–12), 3D Moléculas 3D (cap. 3, VSEPR), 3E Orgânica
+    (caps. 18–19), 3F Missões (decidir com o usuário).
   - **Curiosidades dos elementos — CONCLUÍDA**: os 118 elementos têm descrição e curiosidades no
     painel da tabela periódica (`data/element-facts.json`), escritas com palavras próprias a partir
     do livro da DK (*The Periodic Table Book*, 2017), como leitura complementar com página. Erros do
@@ -54,7 +63,7 @@ por eletrólise; o quadro do v. 5 p. 49 generaliza demais a decomposição de ox
 - **No plano**: 3B cinética (v. 2 B04; v. 3 B05–B06; v. 4 B07–B08); 3C equilíbrio (v. 5 C20;
   v. 6 C21–C24); 3D geometria/polaridade (v. 3 C10); 3E orgânica (v. 1 D04; v. 2 D05–D08;
   v. 3 D09–D12 com isomeria plana; v. 4 D13–D16 com isomeria espacial; v. 5 D17–D20; v. 6 D21–D22).
-- **Itens baratos (aprovados para fazer com a 3B)**: propriedades periódicas — raio, energia de
+- **Itens baratos (FEITOS com a 3B)**: propriedades periódicas — raio, energia de
   ionização, afinidade eletrônica (v. 2 C06; dados já no dataset aberto); fórmula mínima/molecular
   e composição centesimal (v. 1 D02); concentração g/L, %, ppm, diluição e mistura (v. 5 A09–A10);
   leis de Proust e Dalton (v. 1 C01); NOX em cada oxirredução (v. 4 C13); testes de identificação

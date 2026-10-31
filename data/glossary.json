@@ -1586,7 +1586,8 @@
       "term": "Número de oxidação",
       "aliases": [
         "números de oxidação",
-        "estado de oxidação"
+        "estado de oxidação",
+        "nox"
       ],
       "definition": "A 'carga efetiva' de um átomo num composto, calculada por regras. Serve para acompanhar quem perde e quem ganha elétrons. É o número romano em nomes como ferro(III).",
       "example": "No Fe₂O₃, o ferro tem número de oxidação +3; no FeCl₂, +2.",
@@ -3074,6 +3075,244 @@
         "ref": "atkins-jones",
         "topic": "Seção 14.14: catálise (área de superfície em reações heterogêneas)",
         "pages": "595"
+      }
+    },
+    {
+      "id": "raio-atomico",
+      "term": "Raio atômico",
+      "aliases": [
+        "raios atômicos",
+        "raio covalente"
+      ],
+      "definition": "O \"tamanho\" de um átomo: metade da distância entre os centros de dois átomos vizinhos ligados. Cresce descendo um grupo (mais camadas de elétrons) e diminui ao longo de um período (o núcleo puxa mais forte).",
+      "example": "O césio (232 pm) é bem maior que o lítio (133 pm), que está no mesmo grupo, duas camadas acima.",
+      "related": [
+        "tabela-periodica",
+        "energia-de-ionizacao"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: atomic radius",
+        "pages": "B3"
+      }
+    },
+    {
+      "id": "energia-de-ionizacao",
+      "term": "Energia de ionização",
+      "aliases": [
+        "energias de ionização",
+        "1ª energia de ionização",
+        "primeira energia de ionização"
+      ],
+      "definition": "A energia mínima para arrancar um elétron de um átomo isolado (em estado gasoso). Quanto menor, mais fácil o átomo vira cátion: por isso os metais alcalinos, com as menores energias de ionização, são tão reativos.",
+      "example": "Arrancar um elétron do sódio custa 496 kJ/mol; do neônio, 2081 kJ/mol.",
+      "related": [
+        "cation",
+        "raio-atomico",
+        "afinidade-eletronica"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: ionization energy",
+        "pages": "B15"
+      }
+    },
+    {
+      "id": "afinidade-eletronica",
+      "term": "Afinidade eletrônica",
+      "aliases": [
+        "afinidades eletrônicas"
+      ],
+      "definition": "A energia liberada quando um átomo isolado (gasoso) ganha um elétron. Quanto maior, mais o átomo \"quer\" o elétron: os halogênios têm as maiores. Um valor negativo indica que é preciso gastar energia para o átomo aceitar o elétron.",
+      "example": "O cloro libera 349 kJ/mol ao virar Cl⁻ — é a maior afinidade eletrônica da tabela.",
+      "related": [
+        "anion",
+        "energia-de-ionizacao",
+        "eletronegatividade"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Seção 1.18: electron affinity",
+        "pages": "45"
+      }
+    },
+    {
+      "id": "desproporcionamento",
+      "term": "Desproporcionamento",
+      "aliases": [
+        "desproporciona",
+        "desproporcionam",
+        "dismutação"
+      ],
+      "definition": "Oxirredução em que o mesmo elemento, na mesma substância, ao mesmo tempo oxida e reduz: parte dos átomos sobe de NOX e parte desce.",
+      "example": "Na decomposição da água oxigenada, o oxigênio (−1) vira −2 na água e 0 no O2.",
+      "related": [
+        "redox",
+        "numero-de-oxidacao"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: disproportionation",
+        "pages": "B9"
+      }
+    },
+    {
+      "id": "lei-de-proust",
+      "term": "Lei de Proust (proporções definidas)",
+      "aliases": [
+        "lei de proust",
+        "proporções definidas",
+        "lei das proporções definidas",
+        "composição constante"
+      ],
+      "definition": "Um composto tem sempre a mesma composição em massa, venha de onde vier: a razão entre as massas dos seus elementos é fixa.",
+      "example": "Em qualquer amostra de água, há 7,94 g de oxigênio para cada 1 g de hidrogênio.",
+      "related": [
+        "composto",
+        "lei-de-dalton",
+        "composicao-percentual"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: law of constant composition",
+        "pages": "B16"
+      }
+    },
+    {
+      "id": "lei-de-dalton",
+      "term": "Lei de Dalton (proporções múltiplas)",
+      "aliases": [
+        "lei de dalton",
+        "proporções múltiplas",
+        "lei das proporções múltiplas"
+      ],
+      "definition": "Quando dois elementos formam mais de um composto, fixada a massa de um deles, as massas do outro ficam numa razão de números inteiros pequenos. Foi uma das pistas de que a matéria é feita de átomos.",
+      "example": "Água (H2O) e água oxigenada (H2O2): para a mesma massa de hidrogênio, a massa de oxigênio está na razão 1 : 2.",
+      "related": [
+        "lei-de-proust",
+        "atomo"
+      ],
+      "source": {
+        "ref": "bernoulli",
+        "topic": "v. 1, Frente C, Módulo 01: leis das reações químicas",
+        "pages": "36"
+      }
+    },
+    {
+      "id": "composicao-percentual",
+      "term": "Composição percentual em massa",
+      "aliases": [
+        "composição centesimal",
+        "composição percentual",
+        "porcentagem em massa",
+        "composição em massa"
+      ],
+      "definition": "Quanto de cada elemento há num composto, em porcentagem da massa total. Calcula-se pela fórmula: massa do elemento na fórmula ÷ massa molar × 100.",
+      "example": "A água tem 11,2% de hidrogênio e 88,8% de oxigênio em massa.",
+      "related": [
+        "massa-molar",
+        "formula-minima"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: mass percentage composition",
+        "pages": "B17"
+      }
+    },
+    {
+      "id": "formula-minima",
+      "term": "Fórmula mínima (empírica)",
+      "aliases": [
+        "fórmula mínima",
+        "fórmula empírica",
+        "fórmulas mínimas"
+      ],
+      "definition": "A fórmula com a menor proporção inteira entre os átomos. É o que a análise da composição em massa revela; para saber a fórmula molecular é preciso também a massa molar.",
+      "example": "A água oxigenada, H2O2, tem fórmula mínima HO; o ácido acético, CH3COOH, tem CH2O.",
+      "related": [
+        "formula-molecular",
+        "composicao-percentual"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: empirical formula",
+        "pages": "B10"
+      }
+    },
+    {
+      "id": "formula-molecular",
+      "term": "Fórmula molecular",
+      "aliases": [
+        "fórmulas moleculares"
+      ],
+      "definition": "A fórmula com o número real de átomos de cada elemento numa molécula. É sempre um múltiplo inteiro da fórmula mínima.",
+      "example": "A vitamina C tem fórmula mínima C3H4O3 e fórmula molecular C6H8O6 (o dobro).",
+      "related": [
+        "formula-minima"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: molecular formula",
+        "pages": "B18"
+      }
+    },
+    {
+      "id": "diluicao",
+      "term": "Diluição",
+      "aliases": [
+        "diluir",
+        "diluições"
+      ],
+      "definition": "Acrescentar solvente a uma solução para baixar a concentração. A quantidade de soluto não muda — só passa a ocupar um volume maior —, por isso c₁·V₁ = c₂·V₂.",
+      "example": "Para fazer 250 mL de NaOH 0,00125 mol/L a partir de uma solução 0,0380 mol/L, pegam-se 8,22 mL e completa-se com água.",
+      "related": [
+        "concentracao-molar",
+        "solucao"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Seção G.4: diluição (Exemplo G.4)",
+        "pages": "F57"
+      }
+    },
+    {
+      "id": "ppm",
+      "term": "Partes por milhão (ppm)",
+      "aliases": [
+        "ppm",
+        "partes por milhão"
+      ],
+      "definition": "Quantos gramas de soluto há em um milhão de gramas de solução. Serve para quantidades muito pequenas; em água diluída, 1 ppm ≈ 1 mg por litro.",
+      "example": "A água tratada costuma ter cerca de 1 ppm de cloro: 1 mg em cada litro.",
+      "related": [
+        "concentracao-molar",
+        "concentracao-em-massa"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: parts per million",
+        "pages": "B20"
+      }
+    },
+    {
+      "id": "concentracao-em-massa",
+      "term": "Concentração em massa (g/L)",
+      "aliases": [
+        "concentração comum",
+        "concentração em g/l",
+        "g/l"
+      ],
+      "definition": "Massa de soluto (em gramas) dissolvida em cada litro de solução. Para passar para mol/L, divide-se pela massa molar do soluto.",
+      "example": "Um refrigerante com 0,358 g/L de sacarina tem 0,358 g dela dissolvidos em cada litro.",
+      "related": [
+        "concentracao-molar",
+        "ppm",
+        "massa-molar"
+      ],
+      "source": {
+        "ref": "bernoulli",
+        "topic": "v. 5, Frente A, Módulo 09: concentração das soluções",
+        "pages": "3"
       }
     }
   ]

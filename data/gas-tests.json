@@ -1,0 +1,34 @@
+{
+  "_meta": {
+    "description": "Como confirmar, no laboratório, que um gás se formou numa reação: testes simples de identificação de H2, O2 e CO2. Aparecem no painel de resultado quando o gás é produto.",
+    "fields": "gases: { idDaSubstância: { test (o que se faz), result (o que se vê), why (por quê), safety, reaction? (reação do jogo que é o próprio teste), source [{ ref, topic, pages }] } }"
+  },
+  "gases": {
+    "H2": {
+      "test": "Aproxime um palito de fósforo aceso da boca do tubo onde o gás foi recolhido.",
+      "result": "Um pequeno estalo: o hidrogênio explode em miniatura.",
+      "why": "O H2 é combustível: com o oxigênio do ar e a chama, forma água num instante (é a reação H2 + O2 do jogo).",
+      "safety": "Só com quantidades pequenas, em tubo de ensaio: muito hidrogênio misturado com ar explode com força.",
+      "reaction": "h2-o2",
+      "source": [{ "ref": "bernoulli", "topic": "v. 5, Frente C, Módulo 18: identificação de H2, O2 e CO2", "pages": "49" }]
+    },
+    "O2": {
+      "test": "Apague a chama de um palito de fósforo, deixando a ponta em brasa, e coloque-o dentro do tubo.",
+      "result": "A brasa reacende e volta a ter chama.",
+      "why": "O O2 é o comburente: o ar tem só um quinto de oxigênio; no gás puro, a queima da madeira fica muito mais rápida.",
+      "safety": "Seguro em pequena escala. Oxigênio puro faz tudo queimar mais forte: nunca perto de óleo ou graxa.",
+      "source": [{ "ref": "bernoulli", "topic": "v. 5, Frente C, Módulo 18: identificação de H2, O2 e CO2", "pages": "49" }]
+    },
+    "CO2": {
+      "test": "Borbulhe o gás numa solução de hidróxido de cálcio, a água de cal.",
+      "result": "A solução fica turva, branca como leite.",
+      "why": "O CO2 reage com o Ca(OH)2 e forma carbonato de cálcio (CaCO3), pouco solúvel, que fica em suspensão. Com água de barita, Ba(OH)2, o teste também funciona (forma BaCO3).",
+      "safety": "Seguro. A água de cal é levemente cáustica: não leve aos olhos.",
+      "reaction": "caoh2-co2",
+      "source": [
+        { "ref": "bernoulli", "topic": "v. 5, Frente C, Módulo 18: identificação de H2, O2 e CO2", "pages": "49" },
+        { "ref": "atkins-jones", "topic": "Gás que turva a água de cal (exercício sobre o CO2)", "pages": "703" }
+      ]
+    }
+  }
+}

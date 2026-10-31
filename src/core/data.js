@@ -38,6 +38,8 @@ export function buildGameData(raw) {
     elementFactsMeta: raw.elementFacts?._meta ?? null,
     // Velocidade das reações (Fase 3B): dados das Tabelas 14.1 e 14.4 de Atkins & Jones.
     kinetics: buildKinetics(raw.kinetics),
+    // Testes de identificação de gases (H2, O2, CO2).
+    gasTests: raw.gasTests?.gases ?? {},
     sources: raw.sources.sources,
     complementarySources: raw.sources._meta.complementaryOnly ?? [],
     reactivitySeries: raw.reactivitySeries.series,
