@@ -285,6 +285,20 @@ sub, sup { font-size: 0.7em; line-height: 0; }
 .stoich-row { display: flex; flex-wrap: wrap; gap: 0.4rem; align-items: center; }
 .stoich-row .btn { padding: 0.3rem 0.7rem; }
 
+/* ---------- Energia (Fase 3A) ---------- */
+.energy { margin: 0.8rem 0; padding: 0.6rem 0.8rem; border-radius: var(--radius); background: var(--panel-2); }
+.energy h3 { margin-top: 0; }
+.energy-row { display: flex; gap: 0.8rem; align-items: center; flex-wrap: wrap; }
+.energy-row > div { flex: 1 1 220px; min-width: 0; }
+.energy-svg { width: 230px; max-width: 100%; flex: none; }
+.energy-svg .lvl { stroke: var(--text); stroke-width: 3; }
+.energy-svg text { font-family: system-ui, sans-serif; font-size: 13px; fill: var(--muted); text-anchor: middle; }
+.energy-svg text.dh { fill: var(--text); font-weight: 700; }
+.energy-svg .arrow-exo { stroke: var(--bad); stroke-width: 3; }
+.energy-svg .arrow-endo { stroke: var(--accent); stroke-width: 3; }
+.energy-svg .head-exo { fill: var(--bad); }
+.energy-svg .head-endo { fill: var(--accent); }
+
 /* ---------- Objetivos ---------- */
 .objective-list { list-style: none; padding: 0; margin: 0.5rem 0; display: flex; flex-direction: column; gap: 0.5rem; }
 .objective-list li { display: flex; gap: 0.5rem; align-items: flex-start; }

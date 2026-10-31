@@ -20,6 +20,7 @@ export function loadRaw() {
     ions: read('ions.json'),
     rules: read('rules.json'),
     glossary: read('glossary.json'),
+    thermo: read('thermo.json'),
   };
 }
 

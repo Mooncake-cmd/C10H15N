@@ -8,7 +8,8 @@
       "reactionType": "{ reactionType, withReactant? } — fazer uma reação daquele tipo (opcionalmente usando um reagente específico)",
       "nonReaction": "{ reasonId } — tentar uma combinação que não reage e ver o porquê. reasonId é o id em non-reactions.json ou 'rule:<id>' de uma regra genérica",
       "reaction": "{ reaction } — fazer uma reação específica (id de reactions.json, ou 'gen:A+B' de uma reação gerada por regra); útil quando o produto já pode ter sido obtido por outro caminho",
-      "stoich": "{ reaction, given: { idDoReagente: medida }, ask: idDoProduto | 'limiting' | 'yield', unit?: 'g' | 'mol' | 'L', actual?: { id, g } } — pergunta de estequiometria; a resposta certa é calculada (tolerância de 2%). medida: gramas, { mol }, { L } de gás (25 °C, 1 atm) ou { mL, M } de solução"
+      "thermo": "{ sign: 'exo' | 'endo', minKJ? } — ter feito uma reação que libera (exo) ou absorve (endo) calor, pelo ΔH° calculado; minKJ exige |ΔH°| mínimo (Fase 3A)",
+      "stoich": "{ reaction, given: { idDoReagente: medida }, ask: idDoProduto | 'limiting' | 'yield' | 'heat', unit?: 'g' | 'mol' | 'L', actual?: { id, g } } — pergunta de estequiometria; a resposta certa é calculada (tolerância de 2%). medida: gramas, { mol }, { L } de gás (25 °C, 1 atm) ou { mL, M } de solução"
     }
   },
   "levels": [
@@ -209,7 +210,26 @@
           "text": "Aquecendo 42,73 g de calcário, obtiveram-se 17,5 g de CO₂. Qual foi o rendimento (em %)?",
           "hint": "Calcule quanto CO2 sairia no máximo (rendimento teórico) e divida o obtido por ele." }
       ],
-      "lesson": "Gás: mol = litros ÷ volume molar (cerca de 24,5 L/mol a 25 °C e 1 atm). Solução: mol = litros × concentração (mol/L). Rendimento = obtido ÷ teórico × 100%: na prática quase sempre sai menos do que a conta prevê. Você concluiu a Fase 2!"
+      "lesson": "Gás: mol = litros ÷ volume molar (cerca de 24,5 L/mol a 25 °C e 1 atm). Solução: mol = litros × concentração (mol/L). Rendimento = obtido ÷ teórico × 100%: na prática quase sempre sai menos do que a conta prevê. Você concluiu a Fase 2! Na Fase 3 entram a energia, a velocidade e o equilíbrio das reações."
+    },
+    {
+      "id": "n12",
+      "phase": 3,
+      "title": "Energia das reações",
+      "intro": "Fase 3: por que umas reações esquentam e outras esfriam? Cada substância tem uma 'entalpia de formação' medida em laboratório; com elas, a lei de Hess dá o calor de qualquer reação (ΔH°). O painel de cada reação agora mostra a energia e diz se a reação é espontânea (ΔG°).",
+      "objectives": [
+        { "id": "n12-endo", "type": "thermo", "sign": "endo", "text": "Faça uma reação que ABSORVE calor (ΔH° > 0)",
+          "hint": "Reações de decomposição costumam precisar de energia: calor ou eletricidade." },
+        { "id": "n12-1000", "type": "thermo", "sign": "exo", "minKJ": 1000, "text": "Encontre uma reação que libera mais de 1000 kJ",
+          "hint": "Metais que queimam com luz forte liberam muita energia. Olhe o ΔH° no painel." },
+        { "id": "n12-metano", "type": "stoich", "reaction": "ch4-o2", "given": { "CH4": 16.0 }, "ask": "heat",
+          "text": "Quantos kJ de calor saem ao queimar 16,0 g de metano (gás natural)?",
+          "hint": "16,0 g de CH4 ≈ 1 mol. O ΔH° da combustão, no painel da reação, vale para 1 mol de CH4." },
+        { "id": "n12-etanol", "type": "stoich", "reaction": "gen:C2H5OH+O2", "given": { "C2H5OH": 23.0 }, "ask": "heat",
+          "text": "E ao queimar 23,0 g de etanol (meio mol)?",
+          "hint": "O calor é proporcional à quantidade: meio mol libera metade do ΔH° da equação." }
+      ],
+      "lesson": "ΔH° < 0: a reação libera calor (exotérmica); ΔH° > 0: absorve (endotérmica). Pela lei de Hess, ΔH° = soma das entalpias de formação dos produtos − soma das dos reagentes. Já ΔG° < 0 diz que a reação é espontânea — o que não quer dizer rápida: o metano é estável no ar até uma faísca vencer a energia de ativação."
     }
   ]
 }

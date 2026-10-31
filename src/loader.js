@@ -14,6 +14,7 @@ const FILES = {
   ions: 'ions.json',
   rules: 'rules.json',
   glossary: 'glossary.json',
+  thermo: 'thermo.json',
 };
 
 export async function loadGameData(base = './data/') {

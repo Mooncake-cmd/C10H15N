@@ -208,8 +208,8 @@ async function main() {
       return html`<form class="stoich-form" data-objective="${o.id}"><span class="small muted">Equação: ${r.name}</span><div class="stoich-row">${raw(opts)}</div></form>`;
     }
     const UNIT = { g: ['gramas', 'g de'], mol: ['mol', 'mol de'], L: ['litros', 'L de'] };
-    const [ph, label] = o.ask === 'yield' ? ['%', '%'] : UNIT[o.unit ?? 'g'];
-    const what = o.ask === 'yield' ? '' : formatFormulaHTML(data.substancesById.get(o.ask).formula);
+    const [ph, label] = o.ask === 'yield' ? ['%', '%'] : o.ask === 'heat' ? ['kJ', 'kJ de calor liberado'] : UNIT[o.unit ?? 'g'];
+    const what = o.ask === 'yield' || o.ask === 'heat' ? '' : formatFormulaHTML(data.substancesById.get(o.ask).formula);
     return html`<form class="stoich-form" data-objective="${o.id}"><span class="small muted">Equação: ${r.name}</span>
       <div class="stoich-row"><input name="answer" inputmode="decimal" autocomplete="off" aria-label="Resposta (${ph})" placeholder="${ph}"><span class="small">${label} ${raw(what)}</span>
       <button class="btn btn-primary" type="submit">Conferir</button></div></form>`;

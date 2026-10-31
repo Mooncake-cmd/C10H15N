@@ -10,7 +10,7 @@ curados e mais 81 gerados a partir de íons, 41 reações curadas, 17 "não-rea�
 **motor de regras** que monta e balanceia sozinho cerca de 750 reações a partir de regras gerais
 (solubilidade, ácido-base, série eletroquímica, combustão, decomposição), com explicação, fonte e
 segurança. Há também uma calculadora de estequiometria (massa, mol, litros de gás, solução em
-mol/L e rendimento), 12 níveis de progressão em duas fases e um **glossário** com mais de 120 termos: nos textos, as palavras de química ficam sublinhadas e mostram a
+mol/L e rendimento), 13 níveis de progressão e um **glossário** com mais de 130 termos: nos textos, as palavras de química ficam sublinhadas e mostram a
 definição ao toque.
 
 ## Como rodar
@@ -74,6 +74,7 @@ data/                       TODO o conteúdo (JSON) — dá para editar sem mexe
   ions.json                 íons, regras de solubilidade (Tabela I.1), compostos que não existem
   rules.json                textos, fontes e segurança das regras da Fase 2
   glossary.json             glossário (definição, exemplo, relacionados, página do glossário do livro)
+  thermo.json               ΔfH°, ΔfG° e S° a 298 K por espécie e estado (Fase 3A), com livro e página
   items.json                ferramentas (calor, faísca, luz, eletricidade, catalisador)
   reactivity-series.json    série de reatividade (E°), usada pelas regras
   progression.json          níveis, desbloqueios e objetivos
@@ -87,7 +88,8 @@ src/core/                   química e regras do jogo — sem DOM, testável no 
   progression.js            estado do jogador, objetivos, níveis
   balancer.js               balanceamento automático (espaço nulo com frações exatas)
   ions.js                   solubilidade, fórmula e nome de compostos iônicos, compostos derivados
-  stoichiometry.js          massas, mol e reagente limitante
+  stoichiometry.js          massas, mol, litros de gás, solução, reagente limitante e rendimento
+  thermo.js                 ΔH°, ΔG° e ΔS° das reações pela lei de Hess (Fase 3A)
   rules/reaction-rules.js   motor de regras da Fase 2
   glossary.js               acha os termos do glossário num texto (forma mais longa, palavra inteira)
   structure.js              estruturas 2D: desenho, unidade-fórmula, montagem dos lados da equação,
@@ -175,8 +177,9 @@ em `tests/rules.test.js` confere tudo o que a regra nova passar a gerar — ante
 revise uma amostra das equações geradas.
 
 **Novo nível/objetivo**: em `progression.json` (cada nível tem `phase`). Tipos de objetivo:
-`produce`, `produceCategory`, `reactionType`, `nonReaction`, `reaction` e `stoich` (pergunta de
-estequiometria em g, mol, L de gás, solução ou rendimento; a resposta certa é calculada). O teste de progressão avisa se um objetivo ficar
+`produce`, `produceCategory`, `reactionType`, `nonReaction`, `reaction`, `thermo` (fazer uma reação
+que libera ou absorve calor) e `stoich` (pergunta de estequiometria em g, mol, L de gás, solução,
+rendimento ou calor em kJ; a resposta certa é calculada). O teste de progressão avisa se um objetivo ficar
 impossível. Inserir um nível no meio muda os índices dos saves: suba `STATE_VERSION` em
 `src/core/progression.js`; saves antigos são migrados refazendo o caminho pelo histórico.
 
@@ -195,6 +198,18 @@ conferidas no livro.
 Dados dos elementos: [Periodic-Table-JSON](https://github.com/Bowserinator/Periodic-Table-JSON),
 compilado da Wikipédia (CC BY-SA). As massas atômicas são arredondadas a 5 algarismos
 significativos e conferidas com a IUPAC nos testes.
+
+## Fase 3A: energia das reações
+
+Cada reação mostra **ΔH°** (calor liberado ou absorvido), **ΔS°** e **ΔG°** a 25 °C, calculados pela
+lei de Hess a partir de `data/thermo.json`. Os dados vêm da Tabela 2C.7 do *Atkins' Physical
+Chemistry* (12. ed.) e, onde ela não tem a espécie, do Apêndice 2A de Atkins & Jones; as duas
+tabelas foram comparadas e concordam em 107 de 110 espécies em comum. Compostos iônicos
+dissolvidos sem linha própria são a soma dos íons. Quando falta o dado de uma espécie, o jogo diz
+"sem dado conferido" — nunca estima. Os testes conferem: ΔfG° = ΔfH° − T·ΔfS° para todo composto
+(pega colunas trocadas), combustões calculadas contra as entalpias de combustão medidas, exemplos
+dos livros (metano −890 kJ, etanol −1368 kJ) e que nenhuma reação marcada como exotérmica ou
+endotérmica — curada ou gerada pelas regras — tenha o sinal de ΔH° trocado.
 
 ## Roteiro: como a Fase 3 se encaixa
 

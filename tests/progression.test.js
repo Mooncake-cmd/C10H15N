@@ -34,6 +34,7 @@ test('referências da progressão existem', () => {
         for (const id of Object.keys(o.given)) assert.ok(r.reactants.some((e) => e.id === id), `${o.id}: ${id} não é reagente`);
         if (o.ask === 'limiting') assert.ok(Object.keys(o.given).length > 1, `${o.id}: limitante precisa de dois reagentes`);
         else if (o.ask === 'yield') assert.ok(r.products.some((e) => e.id === o.actual?.id), `${o.id}: rendimento de um produto`);
+        else if (o.ask === 'heat') assert.ok(Number.isFinite(stoichAnswer(o, data)), `${o.id}: reação sem ΔH° conhecido`);
         else assert.ok(r.products.some((e) => e.id === o.ask), `${o.id}: pergunta inválida`);
         assert.ok(Number.isFinite(stoichAnswer(o, data)) || typeof stoichAnswer(o, data) === 'string', `${o.id}: sem resposta calculável`);
       }
@@ -174,4 +175,13 @@ test('estequiometria com unidades: litros de gás, solução e rendimento', () =
   assert.equal(answerObjective(s0, 'n11-solucao', '0,58', data).correct, false);
   assert.equal(answerObjective(s0, 'n11-rendimento', '93,1%', data).correct, true);
   assert.equal(answerObjective(s0, 'n11-rendimento', '107', data).correct, false);
+});
+
+test('Fase 3A: perguntas de calor', () => {
+  const find = (id) => levels.flatMap((l) => l.objectives).find((x) => x.id === id);
+  assert.ok(Math.abs(stoichAnswer(find('n12-metano'), data) - (16.0 / 16.043) * 890.36) < 0.5);
+  assert.ok(Math.abs(stoichAnswer(find('n12-etanol'), data) - (23.0 / 46.069) * 1366.8) < 2);
+  const s0 = initialState(data);
+  assert.equal(answerObjective(s0, 'n12-metano', '888', data).correct, true);
+  assert.equal(answerObjective(s0, 'n12-metano', '-888', data).correct, false, 'pergunta o calor liberado (positivo)');
 });
