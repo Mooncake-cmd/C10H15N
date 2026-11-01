@@ -14,6 +14,7 @@ import { structureSVG } from './ui/structure-svg.js';
 import { initGlossaryUI } from './ui/glossary-ui.js';
 import { mountKineticsLab } from './ui/kinetics-lab.js';
 import { mountCalculators } from './ui/calculators.js';
+import { mountEquilibriumLab } from './ui/equilibrium-lab.js';
 
 const SAVE_KEY = 'elementar:v1';
 const MAX_SUBSTANCES = 4;
@@ -186,7 +187,7 @@ async function main() {
               .map((o) => {
                 const ok = state.completedObjectives.includes(o.id) || isObjectiveDone(o, state, data);
                 return html`<li class="${ok ? 'is-done' : ''}"><span class="check" aria-hidden="true">${ok ? '✔' : '○'}</span>
-                  <div><span>${o.text}</span>${raw(!ok && o.type === 'stoich' ? stoichForm(o) : '')}${raw(!ok && o.type === 'kinetics' ? kineticsForm(o) : '')}${raw(!ok && o.hint ? `<details class="hint"><summary>Dica</summary>${esc(o.hint)}</details>` : '')}</div></li>`;
+                  <div><span>${o.text}</span>${raw(!ok && o.type === 'stoich' ? stoichForm(o) : '')}${raw(!ok && o.type === 'kinetics' ? kineticsForm(o) : '')}${raw(!ok && o.type === 'equilibrium' ? equilibriumForm(o) : '')}${raw(!ok && o.hint ? `<details class="hint"><summary>Dica</summary>${esc(o.hint)}</details>` : '')}</div></li>`;
               })
               .join(''),
           )}
@@ -225,12 +226,26 @@ async function main() {
       <button type="button" class="btn btn-ghost btn-small" data-open-kinetics="${o.kinetics}">⏱️ Abrir ${data.kinetics.byId.get(o.kinetics).name.toLowerCase()} no laboratório</button></form>`;
   }
 
+  /** Pergunta de equilíbrio (Fase 3C): número ou escolha (Le Chatelier), com atalho para o laboratório. */
+  function equilibriumForm(o) {
+    const section = { pH: 'ph', bufferPH: 'buf', solubility: 'sol', shift: 'gas' }[o.ask];
+    const open = JSON.stringify({ section, species: o.species, salt: o.salt, gas: o.gas });
+    const lab = html`<button type="button" class="btn btn-ghost btn-small" data-open-equilibrium="${open}">⚖️ Abrir no laboratório de equilíbrio</button>`;
+    if (o.choices) {
+      const opts = o.choices.map((c) => html`<button type="button" class="btn btn-ghost stoich-choice" data-answer="${c.value}">${c.label}</button>`).join('');
+      return html`<form class="stoich-form" data-objective="${o.id}"><div class="stoich-row">${raw(opts)}</div>${raw(lab)}</form>`;
+    }
+    return html`<form class="stoich-form" data-objective="${o.id}">
+      <div class="stoich-row"><input name="answer" inputmode="decimal" autocomplete="off" aria-label="Resposta (${o.unitLabel})" placeholder="${o.unitLabel}"><span class="small">${o.unitLabel}</span>
+      <button class="btn btn-primary" type="submit">Conferir</button></div>${raw(lab)}</form>`;
+  }
+
   function submitStoich(objectiveId, answer) {
     const prevLevel = state.levelIndex;
     const { state: next, events, correct } = answerObjective(state, objectiveId, answer, data);
     if (!correct) {
       const kind = data.progression.levels.flatMap((l) => l.objectives).find((o) => o.id === objectiveId)?.type;
-      toast(kind === 'kinetics' ? 'Ainda não. Confira a fórmula e as unidades (a dica ajuda).' : 'Ainda não. Confira a conversão gramas → mol → gramas (a dica ajuda).');
+      toast(kind === 'kinetics' || kind === 'equilibrium' ? 'Ainda não. Confira a fórmula e as unidades (a dica ajuda).' : 'Ainda não. Confira a conversão gramas → mol → gramas (a dica ajuda).');
       return;
     }
     state = next;
@@ -320,6 +335,13 @@ async function main() {
   const kineticsLab = mountKineticsLab($('#kinetics-dialog'), data);
   $('#btn-kinetics').addEventListener('click', () => kineticsLab.open());
   const calculators = mountCalculators($('#calc-dialog'), data);
+  // Laboratório de equilíbrio (Fase 3C).
+  const eqLab = mountEquilibriumLab($('#equilibrium-dialog'), data);
+  $('#btn-equilibrium').addEventListener('click', () => eqLab.open());
+  document.addEventListener('click', (ev) => {
+    const b = ev.target.closest('[data-open-equilibrium]');
+    if (b) eqLab.open(JSON.parse(b.dataset.openEquilibrium || '{}'));
+  });
   $('#btn-calcs').addEventListener('click', () => calculators.open());
   document.addEventListener('click', (ev) => {
     const b = ev.target.closest('[data-open-kinetics]');
@@ -348,7 +370,7 @@ async function main() {
   renderWelcome($('#result'));
   renderAll();
   // Glossário: termos dos textos explicativos viram links para a definição.
-  initGlossaryUI(data, ['#result', '#objectives', '.pt-info', '#level-dialog-body', '#kinetics-dialog .kin-body', '#calc-dil-out', '#calc-mix-out', '#calc-formula-out', '#calc-conc-out']);
+  initGlossaryUI(data, ['#result', '#objectives', '.pt-info', '#level-dialog-body', '#kinetics-dialog .kin-body', '#calc-dil-out', '#calc-mix-out', '#calc-formula-out', '#calc-conc-out', '#equilibrium-dialog .eq-out']);
 }
 
 main();

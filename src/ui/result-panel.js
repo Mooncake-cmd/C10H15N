@@ -11,6 +11,8 @@ import { reactionThermo, heatFor } from '../core/thermo.js';
 import { kineticsLink, kAt, halfLife } from '../core/kinetics.js';
 import { redoxAnalysis, formatOx, frac } from '../core/oxidation.js';
 import { massComposition, empiricalFormula, massRatio, sameElementsPartners, multipleProportions } from '../core/composition.js';
+import { kFromDeltaG, interpretK, leChatelier, findSpecies, solutionPH, molarSolubility } from '../core/equilibrium.js';
+import { SHIFT_TEXT } from './equilibrium-lab.js';
 import { formatSci, formatDuration, sourceText } from './kinetics-lab.js';
 
 let stopStage = () => {};
@@ -277,6 +279,75 @@ function redoxHTML(data, r) {
     <p class="small">Agente redutor: ${list(a.reducers)} (contém o elemento que oxida). Agente oxidante: ${list(a.oxidizers)} (contém o elemento que reduz).${dispro ? ' O mesmo elemento oxida e reduz ao mesmo tempo: é um desproporcionamento.' : ''}</p>${details}</section>`;
 }
 
+/** K = 10^n em texto: números enormes ou minúsculos ficam como potência de 10. */
+function kText(log10K) {
+  if (Math.abs(log10K) < 300) return formatSci(10 ** log10K);
+  const e = Math.round(log10K);
+  return `10${String(e).replace(/-/g, '⁻').replace(/\d/g, (d) => '⁰¹²³⁴⁵⁶⁷⁸⁹'[d])}`;
+}
+
+/** Seção "Equilíbrio" (Fase 3C): K pelo ΔG°, Le Chatelier, Kps dos precipitados e pH de ácidos/bases. */
+function equilibriumHTML(data, r) {
+  const E = data.equilibrium;
+  if (!E) return '';
+  const parts = [];
+  const t = reactionThermo(r, data);
+  const open = (o) => esc(JSON.stringify(o));
+  let labOpts = { section: 'ph' };
+  if (t.dG != null) {
+    const k = kFromDeltaG(t.dG);
+    const side = interpretK(k.log10K);
+    const txt = {
+      produtos: k.log10K > 30 ? 'tão grande que, na prática, a reação vai até o fim' : 'grande: no equilíbrio, há muito mais produto que reagente',
+      reagentes: 'pequeno: no equilíbrio, quase nada reage — a 25 °C a reação não anda sozinha',
+      ambos: 'intermediário: no equilíbrio, sobram quantidades apreciáveis de reagentes e de produtos',
+    }[side];
+    parts.push(`<p><strong>K (25 °C) ≈ ${kText(k.log10K)}</strong>, calculada de ΔG° = −RT ln K: ${txt}.</p>`);
+    const g = E.gasByGame.get(r.id);
+    if (g) {
+      parts.push(`<p class="small">Medido (Tabela 10.2): ${g.points.map(([T, K]) => `K = ${formatSci(K)} a ${T} K`).join('; ')}.</p>`);
+      labOpts = { section: 'gas', gas: g.id };
+    }
+    // Le Chatelier para reações reversíveis ou com K intermediário.
+    if (r.reversible || side === 'ambos') {
+      const gas = (side) => side.reduce((a, e) => a + ((e.state ?? data.substancesById.get(e.id).state) === 'g' ? e.coef : 0), 0);
+      const hasGas = gas(r.products) + gas(r.reactants) > 0;
+      const lc = leChatelier({ dn: gas(r.products) - gas(r.reactants), dH: t.dH });
+      const STRESS = { addReactant: 'Mais reagente', removeProduct: 'Retirar produto', compress: 'Comprimir (mais pressão)', heat: 'Aquecer', cool: 'Resfriar' };
+      const items = Object.entries(STRESS)
+        .filter(([k]) => lc[k] && (k !== 'compress' || hasGas))
+        .map(([k, label]) => `<li>${label}: ${SHIFT_TEXT[lc[k]]}</li>`)
+        .join('');
+      parts.push(`<p class="small"><strong>Le Chatelier</strong> — se perturbarmos o equilíbrio, ele se desloca para aliviar a mudança:</p><ul class="small">${items}</ul>`);
+    }
+  }
+  // Precipitados com Kps (Tabela 12.4).
+  for (const e of r.products) {
+    const sub = data.substancesById.get(e.id);
+    const k = E.kspByFormula.get(sub.formula);
+    if (!k || (e.state ?? sub.state) !== 's') continue;
+    const s = molarSolubility(k);
+    parts.push(`<p class="small"><strong>${formatFormulaHTML(sub.formula)}: Kps = ${formatSci(k.Ksp)}</strong> — só ${formatSci(s)} mol/L (${formatSci(s * molarMass(sub.formula, data.atomicMasses) * 1000)} mg por litro) se dissolvem. Quando os íons se encontram em quantidade maior, Q passa do Kps e o excesso sai como sólido: é o precipitado.</p>`);
+    labOpts = { section: 'sol', salt: sub.formula };
+  }
+  // Ácidos e bases (Tabelas 11.1 e 11.2): pH de uma solução 0,10 mol/L.
+  const seen = new Set();
+  for (const e of r.reactants) {
+    const sub = data.substancesById.get(e.id);
+    const sp = findSpecies(E, sub.formula);
+    if (!sp || seen.has(sub.formula)) continue;
+    seen.add(sub.formula);
+    const ph = solutionPH(sp.kind, 0.1, sp.params);
+    const what = { strongAcid: 'ácido forte', strongBase: 'base forte', weakAcid: `ácido fraco, Ka = ${formatSci(sp.params.Ka)}`, weakBase: `base fraca, Kb = ${formatSci(sp.params.Kb)}` }[sp.kind];
+    parts.push(`<p class="small">${formatFormulaHTML(sub.formula)} (${what}): uma solução 0,10 mol/L tem pH ${fmtNum(ph.pH)}${ph.percent != null ? `, com só ${formatSci(ph.percent, 2)}% das moléculas ionizadas` : ''}.</p>`);
+    if (labOpts.section === 'ph') labOpts = { section: 'ph', species: sub.formula };
+  }
+  if (!parts.length) return `<section class="equilibrium"><h3>Equilíbrio</h3><p class="small muted">Sem ΔG° conferido: o jogo não calcula a constante de equilíbrio desta reação.</p></section>`;
+  return `<section class="equilibrium"><h3>Equilíbrio</h3>${parts.join('')}
+    <button type="button" class="btn btn-ghost btn-small" data-open-equilibrium="${open(labOpts)}">⚖️ Abrir no laboratório de equilíbrio</button>
+    <p class="small muted">Fonte: Atkins &amp; Jones, Chemical Principles, 5. ed. — seções 10.3–10.11 (p. 390–412), Tabelas 10.2 (p. 389), 11.1–11.2 (p. 436–437) e 12.4 (p. 497).</p></section>`;
+}
+
 /** Barreira de energia (energia de ativação); com catalisador, o caminho mais baixo tracejado. */
 function barrierSVG(exo, catalyzed) {
   const yR = exo ? 70 : 92;
@@ -352,6 +423,7 @@ export function renderResult(root, data, result, { newSubstances = [] } = {}) {
       <p>${r.why}</p>
       ${raw(energyHTML(data, r))}
       ${raw(kineticsHTML(data, r))}
+      ${raw(equilibriumHTML(data, r))}
       ${raw(r.conditionNote ? `<p class="small"><strong>Nota:</strong> ${esc(r.conditionNote)}</p>` : '')}
       ${raw(
         r.netIonic

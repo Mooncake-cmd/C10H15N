@@ -17,6 +17,7 @@
     </div>
     <button class="btn btn-ghost" type="button" data-glossary-open="" title="O que significa cada palavra da química">📖 <span class="hide-narrow">Glossário</span></button>
     <button id="btn-kinetics" class="btn btn-ghost" type="button" title="Laboratório de velocidade das reações">⏱️ <span class="hide-narrow">Velocidade</span></button>
+    <button id="btn-equilibrium" class="btn btn-ghost" type="button" title="Laboratório de equilíbrio: pH, tampão, solubilidade, K e Le Chatelier">⚖️ <span class="hide-narrow">Equilíbrio</span></button>
     <button id="btn-calcs" class="btn btn-ghost" type="button" title="Concentração, diluição, mistura e fórmula mínima">🧮 <span class="hide-narrow">Calculadoras</span></button>
     <button id="btn-reset" class="btn btn-ghost" type="button" title="Apagar progresso">Recomeçar</button>
   </header>
@@ -143,6 +144,46 @@
         </div>
         <div id="calc-formula-out" aria-live="polite"></div>
         <p class="small muted">Atkins &amp; Jones, seção F, Exemplos F.2–F.4 (p. F47–F49): os valores iniciais são os da vitamina C.</p>
+      </details>
+    </div>
+  </dialog>
+
+  <dialog id="equilibrium-dialog" class="level-dialog kinetics-dialog" aria-labelledby="eq-title">
+    <div class="glossary-head">
+      <h2 id="eq-title">⚖️ Laboratório de equilíbrio</h2>
+      <button class="btn btn-ghost eq-close" type="button" aria-label="Fechar o laboratório de equilíbrio">×</button>
+    </div>
+    <div class="eq-body calc-body">
+      <details open data-eq="ph"><summary>pH de uma solução</summary>
+        <div class="kin-controls">
+          <label>Substância <select id="eq-species"></select></label>
+          <label>Concentração <input id="eq-c" type="number" min="0" step="any" inputmode="decimal" value="0.08"> mol/L</label>
+        </div>
+        <div id="eq-ph-out" class="eq-out" aria-live="polite"></div>
+      </details>
+      <details data-eq="buf"><summary>Solução-tampão</summary>
+        <div class="kin-controls">
+          <label>Ácido fraco <select id="eq-buf-acid"></select></label>
+          <label>[ácido] <input id="eq-buf-ca" type="number" min="0" step="any" inputmode="decimal" value="0.08"> mol/L</label>
+          <label>[base conjugada] <input id="eq-buf-cb" type="number" min="0" step="any" inputmode="decimal" value="0.04"> mol/L</label>
+        </div>
+        <div id="eq-buf-out" class="eq-out" aria-live="polite"></div>
+      </details>
+      <details data-eq="sol"><summary>Solubilidade pelo Kps</summary>
+        <div class="kin-controls">
+          <label>Sal <select id="eq-salt"></select></label>
+          <label>Íon comum já dissolvido <select id="eq-common-ion"><option value="anion">ânion</option><option value="cation">cátion</option></select>
+            <input id="eq-common-c" type="number" min="0" step="any" inputmode="decimal" value="0"> <span id="eq-common-label"></span></label>
+        </div>
+        <div id="eq-sol-out" class="eq-out" aria-live="polite"></div>
+      </details>
+      <details data-eq="gas"><summary>Equilíbrio entre gases: K, Q e Le Chatelier</summary>
+        <div class="kin-controls">
+          <label>Reação <select id="eq-gas"></select></label>
+          <label>Temperatura <select id="eq-gas-T"></select></label>
+        </div>
+        <div id="eq-gas-p" class="calc-grid"></div>
+        <div id="eq-gas-out" class="eq-out" aria-live="polite"></div>
       </details>
     </div>
   </dialog>

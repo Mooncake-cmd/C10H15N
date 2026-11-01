@@ -8,6 +8,7 @@ import { lookupReaction } from './engine.js';
 import { stoichiometry, percentYield } from './stoichiometry.js';
 import { reactionThermo, heatFor } from './thermo.js';
 import { kineticsAnswer } from './kinetics.js';
+import { equilibriumAnswer } from './equilibrium.js';
 
 export const STATE_VERSION = 2;
 // v1 → v2: um nível novo (metais alcalino-terrosos) entrou no meio da Fase 1, então o
@@ -66,6 +67,8 @@ const OBJECTIVE_CHECKS = {
   stoich: (o, h) => h.stoichSolved.has(o.id),
   // Fase 3B: pergunta de cinética (meia-vida, concentração depois de um tempo, efeito da temperatura).
   kinetics: (o, h) => h.stoichSolved.has(o.id),
+  // Fase 3C: pergunta de equilíbrio (pH, tampão, Kps, Le Chatelier).
+  equilibrium: (o, h) => h.stoichSolved.has(o.id),
   // Fase 3A: ter feito uma reação que libera (exo) ou absorve (endo) calor, opcionalmente com |ΔH°| mínimo.
   thermo: (o, h, data) =>
     [...h.reactionsDone].some((rid) => {
@@ -183,7 +186,16 @@ export function isKineticsAnswerRight(objective, answer, data) {
   return Number.isFinite(x) && Math.abs(x - expected) <= 0.02 * Math.abs(expected);
 }
 
-const ANSWER_CHECKS = { stoich: isStoichAnswerRight, kinetics: isKineticsAnswerRight };
+/** Equilíbrio: escolha exata (Le Chatelier); pH com ±0,02; demais números com 2%. */
+export function isEquilibriumAnswerRight(objective, answer, data) {
+  const expected = equilibriumAnswer(objective, data);
+  if (objective.choices) return answer === expected;
+  const x = Number(String(answer).replace(/\s/g, '').replace(',', '.'));
+  if (!Number.isFinite(x)) return false;
+  return objective.ask === 'pH' || objective.ask === 'bufferPH' ? Math.abs(x - expected) <= 0.02 : Math.abs(x - expected) <= 0.02 * Math.abs(expected);
+}
+
+const ANSWER_CHECKS = { stoich: isStoichAnswerRight, kinetics: isKineticsAnswerRight, equilibrium: isEquilibriumAnswerRight };
 
 /** O jogador respondeu a um objetivo de cálculo (estequiometria ou cinética). */
 export function answerObjective(state, objectiveId, answer, data) {

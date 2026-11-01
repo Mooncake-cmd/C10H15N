@@ -253,6 +253,37 @@
           "hint": "Na 2ª ordem, t½ = 1 ÷ (k·[A]₀): ela depende da concentração inicial." }
       ],
       "lesson": "A velocidade de reação segue uma lei de velocidade: na 1ª ordem, a taxa é k[A] e a meia-vida (ln 2/k) não depende da concentração; na 2ª ordem, a taxa é k[A]² e a meia-vida cresce conforme o reagente acaba. Pela equação de Arrhenius, k = A·e^(−Ea/RT): quanto maior a energia de ativação, mais a temperatura pesa. Um catalisador abre um caminho com Ea menor e sai intacto no fim."
+    },
+    {
+      "id": "n14",
+      "phase": 3,
+      "title": "Equilíbrio químico",
+      "intro": "Fase 3C: muitas reações não vão até o fim — chegam a um equilíbrio em que a reação direta e a inversa acontecem na mesma velocidade. A constante de equilíbrio K diz para que lado ele pende, e o princípio de Le Chatelier diz como ele reage quando mudamos algo. Nas soluções, os mesmos equilíbrios decidem o pH, o funcionamento de um tampão e quanto de um sal se dissolve (Kps). Use o ⚖️ Laboratório de equilíbrio, no topo da página.",
+      "objectives": [
+        { "id": "n14-reversivel", "type": "reaction", "reaction": "co2-h2o", "text": "Faça uma reação reversível: dissolva gás carbônico na água",
+          "hint": "Junte CO2 e H2O. Parte do CO2 vira ácido carbônico, e parte do ácido volta a ser CO2 — por isso o refrigerante perde o gás." },
+        { "id": "n14-acido-forte", "type": "equilibrium", "ask": "pH", "species": "HCl", "c": 0.01, "unitLabel": "pH",
+          "text": "Qual é o pH de uma solução 0,010 mol/L de HCl (ácido forte)?",
+          "hint": "Ácido forte se ioniza totalmente: [H3O⁺] = 0,010 mol/L, e pH = −log[H3O⁺]." },
+        { "id": "n14-acido-fraco", "type": "equilibrium", "ask": "pH", "species": "CH3COOH", "c": 0.08, "unitLabel": "pH",
+          "text": "E o pH do vinagre de laboratório, ácido acético 0,080 mol/L (Ka = 1,8 × 10⁻⁵)?",
+          "hint": "Ácido fraco: Ka = x²/(0,080 − x), com x = [H3O⁺]. Como x é pequeno, x ≈ √(Ka × 0,080)." },
+        { "id": "n14-tampao", "type": "equilibrium", "ask": "bufferPH", "species": "CH3COOH", "cAcid": 0.08, "cBase": 0.04, "unitLabel": "pH",
+          "text": "Um tampão tem 0,080 mol/L de ácido acético e 0,040 mol/L de acetato de sódio. Qual é o pH?",
+          "hint": "pH = pKa + log([base]/[ácido]), com pKa = −log(1,8 × 10⁻⁵) = 4,75." },
+        { "id": "n14-kps", "type": "equilibrium", "ask": "solubility", "salt": "AgCl", "unit": "µmol/L", "unitLabel": "µmol/L",
+          "text": "O Kps do AgCl é 1,6 × 10⁻¹⁰. Quanto dele se dissolve por litro de água (solubilidade molar)?",
+          "hint": "AgCl ⇌ Ag⁺ + Cl⁻: Kps = s·s = s², então s = √Kps. Responda em µmol/L (1 mol = 1 000 000 µmol)." },
+        { "id": "n14-pressao", "type": "equilibrium", "ask": "shift", "gas": "nh3", "stress": "compress",
+          "choices": [{ "value": "produtos", "label": "Para os produtos (mais NH3)" }, { "value": "reagentes", "label": "Para os reagentes" }, { "value": "nao-muda", "label": "Não muda" }],
+          "text": "Na síntese da amônia, N2 + 3 H2 ⇌ 2 NH3, para onde o equilíbrio se desloca se comprimirmos a mistura?",
+          "hint": "Le Chatelier: com mais pressão, o equilíbrio vai para o lado com menos mols de gás. Conte: 4 de um lado, 2 do outro." },
+        { "id": "n14-calor", "type": "equilibrium", "ask": "shift", "gas": "nh3", "stress": "heat", "dH": -92.2,
+          "choices": [{ "value": "produtos", "label": "Para os produtos" }, { "value": "reagentes", "label": "Para os reagentes (menos NH3)" }, { "value": "nao-muda", "label": "Não muda" }],
+          "text": "A síntese da amônia libera calor (ΔH° = −92 kJ). E se aquecermos?",
+          "hint": "Aquecer favorece o sentido que absorve calor (o endotérmico). Aqui, é o sentido inverso." }
+      ],
+      "lesson": "No equilíbrio, as reações direta e inversa continuam acontecendo, na mesma velocidade. K = e^(−ΔG°/RT): K grande favorece os produtos; K pequeno, os reagentes. Comparando Q com K, sabemos para onde a reação vai. Le Chatelier: o equilíbrio se desloca para aliviar a perturbação — mais pressão favorece o lado com menos gás; aquecer favorece o sentido endotérmico. Nas soluções: pH = −log[H3O⁺]; ácido fraco se ioniza pouco (Ka); tampão resiste a mudanças de pH; e o Kps diz quanto de um sal se dissolve."
     }
   ]
 }
