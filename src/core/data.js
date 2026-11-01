@@ -4,6 +4,7 @@
 import { deriveSubstances, buildIonCatalog } from './ions.js';
 import { createGlossary } from './glossary.js';
 import { buildKinetics } from './kinetics.js';
+import { buildEquilibrium } from './equilibrium.js';
 
 export function buildGameData(raw) {
   const elements = raw.elements.elements;
@@ -40,6 +41,8 @@ export function buildGameData(raw) {
     kinetics: buildKinetics(raw.kinetics),
     // Testes de identificação de gases (H2, O2, CO2).
     gasTests: raw.gasTests?.gases ?? {},
+    // Equilíbrio químico (Fase 3C): Tabelas 10.2, 11.1, 11.2, 11.10, 12.3 e 12.4 de Atkins & Jones.
+    equilibrium: buildEquilibrium(raw.equilibrium),
     sources: raw.sources.sources,
     complementarySources: raw.sources._meta.complementaryOnly ?? [],
     reactivitySeries: raw.reactivitySeries.series,

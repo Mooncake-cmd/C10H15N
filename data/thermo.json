@@ -98,6 +98,7 @@
   "OH-(aq)": { "dH": -229.99, "dG": -157.24, "S": -10.75, "ref": "atkins-fq", "page": "894" },
   "S(s)": { "dH": 0.0, "dG": 0.0, "S": 31.8, "ref": "atkins-fq", "page": "895", "note": "α" },
   "SO2(g)": { "dH": -296.83, "dG": -300.19, "S": 248.22, "ref": "atkins-fq", "page": "896" },
+  "SO3(g)": { "dH": -395.72, "dG": -371.06, "S": 256.76, "ref": "atkins-jones", "page": "A15", "note": "Usado na conferência da Tabela 10.2 (2 SO2 + O2 ⇌ 2 SO3)." },
   "SO4^2-(aq)": { "dH": -909.27, "dG": -744.53, "S": 20.1, "ref": "atkins-fq", "page": "896" },
   "Zn(s)": { "dH": 0.0, "dG": 0.0, "S": 41.63, "ref": "atkins-fq", "page": "896" },
   "ZnO(s)": { "dH": -348.28, "dG": -318.3, "S": 43.64, "ref": "atkins-fq", "page": "896" },

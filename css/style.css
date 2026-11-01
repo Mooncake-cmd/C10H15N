@@ -302,6 +302,9 @@ sub, sup { font-size: 0.7em; line-height: 0; }
 /* Fase 3B: velocidade */
 .kinetics { margin: 0.8rem 0; padding: 0.6rem 0.8rem; border-radius: var(--radius); background: var(--panel-2); }
 .kinetics h3 { margin-top: 0; }
+.equilibrium { margin: 0.8rem 0; padding: 0.6rem 0.8rem; border-radius: var(--radius); background: var(--panel-2); }
+.equilibrium h3 { margin-top: 0; }
+.equilibrium ul { margin: 0.2rem 0; padding-left: 1.1rem; }
 .gas-test { margin: 0.8rem 0; padding: 0.6rem 0.8rem; border-radius: var(--radius); border: 1px dashed var(--border); }
 .gas-test h3 { margin-top: 0; }
 .composition ul { padding-left: 1.1rem; }
@@ -331,6 +334,11 @@ sub, sup { font-size: 0.7em; line-height: 0; }
 .calc-grid label { display: flex; flex-wrap: wrap; gap: 0.3rem; align-items: center; font-size: 0.88rem; min-width: 0; }
 .calc-grid input { font: inherit; padding: 0.2rem 0.35rem; border-radius: 6px; border: 1px solid var(--border); background: var(--panel-2); color: var(--text); width: 6.5rem; max-width: 100%; }
 .calc-grid input[data-el] { width: 3rem; }
+.ph-bar { position: relative; height: 12px; border-radius: 6px; margin: 0.4rem 0 0.1rem; background: linear-gradient(90deg, #d7301f, #fc8d59, #fee08b, #d9ef8b, #91cf60, #4575b4, #313695); }
+.ph-mark { position: absolute; top: -4px; width: 4px; height: 20px; margin-left: -2px; background: var(--text); border-radius: 2px; }
+.ph-scale { display: flex; justify-content: space-between; }
+.eq-inds { columns: 2 14rem; }
+.eq-out p { margin: 0.35rem 0; }
 .kin-row { display: flex; gap: 0.8rem; align-items: center; flex-wrap: wrap; }
 .kin-row > div { flex: 1 1 220px; min-width: 0; }
 .kin-svg { width: 300px; max-width: 100%; flex: none; }

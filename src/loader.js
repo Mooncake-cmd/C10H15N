@@ -18,6 +18,7 @@ const FILES = {
   elementFacts: 'element-facts.json',
   kinetics: 'kinetics.json',
   gasTests: 'gas-tests.json',
+  equilibrium: 'equilibrium.json',
 };
 
 export async function loadGameData(base = './data/') {

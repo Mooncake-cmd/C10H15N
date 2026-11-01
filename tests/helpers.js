@@ -24,6 +24,7 @@ export function loadRaw() {
     elementFacts: read('element-facts.json'),
     kinetics: read('kinetics.json'),
     gasTests: read('gas-tests.json'),
+    equilibrium: read('equilibrium.json'),
   };
 }
 

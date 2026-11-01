@@ -10,16 +10,18 @@ curados e mais 81 gerados a partir de íons, 41 reações curadas, 17 "não-rea�
 **motor de regras** que monta e balanceia sozinho cerca de 750 reações a partir de regras gerais
 (solubilidade, ácido-base, série eletroquímica, combustão, decomposição), com explicação, fonte e
 segurança. Há também uma calculadora de estequiometria (massa, mol, litros de gás, solução em
-mol/L e rendimento), 14 níveis de progressão e um **glossário** com mais de 160 termos: nos textos, as palavras de química ficam sublinhadas e mostram a
+mol/L e rendimento), 15 níveis de progressão e um **glossário** com mais de 180 termos: nos textos, as palavras de química ficam sublinhadas e mostram a
 definição ao toque. Na tabela periódica, cada um dos 118 elementos tem **curiosidades** (leitura
 complementar, com a página do livro da DK), e a tabela pode ser colorida por raio atômico,
 energia de ionização, afinidade eletrônica ou eletronegatividade.
 
-**Fase 3 em andamento**: energia das reações (3A) e velocidade das reações (3B) prontas. Cada
-reação mostra ΔH°/ΔS°/ΔG°, a velocidade (dado medido, catálise ou barreira de ativação), os
+**Fase 3 em andamento**: energia (3A), velocidade (3B) e equilíbrio (3C) prontos. Cada
+reação mostra ΔH°/ΔS°/ΔG°, a velocidade (dado medido, catálise ou barreira de ativação), a
+constante de equilíbrio e o princípio de Le Chatelier, o Kps dos precipitados, o pH de ácidos e
+bases, os
 números de oxidação (quem oxida e quem reduz), a composição em massa dos produtos com as leis de
 Proust e Dalton e, quando sai H₂, O₂ ou CO₂, como identificar o gás. No topo da página ficam o
-**laboratório de velocidade** e as **calculadoras** (concentração, diluição, mistura de soluções e
+**laboratório de velocidade**, o **laboratório de equilíbrio** (pH, tampão, Kps, K/Q/Le Chatelier) e as **calculadoras** (concentração, diluição, mistura de soluções e
 fórmula mínima).
 
 ## Como rodar
@@ -87,6 +89,7 @@ data/                       TODO o conteúdo (JSON) — dá para editar sem mexe
   element-facts.json        curiosidades dos 118 elementos (leitura complementar, livro da DK, com página)
   kinetics.json             leis de velocidade, k e parâmetros de Arrhenius (Tabelas 14.1 e 14.4) (Fase 3B)
   gas-tests.json            testes de identificação de H2, O2 e CO2
+  equilibrium.json          K (Tabela 10.2), Kw, Ka/Kb (11.1, 11.2, 11.10), indicadores (12.3), Kps (12.4) (Fase 3C)
   items.json                ferramentas (calor, faísca, luz, eletricidade, catalisador)
   reactivity-series.json    série de reatividade (E°), usada pelas regras
   progression.json          níveis, desbloqueios e objetivos
@@ -106,6 +109,7 @@ src/core/                   química e regras do jogo — sem DOM, testável no 
   oxidation.js              número de oxidação (Toolbox K.1) e análise de oxirredução
   composition.js            composição em massa, fórmula mínima/molecular, leis de Proust e Dalton
   solutions.js              conversão de concentração, diluição e mistura de soluções
+  equilibrium.js            K↔ΔG°, van 't Hoff, Q, Le Chatelier, pH, tampão, Kps e íon comum (Fase 3C)
   rules/reaction-rules.js   motor de regras da Fase 2
   glossary.js               acha os termos do glossário num texto (forma mais longa, palavra inteira)
   structure.js              estruturas 2D: desenho, unidade-fórmula, montagem dos lados da equação,
@@ -116,6 +120,7 @@ src/ui/, src/main.js        interface
   glossary-ui.js            termos clicáveis nos textos, balão com a definição e o diálogo do glossário
   kinetics-lab.js           laboratório de velocidade (curva de concentração, meia-vida, +10 °C)
   calculators.js            calculadoras: concentração, diluição, mistura, fórmula mínima
+  equilibrium-lab.js        laboratório de equilíbrio: pH com indicadores, tampão, Kps, K/Q/Le Chatelier
 tests/                      testes (node:test)
 ```
 
@@ -261,6 +266,28 @@ O jogo **nunca extrapola**: fora da faixa de temperatura medida, não há k.
   Arrhenius pelos pontos do N₂O₅ dá os 103 kJ/mol da Tabela 14.4, e o exemplo resolvido da p. 573
   (N₂O₅ a 65 °C) é reproduzido.
 
+## Fase 3C: equilíbrio químico
+
+`data/equilibrium.json` traz as tabelas de Atkins & Jones: 10.2 (K de reações entre gases, p. 389),
+Kw (p. 430), 11.1 e 11.2 (Ka e Kb, p. 436–437), 11.10 (ácidos polipróticos, p. 455), 12.3
+(indicadores, p. 493) e 12.4 (Kps, p. 497). `src/core/equilibrium.js` faz as contas:
+
+- **K = e^(−ΔG°/RT)** com os dados da Fase 3A, para qualquer reação do jogo; van 't Hoff para
+  outras temperaturas; **Q × K** para a direção; **Le Chatelier** (concentração, pressão pelo Δn
+  de gás, temperatura pelo sinal de ΔH°).
+- **pH** de ácidos e bases fortes (com a autoprotólise da água) e fracos (equação de 2º grau sem
+  aproximação), H₂SO₄ com a 2ª ionização, **tampão** (pH = pKa + log [base]/[ácido]), **Kps**,
+  solubilidade molar e **efeito do íon comum**, cor dos indicadores.
+- **Painel "Equilíbrio"** em cada reação, **laboratório de equilíbrio** (⚖️) e **nível 15** com
+  perguntas de pH, tampão, Kps e Le Chatelier (múltipla escolha).
+- **Testes**:
+  - K × Kc em todos os pontos da Tabela 10.2;
+  - a Tabela 10.2 conferida contra a termodinâmica da Fase 3A (NH₃ e SO₃ batem; o HCl diverge
+    ~40× do Apêndice 2A do próprio livro, e isso está registrado e mostrado no laboratório);
+  - os Kps conferidos contra a regra de solubilidade usada pelo motor (todo "insolúvel" dissolve
+    menos que todo "pouco solúvel");
+  - os exemplos 10.3, 10.13, 11.7, 12.1, 12.8 e o Self-Test 11.15A reproduzidos.
+
 ## Itens das apostilas do ensino médio
 
 O mapeamento das apostilas Bernoulli (v. 1–6) está no `CLAUDE.md`. Já entraram:
@@ -304,7 +331,7 @@ massas molares que já existiam. A Fase 3 segue o mesmo caminho:
 **Fase 3 — conteúdo avançado**
 - Termodinâmica (3A) e cinética (3B): prontas, como dados à parte (`thermo.json`,
   `kinetics.json`) e painéis novos em `src/ui/`, sem mudar as reações nem os testes de conservação.
-- Equilíbrio (3C): mesmo caminho — um `equilibrium.json` com K do livro e um painel/objetivo novo.
+- Equilíbrio (3C): pronto, no mesmo formato (`equilibrium.json`, painel, laboratório, objetivo).
 - Moléculas 3D: um componente de UI à parte (ex.: 3Dmol.js) alimentado por um `data/structures/`.
 - Química orgânica: novas substâncias/reações nos mesmos JSON (o leitor de fórmulas já aceita
   `CH3COOH` e similares).

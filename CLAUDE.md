@@ -42,8 +42,12 @@ Detalhes de arquitetura, estrutura de pastas e "como adicionar conteúdo" estão
     reações), testes de gases (`data/gas-tests.json`), Proust/Dalton/composição/fórmula mínima
     (`src/core/composition.js`), concentração/diluição/mistura (`src/core/solutions.js`) e o
     diálogo de calculadoras.
-  - Próximas: 3C Equilíbrio (caps. 10–12), 3D Moléculas 3D (cap. 3, VSEPR), 3E Orgânica
-    (caps. 18–19), 3F Missões (decidir com o usuário).
+  - **3C Equilíbrio — CONCLUÍDA**: `data/equilibrium.json` (Tabelas 10.2, 11.1, 11.2, 11.10, 12.3,
+    12.4 e Kw), `src/core/equilibrium.js` (K pelo ΔG° da 3A, van 't Hoff, Q, Le Chatelier, pH exato,
+    tampão, Kps, íon comum), painel "Equilíbrio", laboratório de equilíbrio e nível 15. Divergência
+    do livro registrada: Tabela 10.2 × Apêndice 2A para o HCl (~40×).
+  - Próximas: 3D Moléculas 3D (cap. 3, VSEPR), 3E Orgânica (caps. 18–19), 3F Missões (decidir
+    com o usuário).
   - **Curiosidades dos elementos — CONCLUÍDA**: os 118 elementos têm descrição e curiosidades no
     painel da tabela periódica (`data/element-facts.json`), escritas com palavras próprias a partir
     do livro da DK (*The Periodic Table Book*, 2017), como leitura complementar com página. Erros do
