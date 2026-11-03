@@ -1,0 +1,41 @@
+{
+  "_meta": {
+    "description": "Forma das moléculas (Fase 3D). A geometria não é guardada aqui: o jogo a deduz pelo modelo VSEPR a partir das estruturas de Lewis de structures.json (ligações, ordens e cargas formais). Este arquivo traz só os nomes das formas, a hibridização e os dados medidos usados para conferir as previsões.",
+    "fields": "shapes: { 'regiões|átomos|pares': nome } (Fig. 3.1); arrangements: { regiões: nome do arranjo eletrônico }; hybridization: { regiões: sp... } (Tabela 3.2); measuredAngles: { fórmula: { atom, angle } }; dipoles: { fórmula: debye } (Tabela 3.1); nonpolarBonds: pares de elementos cuja ligação conta como praticamente apolar."
+  },
+  "arrangements": {
+    "2": "linear", "3": "trigonal plano", "4": "tetraédrico", "5": "de bipirâmide trigonal", "6": "octaédrico"
+  },
+  "shapes": {
+    "2|2|0": "linear",
+    "3|3|0": "trigonal plana",
+    "3|2|1": "angular",
+    "4|4|0": "tetraédrica",
+    "4|3|1": "pirâmide trigonal",
+    "4|2|2": "angular",
+    "5|5|0": "bipirâmide trigonal",
+    "5|4|1": "gangorra",
+    "5|3|2": "forma de T",
+    "5|2|3": "linear",
+    "6|6|0": "octaédrica",
+    "6|5|1": "pirâmide de base quadrada",
+    "6|4|2": "quadrado planar"
+  },
+  "shapesSource": { "ref": "atkins-jones", "topic": "Seções 3.1–3.2 e Fig. 3.1: modelo VSEPR, nomes das formas e ângulos", "pages": "94–100" },
+  "hybridization": { "2": "sp", "3": "sp²", "4": "sp³", "5": "sp³d", "6": "sp³d²" },
+  "hybridizationSource": { "ref": "atkins-jones", "topic": "Tabela 3.2: hibridização e forma molecular", "pages": "109" },
+  "measuredAngles": {
+    "CH4": { "atom": "C", "angle": 109.5 },
+    "H2O": { "atom": "O", "angle": 104.5 },
+    "NH3": { "atom": "N", "angle": 107 }
+  },
+  "measuredAnglesSource": { "ref": "atkins-jones", "topic": "Seção 3.1: ângulos de ligação medidos (CH4, H2O, NH3)", "pages": "95" },
+  "dipoles": { "HCl": 1.08, "H2O": 1.85, "NH3": 1.47, "CO2": 0, "CH4": 0, "HF": 1.91, "CO": 0.12, "BF3": 0, "O3": 0.53 },
+  "dipolesSource": { "ref": "atkins-jones", "topic": "Seção 3.3 e Tabela 3.1: momentos de dipolo de moléculas selecionadas", "pages": "101–102" },
+  "nonpolarBonds": [["C", "H"]],
+  "nonpolarBondsSource": [
+    { "ref": "bernoulli", "topic": "v. 2, Frente D, Módulo 05: hidrocarbonetos são apolares ou praticamente apolares — a ligação C—H tem pouca polaridade", "pages": "78" },
+    { "ref": "atkins-jones", "topic": "Cadeias de hidrocarboneto apolares", "pages": "180" }
+  ],
+  "regionsSource": { "ref": "atkins-jones", "topic": "Seção 3.1: ligação dupla ou tripla conta como uma região; seção 3.2: o elétron desemparelhado do NO2 também", "pages": "96–98" }
+}

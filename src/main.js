@@ -5,7 +5,7 @@ import { loadGameData } from './loader.js';
 import { createEngine } from './core/engine.js';
 import { initialState, applyResult, inventory, restoreState, unlockLevelMap, isObjectiveDone, answerObjective } from './core/progression.js';
 import { lookupReaction } from './core/engine.js';
-import { formatFormulaHTML } from './core/formula.js';
+import { formatFormulaHTML, formatFormulaText } from './core/formula.js';
 import { renderPeriodicTable } from './ui/periodic-table.js';
 import { renderResult, renderWelcome } from './ui/result-panel.js';
 import { $, html, raw, esc, mainCategory } from './ui/dom.js';
@@ -15,6 +15,7 @@ import { initGlossaryUI } from './ui/glossary-ui.js';
 import { mountKineticsLab } from './ui/kinetics-lab.js';
 import { mountCalculators } from './ui/calculators.js';
 import { mountEquilibriumLab } from './ui/equilibrium-lab.js';
+import { renderMoleculeCard, galleryGroups, moleculeName } from './ui/molecule-card.js';
 
 const SAVE_KEY = 'elementar:v1';
 const MAX_SUBSTANCES = 4;
@@ -187,7 +188,7 @@ async function main() {
               .map((o) => {
                 const ok = state.completedObjectives.includes(o.id) || isObjectiveDone(o, state, data);
                 return html`<li class="${ok ? 'is-done' : ''}"><span class="check" aria-hidden="true">${ok ? '✔' : '○'}</span>
-                  <div><span>${o.text}</span>${raw(!ok && o.type === 'stoich' ? stoichForm(o) : '')}${raw(!ok && o.type === 'kinetics' ? kineticsForm(o) : '')}${raw(!ok && o.type === 'equilibrium' ? equilibriumForm(o) : '')}${raw(!ok && o.hint ? `<details class="hint"><summary>Dica</summary>${esc(o.hint)}</details>` : '')}</div></li>`;
+                  <div><span>${o.text}</span>${raw(!ok && o.type === 'stoich' ? stoichForm(o) : '')}${raw(!ok && o.type === 'kinetics' ? kineticsForm(o) : '')}${raw(!ok && o.type === 'equilibrium' ? equilibriumForm(o) : '')}${raw(!ok && o.type === 'molecule' ? moleculeForm(o) : '')}${raw(!ok && o.hint ? `<details class="hint"><summary>Dica</summary>${esc(o.hint)}</details>` : '')}</div></li>`;
               })
               .join(''),
           )}
@@ -240,12 +241,24 @@ async function main() {
       <button class="btn btn-primary" type="submit">Conferir</button></div>${raw(lab)}</form>`;
   }
 
+  /** Pergunta de forma molecular (Fase 3D): escolha ou número, com atalho para a galeria 3D. */
+  function moleculeForm(o) {
+    const view = html`<button type="button" class="btn btn-ghost btn-small" data-open-molecule="${o.molecule}">🧊 Ver ${formatFormulaText(o.molecule)} em 3D</button>`;
+    if (o.choices) {
+      const opts = o.choices.map((c) => html`<button type="button" class="btn btn-ghost stoich-choice" data-answer="${c.value}">${c.label}</button>`).join('');
+      return html`<form class="stoich-form" data-objective="${o.id}"><div class="stoich-row">${raw(opts)}</div>${raw(view)}</form>`;
+    }
+    return html`<form class="stoich-form" data-objective="${o.id}">
+      <div class="stoich-row"><input name="answer" inputmode="numeric" autocomplete="off" aria-label="Resposta (${o.unitLabel})" placeholder="${o.unitLabel}"><span class="small">${o.unitLabel}</span>
+      <button class="btn btn-primary" type="submit">Conferir</button></div>${raw(view)}</form>`;
+  }
+
   function submitStoich(objectiveId, answer) {
     const prevLevel = state.levelIndex;
     const { state: next, events, correct } = answerObjective(state, objectiveId, answer, data);
     if (!correct) {
       const kind = data.progression.levels.flatMap((l) => l.objectives).find((o) => o.id === objectiveId)?.type;
-      toast(kind === 'kinetics' || kind === 'equilibrium' ? 'Ainda não. Confira a fórmula e as unidades (a dica ajuda).' : 'Ainda não. Confira a conversão gramas → mol → gramas (a dica ajuda).');
+      toast(kind === 'molecule' ? 'Ainda não. Gire a molécula em 3D e conte ligações e pares isolados (a dica ajuda).' : kind === 'kinetics' || kind === 'equilibrium' ? 'Ainda não. Confira a fórmula e as unidades (a dica ajuda).' : 'Ainda não. Confira a conversão gramas → mol → gramas (a dica ajuda).');
       return;
     }
     state = next;
@@ -335,6 +348,32 @@ async function main() {
   const kineticsLab = mountKineticsLab($('#kinetics-dialog'), data);
   $('#btn-kinetics').addEventListener('click', () => kineticsLab.open());
   const calculators = mountCalculators($('#calc-dialog'), data);
+  // Galeria de moléculas em 3D (Fase 3D).
+  const molDlg = $('#molecules-dialog');
+  const molSel = $('#mol-select');
+  molSel.innerHTML = galleryGroups(data)
+    .map(([label, keys]) => `<optgroup label="${esc(label)}">${keys.map((k) => `<option value="${esc(k)}">${esc(formatFormulaText(k))} — ${esc(moleculeName(k, data))}</option>`).join('')}</optgroup>`)
+    .join('');
+  let stopGallery = () => {};
+  const showGallery = (key) => {
+    stopGallery();
+    molSel.value = key;
+    stopGallery = renderMoleculeCard($('#mol-gallery-card'), key, data);
+  };
+  molSel.addEventListener('change', () => showGallery(molSel.value));
+  const openMolecules = (key) => {
+    showGallery(key || molSel.value || 'H2O');
+    if (typeof molDlg.showModal === 'function') molDlg.showModal();
+    else molDlg.setAttribute('open', '');
+  };
+  $('#btn-molecules').addEventListener('click', () => openMolecules('H2O'));
+  molDlg.addEventListener('close', () => stopGallery());
+  molDlg.querySelector('.mol-close').addEventListener('click', () => molDlg.close?.() ?? molDlg.removeAttribute('open'));
+  document.addEventListener('click', (ev) => {
+    const b = ev.target.closest('[data-open-molecule]');
+    if (b) openMolecules(b.dataset.openMolecule);
+  });
+
   // Laboratório de equilíbrio (Fase 3C).
   const eqLab = mountEquilibriumLab($('#equilibrium-dialog'), data);
   $('#btn-equilibrium').addEventListener('click', () => eqLab.open());
@@ -370,7 +409,7 @@ async function main() {
   renderWelcome($('#result'));
   renderAll();
   // Glossário: termos dos textos explicativos viram links para a definição.
-  initGlossaryUI(data, ['#result', '#objectives', '.pt-info', '#level-dialog-body', '#kinetics-dialog .kin-body', '#calc-dil-out', '#calc-mix-out', '#calc-formula-out', '#calc-conc-out', '#equilibrium-dialog .eq-out']);
+  initGlossaryUI(data, ['#result', '#objectives', '.pt-info', '#level-dialog-body', '#kinetics-dialog .kin-body', '#calc-dil-out', '#calc-mix-out', '#calc-formula-out', '#calc-conc-out', '#equilibrium-dialog .eq-out', '#mol-gallery-card']);
 }
 
 main();

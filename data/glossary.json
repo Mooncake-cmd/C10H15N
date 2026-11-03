@@ -3603,6 +3603,205 @@
         "topic": "Glossário: van ’t Hoff equation",
         "pages": "B29"
       }
+    },
+    {
+      "id": "vsepr",
+      "term": "Modelo VSEPR",
+      "aliases": [
+        "vsepr",
+        "repulsão dos pares de elétrons"
+      ],
+      "definition": "Modelo que prevê a forma de uma molécula a partir de uma ideia simples: as regiões de elétrons em volta de um átomo (ligações e pares isolados) se repelem e ficam o mais longe possível umas das outras. Uma ligação dupla ou tripla conta como uma só região.",
+      "example": "O carbono do CH4 tem 4 regiões, que se afastam ao máximo formando um tetraedro.",
+      "related": [
+        "par-isolado",
+        "arranjo-eletronico",
+        "forma-molecular"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: valence-shell electron-pair repulsion model",
+        "pages": "B29"
+      }
+    },
+    {
+      "id": "par-isolado",
+      "term": "Par isolado",
+      "aliases": [
+        "pares isolados",
+        "par não ligante",
+        "pares não ligantes"
+      ],
+      "definition": "Um par de elétrons da camada de valência que não participa de nenhuma ligação. Ele também ocupa espaço em volta do átomo — até mais que uma ligação — e por isso muda a forma da molécula.",
+      "example": "O oxigênio da água tem dois pares isolados; eles empurram as ligações O–H e o ângulo cai de 109,5° para 104,5°.",
+      "related": [
+        "vsepr",
+        "eletrons-de-valencia"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: lone pair",
+        "pages": "B17"
+      }
+    },
+    {
+      "id": "arranjo-eletronico",
+      "term": "Arranjo eletrônico",
+      "aliases": [
+        "arranjos eletrônicos"
+      ],
+      "definition": "Como as regiões de elétrons (ligações e pares isolados) se distribuem em volta de um átomo: linear (2), trigonal plano (3), tetraédrico (4)… A forma da molécula considera só onde estão os átomos.",
+      "example": "Na amônia, o arranjo é tetraédrico (3 ligações + 1 par isolado), mas a forma é uma pirâmide trigonal.",
+      "related": [
+        "vsepr",
+        "forma-molecular"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: electron arrangement",
+        "pages": "B10"
+      }
+    },
+    {
+      "id": "forma-molecular",
+      "term": "Forma molecular (geometria)",
+      "aliases": [
+        "geometria molecular",
+        "forma da molécula",
+        "forma das moléculas",
+        "formas das moléculas"
+      ],
+      "definition": "A disposição dos átomos de uma molécula no espaço: linear, angular, trigonal plana, pirâmide trigonal, tetraédrica… Ela decide se a molécula é polar e, com isso, muitas propriedades da substância.",
+      "example": "CO2 é linear; H2O é angular; NH3 é uma pirâmide trigonal; CH4 é tetraédrica.",
+      "related": [
+        "vsepr",
+        "angulo-de-ligacao",
+        "molecula-polar"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Seção 3.1 e Fig. 3.1: nomes das formas das moléculas",
+        "pages": "94–95"
+      }
+    },
+    {
+      "id": "angulo-de-ligacao",
+      "term": "Ângulo de ligação",
+      "aliases": [
+        "ângulos de ligação"
+      ],
+      "definition": "O ângulo entre duas ligações que saem do mesmo átomo.",
+      "example": "No CH4, todos os ângulos H–C–H são de 109,5°; na água, H–O–H é 104,5°.",
+      "related": [
+        "forma-molecular"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: bond angle",
+        "pages": "B4"
+      }
+    },
+    {
+      "id": "hibridizacao",
+      "term": "Hibridização",
+      "aliases": [
+        "hibridizado",
+        "hibridizada",
+        "orbital híbrido",
+        "orbitais híbridos"
+      ],
+      "definition": "Modelo em que os orbitais de um átomo se misturam para formar orbitais \"híbridos\" apontando nas direções das regiões do VSEPR: 2 regiões → sp (linear), 3 → sp² (trigonal), 4 → sp³ (tetraédrico).",
+      "example": "O carbono do metano é sp³; o do CO2 é sp.",
+      "related": [
+        "vsepr",
+        "arranjo-eletronico"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: hybridization; hybrid orbital",
+        "pages": "B13"
+      }
+    },
+    {
+      "id": "momento-de-dipolo",
+      "term": "Momento de dipolo",
+      "aliases": [
+        "momentos de dipolo",
+        "dipolo",
+        "dipolos"
+      ],
+      "definition": "Medida da separação de cargas numa ligação ou numa molécula: um lado levemente negativo (o átomo mais eletronegativo) e outro levemente positivo. Medido em debye (D).",
+      "example": "Água: 1,85 D; dióxido de carbono: 0 D, porque os dois dipolos C=O se cancelam.",
+      "related": [
+        "molecula-polar",
+        "eletronegatividade"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: dipole moment; electric dipole moment",
+        "pages": "B9"
+      }
+    },
+    {
+      "id": "ligacao-polar",
+      "term": "Ligação covalente polar",
+      "aliases": [
+        "ligação polar",
+        "ligações polares",
+        "ligações covalentes polares"
+      ],
+      "definition": "Ligação covalente entre átomos de eletronegatividades diferentes: os elétrons ficam mais perto do átomo mais eletronegativo, que ganha uma carga parcial negativa.",
+      "example": "Na ligação H–Cl, o cloro fica levemente negativo e o hidrogênio levemente positivo.",
+      "related": [
+        "momento-de-dipolo",
+        "eletronegatividade"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: polar covalent bond",
+        "pages": "B21"
+      }
+    },
+    {
+      "id": "molecula-polar",
+      "term": "Molécula polar",
+      "aliases": [
+        "moléculas polares",
+        "polar",
+        "polares"
+      ],
+      "definition": "Molécula com momento de dipolo diferente de zero: os dipolos das ligações não se cancelam por causa da forma. Moléculas polares costumam se dissolver bem em água.",
+      "example": "H2O e NH3 são polares; o CO2, mesmo com ligações polares, não é, porque é linear e simétrico.",
+      "related": [
+        "molecula-apolar",
+        "momento-de-dipolo",
+        "forma-molecular"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: polar molecule",
+        "pages": "B21"
+      }
+    },
+    {
+      "id": "molecula-apolar",
+      "term": "Molécula apolar",
+      "aliases": [
+        "moléculas apolares",
+        "apolar",
+        "apolares"
+      ],
+      "definition": "Molécula com momento de dipolo zero: ou as ligações não são polares (H2, O2), ou os dipolos se cancelam pela simetria (CO2, CH4). Hidrocarbonetos são praticamente apolares.",
+      "example": "Óleo (hidrocarbonetos) e água não se misturam: o óleo é apolar e a água é polar.",
+      "related": [
+        "molecula-polar",
+        "momento-de-dipolo"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: nonpolar molecule",
+        "pages": "B19"
+      }
     }
   ]
 }

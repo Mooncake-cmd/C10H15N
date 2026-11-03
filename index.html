@@ -18,6 +18,7 @@
     <button class="btn btn-ghost" type="button" data-glossary-open="" title="O que significa cada palavra da química">📖 <span class="hide-narrow">Glossário</span></button>
     <button id="btn-kinetics" class="btn btn-ghost" type="button" title="Laboratório de velocidade das reações">⏱️ <span class="hide-narrow">Velocidade</span></button>
     <button id="btn-equilibrium" class="btn btn-ghost" type="button" title="Laboratório de equilíbrio: pH, tampão, solubilidade, K e Le Chatelier">⚖️ <span class="hide-narrow">Equilíbrio</span></button>
+    <button id="btn-molecules" class="btn btn-ghost" type="button" title="Moléculas em 3D: forma, ângulos e polaridade">🧊 <span class="hide-narrow">Moléculas</span></button>
     <button id="btn-calcs" class="btn btn-ghost" type="button" title="Concentração, diluição, mistura e fórmula mínima">🧮 <span class="hide-narrow">Calculadoras</span></button>
     <button id="btn-reset" class="btn btn-ghost" type="button" title="Apagar progresso">Recomeçar</button>
   </header>
@@ -186,6 +187,16 @@
         <div id="eq-gas-out" class="eq-out" aria-live="polite"></div>
       </details>
     </div>
+  </dialog>
+
+  <dialog id="molecules-dialog" class="level-dialog kinetics-dialog" aria-labelledby="mol-title">
+    <div class="glossary-head">
+      <h2 id="mol-title">🧊 Moléculas em 3D</h2>
+      <button class="btn btn-ghost mol-close" type="button" aria-label="Fechar a galeria de moléculas">×</button>
+    </div>
+    <p class="small">Pelo modelo VSEPR, as regiões de elétrons em volta de cada átomo (ligações e pares isolados) se afastam ao máximo — e isso decide a forma da molécula.</p>
+    <div class="kin-controls"><label>Molécula <select id="mol-select"></select></label></div>
+    <div id="mol-gallery-card" class="mol-card"></div>
   </dialog>
 
   <div id="toasts" class="toasts" aria-live="polite"></div>
