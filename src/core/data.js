@@ -43,6 +43,8 @@ export function buildGameData(raw) {
     gasTests: raw.gasTests?.gases ?? {},
     // Equilíbrio químico (Fase 3C): Tabelas 10.2, 11.1, 11.2, 11.10, 12.3 e 12.4 de Atkins & Jones.
     equilibrium: buildEquilibrium(raw.equilibrium),
+    // Forma das moléculas (Fase 3D): nomes das formas e dados medidos (cap. 3 de Atkins & Jones).
+    molecules: raw.molecules ?? null,
     sources: raw.sources.sources,
     complementarySources: raw.sources._meta.complementaryOnly ?? [],
     reactivitySeries: raw.reactivitySeries.series,

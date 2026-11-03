@@ -46,8 +46,13 @@ Detalhes de arquitetura, estrutura de pastas e "como adicionar conteúdo" estão
     12.4 e Kw), `src/core/equilibrium.js` (K pelo ΔG° da 3A, van 't Hoff, Q, Le Chatelier, pH exato,
     tampão, Kps, íon comum), painel "Equilíbrio", laboratório de equilíbrio e nível 15. Divergência
     do livro registrada: Tabela 10.2 × Apêndice 2A para o HCl (~40×).
-  - Próximas: 3D Moléculas 3D (cap. 3, VSEPR), 3E Orgânica (caps. 18–19), 3F Missões (decidir
-    com o usuário).
+  - **3D Moléculas 3D — CONCLUÍDA**: `src/core/vsepr.js` deduz pares isolados, AXE, forma,
+    hibridização, coordenadas 3D e polaridade das estruturas de Lewis de `structures.json`;
+    `data/molecules.json` (Fig. 3.1, Tabelas 3.1 e 3.2, ângulos medidos); visualizador próprio em
+    canvas (`src/ui/molecule3d.js`), painel "Forma das moléculas", galeria 🧊 e nível 16. Ligação
+    C–H tratada como praticamente apolar (Bernoulli v. 2 p. 78). Ainda não feito: interações
+    intermoleculares (v. 3 C12) — item "médio".
+  - Próximas: 3E Orgânica (caps. 18–19), 3F Missões (decidir com o usuário).
   - **Curiosidades dos elementos — CONCLUÍDA**: os 118 elementos têm descrição e curiosidades no
     painel da tabela periódica (`data/element-facts.json`), escritas com palavras próprias a partir
     do livro da DK (*The Periodic Table Book*, 2017), como leitura complementar com página. Erros do

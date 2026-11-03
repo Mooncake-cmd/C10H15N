@@ -13,9 +13,11 @@ import { redoxAnalysis, formatOx, frac } from '../core/oxidation.js';
 import { massComposition, empiricalFormula, massRatio, sameElementsPartners, multipleProportions } from '../core/composition.js';
 import { kFromDeltaG, interpretK, leChatelier, findSpecies, solutionPH, molarSolubility } from '../core/equilibrium.js';
 import { SHIFT_TEXT } from './equilibrium-lab.js';
+import { renderMoleculeCard, reactionMoleculeKeys } from './molecule-card.js';
 import { formatSci, formatDuration, sourceText } from './kinetics-lab.js';
 
 let stopStage = () => {};
+let stopMolecule = () => {};
 
 /** Monta a animação no placeholder [data-stage]; um erro aqui nunca derruba o painel. */
 function mountStage(root, mount) {
@@ -279,6 +281,42 @@ function redoxHTML(data, r) {
     <p class="small">Agente redutor: ${list(a.reducers)} (contém o elemento que oxida). Agente oxidante: ${list(a.oxidizers)} (contém o elemento que reduz).${dispro ? ' O mesmo elemento oxida e reduz ao mesmo tempo: é um desproporcionamento.' : ''}</p>${details}</section>`;
 }
 
+/** Seção "Forma das moléculas (3D)" (Fase 3D): abas com as moléculas e íons da reação. */
+function moleculesHTML(data, r) {
+  const keys = reactionMoleculeKeys(r, data);
+  if (!keys.length) return '';
+  const tabs = keys
+    .map((k, i) => `<button type="button" class="btn btn-ghost btn-small mol-tab${i === 0 ? ' is-active' : ''}" data-mol-key="${esc(k)}" aria-pressed="${i === 0}">${formatFormulaHTML(k)}</button>`)
+    .join('');
+  return `<section class="molecules"><h3>Forma das moléculas (3D)</h3>
+    <div class="mol-tabs" role="group" aria-label="Escolha a molécula">${tabs}</div>
+    <div class="mol-card" data-first="${esc(keys[0])}"></div></section>`;
+}
+
+function mountMolecules(root, data) {
+  const sec = root.querySelector('.molecules');
+  if (!sec) return;
+  const card = sec.querySelector('.mol-card');
+  const show = (key) => {
+    stopMolecule();
+    try {
+      stopMolecule = renderMoleculeCard(card, key, data);
+    } catch (err) {
+      console.warn('Molécula 3D indisponível:', err);
+      card.innerHTML = '';
+    }
+    sec.querySelectorAll('.mol-tab').forEach((b) => {
+      b.classList.toggle('is-active', b.dataset.molKey === key);
+      b.setAttribute('aria-pressed', String(b.dataset.molKey === key));
+    });
+  };
+  sec.querySelector('.mol-tabs').addEventListener('click', (ev) => {
+    const b = ev.target.closest('[data-mol-key]');
+    if (b) show(b.dataset.molKey);
+  });
+  show(card.dataset.first);
+}
+
 /** K = 10^n em texto: números enormes ou minúsculos ficam como potência de 10. */
 function kText(log10K) {
   if (Math.abs(log10K) < 300) return formatSci(10 ** log10K);
@@ -402,6 +440,8 @@ const itemLabel = (data, id) => {
 export function renderResult(root, data, result, { newSubstances = [] } = {}) {
   stopStage();
   stopStage = () => {};
+  stopMolecule();
+  stopMolecule = () => {};
   root.classList.remove('kind-reaction', 'kind-needs-condition', 'kind-no-reaction', 'kind-unknown', 'kind-invalid');
   root.classList.add(`kind-${result.kind}`);
 
@@ -433,6 +473,7 @@ export function renderResult(root, data, result, { newSubstances = [] } = {}) {
           : '',
       )}
       ${raw(redoxHTML(data, r))}
+      ${raw(moleculesHTML(data, r))}
       ${raw(gasTestsHTML(data, r))}
       <aside class="safety safety-${r.safety.level}">
         <strong>${SAFETY_LABEL[r.safety.level]}</strong>
@@ -446,6 +487,7 @@ export function renderResult(root, data, result, { newSubstances = [] } = {}) {
       ${raw(sourceHTML(data, r.source))}`;
     mountStage(root, (el) => mountReactionStage(el, data, r));
     mountCalculator(root, data, r);
+    mountMolecules(root, data);
     return;
   }
 

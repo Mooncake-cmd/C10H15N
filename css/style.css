@@ -339,6 +339,20 @@ sub, sup { font-size: 0.7em; line-height: 0; }
 .ph-scale { display: flex; justify-content: space-between; }
 .eq-inds { columns: 2 14rem; }
 .eq-out p { margin: 0.35rem 0; }
+.molecules { margin: 0.8rem 0; padding: 0.6rem 0.8rem; border-radius: var(--radius); background: var(--panel-2); }
+.molecules h3 { margin-top: 0; }
+.mol-tabs { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-bottom: 0.5rem; }
+.mol-tab.is-active { border-color: var(--accent); background: var(--panel); }
+.mol3d { display: flex; gap: 0.8rem; flex-wrap: wrap; align-items: flex-start; }
+.mol3d-view { flex: none; width: 260px; max-width: 100%; }
+.mol3d-canvas { width: 100%; height: 220px; display: block; border-radius: var(--radius); background: radial-gradient(circle at 50% 40%, var(--panel), var(--panel-2)); border: 1px solid var(--border); touch-action: none; cursor: grab; }
+.mol3d-canvas:active { cursor: grabbing; }
+.mol3d-canvas:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.mol3d-info { flex: 1 1 220px; min-width: 0; }
+.mol3d-info h4 { margin: 0 0 0.3rem; }
+.mol3d-info p { margin: 0.3rem 0; }
+.mol3d-lp { display: inline-flex; gap: 0.3rem; align-items: center; margin-top: 0.3rem; }
+.mol3d-hint { margin: 0.1rem 0 0; }
 .kin-row { display: flex; gap: 0.8rem; align-items: center; flex-wrap: wrap; }
 .kin-row > div { flex: 1 1 220px; min-width: 0; }
 .kin-svg { width: 300px; max-width: 100%; flex: none; }

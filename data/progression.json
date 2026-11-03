@@ -284,6 +284,38 @@
           "hint": "Aquecer favorece o sentido que absorve calor (o endotérmico). Aqui, é o sentido inverso." }
       ],
       "lesson": "No equilíbrio, as reações direta e inversa continuam acontecendo, na mesma velocidade. K = e^(−ΔG°/RT): K grande favorece os produtos; K pequeno, os reagentes. Comparando Q com K, sabemos para onde a reação vai. Le Chatelier: o equilíbrio se desloca para aliviar a perturbação — mais pressão favorece o lado com menos gás; aquecer favorece o sentido endotérmico. Nas soluções: pH = −log[H3O⁺]; ácido fraco se ioniza pouco (Ka); tampão resiste a mudanças de pH; e o Kps diz quanto de um sal se dissolve."
+    },
+    {
+      "id": "n15",
+      "phase": 3,
+      "title": "Forma das moléculas",
+      "intro": "Fase 3D: as moléculas têm forma no espaço. Pelo modelo VSEPR, as regiões de elétrons em volta de cada átomo — ligações e pares isolados — se afastam o máximo possível, e isso decide se a molécula é linear, angular, piramidal ou tetraédrica. A forma decide também se ela é polar. Gire as moléculas no painel de cada reação ou na galeria 🧊 Moléculas, no topo.",
+      "objectives": [
+        { "id": "n15-agua", "type": "molecule", "molecule": "H2O", "ask": "shape",
+          "choices": [{ "value": "linear", "label": "Linear" }, { "value": "angular", "label": "Angular" }, { "value": "pirâmide trigonal", "label": "Pirâmide trigonal" }],
+          "text": "Qual é a forma da molécula de água?",
+          "hint": "O oxigênio tem 2 ligações e 2 pares isolados: 4 regiões em tetraedro, mas só 2 têm átomos." },
+        { "id": "n15-amonia", "type": "molecule", "molecule": "NH3", "ask": "shape",
+          "choices": [{ "value": "trigonal plana", "label": "Trigonal plana" }, { "value": "pirâmide trigonal", "label": "Pirâmide trigonal" }, { "value": "tetraédrica", "label": "Tetraédrica" }],
+          "text": "E a da amônia, NH3?",
+          "hint": "3 ligações + 1 par isolado no nitrogênio. O par empurra os três hidrogênios para baixo." },
+        { "id": "n15-pares", "type": "molecule", "molecule": "NH3", "ask": "lonePairs", "unitLabel": "pares isolados",
+          "text": "Quantos pares isolados tem o nitrogênio da amônia?",
+          "hint": "O N tem 5 elétrons de valência; 3 estão nas ligações com os H." },
+        { "id": "n15-co2", "type": "molecule", "molecule": "CO2", "ask": "polar",
+          "choices": [{ "value": "polar", "label": "Polar" }, { "value": "apolar", "label": "Apolar" }],
+          "text": "As ligações C=O são polares. Então o CO2 é uma molécula polar ou apolar?",
+          "hint": "O CO2 é linear: O=C=O. Os dois dipolos apontam para lados opostos." },
+        { "id": "n15-metano", "type": "molecule", "molecule": "CH4", "ask": "hybridization",
+          "choices": [{ "value": "sp", "label": "sp" }, { "value": "sp²", "label": "sp²" }, { "value": "sp³", "label": "sp³" }],
+          "text": "Qual é a hibridização do carbono no metano, CH4?",
+          "hint": "4 regiões → sp³ (tetraédrico); 3 → sp² (trigonal); 2 → sp (linear)." },
+        { "id": "n15-carbonato", "type": "molecule", "molecule": "CO3^2-", "ask": "shape",
+          "choices": [{ "value": "trigonal plana", "label": "Trigonal plana" }, { "value": "pirâmide trigonal", "label": "Pirâmide trigonal" }, { "value": "tetraédrica", "label": "Tetraédrica" }],
+          "text": "O íon carbonato, CO3²⁻ (do calcário), tem que forma?",
+          "hint": "A ligação dupla C=O conta como uma só região. O carbono não tem par isolado." }
+      ],
+      "lesson": "Modelo VSEPR: conte as regiões de elétrons em volta do átomo central (cada ligação, simples ou múltipla, conta uma; cada par isolado, uma). Elas se afastam ao máximo: 2 → linear, 3 → trigonal, 4 → tetraédrico. A forma considera só os átomos: com pares isolados, o tetraedro vira pirâmide (NH3) ou molécula angular (H2O), e os ângulos ficam um pouco menores. Se os dipolos das ligações não se cancelam pela forma, a molécula é polar."
     }
   ]
 }

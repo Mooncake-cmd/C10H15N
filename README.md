@@ -10,15 +10,15 @@ curados e mais 81 gerados a partir de íons, 41 reações curadas, 17 "não-rea�
 **motor de regras** que monta e balanceia sozinho cerca de 750 reações a partir de regras gerais
 (solubilidade, ácido-base, série eletroquímica, combustão, decomposição), com explicação, fonte e
 segurança. Há também uma calculadora de estequiometria (massa, mol, litros de gás, solução em
-mol/L e rendimento), 15 níveis de progressão e um **glossário** com mais de 180 termos: nos textos, as palavras de química ficam sublinhadas e mostram a
+mol/L e rendimento), 16 níveis de progressão e um **glossário** com mais de 190 termos: nos textos, as palavras de química ficam sublinhadas e mostram a
 definição ao toque. Na tabela periódica, cada um dos 118 elementos tem **curiosidades** (leitura
 complementar, com a página do livro da DK), e a tabela pode ser colorida por raio atômico,
 energia de ionização, afinidade eletrônica ou eletronegatividade.
 
-**Fase 3 em andamento**: energia (3A), velocidade (3B) e equilíbrio (3C) prontos. Cada
+**Fase 3 em andamento**: energia (3A), velocidade (3B), equilíbrio (3C) e moléculas em 3D (3D) prontos. Cada
 reação mostra ΔH°/ΔS°/ΔG°, a velocidade (dado medido, catálise ou barreira de ativação), a
 constante de equilíbrio e o princípio de Le Chatelier, o Kps dos precipitados, o pH de ácidos e
-bases, os
+bases, a forma 3D das moléculas (VSEPR, com polaridade e hibridização), os
 números de oxidação (quem oxida e quem reduz), a composição em massa dos produtos com as leis de
 Proust e Dalton e, quando sai H₂, O₂ ou CO₂, como identificar o gás. No topo da página ficam o
 **laboratório de velocidade**, o **laboratório de equilíbrio** (pH, tampão, Kps, K/Q/Le Chatelier) e as **calculadoras** (concentração, diluição, mistura de soluções e
@@ -89,6 +89,7 @@ data/                       TODO o conteúdo (JSON) — dá para editar sem mexe
   element-facts.json        curiosidades dos 118 elementos (leitura complementar, livro da DK, com página)
   kinetics.json             leis de velocidade, k e parâmetros de Arrhenius (Tabelas 14.1 e 14.4) (Fase 3B)
   gas-tests.json            testes de identificação de H2, O2 e CO2
+  molecules.json            nomes das formas VSEPR, hibridização, ângulos e dipolos medidos (Fase 3D)
   equilibrium.json          K (Tabela 10.2), Kw, Ka/Kb (11.1, 11.2, 11.10), indicadores (12.3), Kps (12.4) (Fase 3C)
   items.json                ferramentas (calor, faísca, luz, eletricidade, catalisador)
   reactivity-series.json    série de reatividade (E°), usada pelas regras
@@ -109,6 +110,8 @@ src/core/                   química e regras do jogo — sem DOM, testável no 
   oxidation.js              número de oxidação (Toolbox K.1) e análise de oxirredução
   composition.js            composição em massa, fórmula mínima/molecular, leis de Proust e Dalton
   solutions.js              conversão de concentração, diluição e mistura de soluções
+  vsepr.js                  VSEPR a partir das estruturas de Lewis: pares isolados, forma, hibridização,
+                            coordenadas 3D e polaridade (Fase 3D)
   equilibrium.js            K↔ΔG°, van 't Hoff, Q, Le Chatelier, pH, tampão, Kps e íon comum (Fase 3C)
   rules/reaction-rules.js   motor de regras da Fase 2
   glossary.js               acha os termos do glossário num texto (forma mais longa, palavra inteira)
@@ -120,6 +123,8 @@ src/ui/, src/main.js        interface
   glossary-ui.js            termos clicáveis nos textos, balão com a definição e o diálogo do glossário
   kinetics-lab.js           laboratório de velocidade (curva de concentração, meia-vida, +10 °C)
   calculators.js            calculadoras: concentração, diluição, mistura, fórmula mínima
+  molecule3d.js             visualizador 3D próprio em <canvas> (esferas e bastões, pares isolados)
+  molecule-card.js          cartão da molécula: 3D + explicação; usado no painel e na galeria
   equilibrium-lab.js        laboratório de equilíbrio: pH com indicadores, tampão, Kps, K/Q/Le Chatelier
 tests/                      testes (node:test)
 ```
@@ -288,6 +293,27 @@ Kw (p. 430), 11.1 e 11.2 (Ka e Kb, p. 436–437), 11.10 (ácidos polipróticos, 
     menos que todo "pouco solúvel");
   - os exemplos 10.3, 10.13, 11.7, 12.1, 12.8 e o Self-Test 11.15A reproduzidos.
 
+## Fase 3D: moléculas em 3D
+
+A forma das moléculas **não é digitada**: `src/core/vsepr.js` a deduz das estruturas de Lewis que
+já existiam (`structures.json`). Para cada átomo, conta os elétrons de valência, as ligações (uma
+dupla ou tripla conta como uma região) e a carga formal, e daí os pares isolados e as regiões
+(Atkins & Jones, seções 3.1–3.2, p. 94–100). Com isso vêm a notação AXE, o arranjo eletrônico, a
+forma (Fig. 3.1), a hibridização (Tabela 3.2, p. 109) e as **coordenadas 3D**, montadas átomo a
+átomo com as direções ideais de cada arranjo. A **polaridade** é a soma vetorial dos dipolos das
+ligações (diferença de eletronegatividade), com a ligação C–H tratada como praticamente apolar
+(Bernoulli v. 2, p. 78).
+
+- **Visualizador 3D próprio** (sem bibliotecas), em `<canvas>`: gira arrastando ou com as setas,
+  mostra os pares isolados e respeita "reduzir movimento".
+- **Painel "Forma das moléculas (3D)"** em cada reação (abas com as moléculas e íons
+  poliatômicos) e **galeria** 🧊 com as 26 moléculas e íons do jogo.
+- **Nível 16** com perguntas de forma, pares isolados, polaridade e hibridização.
+- **Testes**: formas e notações AXE dos exemplos do livro (CH₄, H₂O, NH₃, CO₂, SO₂, NO₃⁻, CO₃²⁻,
+  SO₄²⁻, NH₄⁺), octeto em toda estrutura, ângulos ideais em toda a geometria 3D sem átomos
+  sobrepostos, polaridade prevista × momentos de dipolo medidos (Tabela 3.1, p. 102) e ângulos
+  medidos menores que os ideais quando há pares isolados (p. 95).
+
 ## Itens das apostilas do ensino médio
 
 O mapeamento das apostilas Bernoulli (v. 1–6) está no `CLAUDE.md`. Já entraram:
@@ -332,7 +358,7 @@ massas molares que já existiam. A Fase 3 segue o mesmo caminho:
 - Termodinâmica (3A) e cinética (3B): prontas, como dados à parte (`thermo.json`,
   `kinetics.json`) e painéis novos em `src/ui/`, sem mudar as reações nem os testes de conservação.
 - Equilíbrio (3C): pronto, no mesmo formato (`equilibrium.json`, painel, laboratório, objetivo).
-- Moléculas 3D: um componente de UI à parte (ex.: 3Dmol.js) alimentado por um `data/structures/`.
+- Moléculas 3D (3D): pronto, com renderizador próprio e geometria deduzida pelo VSEPR.
 - Química orgânica: novas substâncias/reações nos mesmos JSON (o leitor de fórmulas já aceita
   `CH3COOH` e similares).
 - Missões: novos tipos em `OBJECTIVE_CHECKS` e um campo `missions` em `progression.json`
