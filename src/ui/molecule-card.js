@@ -6,6 +6,7 @@ import { formatFormulaHTML } from '../core/formula.js';
 import { analyzeMolecule, moleculeKeys } from '../core/vsepr.js';
 import { mountMolecule3D, modelFrom } from './molecule3d.js';
 import { sourceText } from './kinetics-lab.js';
+import { analyzeOrganic, FUNCTION_LABEL, FUNCTION_GROUP } from '../core/organic.js';
 
 const num = (x) => String(x).replace('.', ',');
 const plural = (n, s, p) => (n === 0 ? `nenhum ${s}` : `${n} ${n === 1 ? s : p}`);
@@ -58,6 +59,30 @@ export function moleculeInfoHTML(m, data) {
   return parts.join('');
 }
 
+const ISOMER_TEXT = { função: 'de função', cadeia: 'de cadeia', posição: 'de posição' };
+
+/** Bloco de química orgânica (Fase 3E): função, nome oficial explicado e isômeros. */
+export function organicInfoHTML(key, data) {
+  const o = analyzeOrganic(key, data);
+  if (!o) return '';
+  const others = o.types.filter((t) => t !== o.fn).map((t) => FUNCTION_LABEL[t]);
+  const parts = o.iupac.parts.map((p) => `<li><code>${esc(p.text)}</code> — ${esc(p.meaning)}</li>`).join('');
+  const iso = o.isomers.length
+    ? `Isômeros no jogo (mesma fórmula, outra estrutura): ${o.isomers
+        .map((i) => `${formatFormulaHTML(i.id)} — ${esc(moleculeName(i.id, data))} (isomeria ${ISOMER_TEXT[i.type]})`)
+        .join('; ')}.`
+    : '';
+  return `<div class="org-info"><h5>Química orgânica</h5>
+    <p><strong>Função: ${esc(FUNCTION_LABEL[o.fn])}</strong> — ${esc(FUNCTION_GROUP[o.fn])}.${others.length ? ` Também tem: ${esc(others.join(', '))}.` : ''} ${o.saturated ? 'Cadeia saturada (só ligações simples entre carbonos).' : 'Cadeia insaturada (tem ligação dupla ou tripla).'}</p>
+    <p>Nome oficial (IUPAC): <strong>${esc(o.iupac.name)}</strong></p>
+    <ul class="org-parts small">${parts}</ul>
+    <p class="small">Fórmula molecular: ${formatFormulaHTML(o.molecularFormula)}. ${iso}</p>
+    <p class="small muted">Nome e função deduzidos da estrutura. Fonte: ${sourceText(data, [
+      { ref: 'atkins-jones', topic: 'Seções 18.1–18.2: nomes e isômeros', pages: '739–741' },
+      { ref: 'atkins-jones', topic: 'Tabela 19.1 e seções 19.1–19.7: grupos funcionais', pages: '762–766' },
+    ])}; Bernoulli, Química, v. 3, Frente D, Módulo 12 (isomeria plana).</p></div>`;
+}
+
 /**
  * Desenha o cartão de uma molécula em `box` (substitui o conteúdo) e monta o visualizador.
  * @returns {() => void} função para parar a animação
@@ -73,7 +98,7 @@ export function renderMoleculeCard(box, key, data, { lonePairs = true } = {}) {
       <div class="mol3d-view"><canvas class="mol3d-canvas" width="260" height="220"></canvas>
         <label class="small mol3d-lp"><input type="checkbox" ${lonePairs ? 'checked' : ''}> pares isolados</label>
         <p class="small muted mol3d-hint">Arraste (ou use as setas) para girar.</p></div>
-      <div class="mol3d-info"><h4>${formatFormulaHTML(key)} — ${esc(name)}</h4>${moleculeInfoHTML(m, data)}</div></div>`;
+      <div class="mol3d-info"><h4>${formatFormulaHTML(key)} — ${esc(name)}</h4>${organicInfoHTML(key, data)}${moleculeInfoHTML(m, data)}</div></div>`;
   const viewer = mountMolecule3D(box.querySelector('canvas'), modelFrom(m), {
     showLonePairs: lonePairs,
     label: `Modelo 3D de ${name}: forma ${m.shape}. Arraste ou use as setas para girar.`,
@@ -89,7 +114,8 @@ export function reactionMoleculeKeys(r, data) {
   for (const e of [...r.reactants, ...r.products]) {
     const sub = data.substancesById.get(e.id);
     add(sub.id);
-    if (sub.ions) {
+    // Íons poliatômicos só de compostos iônicos (o acetato do ácido acético não vira aba).
+    if (sub.ions && !analyzeMolecule(sub.id, data)) {
       add(sub.ions.cation.formula);
       add(sub.ions.anion.formula);
     }

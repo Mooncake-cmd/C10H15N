@@ -316,6 +316,38 @@
           "hint": "A ligação dupla C=O conta como uma só região. O carbono não tem par isolado." }
       ],
       "lesson": "Modelo VSEPR: conte as regiões de elétrons em volta do átomo central (cada ligação, simples ou múltipla, conta uma; cada par isolado, uma). Elas se afastam ao máximo: 2 → linear, 3 → trigonal, 4 → tetraédrico. A forma considera só os átomos: com pares isolados, o tetraedro vira pirâmide (NH3) ou molécula angular (H2O), e os ângulos ficam um pouco menores. Se os dipolos das ligações não se cancelam pela forma, a molécula é polar."
+    },
+    {
+      "id": "n16",
+      "phase": 3,
+      "title": "Química orgânica",
+      "intro": "Fase 3E: a química do carbono. Cada carbono faz quatro ligações e forma cadeias, e alguns grupos de átomos — os grupos funcionais — decidem como a molécula reage: álcool (–OH), aldeído, cetona, ácido carboxílico, éster… Os nomes oficiais (IUPAC) contam a estrutura: prefixo (quantos carbonos), infixo (tipo de ligação) e sufixo (função). Novos compostos orgânicos entraram no inventário; a galeria 🧊 mostra o nome de cada um explicado pedaço por pedaço.",
+      "unlocks": { "substances": ["C2H4", "C2H2", "CH3OH", "CH3OCH3", "CH3CHO", "CH3COCH3", "CH3CH2CH2CH3", "CH(CH3)3", "CH3CH2CH2OH", "CH3CH(OH)CH3"] },
+      "objectives": [
+        { "id": "n16-adicao", "type": "reactionType", "reactionType": "adicao", "text": "Faça uma reação de adição: some uma molécula à ligação dupla do eteno",
+          "hint": "Junte eteno (C2H4) com Cl2 ou HCl. Com H2 ou água, é preciso ajuda: um catalisador (e, para a água, calor)." },
+        { "id": "n16-substituicao", "type": "reaction", "reaction": "ch4-cl2", "text": "Troque um hidrogênio do metano por um cloro (substituição)",
+          "hint": "Metano e cloro não reagem no escuro. A luz quebra o Cl2 e começa uma reação em cadeia." },
+        { "id": "n16-ester", "type": "produce", "substance": "CH3COOC2H5", "text": "Produza um éster com cheiro de fruta",
+          "hint": "Ácido acético + etanol, aquecidos e com um catalisador ácido, formam um éster e água (esterificação)." },
+        { "id": "n16-nome", "type": "organic", "ask": "name", "molecule": "CH3CH(OH)CH3",
+          "choices": [{ "value": "propan-1-ol", "label": "propan-1-ol" }, { "value": "propan-2-ol", "label": "propan-2-ol" }, { "value": "propanona", "label": "propanona" }],
+          "text": "Qual é o nome oficial do álcool CH3–CH(OH)–CH3 (o álcool isopropílico)?",
+          "hint": "3 carbonos = prop; só ligações simples = an; álcool = ol. Falta dizer em que carbono está o –OH." },
+        { "id": "n16-funcao", "type": "organic", "ask": "function", "molecule": "CH3COCH3",
+          "choices": [{ "value": "aldeido", "label": "Aldeído" }, { "value": "cetona", "label": "Cetona" }, { "value": "ester", "label": "Éster" }],
+          "text": "A acetona, CH3–CO–CH3, pertence a que função orgânica?",
+          "hint": "O C=O está no meio da cadeia, entre dois carbonos. Se estivesse na ponta, com um H, seria um aldeído." },
+        { "id": "n16-isomero", "type": "organic", "ask": "isomer", "molecule": "C2H5OH",
+          "choices": [{ "value": "CH3OH", "label": "Metanol, CH3OH" }, { "value": "CH3OCH3", "label": "Metoximetano, CH3OCH3" }, { "value": "CH3CHO", "label": "Etanal, CH3CHO" }],
+          "text": "Qual destas substâncias é isômera do etanol, CH3CH2OH?",
+          "hint": "Isômeros têm a mesma fórmula molecular. Conte os átomos: o etanol é C2H6O." },
+        { "id": "n16-tipo", "type": "organic", "ask": "isomerType", "molecule": "CH3CH2CH2CH3", "other": "CH(CH3)3",
+          "choices": [{ "value": "função", "label": "De função" }, { "value": "cadeia", "label": "De cadeia" }, { "value": "posição", "label": "De posição" }],
+          "text": "Butano (cadeia em fila) e metilpropano (cadeia ramificada) são isômeros de quê?",
+          "hint": "Os dois são alcanos (mesma função). O que muda é o esqueleto de carbonos." }
+      ],
+      "lesson": "Grupos funcionais decidem como uma molécula orgânica reage: alcanos só fazem substituição (com luz); alcenos fazem adição na ligação dupla; ácido + álcool formam éster e água (esterificação, uma condensação). O nome oficial é prefixo + infixo + sufixo: prop-an-2-ol = 3 carbonos, só ligações simples, álcool no carbono 2. Isômeros têm a mesma fórmula molecular e estruturas diferentes: de função, de cadeia ou de posição."
     }
   ]
 }

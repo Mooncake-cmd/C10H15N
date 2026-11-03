@@ -22,6 +22,9 @@ export const TYPE_LABEL = {
   combustao: 'Combustão',
   acido_base: 'Ácido-base',
   oxirreducao: 'Oxirredução',
+  adicao: 'Adição',
+  substituicao: 'Substituição',
+  condensacao: 'Condensação',
 };
 
 export const FAMILY_LABEL = {

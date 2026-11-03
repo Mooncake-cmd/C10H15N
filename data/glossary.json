@@ -3802,6 +3802,475 @@
         "topic": "Glossário: nonpolar molecule",
         "pages": "B19"
       }
+    },
+    {
+      "id": "grupo-funcional",
+      "term": "Grupo funcional",
+      "aliases": [
+        "grupos funcionais",
+        "função orgânica",
+        "funções orgânicas"
+      ],
+      "definition": "Um conjunto de átomos que dá a uma molécula orgânica um jeito próprio de reagir. Moléculas com o mesmo grupo funcional formam uma \"função\": álcoois (–OH), ácidos carboxílicos (–COOH), cetonas (C=O no meio da cadeia)…",
+      "example": "O etanol e o metanol têm o grupo –OH: os dois são álcoois.",
+      "related": [
+        "composto-organico",
+        "alcool"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: functional group",
+        "pages": "B12"
+      }
+    },
+    {
+      "id": "alcano",
+      "term": "Alcano",
+      "aliases": [
+        "alcanos"
+      ],
+      "definition": "Hidrocarboneto só com ligações simples entre carbonos (saturado). Os nomes terminam em -ano.",
+      "example": "Metano, etano, propano e butano.",
+      "related": [
+        "hidrocarboneto",
+        "alceno"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: alkane",
+        "pages": "B2"
+      }
+    },
+    {
+      "id": "alceno",
+      "term": "Alceno",
+      "aliases": [
+        "alcenos"
+      ],
+      "definition": "Hidrocarboneto com uma ligação dupla entre carbonos. Os nomes terminam em -eno. A ligação dupla recebe outros átomos nas reações de adição.",
+      "example": "Eteno (etileno), CH2=CH2.",
+      "related": [
+        "alcano",
+        "alcino",
+        "reacao-de-adicao"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: alkene",
+        "pages": "B2"
+      }
+    },
+    {
+      "id": "alcino",
+      "term": "Alcino",
+      "aliases": [
+        "alcinos"
+      ],
+      "definition": "Hidrocarboneto com uma ligação tripla entre carbonos. Os nomes terminam em -ino.",
+      "example": "Etino (acetileno), HC≡CH, o gás do maçarico.",
+      "related": [
+        "alceno"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: alkyne",
+        "pages": "B2"
+      }
+    },
+    {
+      "id": "aldeido",
+      "term": "Aldeído",
+      "aliases": [
+        "aldeídos"
+      ],
+      "definition": "Composto com o grupo –CHO: um C=O na ponta da cadeia, ligado a um H. Os nomes terminam em -al.",
+      "example": "Etanal (acetaldeído), CH3CHO.",
+      "related": [
+        "cetona",
+        "carbonila"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: aldehyde",
+        "pages": "B1"
+      }
+    },
+    {
+      "id": "cetona",
+      "term": "Cetona",
+      "aliases": [
+        "cetonas"
+      ],
+      "definition": "Composto com um C=O entre dois carbonos (no meio da cadeia). Os nomes terminam em -ona.",
+      "example": "Propanona (acetona), CH3COCH3.",
+      "related": [
+        "aldeido",
+        "carbonila"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: ketone",
+        "pages": "B16"
+      }
+    },
+    {
+      "id": "acido-carboxilico",
+      "term": "Ácido carboxílico",
+      "aliases": [
+        "ácidos carboxílicos",
+        "carboxila"
+      ],
+      "definition": "Composto com o grupo –COOH (carboxila). São ácidos fracos. O nome começa com \"ácido\" e termina em -oico.",
+      "example": "Ácido etanoico (acético), CH3COOH, o ácido do vinagre.",
+      "related": [
+        "acido-fraco",
+        "ester"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: carboxylic acid; carboxyl group",
+        "pages": "B5"
+      }
+    },
+    {
+      "id": "ester",
+      "term": "Éster",
+      "aliases": [
+        "ésteres"
+      ],
+      "definition": "Composto formado por um ácido carboxílico e um álcool, com o grupo –COO– entre duas cadeias. Muitos têm cheiro de fruta. Nome: \"-oato de -ila\".",
+      "example": "Etanoato de etila (acetato de etila), CH3COOC2H5.",
+      "related": [
+        "esterificacao",
+        "acido-carboxilico",
+        "alcool"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: ester",
+        "pages": "B11"
+      }
+    },
+    {
+      "id": "eter",
+      "term": "Éter",
+      "aliases": [
+        "éteres"
+      ],
+      "definition": "Composto com um oxigênio ligado a dois carbonos (R–O–R). Nome oficial: o grupo menor vira \"-oxi\" na frente do maior.",
+      "example": "Metoximetano, CH3OCH3.",
+      "related": [
+        "alcool",
+        "isomero"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: ether",
+        "pages": "B11"
+      }
+    },
+    {
+      "id": "haleto-organico",
+      "term": "Haleto orgânico",
+      "aliases": [
+        "haletos orgânicos",
+        "haloalcano",
+        "haloalcanos"
+      ],
+      "definition": "Composto orgânico em que um ou mais hidrogênios foram trocados por halogênios (F, Cl, Br, I).",
+      "example": "Clorometano, CH3Cl; 1,2-dicloroetano, matéria-prima do PVC.",
+      "related": [
+        "halogenio",
+        "reacao-de-substituicao"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: haloalkane",
+        "pages": "B13"
+      }
+    },
+    {
+      "id": "hidrocarboneto-saturado",
+      "term": "Hidrocarboneto saturado",
+      "aliases": [
+        "saturado",
+        "saturados",
+        "hidrocarbonetos saturados"
+      ],
+      "definition": "Hidrocarboneto sem ligações duplas ou triplas entre carbonos: cada carbono já está \"cheio\" de ligações simples.",
+      "example": "Etano, CH3–CH3.",
+      "related": [
+        "alcano",
+        "hidrocarboneto-insaturado"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: saturated hydrocarbon",
+        "pages": "B24"
+      }
+    },
+    {
+      "id": "hidrocarboneto-insaturado",
+      "term": "Hidrocarboneto insaturado",
+      "aliases": [
+        "insaturado",
+        "insaturados",
+        "insaturação",
+        "hidrocarbonetos insaturados"
+      ],
+      "definition": "Hidrocarboneto com pelo menos uma ligação dupla ou tripla entre carbonos. Pode receber mais átomos (adição).",
+      "example": "Eteno, CH2=CH2; etino, HC≡CH.",
+      "related": [
+        "alceno",
+        "alcino",
+        "reacao-de-adicao"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: unsaturated hydrocarbon",
+        "pages": "B29"
+      }
+    },
+    {
+      "id": "carbonila",
+      "term": "Carbonila (grupo C=O)",
+      "aliases": [
+        "grupo carbonila"
+      ],
+      "definition": "Um carbono ligado a um oxigênio por ligação dupla, C=O. Aparece em aldeídos, cetonas, ácidos carboxílicos e ésteres.",
+      "example": "Na acetona, CH3–CO–CH3, a carbonila fica no carbono do meio.",
+      "related": [
+        "aldeido",
+        "cetona"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: carbonyl group",
+        "pages": "B5"
+      }
+    },
+    {
+      "id": "hidroxila",
+      "term": "Hidroxila (grupo –OH)",
+      "aliases": [
+        "grupo hidroxila"
+      ],
+      "definition": "O grupo –OH ligado a um carbono de uma molécula orgânica: é o que faz de uma substância um álcool.",
+      "example": "O etanol tem uma hidroxila: CH3CH2–OH.",
+      "related": [
+        "alcool"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: hydroxyl group",
+        "pages": "B14"
+      }
+    },
+    {
+      "id": "isomero",
+      "term": "Isômero",
+      "aliases": [
+        "isômeros",
+        "isomeria"
+      ],
+      "definition": "Substâncias diferentes com a mesma fórmula molecular: os mesmos átomos, arrumados de outro jeito. Por isso têm propriedades diferentes.",
+      "example": "Etanol (CH3CH2OH, um líquido) e metoximetano (CH3OCH3, um gás) são ambos C2H6O.",
+      "related": [
+        "isomeria-plana",
+        "formula-molecular"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: isomer",
+        "pages": "B15"
+      }
+    },
+    {
+      "id": "isomeria-plana",
+      "term": "Isomeria plana (estrutural)",
+      "aliases": [
+        "isômeros estruturais",
+        "isomeria de função",
+        "isomeria de cadeia",
+        "isomeria de posição"
+      ],
+      "definition": "Isômeros cujos átomos estão ligados a parceiros diferentes. De função: grupos funcionais diferentes (álcool × éter). De cadeia: esqueleto de carbono diferente (normal × ramificado). De posição: o mesmo grupo em outro carbono.",
+      "example": "Butano × metilpropano (cadeia); propan-1-ol × propan-2-ol (posição).",
+      "related": [
+        "isomero"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: structural isomers",
+        "pages": "B27"
+      }
+    },
+    {
+      "id": "nomenclatura-iupac",
+      "term": "Nomenclatura IUPAC (nome oficial)",
+      "aliases": [
+        "nomenclatura",
+        "nome oficial",
+        "iupac"
+      ],
+      "definition": "Regras internacionais para dar nome às substâncias. Nos compostos orgânicos, o nome junta prefixo (quantos carbonos: met, et, prop, but…), infixo (tipo de ligação: an, en, in) e sufixo (função: o, ol, al, ona, oico).",
+      "example": "prop + an + ol = propanol; et + en + o = eteno.",
+      "related": [
+        "cadeia-carbonica",
+        "grupo-funcional"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Seção 18.1: nomes dos alcanos (Exemplo 18.1)",
+        "pages": "739"
+      }
+    },
+    {
+      "id": "cadeia-carbonica",
+      "term": "Cadeia carbônica",
+      "aliases": [
+        "cadeia principal",
+        "cadeias carbônicas"
+      ],
+      "definition": "O \"esqueleto\" de carbonos ligados entre si numa molécula orgânica. A cadeia principal é a mais longa que contém o grupo funcional; ela dá o prefixo do nome.",
+      "example": "No metilpropano, a cadeia principal tem 3 carbonos e há um grupo metil no meio.",
+      "related": [
+        "nomenclatura-iupac"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Seção 18.1: a cadeia mais longa dá o nome do alcano",
+        "pages": "739"
+      }
+    },
+    {
+      "id": "reacao-de-adicao",
+      "term": "Reação de adição",
+      "aliases": [
+        "reações de adição"
+      ],
+      "definition": "Reação em que átomos se somam aos dois carbonos de uma ligação dupla ou tripla, que vira simples. É a reação típica dos alcenos.",
+      "example": "CH2=CH2 + Cl2 → CH2Cl–CH2Cl.",
+      "related": [
+        "alceno",
+        "hidrogenacao"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: addition reaction",
+        "pages": "B1"
+      }
+    },
+    {
+      "id": "reacao-de-substituicao",
+      "term": "Reação de substituição",
+      "aliases": [
+        "reações de substituição"
+      ],
+      "definition": "Reação em que um átomo (ou grupo) toma o lugar de outro numa molécula. É o jeito de os alcanos reagirem, já que não têm ligação dupla.",
+      "example": "CH4 + Cl2 → CH3Cl + HCl (com luz).",
+      "related": [
+        "alcano",
+        "haleto-organico"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: substitution reaction",
+        "pages": "B27"
+      }
+    },
+    {
+      "id": "reacao-de-condensacao",
+      "term": "Reação de condensação",
+      "aliases": [
+        "reações de condensação"
+      ],
+      "definition": "Reação em que duas moléculas se unem numa maior, soltando uma molécula pequena (quase sempre água).",
+      "example": "Ácido acético + etanol → acetato de etila + água.",
+      "related": [
+        "esterificacao"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: condensation reaction",
+        "pages": "B7"
+      }
+    },
+    {
+      "id": "esterificacao",
+      "term": "Esterificação",
+      "aliases": [
+        "esterificar"
+      ],
+      "definition": "Reação de um ácido carboxílico com um álcool, formando um éster e água. É reversível e acelerada por um ácido forte.",
+      "example": "CH3COOH + C2H5OH ⇌ CH3COOC2H5 + H2O.",
+      "related": [
+        "ester",
+        "reacao-de-condensacao"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Seção 19.7: ésteres e esterificação",
+        "pages": "766"
+      }
+    },
+    {
+      "id": "hidrogenacao",
+      "term": "Hidrogenação",
+      "aliases": [
+        "hidrogenar",
+        "hidrogenado",
+        "hidrogenada"
+      ],
+      "definition": "Adição de hidrogênio a uma ligação dupla ou tripla, com um catalisador metálico. Transforma alcenos em alcanos e óleos vegetais em gorduras sólidas.",
+      "example": "CH2=CH2 + H2 → CH3–CH3 (com níquel).",
+      "related": [
+        "reacao-de-adicao",
+        "catalisador"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: hydrogenation",
+        "pages": "B14"
+      }
+    },
+    {
+      "id": "polimero",
+      "term": "Polímero",
+      "aliases": [
+        "polímeros",
+        "polimerização",
+        "monômero",
+        "monômeros"
+      ],
+      "definition": "Substância de moléculas enormes, feitas de uma pequena unidade (o monômero) repetida milhares de vezes. Os plásticos são polímeros.",
+      "example": "O eteno é o monômero do polietileno; o 1,2-dicloroetano leva ao PVC.",
+      "related": [
+        "alceno"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: polymer; monomer",
+        "pages": "B22"
+      }
+    },
+    {
+      "id": "reacao-em-cadeia",
+      "term": "Reação em cadeia",
+      "aliases": [
+        "reações em cadeia"
+      ],
+      "definition": "Reação que se mantém sozinha: cada etapa produz uma espécie reativa (um radical) que inicia a etapa seguinte.",
+      "example": "Na cloração do metano, a luz forma átomos de cloro, e cada um deles começa uma sequência de reações.",
+      "related": [
+        "radical",
+        "reacao-de-substituicao"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: chain reaction",
+        "pages": "B5"
+      }
     }
   ]
 }

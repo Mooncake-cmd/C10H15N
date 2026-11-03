@@ -21,7 +21,7 @@ test('exemplos clássicos', () => {
   assert.deepEqual(nox('HNO3'), { H: '+1', N: '+5', O: '−2' });
   assert.deepEqual(nox('NH3'), { H: '+1', N: '−3' });
   assert.deepEqual(nox('Fe2O3'), { Fe: '+3', O: '−2' });
-  assert.deepEqual(nox('C3H8'), { H: '+1', C: '−8/3' }); // NOX médio
+  assert.deepEqual(nox('C3H8'), { C: '−3/−2', H: '+1' }); // átomo por átomo: CH3 −3, CH2 −2
   assert.deepEqual(nox('Cl2'), { Cl: '0' });
   assert.equal(nox('NH4NO3').N, '−3/+5'); // íon por íon
 });
