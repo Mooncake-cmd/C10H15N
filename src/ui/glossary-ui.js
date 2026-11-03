@@ -64,6 +64,9 @@ export function initGlossaryUI(data, containers) {
   }
 
   // ---------- Balão com a definição ----------
+  // Diálogos modais (laboratórios, calculadoras, níveis) ficam na "camada de cima" do navegador,
+  // acima de qualquer z-index. Por isso o balão abre DENTRO do diálogo em que está o termo (ou no
+  // <body>, fora deles) e usa position: fixed, com coordenadas da janela.
   const pop = document.createElement('div');
   pop.className = 'term-pop';
   pop.setAttribute('role', 'dialog');
@@ -87,18 +90,24 @@ export function initGlossaryUI(data, containers) {
       <p class="small"><em>Exemplo:</em> ${esc(t.example)}</p>
       ${relatedHTML(t)}
       <p class="term-src small muted">${esc(sourceText(t))} · <button type="button" class="term-link" data-glossary-open="${t.id}">ver no glossário</button></p>`;
+    const host = anchor.closest('dialog[open]') ?? document.body;
+    if (pop.parentElement !== host) host.append(pop);
     pop.hidden = false;
     opener = anchor;
-    const r = anchor.getBoundingClientRect();
+    place();
+    pop.querySelector('strong').focus({ preventScroll: true });
+  }
+  /** Posiciona o balão logo abaixo do termo (ou acima, se não couber), dentro da janela. */
+  function place() {
+    if (pop.hidden || !opener) return;
+    const r = opener.getBoundingClientRect();
     const w = Math.min(340, window.innerWidth - 32);
     pop.style.width = `${w}px`;
-    const left = Math.min(Math.max(16, r.left + window.scrollX), window.scrollX + window.innerWidth - w - 16);
-    pop.style.left = `${left}px`;
-    pop.style.top = `${r.bottom + window.scrollY + 6}px`;
-    // Se não couber embaixo, abre acima.
+    pop.style.left = `${Math.min(Math.max(16, r.left), window.innerWidth - w - 16)}px`;
     const h = pop.offsetHeight;
-    if (r.bottom + h + 12 > window.innerHeight && r.top > h + 12) pop.style.top = `${r.top + window.scrollY - h - 6}px`;
-    pop.querySelector('strong').focus({ preventScroll: true });
+    const below = r.bottom + 6;
+    const top = below + h + 12 > window.innerHeight && r.top > h + 12 ? r.top - h - 6 : Math.min(below, Math.max(16, window.innerHeight - h - 16));
+    pop.style.top = `${top}px`;
   }
   function closePop() {
     if (pop.hidden) return;
@@ -172,4 +181,17 @@ export function initGlossaryUI(data, containers) {
     }
   });
   window.addEventListener('resize', closePop);
+  // Ao rolar a página ou um diálogo, o balão acompanha o termo; se o termo sair da tela, fecha.
+  document.addEventListener(
+    'scroll',
+    (ev) => {
+      if (pop.hidden || !opener || pop.contains(ev.target)) return;
+      const r = opener.getBoundingClientRect();
+      if (r.bottom < 0 || r.top > window.innerHeight || !opener.isConnected) closePop();
+      else place();
+    },
+    true,
+  );
+  // Ao fechar um diálogo, o balão aberto dentro dele vai junto.
+  document.addEventListener('close', (ev) => { if (ev.target.contains?.(pop)) closePop(); }, true);
 }
