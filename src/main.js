@@ -188,7 +188,7 @@ async function main() {
               .map((o) => {
                 const ok = state.completedObjectives.includes(o.id) || isObjectiveDone(o, state, data);
                 return html`<li class="${ok ? 'is-done' : ''}"><span class="check" aria-hidden="true">${ok ? '✔' : '○'}</span>
-                  <div><span>${o.text}</span>${raw(!ok && o.type === 'stoich' ? stoichForm(o) : '')}${raw(!ok && o.type === 'kinetics' ? kineticsForm(o) : '')}${raw(!ok && o.type === 'equilibrium' ? equilibriumForm(o) : '')}${raw(!ok && o.type === 'molecule' ? moleculeForm(o) : '')}${raw(!ok && o.hint ? `<details class="hint"><summary>Dica</summary>${esc(o.hint)}</details>` : '')}</div></li>`;
+                  <div><span>${o.text}</span>${raw(!ok && o.type === 'stoich' ? stoichForm(o) : '')}${raw(!ok && o.type === 'kinetics' ? kineticsForm(o) : '')}${raw(!ok && o.type === 'equilibrium' ? equilibriumForm(o) : '')}${raw(!ok && o.type === 'molecule' ? moleculeForm(o) : '')}${raw(!ok && o.type === 'organic' ? organicForm(o) : '')}${raw(!ok && o.hint ? `<details class="hint"><summary>Dica</summary>${esc(o.hint)}</details>` : '')}</div></li>`;
               })
               .join(''),
           )}
@@ -253,12 +253,19 @@ async function main() {
       <button class="btn btn-primary" type="submit">Conferir</button></div>${raw(view)}</form>`;
   }
 
+  /** Pergunta de química orgânica (Fase 3E): escolha, com atalho para ver a molécula (e o nome explicado). */
+  function organicForm(o) {
+    const opts = o.choices.map((c) => html`<button type="button" class="btn btn-ghost stoich-choice" data-answer="${c.value}">${c.label}</button>`).join('');
+    const view = html`<button type="button" class="btn btn-ghost btn-small" data-open-molecule="${o.molecule}">🧊 Ver ${formatFormulaText(o.molecule)} em 3D</button>`;
+    return html`<form class="stoich-form" data-objective="${o.id}"><div class="stoich-row">${raw(opts)}</div>${raw(view)}</form>`;
+  }
+
   function submitStoich(objectiveId, answer) {
     const prevLevel = state.levelIndex;
     const { state: next, events, correct } = answerObjective(state, objectiveId, answer, data);
     if (!correct) {
       const kind = data.progression.levels.flatMap((l) => l.objectives).find((o) => o.id === objectiveId)?.type;
-      toast(kind === 'molecule' ? 'Ainda não. Gire a molécula em 3D e conte ligações e pares isolados (a dica ajuda).' : kind === 'kinetics' || kind === 'equilibrium' ? 'Ainda não. Confira a fórmula e as unidades (a dica ajuda).' : 'Ainda não. Confira a conversão gramas → mol → gramas (a dica ajuda).');
+      toast(kind === 'organic' ? 'Ainda não. Abra a molécula na galeria: lá o nome e a função aparecem explicados (a dica ajuda).' : kind === 'molecule' ? 'Ainda não. Gire a molécula em 3D e conte ligações e pares isolados (a dica ajuda).' : kind === 'kinetics' || kind === 'equilibrium' ? 'Ainda não. Confira a fórmula e as unidades (a dica ajuda).' : 'Ainda não. Confira a conversão gramas → mol → gramas (a dica ajuda).');
       return;
     }
     state = next;

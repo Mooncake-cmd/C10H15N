@@ -350,6 +350,10 @@ sub, sup { font-size: 0.7em; line-height: 0; }
 .mol3d-canvas:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .mol3d-info { flex: 1 1 220px; min-width: 0; }
 .mol3d-info h4 { margin: 0 0 0.3rem; }
+.org-info { margin: 0.3rem 0 0.6rem; padding: 0.4rem 0.6rem; border-left: 3px solid var(--accent); background: var(--panel); border-radius: 6px; }
+.org-info h5 { margin: 0 0 0.2rem; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.03em; color: var(--muted); }
+.org-parts { margin: 0.2rem 0; padding-left: 1.1rem; }
+.org-parts code { font-weight: 700; }
 .mol3d-info p { margin: 0.3rem 0; }
 .mol3d-lp { display: inline-flex; gap: 0.3rem; align-items: center; margin-top: 0.3rem; }
 .mol3d-hint { margin: 0.1rem 0 0; }
@@ -461,7 +465,14 @@ sub, sup { font-size: 0.7em; line-height: 0; }
 .glossary-entry h3 { text-transform: none; letter-spacing: 0; color: var(--text); font-size: 1rem; margin: 0 0 0.2rem; }
 .glossary-entry p { margin: 0.2rem 0; }
 .glossary-entry.is-hit { background: color-mix(in srgb, var(--accent) 12%, transparent); border-radius: 6px; }
-@media (max-width: 600px) { .hide-narrow { display: none; } }
+@media (max-width: 600px) {
+  .hide-narrow { display: none; }
+  /* Topo em duas linhas: marca e botões em cima, nível e progresso embaixo. */
+  .topbar { flex-wrap: wrap; gap: 0.4rem 0.5rem; }
+  .topbar .level { order: 3; flex-basis: 100%; }
+  .topbar .btn { padding: 0.35rem 0.55rem; }
+  .brand { margin-right: auto; }
+}
 
 /* ---------- Diálogo e toasts ---------- */
 .level-dialog { border: none; border-radius: 14px; padding: 1.5rem; max-width: min(520px, calc(100vw - 32px)); background: var(--panel); color: var(--text); box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35); }

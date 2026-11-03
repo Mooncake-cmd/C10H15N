@@ -5,17 +5,17 @@ faísca, luz, eletricidade, catalisador) e vê **reações químicas reais**, co
 o porquê, a conservação de átomos e massa, os riscos de segurança e a fonte para conferir num
 livro-texto. Quando não há reação, o jogo diz isso e explica o motivo.
 
-**Fases 1 e 2 concluídas.** 25 elementos jogáveis (os 118 aparecem na tabela), 44 compostos
-curados e mais 81 gerados a partir de íons, 41 reações curadas, 17 "não-reações" curadas e um
+**Fases 1 e 2 concluídas.** 25 elementos jogáveis (os 118 aparecem na tabela), 59 compostos
+curados e mais 81 gerados a partir de íons, 49 reações curadas, 17 "não-reações" curadas e um
 **motor de regras** que monta e balanceia sozinho cerca de 750 reações a partir de regras gerais
 (solubilidade, ácido-base, série eletroquímica, combustão, decomposição), com explicação, fonte e
 segurança. Há também uma calculadora de estequiometria (massa, mol, litros de gás, solução em
-mol/L e rendimento), 16 níveis de progressão e um **glossário** com mais de 190 termos: nos textos, as palavras de química ficam sublinhadas e mostram a
+mol/L e rendimento), 17 níveis de progressão e um **glossário** com mais de 210 termos: nos textos, as palavras de química ficam sublinhadas e mostram a
 definição ao toque. Na tabela periódica, cada um dos 118 elementos tem **curiosidades** (leitura
 complementar, com a página do livro da DK), e a tabela pode ser colorida por raio atômico,
 energia de ionização, afinidade eletrônica ou eletronegatividade.
 
-**Fase 3 em andamento**: energia (3A), velocidade (3B), equilíbrio (3C) e moléculas em 3D (3D) prontos. Cada
+**Fase 3 em andamento**: energia (3A), velocidade (3B), equilíbrio (3C), moléculas em 3D (3D) e química orgânica (3E) prontos. Cada
 reação mostra ΔH°/ΔS°/ΔG°, a velocidade (dado medido, catálise ou barreira de ativação), a
 constante de equilíbrio e o princípio de Le Chatelier, o Kps dos precipitados, o pH de ácidos e
 bases, a forma 3D das moléculas (VSEPR, com polaridade e hibridização), os
@@ -110,6 +110,7 @@ src/core/                   química e regras do jogo — sem DOM, testável no 
   oxidation.js              número de oxidação (Toolbox K.1) e análise de oxirredução
   composition.js            composição em massa, fórmula mínima/molecular, leis de Proust e Dalton
   solutions.js              conversão de concentração, diluição e mistura de soluções
+  organic.js                grupos funcionais, nome oficial (IUPAC) e isomeria deduzidos das estruturas (Fase 3E)
   vsepr.js                  VSEPR a partir das estruturas de Lewis: pares isolados, forma, hibridização,
                             coordenadas 3D e polaridade (Fase 3D)
   equilibrium.js            K↔ΔG°, van 't Hoff, Q, Le Chatelier, pH, tampão, Kps e íon comum (Fase 3C)
@@ -293,6 +294,32 @@ Kw (p. 430), 11.1 e 11.2 (Ka e Kb, p. 436–437), 11.10 (ácidos polipróticos, 
     menos que todo "pouco solúvel");
   - os exemplos 10.3, 10.13, 11.7, 12.1, 12.8 e o Self-Test 11.15A reproduzidos.
 
+## Fase 3E: química orgânica
+
+- **15 compostos orgânicos novos** (eteno, etino, etano, metanol, metoximetano, etanal, propanona,
+  acetato de etila, clorometano, cloroetano, 1,2-dicloroetano, butano, metilpropano, propan-1-ol,
+  propan-2-ol), com estrutura de Lewis — e, por isso, com forma 3D, NOX e polaridade automáticos.
+- **`src/core/organic.js`** deduz da estrutura: os **grupos funcionais** (Tabela 19.1), a
+  **função principal**, o **nome oficial IUPAC** com cada pedaço explicado (prefixo + infixo +
+  sufixo; localizadores só quando precisa: "propan-2-ol", mas "propanona"; ésteres como
+  "etanoato de etila"; éteres como "metoximetano") e os **isômeros** do jogo, com o tipo de
+  isomeria plana (função, cadeia, posição). O teste confere que o nome deduzido é o nome escrito
+  à mão para cada composto.
+- **8 reações curadas** do Atkins & Jones, caps. 14, 18 e 19: substituição (CH₄ + Cl₂ com luz,
+  p. 744), adições ao eteno (H₂ com níquel, p. 597; Cl₂, p. 746; HCl, p. 747; H₂O com ácido
+  fosfórico, p. 763), esterificação (p. 766), o vinho que vira vinagre (p. 765; com o
+  *Acetobacter* do Bernoulli v. 1, p. 8) e a combustão do etanol (p. 270). Tipos novos de reação:
+  adição, substituição e condensação.
+- **NOX átomo por átomo** nas moléculas (Bernoulli v. 4, p. 31): cada ligação dá os elétrons ao
+  átomo mais eletronegativo. Uma reação só é oxirredução quando muda o NOX dos átomos **e** a
+  média de cada molécula — assim a esterificação e a adição de H₂O/HCl ao eteno não viram
+  "redox", mas o desproporcionamento da água oxigenada continua sendo. A varredura de ~700
+  reações confere isso.
+- No cartão de cada molécula (painel e galeria 🧊), um bloco **"Química orgânica"**; **nível 17**
+  com adição, substituição, esterificação, nome oficial, função e isomeria.
+- Divergência registrada: a Tabela 2C.6 do Atkins FQ dá ΔcH° = −2231 kJ/mol para o acetato de
+  etila, mas o seu ΔfH° leva a −2238 kJ/mol pela lei de Hess.
+
 ## Fase 3D: moléculas em 3D
 
 A forma das moléculas **não é digitada**: `src/core/vsepr.js` a deduz das estruturas de Lewis que
@@ -359,7 +386,6 @@ massas molares que já existiam. A Fase 3 segue o mesmo caminho:
   `kinetics.json`) e painéis novos em `src/ui/`, sem mudar as reações nem os testes de conservação.
 - Equilíbrio (3C): pronto, no mesmo formato (`equilibrium.json`, painel, laboratório, objetivo).
 - Moléculas 3D (3D): pronto, com renderizador próprio e geometria deduzida pelo VSEPR.
-- Química orgânica: novas substâncias/reações nos mesmos JSON (o leitor de fórmulas já aceita
-  `CH3COOH` e similares).
+- Química orgânica (3E): pronta, com nomes, funções e isomeria deduzidos das estruturas.
 - Missões: novos tipos em `OBJECTIVE_CHECKS` e um campo `missions` em `progression.json`
   (o estado salvo tem `version` para migração).

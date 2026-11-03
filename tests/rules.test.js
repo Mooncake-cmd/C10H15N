@@ -107,6 +107,16 @@ test('coerência: onde a regra se aplica a uma reação curada, dá o mesmo resu
     assert.ok(!got.outcome || got.outcome.kind !== 'no-reaction', `${r.id}: a regra diz que não reage, mas a base curada tem a reação`);
     if (!got.reaction) continue;
     const norm = (side) => side.map((e) => `${e.coef} ${e.id}`).sort();
+    const conds = (x) => JSON.stringify((x.conditions ?? []).map((a) => [...a].sort()).sort());
+    if (conds(got.reaction) !== conds(r)) {
+      // Mesmos reagentes, outra condição (ex.: etanol + O2 com catalisador vira vinagre; com faísca,
+      // queima). Então OUTRA reação curada tem de reproduzir a regra nas condições dela.
+      const ids = (x) => x.reactants.map((e) => e.id).sort().join('+');
+      const twin = data.reactions.find((x) => x !== r && conds(x) === conds(got.reaction) && ids(x) === ids(r));
+      assert.ok(twin, `${r.id}: a regra dá outra reação nas condições dela e nenhuma curada a reproduz`);
+      assert.deepEqual(norm(got.reaction.products), norm(twin.products), `${twin.id}: regra ≠ curada`);
+      continue;
+    }
     assert.deepEqual(norm(got.reaction.products), norm(r.products), `${r.id}: regra ≠ curada`);
     assert.deepEqual(norm(got.reaction.reactants), norm(r.reactants), `${r.id}: coeficientes diferentes`);
     reproduced++;

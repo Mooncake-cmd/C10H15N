@@ -52,11 +52,35 @@ Detalhes de arquitetura, estrutura de pastas e "como adicionar conteúdo" estão
     canvas (`src/ui/molecule3d.js`), painel "Forma das moléculas", galeria 🧊 e nível 16. Ligação
     C–H tratada como praticamente apolar (Bernoulli v. 2 p. 78). Ainda não feito: interações
     intermoleculares (v. 3 C12) — item "médio".
-  - Próximas: 3E Orgânica (caps. 18–19), 3F Missões (decidir com o usuário).
+  - **3E Orgânica — CONCLUÍDA**: 15 compostos novos com estrutura; `src/core/organic.js` deduz
+    grupos funcionais, nome IUPAC (com o significado de cada pedaço) e isomeria (função, cadeia,
+    posição); 8 reações curadas (A&J caps. 14, 18–19) e tipos novos `adicao`, `substituicao`,
+    `condensacao`; nível 17. **NOX agora é átomo por átomo** nas moléculas com estrutura
+    (Bernoulli v. 4 p. 31), e uma reação só é redox se mudam o NOX dos átomos E a média de cada
+    molécula (esterificação e adição de HCl/H2O ao eteno não são; desproporcionamento é).
+    Divergência do livro registrada: ΔcH° do acetato de etila (Atkins FQ, Tabela 2C.6).
+  - Próxima: **3F Missões** (formato a decidir com o usuário). Depois, Fase 4 (aprendizagem).
   - **Curiosidades dos elementos — CONCLUÍDA**: os 118 elementos têm descrição e curiosidades no
     painel da tabela periódica (`data/element-facts.json`), escritas com palavras próprias a partir
     do livro da DK (*The Periodic Table Book*, 2017), como leitura complementar com página. Erros do
     livro foram corrigidos e registrados em `_meta.corrections`; o livro nunca é fonte de reação.
+
+## Plano combinado com o usuário (ordem)
+
+1. Terminar a Fase 3: 3E Orgânica (feita), depois **3F Missões** (formato a decidir com o usuário).
+2. **Fase 4 — aprendizagem** (pedido do usuário, depois da Fase 3), para que um iniciante aprenda
+   de verdade ao terminar os níveis:
+   - **Fundamentos** no começo do jogo: átomo e distribuição eletrônica, estados da matéria,
+     misturas, nomenclatura (itens "médios" das apostilas abaixo).
+   - **Degraus intermediários** na Fase 3, para a dificuldade subir aos poucos (hoje o salto para
+     logaritmos/exponenciais nos níveis 13–15 é grande).
+   - **Revisões**: perguntas que voltam depois e misturam assuntos (revisão espaçada).
+   - Problemas já identificados: dá para cumprir objetivos combinando tudo por tentativa, e os
+     laboratórios mostram a resposta pronta das perguntas de cálculo (mostrar o caminho da conta
+     e pedir raciocínio, com explicação do erro).
+3. **Guardados para depois** (o usuário pediu para não perder): as pendências da Fase 2 (acima),
+   os itens "médios" das apostilas, as etapas novas possíveis e os itens adiados pelo usuário
+   (utensílios de laboratório e separação de misturas) — todos listados na seção abaixo.
 
 ## Apostilas Bernoulli (ensino médio) — mapeamento
 

@@ -10,6 +10,7 @@ import { reactionThermo, heatFor } from './thermo.js';
 import { kineticsAnswer } from './kinetics.js';
 import { equilibriumAnswer } from './equilibrium.js';
 import { moleculeAnswer } from './vsepr.js';
+import { organicAnswer } from './organic.js';
 
 export const STATE_VERSION = 2;
 // v1 → v2: um nível novo (metais alcalino-terrosos) entrou no meio da Fase 1, então o
@@ -72,6 +73,8 @@ const OBJECTIVE_CHECKS = {
   equilibrium: (o, h) => h.stoichSolved.has(o.id),
   // Fase 3D: pergunta sobre a forma de uma molécula (forma, polaridade, pares isolados, hibridização).
   molecule: (o, h) => h.stoichSolved.has(o.id),
+  // Fase 3E: pergunta de química orgânica (nome oficial, função, isomeria).
+  organic: (o, h) => h.stoichSolved.has(o.id),
   // Fase 3A: ter feito uma reação que libera (exo) ou absorve (endo) calor, opcionalmente com |ΔH°| mínimo.
   thermo: (o, h, data) =>
     [...h.reactionsDone].some((rid) => {
@@ -206,7 +209,16 @@ export function isMoleculeAnswerRight(objective, answer, data) {
   return Number.isFinite(x) && Math.abs(x - expected) < 0.5;
 }
 
-const ANSWER_CHECKS = { stoich: isStoichAnswerRight, kinetics: isKineticsAnswerRight, equilibrium: isEquilibriumAnswerRight, molecule: isMoleculeAnswerRight };
+/** Orgânica: sempre escolha (nome, função, isômero, tipo de isomeria). */
+export const isOrganicAnswerRight = (objective, answer, data) => String(answer) === String(organicAnswer(objective, data));
+
+const ANSWER_CHECKS = {
+  stoich: isStoichAnswerRight,
+  kinetics: isKineticsAnswerRight,
+  equilibrium: isEquilibriumAnswerRight,
+  molecule: isMoleculeAnswerRight,
+  organic: isOrganicAnswerRight,
+};
 
 /** O jogador respondeu a um objetivo de cálculo (estequiometria ou cinética). */
 export function answerObjective(state, objectiveId, answer, data) {

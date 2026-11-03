@@ -213,6 +213,26 @@
       "catalysis": true,
       "note": "Na indústria, o catalisador é ferro: as moléculas de N2 grudam na superfície do metal (adsorção), a ligação tripla N≡N enfraquece e a reação com o H2 fica muito mais rápida. É um catalisador heterogêneo (sólido, com reagentes gasosos).",
       "source": { "ref": "atkins-jones", "topic": "Seção 14.15: catalisadores industriais (processo Haber)", "pages": "597" }
+    },
+    "etanol-vinagre": {
+      "catalysis": true,
+      "note": "Sem ajuda, o etanol quase não reage com o oxigênio à temperatura ambiente. Na natureza, as enzimas de bactérias do vinagre (Acetobacter) são o catalisador: enzimas são catalisadores biológicos, que aceleram reações específicas.",
+      "source": { "ref": "atkins-jones", "topic": "Seção 14.16: catalisadores vivos — enzimas", "pages": "600" }
+    },
+    "c2h4-h2": {
+      "catalysis": true,
+      "note": "Níquel em pó bem fino: as moléculas de eteno e H2 grudam na superfície do metal, as ligações enfraquecem e a adição fica rápida. É um catalisador heterogêneo (sólido, com reagentes gasosos).",
+      "source": { "ref": "atkins-jones", "topic": "Seção 14.15: níquel na hidrogenação do eteno", "pages": "597" }
+    },
+    "c2h4-h2o": {
+      "catalysis": true,
+      "note": "O ácido fosfórico fornece o H⁺ que começa a adição da água à ligação dupla e é devolvido no fim.",
+      "source": { "ref": "atkins-jones", "topic": "Seção 19.2: hidratação do eteno com catalisador de ácido fosfórico", "pages": "763" }
+    },
+    "esterificacao": {
+      "catalysis": true,
+      "note": "Um pouco de ácido forte (como o sulfúrico) acelera a esterificação sem ser consumido. Sem ele, ácido e álcool levariam muito tempo para chegar ao equilíbrio.",
+      "source": { "ref": "atkins-jones", "topic": "Seção 19.7: esterificação catalisada por ácido forte", "pages": "766" }
     }
   }
 }

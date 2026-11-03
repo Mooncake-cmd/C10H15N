@@ -156,9 +156,23 @@ export function embed3D(lewis, data) {
         }
       }
     }
-    // Vizinhos ainda não colocados ocupam as direções livres; o pai já usa a direção 0.
+    // Vizinhos ainda não colocados ocupam as direções livres; o pai já usa a direção 0. O ramo
+    // com mais átomos pesados fica na direção anti (zigue-zague), para a cadeia não se enrolar.
     const free = parent != null ? dirs.slice(1) : dirs.slice();
-    const children = s.neighbors.filter((j) => pos[j] == null);
+    const heavy = (j, from) => {
+      let n = 0;
+      const seen = new Set([from]);
+      const stack = [j];
+      while (stack.length) {
+        const k = stack.pop();
+        if (seen.has(k)) continue;
+        seen.add(k);
+        if (sites[k].el !== 'H') n++;
+        for (const x of sites[k].neighbors) if (!seen.has(x)) stack.push(x);
+      }
+      return n;
+    };
+    const children = s.neighbors.filter((j) => pos[j] == null).sort((a, b) => heavy(b, i) - heavy(a, i));
     children.forEach((j, k) => {
       const bond = s.bonds.find((b) => (b.a === i && b.b === j) || (b.b === i && b.a === j));
       pos[j] = v.add(pos[i], v.mul(free[k], bondLength(s.el, sites[j].el, bond.order, data)));

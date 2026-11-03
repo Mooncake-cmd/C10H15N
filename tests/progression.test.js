@@ -9,6 +9,7 @@ import { initialState, applyResult, inventory, restoreState, STATE_VERSION, OBJE
 import { kineticsAnswer, kAt } from '../src/core/kinetics.js';
 import { equilibriumAnswer } from '../src/core/equilibrium.js';
 import { moleculeAnswer } from '../src/core/vsepr.js';
+import { organicAnswer } from '../src/core/organic.js';
 import { lookupReaction } from '../src/core/engine.js';
 
 const data = loadData();
@@ -85,11 +86,11 @@ function playLevel(state) {
       if (state.levelIndex !== startLevel || state.finished) break;
     }
     // Perguntas de estequiometria: o jogador "faz a conta" (a resposta certa calculada).
-    for (const o of data.progression.levels[startLevel].objectives.filter((x) => ['stoich', 'kinetics', 'equilibrium', 'molecule'].includes(x.type))) {
+    for (const o of data.progression.levels[startLevel].objectives.filter((x) => ['stoich', 'kinetics', 'equilibrium', 'molecule', 'organic'].includes(x.type))) {
       if (state.levelIndex !== startLevel || state.finished) break;
       const before = JSON.stringify(state);
       const answer =
-        o.type === 'kinetics' ? kineticsAnswer(o, data.kinetics) : o.type === 'equilibrium' ? equilibriumAnswer(o, data) : o.type === 'molecule' ? moleculeAnswer(o, data) : stoichAnswer(o, data);
+        o.type === 'kinetics' ? kineticsAnswer(o, data.kinetics) : o.type === 'equilibrium' ? equilibriumAnswer(o, data) : o.type === 'molecule' ? moleculeAnswer(o, data) : o.type === 'organic' ? organicAnswer(o, data) : stoichAnswer(o, data);
       state = answerObjective(state, o.id, answer, data).state;
       if (JSON.stringify(state) !== before) changed = true;
     }
