@@ -5,6 +5,7 @@ import { deriveSubstances, buildIonCatalog } from './ions.js';
 import { createGlossary } from './glossary.js';
 import { buildKinetics } from './kinetics.js';
 import { buildEquilibrium } from './equilibrium.js';
+import { buildLab } from './lab.js';
 
 export function buildGameData(raw) {
   const elements = raw.elements.elements;
@@ -48,6 +49,8 @@ export function buildGameData(raw) {
     // Missões (Fase 3F): história, kit limitado, tentativas e etapas.
     missions: raw.missions?.missions ?? [],
     missionsById: new Map((raw.missions?.missions ?? []).map((m) => [m.id, m])),
+    // Laboratório: utensílios, separação de misturas e cores de chama.
+    lab: buildLab(raw.lab),
     sources: raw.sources.sources,
     complementarySources: raw.sources._meta.complementaryOnly ?? [],
     reactivitySeries: raw.reactivitySeries.series,

@@ -122,6 +122,11 @@ export function formulaUnit(sub, data) {
   else if (kind === 'ionic') {
     const { cation, anion } = entry ?? sub.ions;
     s = ionicUnit(cation, anion, data);
+  } else if (kind === 'hydrate') {
+    // Hidrato: a unidade do sal e, ao lado, as moléculas de água de hidratação.
+    const salt = formulaUnit(data.substancesById.get(entry.salt), data);
+    const water = fromEntry(data.structures.substances.H2O);
+    s = row([salt, ...Array.from({ length: entry.water }, () => water)], ION_GAP);
   } else if (kind) s = looseAtoms(sub.formula);
   return s && { kind, ...centerAt(s) };
 }

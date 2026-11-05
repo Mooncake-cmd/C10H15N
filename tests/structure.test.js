@@ -7,7 +7,7 @@ import { loadData } from './helpers.js';
 import { checkStructure, formulaUnit, displayStructure, structureKind, ionStructure, layoutSide, pairAtoms } from '../src/core/structure.js';
 
 const data = loadData();
-const KINDS = ['molecule', 'ionic', 'network', 'lattice', 'atom'];
+const KINDS = ['molecule', 'ionic', 'network', 'lattice', 'atom', 'hydrate'];
 
 test('o verificador detecta desenhos errados (sanidade do próprio teste)', () => {
   const s = (atoms, bonds = []) => ({ atoms: atoms.map(([el, x, y, charge = 0]) => ({ el, x, y, charge })), bonds: bonds.map(([a, b, order]) => ({ a, b, order })) });

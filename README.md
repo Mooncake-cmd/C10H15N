@@ -5,12 +5,12 @@ faísca, luz, eletricidade, catalisador) e vê **reações químicas reais**, co
 o porquê, a conservação de átomos e massa, os riscos de segurança e a fonte para conferir num
 livro-texto. Quando não há reação, o jogo diz isso e explica o motivo.
 
-**Fases 1 e 2 concluídas.** 25 elementos jogáveis (os 118 aparecem na tabela), 59 compostos
-curados e mais 81 gerados a partir de íons, 50 reações curadas, 17 "não-reações" curadas e um
+**Fases 1 e 2 concluídas.** 25 elementos jogáveis (os 118 aparecem na tabela), 61 compostos
+curados e mais 81 gerados a partir de íons, 53 reações curadas, 17 "não-reações" curadas e um
 **motor de regras** que monta e balanceia sozinho cerca de 750 reações a partir de regras gerais
 (solubilidade, ácido-base, série eletroquímica, combustão, decomposição), com explicação, fonte e
 segurança. Há também uma calculadora de estequiometria (massa, mol, litros de gás, solução em
-mol/L e rendimento), 18 níveis de progressão e um **glossário** com mais de 220 termos: nos textos, as palavras de química ficam sublinhadas e mostram a
+mol/L e rendimento), 19 níveis de progressão e um **glossário** com mais de 240 termos: nos textos, as palavras de química ficam sublinhadas e mostram a
 definição ao toque. Na tabela periódica, cada um dos 118 elementos tem **curiosidades** (leitura
 complementar, com a página do livro da DK), e a tabela pode ser colorida por raio atômico,
 energia de ionização, afinidade eletrônica ou eletronegatividade.
@@ -22,8 +22,9 @@ bases, a forma 3D das moléculas (VSEPR, com polaridade e hibridização), os
 números de oxidação (quem oxida e quem reduz), a composição em massa dos produtos com as leis de
 Proust e Dalton e, quando sai H₂, O₂ ou CO₂, como identificar o gás. No topo da página ficam o
 **laboratório de velocidade**, o **laboratório de equilíbrio** (pH, tampão, Kps, K/Q/Le Chatelier) e as **calculadoras** (concentração, diluição, mistura de soluções e
-fórmula mínima). No painel 🗺️ **Missões**, seis histórias com kit limitado e tentativas
-contadas, montadas a partir de aulas práticas de laboratório.
+fórmula mínima). No painel 🗺️ **Missões**, 16 histórias com kit limitado e tentativas
+contadas, montadas a partir de aulas práticas de laboratório; no 🧰 **Laboratório**, os utensílios
+(com desenho e uso), a separação de misturas e o teste de chama.
 
 ## Como rodar
 
@@ -93,6 +94,7 @@ data/                       TODO o conteúdo (JSON) — dá para editar sem mexe
   molecules.json            nomes das formas VSEPR, hibridização, ângulos e dipolos medidos (Fase 3D)
   equilibrium.json          K (Tabela 10.2), Kw, Ka/Kb (11.1, 11.2, 11.10), indicadores (12.3), Kps (12.4) (Fase 3C)
   missions.json             missões: história, kit, tentativas, etapas e perguntas com o porquê (Fase 3F)
+  lab.json                  utensílios, métodos de separação, misturas e cores no teste de chama
   items.json                ferramentas (calor, faísca, luz, eletricidade, catalisador)
   reactivity-series.json    série de reatividade (E°), usada pelas regras
   progression.json          níveis, desbloqueios e objetivos
@@ -105,6 +107,7 @@ src/core/                   química e regras do jogo — sem DOM, testável no 
   rules/                    explicações de "não reage" (gás nobre, só metais, série de reatividade...)
   progression.js            estado do jogador, objetivos, níveis (e as transições das missões)
   missions.js               corrida de uma missão: kit, etapas, tentativas, contas e o caminho da conta (Fase 3F)
+  lab.js                    separação de misturas (método × mistura, com o porquê) e teste de chama
   balancer.js               balanceamento automático (espaço nulo com frações exatas)
   ions.js                   solubilidade, fórmula e nome de compostos iônicos, compostos derivados
   stoichiometry.js          massas, mol, litros de gás, solução, reagente limitante e rendimento
@@ -131,6 +134,9 @@ src/ui/, src/main.js        interface
   molecule-card.js          cartão da molécula: 3D + explicação; usado no painel e na galeria
   equilibrium-lab.js        laboratório de equilíbrio: pH com indicadores, tampão, Kps, K/Q/Le Chatelier
   missions-ui.js            lista de missões, quadro da missão em andamento e tela de missão concluída
+  lab-ui.js                 painel 🧰 Laboratório: utensílios, separação de misturas e teste de chama
+  glassware-svg.js          desenhos (traço) dos utensílios de laboratório
+  chem-text.js              texto com fórmulas químicas em subscrito
 tests/                      testes (node:test)
 ```
 
@@ -236,6 +242,13 @@ contas (`stoich`, `titration`) têm a resposta e o caminho calculados. O teste j
 com um jogador que só usa o kit e confere que ela fecha com uma combinação por etapa e folga de
 pelo menos 2 tentativas. Para contar no jogo, ponha um objetivo `mission` num nível.
 
+**Mistura, método de separação ou cor de chama**: em `data/lab.json`. Cada mistura tem um `type`
+(sólido-líquido, sólido dissolvido, líquidos miscíveis/imiscíveis, sólidos, substância) e os
+métodos que funcionam com o texto do resultado (`ok`); para os outros, a explicação vem de
+`failWhy` do método pelo tipo da mistura (ou de `fails` da própria mistura). O teste confere que
+toda combinação mistura × método tem explicação. Cor de chama só com fonte: sem ela, o jogo
+diz que não tem a cor em vez de inventar.
+
 **Atualizar os elementos**: troque `data/source/PeriodicTableJSON.json` e rode
 `npm run build:elements`.
 
@@ -339,6 +352,39 @@ recursos limitados e química ambiental:
 - Testes (`tests/missions.test.js`): dados, cada missão concluível com o kit, regras de
   tentativa e falha, contas (0,835 mol/L; 2,45 L), o pH no fim da titulação (~9, dentro da faixa
   da fenolftaleína e fora das outras alternativas) e as massas molares citadas nos textos.
+
+## Laboratório e mais missões (manuais de laboratório)
+
+As partes dos manuais de laboratório que ainda não tinham sido usadas, e os itens que o usuário
+tinha adiado (utensílios e separação de misturas):
+
+- **🧰 Laboratório** (`data/lab.json`, `src/core/lab.js`, `src/ui/lab-ui.js`): 20 utensílios
+  com desenho, uso e cuidados (Reis/UFV, Prática nº 1); 8 métodos de separação (decantação, funil
+  de separação, filtração, evaporação, destilação simples e fracionada, ímã, dissolução
+  fracionada) testáveis livremente em 7 misturas, cada combinação com o porquê (Atkins & Jones,
+  seção G, p. F52–F54; Bernoulli v. 2, Frente A, Módulo 03; Lenzi, UD 10–12); e o teste de chama
+  (Na, Ca, Sr, Ba e o HCl que não dá cor; Atkins & Jones p. 50 e 625). Cores sem fonte (K, Li,
+  Cu) não entram.
+- **10 missões novas** e o **nível 19, "Laboratório de verdade"**. Algumas são liberadas logo no
+  começo do jogo e funcionam como fundamentos: 🥽 primeiro dia no laboratório (utensílio certo,
+  algarismos significativos, segurança), 🏞️ água do rio (decantar/filtrar, depois destilar),
+  🫗 água, óleo e álcool (funil × destilação; azeótropo), 🧲 ferro e enxofre (mistura × composto),
+  🕯️ o que uma vela produz (método científico); depois 🎆 cores dos fogos (teste de chama),
+  🍞 o segredo do fermento, 🔋 pilha de Daniell (1,10 V com o caminho da conta), ⚡ eletrólise
+  da água e 💧 o detector de água (CuSO₄ anidro × penta-hidratado).
+- Etapas novas de missão: `separate` (escolher o método para uma mistura) e `flame` (levar uma
+  amostra à chama); conta nova `cell` (E°pilha = E°cátodo − E°ânodo, com a série do jogo).
+- **Reações novas**: Fe + S → FeS com calor (Reis p. 45–46 do PDF; Bernoulli v. 1 p. 38; ΔfG° do
+  FeS no Atkins FQ — o Atkins & Jones não traz), 2 NaHCO₃ → Na₂CO₃ + H₂O + CO₂ com calor (Farias
+  p. 87–88) e CuSO₄ + 5 H₂O → CuSO₄·5H₂O (Atkins & Jones p. F31; ΔH° = −79 kJ/mol pela Tabela 2C.7;
+  Farias p. 65–66 mede −78,5). Substâncias novas: FeS e o hidrato CuSO₄·5H₂O (novo tipo de
+  desenho `hydrate`; NOX do sal + água).
+- **Glossário**: misturas homogênea/heterogênea, filtração, decantação, destilação, evaporação,
+  azeótropo, hidrato, menisco, algarismos significativos, hipótese, método científico, pilha,
+  ânodo, cátodo, ponte salina e teste de chama.
+- Testes: `tests/lab.test.js` (utensílios, toda combinação mistura × método explicada, a química
+  de cada separação, cores de chama com fonte, 1,10 V) e as missões novas jogadas pelo "jogador
+  esperto" do teste (só o kit, uma tentativa por etapa).
 
 ## Fase 3E: química orgânica
 

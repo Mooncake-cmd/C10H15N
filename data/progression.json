@@ -363,6 +363,25 @@
         { "id": "n17-chuva", "type": "mission", "mission": "m-chuva-acida", "text": "Missão 🌧️: chuva ácida na cidade" }
       ],
       "lesson": "No laboratório, a química vira método: planejar antes de misturar, observar (bolhas, cor, precipitado), identificar o que se formou com testes simples e medir (titulação, volume de gás). As mesmas reações explicam problemas reais: por que o CO2 apaga o fogo, como um catalisador acelera uma reação, por que a chuva ácida desgasta o mármore. E, numa sequência de reações, os átomos de um elemento atravessam todas as etapas: só mudam de parceiro."
+    },
+    {
+      "id": "n18",
+      "phase": 3,
+      "title": "Laboratório de verdade",
+      "intro": "Mais missões, agora com o laboratório inteiro: escolher o utensílio certo, anotar medidas com os algarismos significativos, separar misturas (decantação, filtração, destilação, ímã…), fazer o teste de chama, montar uma pilha e uma eletrólise. Algumas missões já estão liberadas desde o começo do jogo. No painel 🧰 Laboratório você encontra os utensílios e pode testar à vontade cada método de separação em cada mistura.",
+      "objectives": [
+        { "id": "n18-primeiro-dia", "type": "mission", "mission": "m-primeiro-dia", "text": "Missão 🥽: primeiro dia no laboratório" },
+        { "id": "n18-rio", "type": "mission", "mission": "m-agua-rio", "text": "Missão 🏞️: água do rio para o laboratório" },
+        { "id": "n18-liquidos", "type": "mission", "mission": "m-liquidos", "text": "Missão 🫗: água, óleo e álcool" },
+        { "id": "n18-ferro-enxofre", "type": "mission", "mission": "m-ferro-enxofre", "text": "Missão 🧲: ferro e enxofre, mistura ou composto?" },
+        { "id": "n18-vela", "type": "mission", "mission": "m-vela", "text": "Missão 🕯️: o que uma vela produz?" },
+        { "id": "n18-fogos", "type": "mission", "mission": "m-fogos", "text": "Missão 🎆: as cores dos fogos de artifício" },
+        { "id": "n18-fermento", "type": "mission", "mission": "m-fermento", "text": "Missão 🍞: o segredo do fermento" },
+        { "id": "n18-pilha", "type": "mission", "mission": "m-pilha", "text": "Missão 🔋: a pilha de Daniell" },
+        { "id": "n18-eletrolise", "type": "mission", "mission": "m-eletrolise", "text": "Missão ⚡: eletrólise da água" },
+        { "id": "n18-detector", "type": "mission", "mission": "m-detector", "text": "Missão 💧: o detector de água" }
+      ],
+      "lesson": "Misturas se separam por métodos físicos: primeiro as fases de uma mistura heterogênea (decantação, filtração, funil de separação, ímã), depois o que está dissolvido, mudando o estado físico (evaporação, destilação). Um composto, não: só outra reação o separa. No laboratório, cada utensílio tem seu papel e cada medida se anota com os algarismos significativos que o instrumento permite. A luz de uma chama identifica metais; uma reação de oxirredução espontânea vira pilha, e a eletricidade força a reação contrária (eletrólise)."
     }
   ]
 }

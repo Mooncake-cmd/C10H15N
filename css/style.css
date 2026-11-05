@@ -513,3 +513,23 @@ sub, sup { font-size: 0.7em; line-height: 0; }
 .mission-feedback.is-info { border-color: var(--border); background: var(--panel-2); }
 .mission-feedback ol { margin: 0.3rem 0 0; padding-left: 1.2rem; }
 .inventory.is-mission { outline: 2px dashed var(--accent); outline-offset: -2px; }
+
+/* ---------- Laboratório: utensílios, separação, chama ---------- */
+:root { --liquid: #7cc4ff; }
+.gw-svg { color: var(--text); }
+.gw-svg .gw-liquid { fill: var(--liquid); fill-opacity: 0.45; stroke: none; }
+.gw-svg .gw-flame { fill: #4b8dff; fill-opacity: 0.5; stroke: #2463eb; }
+.gw-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr)); gap: 0.5rem; }
+.gw-card { display: flex; gap: 0.6rem; align-items: flex-start; border: 1px solid var(--border); border-radius: var(--radius); padding: 0.5rem; background: var(--panel-2); }
+.gw-card h4 { margin: 0 0 0.2rem; font-size: 0.95rem; }
+.gw-card p { margin: 0.15rem 0; }
+.gw-pic { flex: none; width: 56px; height: 56px; }
+.gw-tip { color: var(--warn); }
+.lab-tabs { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-bottom: 0.5rem; }
+.lab-tabs [aria-selected="true"] { background: var(--accent); color: var(--accent-text); border-color: var(--accent); }
+.lab-methods { display: flex; flex-wrap: wrap; gap: 0.3rem; margin: 0.3rem 0; }
+.lab-methods .btn { white-space: normal; }
+.lab-out { margin-top: 0.4rem; }
+.mission-mixture { margin: 0.2rem 0; }
+.flame-swatch { display: inline-block; width: 1.1rem; height: 1.4rem; margin-right: 0.4rem; vertical-align: middle; border-radius: 50% 50% 45% 45% / 65% 65% 35% 35%; background: radial-gradient(circle at 50% 70%, #fff8 0 20%, var(--flame) 45%, transparent 75%); box-shadow: 0 0 10px var(--flame); }
+.flame-swatch.is-blue { --flame: #4b8dff; opacity: 0.7; }

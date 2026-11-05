@@ -193,6 +193,8 @@
     "MgO": { "kind": "ionic", "cation": { "formula": "Mg^2+", "count": 1 }, "anion": { "formula": "O^2-", "count": 1 } },
     "CaO": { "kind": "ionic", "cation": { "formula": "Ca^2+", "count": 1 }, "anion": { "formula": "O^2-", "count": 1 } },
     "CuO": { "kind": "ionic", "cation": { "formula": "Cu^2+", "count": 1 }, "anion": { "formula": "O^2-", "count": 1 } },
+    "FeS": { "kind": "ionic", "cation": { "formula": "Fe^2+", "count": 1 }, "anion": { "formula": "S^2-", "count": 1 } },
+    "CuSO4·5H2O": { "kind": "hydrate", "salt": "CuSO4", "water": 5 },
     "Fe2O3": { "kind": "ionic", "cation": { "formula": "Fe^3+", "count": 2 }, "anion": { "formula": "O^2-", "count": 3 } },
     "Al2O3": { "kind": "ionic", "cation": { "formula": "Al^3+", "count": 2 }, "anion": { "formula": "O^2-", "count": 3 } }
   }

@@ -27,6 +27,7 @@ export function loadRaw() {
     equilibrium: read('equilibrium.json'),
     molecules: read('molecules.json'),
     missions: read('missions.json'),
+    lab: read('lab.json'),
   };
 }
 
@@ -38,8 +39,9 @@ export const loadData = () => buildGameData(loadRaw());
  * Devolve o estado final, quantas combinações usou e, se não concluiu, onde travou.
  */
 export async function playMission(state, missionId, data, engine) {
-  const { startMission, missionCombine, answerMission } = await import('../src/core/progression.js');
-  const { currentSteps, missionInventory, actionMatches, isAction, missionAnswer } = await import('../src/core/missions.js');
+  const { startMission, missionCombine, answerMission, missionLab } = await import('../src/core/progression.js');
+  const { currentSteps, missionInventory, actionMatches, isAction, missionAnswer, LAB_KINDS } = await import('../src/core/missions.js');
+  const { separate, flameTest } = await import('../src/core/lab.js');
   const mission = data.missionsById.get(missionId);
   let s = startMission(state, missionId, data);
   if (!s.missionRun) return { state: s, attempts: null, stuck: 'não liberada' };
@@ -56,6 +58,17 @@ export async function playMission(state, missionId, data, engine) {
     if (!step) break;
     if (!isAction(step)) {
       s = answerMission(s, step.id, missionAnswer(step, data), data).state;
+      continue;
+    }
+    // Laboratório: escolhe o método que separa / a substância que dá a cor (sem gastar tentativa).
+    if (LAB_KINDS.includes(step.kind)) {
+      const action =
+        step.kind === 'separate'
+          ? { type: 'separate', mixture: step.mixture, method: (mission.kit.methods ?? []).find((m) => (!step.method || m === step.method) && separate(step.mixture, m, data.lab).ok) }
+          : { type: 'flame', substance: mission.kit.substances.find((id) => flameTest(id, data)?.element === step.element) };
+      if (!action.method && !action.substance) return { state: s, attempts: used, stuck: step.id };
+      s = missionLab(s, action, data).state;
+      used += 1;
       continue;
     }
     const inv = missionInventory(run, mission);

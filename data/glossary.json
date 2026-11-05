@@ -4365,6 +4365,332 @@
         "topic": "Seção 4.6: densidade de um gás",
         "pages": "145"
       }
+    },
+    {
+      "id": "mistura-heterogenea",
+      "term": "Mistura heterogênea",
+      "aliases": [
+        "misturas heterogêneas",
+        "material heterogêneo"
+      ],
+      "definition": "Mistura em que dá para ver partes diferentes (fases), a olho nu ou ao microscópio: os componentes ficam em regiões separadas.",
+      "example": "Água com areia, água com óleo, granito, limalha de ferro com enxofre.",
+      "related": [
+        "mistura",
+        "mistura-homogenea",
+        "filtracao",
+        "decantacao"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: heterogeneous mixture; seção G.1",
+        "pages": "B13"
+      }
+    },
+    {
+      "id": "mistura-homogenea",
+      "term": "Mistura homogênea",
+      "aliases": [
+        "misturas homogêneas",
+        "material homogêneo"
+      ],
+      "definition": "Mistura com o mesmo aspecto em toda parte, até em escala de moléculas: parece uma substância só. Também é chamada de solução.",
+      "example": "Água com sal dissolvido, água com álcool, o ar.",
+      "related": [
+        "mistura",
+        "solucao",
+        "mistura-heterogenea",
+        "destilacao"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: homogeneous mixture; seção G.1",
+        "pages": "B13"
+      }
+    },
+    {
+      "id": "filtracao",
+      "term": "Filtração",
+      "aliases": [
+        "filtrações",
+        "filtrar",
+        "filtrada",
+        "filtrado"
+      ],
+      "definition": "Separação de um sólido que não se dissolve num líquido: a mistura passa por um filtro, o líquido (com o que está dissolvido) atravessa e o sólido fica retido.",
+      "example": "O coador de café; o papel de filtro segura a areia, mas o sal dissolvido passa.",
+      "related": [
+        "mistura-heterogenea",
+        "decantacao"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: filtration; seção G.2",
+        "pages": "B11"
+      }
+    },
+    {
+      "id": "decantacao",
+      "term": "Decantação",
+      "aliases": [
+        "decantar",
+        "decantada"
+      ],
+      "definition": "Separação pela diferença de densidade: em repouso, o sólido (ou o líquido mais denso) vai para o fundo, e o de cima é despejado ou escoado.",
+      "example": "A areia assenta no fundo do balde de água barrenta; no funil de separação, a água escoa por baixo do óleo.",
+      "related": [
+        "mistura-heterogenea",
+        "filtracao"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Seção G.2: técnicas de separação (decantação)",
+        "pages": "F53"
+      }
+    },
+    {
+      "id": "destilacao",
+      "term": "Destilação",
+      "aliases": [
+        "destilações",
+        "destilar",
+        "destilada",
+        "destilado",
+        "destilação simples",
+        "destilação fracionada"
+      ],
+      "definition": "Separação pela diferença de ponto de ebulição: a mistura é aquecida, o componente mais volátil vira vapor, passa pelo condensador e volta a ser líquido (o destilado). Com uma coluna de fracionamento, separa até líquidos que se misturam.",
+      "example": "Água destilada a partir de água com sal; o álcool separado da água do vinho.",
+      "related": [
+        "mistura-homogenea",
+        "azeotropo"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: distillation; seção G.2",
+        "pages": "B9"
+      }
+    },
+    {
+      "id": "evaporacao",
+      "term": "Evaporação",
+      "aliases": [
+        "evaporar",
+        "evapora"
+      ],
+      "definition": "Passagem de um líquido para vapor. Como método de separação, tira o líquido de uma solução e deixa o sólido dissolvido — mas o líquido se perde.",
+      "example": "Nas salinas, a água do mar evapora ao sol e o sal fica.",
+      "related": [
+        "destilacao",
+        "mistura-homogenea"
+      ],
+      "source": {
+        "ref": "lenzi",
+        "topic": "UD 10: evaporação",
+        "pages": "263"
+      }
+    },
+    {
+      "id": "azeotropo",
+      "term": "Azeótropo",
+      "aliases": [
+        "mistura azeotrópica",
+        "misturas azeotrópicas"
+      ],
+      "definition": "Mistura de líquidos que ferve sem mudar de composição, como se fosse uma substância pura: a destilação não consegue separá-la além daquele ponto.",
+      "example": "Etanol com cerca de 4,4% de água: o álcool destilado não passa de ~95,6%.",
+      "related": [
+        "destilacao"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: azeotrope",
+        "pages": "B3"
+      }
+    },
+    {
+      "id": "hidrato",
+      "term": "Hidrato",
+      "aliases": [
+        "hidratos",
+        "hidratado",
+        "hidratada",
+        "água de hidratação",
+        "anidro"
+      ],
+      "definition": "Sólido com moléculas de água presas no cristal, em proporção fixa. Sem essa água, o sal é chamado de anidro.",
+      "example": "CuSO4·5H2O, o sulfato de cobre azul; aquecido, perde a água e vira o CuSO4 anidro, branco.",
+      "related": [
+        "composto",
+        "sal"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: hydrate",
+        "pages": "B13"
+      }
+    },
+    {
+      "id": "menisco",
+      "term": "Menisco",
+      "aliases": [],
+      "definition": "A superfície curva que um líquido forma num tubo estreito. Nas medidas de volume, lê-se a parte de baixo da curva, com os olhos na altura do líquido.",
+      "example": "Na bureta e na proveta, o menisco da água fica curvado para baixo.",
+      "related": [
+        "algarismos-significativos"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: meniscus",
+        "pages": "B17"
+      }
+    },
+    {
+      "id": "algarismos-significativos",
+      "term": "Algarismos significativos",
+      "aliases": [
+        "algarismo significativo"
+      ],
+      "definition": "Os dígitos de uma medida em que se confia: todos os certos, lidos na escala, mais o último, estimado entre as marcas. Quantos são depende do instrumento.",
+      "example": "Numa régua de divisões de 1 mm, 15,63 cm tem 4 algarismos significativos (o 3 é estimado).",
+      "related": [
+        "menisco"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: significant figures",
+        "pages": "B25"
+      }
+    },
+    {
+      "id": "hipotese",
+      "term": "Hipótese",
+      "aliases": [
+        "hipóteses"
+      ],
+      "definition": "Explicação provisória para um conjunto de observações, que precisa ser testada por experimentos.",
+      "example": "\"A vela apaga sob o copo porque o oxigênio acaba\" — testa-se com copos de tamanhos diferentes.",
+      "related": [
+        "metodo-cientifico"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: hypothesis",
+        "pages": "B14"
+      }
+    },
+    {
+      "id": "metodo-cientifico",
+      "term": "Método científico",
+      "aliases": [],
+      "definition": "O caminho da ciência: observar e registrar, propor uma hipótese, testá-la com experimentos (variando um fator de cada vez) e generalizar.",
+      "example": "Observar uma vela, supor que ela precisa de oxigênio e testar com copos de tamanhos diferentes.",
+      "related": [
+        "hipotese"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: scientific method",
+        "pages": "B24"
+      }
+    },
+    {
+      "id": "pilha",
+      "term": "Pilha",
+      "aliases": [
+        "pilhas",
+        "célula galvânica",
+        "células galvânicas"
+      ],
+      "definition": "Dispositivo que transforma a energia de uma reação de oxirredução espontânea em corrente elétrica: a oxidação e a redução acontecem em lugares separados, ligados por um fio.",
+      "example": "Na pilha de Daniell, o zinco se oxida num copo e os íons de cobre se reduzem no outro: 1,10 V.",
+      "related": [
+        "anodo",
+        "catodo",
+        "ponte-salina",
+        "redox"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: electrochemical cell (galvanic cell)",
+        "pages": "B9"
+      }
+    },
+    {
+      "id": "anodo",
+      "term": "Ânodo",
+      "aliases": [
+        "ânodos",
+        "anodo"
+      ],
+      "definition": "O eletrodo onde acontece a oxidação (onde a espécie perde elétrons). Numa pilha é o polo negativo; numa eletrólise, o positivo.",
+      "example": "Na pilha de Daniell, o zinco é o ânodo: Zn → Zn²⁺ + 2 e⁻.",
+      "related": [
+        "catodo",
+        "pilha",
+        "oxidacao"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: anode",
+        "pages": "B2"
+      }
+    },
+    {
+      "id": "catodo",
+      "term": "Cátodo",
+      "aliases": [
+        "cátodos",
+        "catodo"
+      ],
+      "definition": "O eletrodo onde acontece a redução (onde a espécie recebe elétrons). Numa pilha é o polo positivo; numa eletrólise, o negativo.",
+      "example": "Na eletrólise da água, o H2 se forma no cátodo.",
+      "related": [
+        "anodo",
+        "pilha",
+        "reducao"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: cathode",
+        "pages": "B5"
+      }
+    },
+    {
+      "id": "ponte-salina",
+      "term": "Ponte salina",
+      "aliases": [
+        "pontes salinas"
+      ],
+      "definition": "Tubo com uma solução de sal que liga os dois compartimentos de uma pilha: por ela passam íons, o que fecha o circuito e mantém as soluções neutras.",
+      "example": "Sem a ponte salina, a pilha de Daniell para de funcionar quase na hora.",
+      "related": [
+        "pilha"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: salt bridge",
+        "pages": "B24"
+      }
+    },
+    {
+      "id": "teste-de-chama",
+      "term": "Teste de chama",
+      "aliases": [
+        "testes de chama",
+        "análise pela chama"
+      ],
+      "definition": "Identificação de um metal pela cor que ele dá a uma chama: o calor excita os elétrons, e ao voltarem eles emitem luz de cor típica do elemento.",
+      "example": "Sódio: amarelo; cálcio: vermelho-alaranjado; estrôncio: vermelho; bário: verde.",
+      "related": [
+        "espectro",
+        "eletron"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Seção 15.7: cores de chama dos metais alcalino-terrosos",
+        "pages": "625"
+      }
     }
   ]
 }

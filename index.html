@@ -17,6 +17,7 @@
     </div>
     <button class="btn btn-ghost" type="button" data-glossary-open="" title="O que significa cada palavra da química">📖 <span class="hide-narrow">Glossário</span></button>
     <button id="btn-missions" class="btn btn-ghost" type="button" title="Missões: histórias com kit limitado e tentativas contadas">🗺️ <span class="hide-narrow">Missões</span><span id="missions-badge" class="nav-badge" hidden></span></button>
+    <button id="btn-lab" class="btn btn-ghost" type="button" title="Laboratório: utensílios, separação de misturas e teste de chama">🧰 <span class="hide-narrow">Laboratório</span></button>
     <button id="btn-kinetics" class="btn btn-ghost" type="button" title="Laboratório de velocidade das reações">⏱️ <span class="hide-narrow">Velocidade</span></button>
     <button id="btn-equilibrium" class="btn btn-ghost" type="button" title="Laboratório de equilíbrio: pH, tampão, solubilidade, K e Le Chatelier">⚖️ <span class="hide-narrow">Equilíbrio</span></button>
     <button id="btn-molecules" class="btn btn-ghost" type="button" title="Moléculas em 3D: forma, ângulos e polaridade">🧊 <span class="hide-narrow">Moléculas</span></button>
@@ -207,6 +208,19 @@
     </div>
     <p class="small">Cada missão conta uma história e traz um kit pequeno: durante a missão, só ele vale na bancada, e as tentativas são contadas. Pense antes de juntar! Os roteiros vêm de aulas práticas de laboratório.</p>
     <div class="missions-list"></div>
+  </dialog>
+
+  <dialog id="lab-dialog" class="level-dialog kinetics-dialog" aria-labelledby="lab-title">
+    <div class="glossary-head">
+      <h2 id="lab-title">🧰 Laboratório</h2>
+      <button class="btn btn-ghost lab-close" type="button" aria-label="Fechar o laboratório">×</button>
+    </div>
+    <div class="lab-tabs" role="tablist">
+      <button type="button" class="btn btn-ghost" role="tab" data-lab-tab="gw">Utensílios</button>
+      <button type="button" class="btn btn-ghost" role="tab" data-lab-tab="sep">Separação de misturas</button>
+      <button type="button" class="btn btn-ghost" role="tab" data-lab-tab="flame">Teste de chama</button>
+    </div>
+    <div class="lab-body"></div>
   </dialog>
 
   <div id="toasts" class="toasts" aria-live="polite"></div>

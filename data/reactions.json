@@ -803,6 +803,78 @@
       }
     },
     {
+      "id": "fe-s",
+      "name": "Ferro e enxofre viram sulfeto de ferro",
+      "reactants": [{ "id": "Fe", "coef": 1 }, { "id": "S", "coef": 1 }],
+      "products": [{ "id": "FeS", "coef": 1 }],
+      "types": ["sintese"],
+      "tags": ["redox", "exotermica"],
+      "conditions": [["calor"]],
+      "explanation": "Aquecida, a mistura de limalha de ferro com enxofre em pó brilha e vira um sólido escuro: sulfeto de ferro(II).",
+      "why": "Antes do aquecimento era só uma MISTURA: cada componente guardava suas propriedades (o ímã puxava o ferro, o enxofre continuava amarelo). O calor fornece a energia de ativação, o ferro entrega 2 elétrons ao enxofre e forma-se um COMPOSTO, com propriedades novas. Agora o ímã não separa mais nada, e a proporção é fixa: 1 Fe para 1 S (lei de Proust).",
+      "safety": {
+        "level": "perigo",
+        "why": "A reação libera muito calor, e o enxofre aquecido queima e solta SO2, gás tóxico. O FeS formado, em contato com ácidos, solta H2S, também tóxico.",
+        "home": "Não faça em casa: exige capela de exaustão e aquecimento forte."
+      },
+      "source": {
+        "ref": "reis-ufv",
+        "topic": "Prática nº 2: o composto sulfeto de ferro(II) (FeS) × o material ferro + enxofre, que mantém as propriedades de cada um e se separa com facilidade",
+        "pages": "45–46 (do PDF)",
+        "justification": "Fe(s) + S(s) → FeS(s) por aquecimento. O Atkins & Jones não traz esta síntese; a apostila (exercício de lei de Proust: 'aquecendo-se 21 g de ferro com 15 g de enxofre obtêm-se 33 g de sulfeto ferroso, restando 3 g de enxofre', proporção 1:1) e o ΔfG° negativo do FeS (Atkins FQ, Tabela 2C.7) confirmam. Ideal conferir no Greenwood.",
+        "seeAlso": [
+          { "ref": "bernoulli", "topic": "v. 1: aquecimento de ferro com enxofre forma sulfeto ferroso (exercício de leis ponderais)", "pages": "38" },
+          { "ref": "bernoulli", "topic": "v. 2, Frente A, Módulo 03: separação magnética de limalha de ferro + pó de enxofre", "pages": "4" }
+        ]
+      }
+    },
+    {
+      "id": "nahco3-calor",
+      "name": "Bicarbonato aquecido (fermento)",
+      "reactants": [{ "id": "NaHCO3", "coef": 2 }],
+      "products": [{ "id": "Na2CO3", "coef": 1 }, { "id": "H2O", "coef": 1, "state": "g" }, { "id": "CO2", "coef": 1 }],
+      "types": ["decomposicao"],
+      "tags": ["cotidiano"],
+      "conditions": [["calor"]],
+      "explanation": "Aquecido, o bicarbonato de sódio se decompõe: sobra carbonato de sódio e saem vapor de água e gás carbônico.",
+      "why": "Dois íons HCO3⁻ trocam um H⁺ entre si: um vira CO3²⁻, que fica no sólido como Na2CO3, e o outro vira H2CO3, que se desfaz em H2O e CO2. Os gases que saem fazem a massa de bolo crescer, e é por isso que o bicarbonato funciona como fermento mesmo sem ácido.",
+      "safety": {
+        "level": "seguro",
+        "why": "Bicarbonato e carbonato de sódio são de uso doméstico. O carbonato, porém, é mais básico e irrita os olhos.",
+        "home": "Acontece no forno, quando a receita leva bicarbonato. Não aqueça em recipiente fechado."
+      },
+      "source": {
+        "ref": "farias",
+        "topic": "Síntese do bicarbonato e do carbonato de sódio: 'prepare então o carbonato de sódio por aquecimento a 250 °C'",
+        "pages": "87–88",
+        "justification": "2 NaHCO3(s) → Na2CO3(s) + H2O(g) + CO2(g) por aquecimento. O Atkins & Jones (p. 623) trata o fermento só pela reação do HCO3⁻ com ácidos.",
+        "seeAlso": [{ "ref": "atkins-jones", "topic": "Seção 15.6: bicarbonato de sódio e fermento químico", "pages": "623" }]
+      }
+    },
+    {
+      "id": "cuso4-hidratacao",
+      "name": "Sulfato de cobre anidro + água (o detector de água)",
+      "reactants": [{ "id": "CuSO4", "coef": 1 }, { "id": "H2O", "coef": 5 }],
+      "products": [{ "id": "CuSO4·5H2O", "coef": 1 }],
+      "types": ["sintese"],
+      "tags": ["exotermica"],
+      "conditions": [],
+      "explanation": "O pó branco de sulfato de cobre anidro fica azul ao receber água: forma-se o sal penta-hidratado, e a mistura esquenta.",
+      "why": "O CuSO4 anidro atrai muito a água: cinco moléculas de H2O se prendem a cada unidade do sal, dentro do cristal (água de hidratação), e o sólido muda de branco para azul. Ao aquecer acima de ~150 °C, a água sai e o pó volta a ficar branco: a reação vai e volta.",
+      "safety": {
+        "level": "cuidado",
+        "why": "Sais de cobre são tóxicos se ingeridos e irritam pele e olhos.",
+        "home": "Não faça em casa: o sulfato de cobre não é para manusear sem luvas e óculos."
+      },
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Seção D.3 e Fig. D.1: CuSO4·5H2O azul perde a água acima de 150 °C e forma o pó branco anidro; o anidro atrai tanto a água que fica azul quando ela é adicionada",
+        "pages": "F31",
+        "justification": "CuSO4(s) + 5 H2O(l) → CuSO4·5H2O(s); ΔH° = −79 kJ/mol pela Tabela 2C.7 do Atkins FQ.",
+        "seeAlso": [{ "ref": "farias", "topic": "Entalpia de hidratação do sulfato de cobre (valor de referência −78,5 kJ/mol)", "pages": "65–66" }]
+      }
+    },
+    {
       "id": "cu-hno3",
       "name": "Cobre no ácido nítrico diluído",
       "reactants": [{ "id": "Cu", "coef": 3 }, { "id": "HNO3", "coef": 8 }],

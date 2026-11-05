@@ -11,7 +11,7 @@ import { kineticsAnswer } from './kinetics.js';
 import { equilibriumAnswer } from './equilibrium.js';
 import { moleculeAnswer } from './vsepr.js';
 import { organicAnswer } from './organic.js';
-import { newRun, runCombine, runAnswer, isMissionAvailable } from './missions.js';
+import { newRun, runCombine, runAnswer, runLab, isMissionAvailable } from './missions.js';
 
 export const STATE_VERSION = 2;
 // v1 → v2: um nível novo (metais alcalino-terrosos) entrou no meio da Fase 1, então o
@@ -274,6 +274,20 @@ export function missionCombine(state, selection, result, gameData) {
   const events = [...base.events, ...res.completed.map((step) => ({ type: 'mission-step', mission, step }))];
   const s = finishRun({ ...base.state, missionRun: res.run }, mission, res.finished, events, gameData, run.failed);
   return { state: s, events };
+}
+
+/**
+ * Ação de laboratório na missão em andamento (separar uma mistura, teste de chama).
+ * @returns {{ state, events, outcome }}
+ */
+export function missionLab(state, action, gameData) {
+  const run = state.missionRun;
+  if (!run) return { state, events: [], outcome: null };
+  const mission = gameData.missionsById.get(run.id);
+  const res = runLab(run, mission, action, gameData);
+  const events = res.completed.map((step) => ({ type: 'mission-step', mission, step }));
+  const s = finishRun({ ...state, missionRun: res.run }, mission, res.finished, events, gameData, run.failed);
+  return { state: s, events, outcome: res.outcome };
 }
 
 /**
