@@ -44,7 +44,14 @@ export function flameElement(sub, data) {
  * @returns {{ element, color: string|null, css: string|null, text, source } | null}
  */
 export function flameTest(substanceId, data) {
-  const el = flameElement(data.substancesById.get(substanceId), data);
-  const entry = el ? data.lab.flame[el] : null;
-  return entry ? { element: el, ...entry } : null;
+  const sub = data.substancesById.get(substanceId);
+  const el = flameElement(sub, data);
+  let entry = el ? data.lab.flame[el] : null;
+  // Alguns metais mudam de tom com haletos (o cobre: verde nos sais comuns, verde-azulado nos cloretos).
+  if (entry?.halide && /^(Cl|Br|I)-$/.test(sub.ions?.anion.formula ?? '')) entry = { ...entry, ...entry.halide };
+  if (entry) {
+    const { halide, ...rest } = entry;
+    return { element: el, ...rest };
+  }
+  return null;
 }

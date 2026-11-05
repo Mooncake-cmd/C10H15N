@@ -6,7 +6,9 @@
     "secondaryNote": "Fonte secundária, para linguagem de iniciante e convenções do ensino médio brasileiro. O que vier dela é conferido em Atkins & Jones; quando o livro-texto tem o assunto, ele é citado junto.",
     "complementaryOnlyNote": "Fontes de divulgação: só podem aparecer em 'seeAlso' (contexto, curiosidades), nunca como fonte principal de uma reação ou não-reação. Os testes conferem isso. dk-elements: livro completo recebido; as páginas citadas são as impressas no livro.",
     "labManuals": ["lenzi", "reis-ufv", "farias"],
-    "labManualsNote": "Manuais de laboratório (Fase 3F): roteiros, observações e segurança das práticas que viram missões. A química de cada reação continua conferida no livro-texto; quando só o manual traz a reação (Cu(OH)2 → CuO por aquecimento, na prática 'Do cobre ao cobre'), isso fica dito na justificativa."
+    "labManualsNote": "Manuais de laboratório (Fase 3F): roteiros, observações e segurança das práticas que viram missões. A química de cada reação continua conferida no livro-texto; quando só o manual traz a reação (Cu(OH)2 → CuO por aquecimento, na prática 'Do cobre ao cobre'), isso fica dito na justificativa.",
+    "web": ["reyes-morales-2021", "reyes-morales-2022", "fukuda-koga", "wikipedia", "mfa-cameo"],
+    "webNote": "Fontes da internet (pesquisa de novembro de 2026), usadas para conferir o Greenwood (1997) e cobrir o que ele não traz. Artigos revisados por pares valem como confirmação; Wikipédia e enciclopédias de museu só para dados simples (cor de chama, existência de um composto) e sempre marcados como fonte da internet. Sites de vestibular não entram como fonte."
   },
   "sources": {
     "brown": "BROWN, T. L.; LEMAY, H. E.; BURSTEN, B. E.; MURPHY, C. J.; WOODWARD, P. M. Química: a ciência central. 13. ed. São Paulo: Pearson, 2016.",
@@ -20,6 +22,11 @@
     "crc": "HAYNES, W. M. (ed.). CRC Handbook of Chemistry and Physics. 97th ed. Boca Raton: CRC Press, 2016. Seção 'Electrochemical Series' (potenciais-padrão de redução).",
     "lenzi": "LENZI, E.; FAVERO, L. O. B.; SILVA, M. B. da; GIMENES, M. J. G.; VIANNA FILHO, E. de A.; TANAKA, A. S. Química Geral Experimental. 3. ed. [S. l.]: Freitas Bastos, 2024. ISBN 978-65-5675-367-6. Manual de laboratório; a cópia é um EPUB: a página é o número do arquivo da parte 1, +236 na parte 2 e +486 na parte 3 (confere com os números impressos que aparecem no texto).",
     "reis-ufv": "REIS, E. L. (org.); PROFESSORES DE QUÍMICA DA UFV. Química Geral: práticas fundamentais. Viçosa: Editora UFV, 2021 (Série Didática; 1. ed. 1988). ISBN 978-65-5925-034-9. Manual de laboratório; as páginas do PDF não trazem numeração impressa, então são citadas como 'do PDF'.",
-    "farias": "FARIAS, R. F. de. Práticas de Química Inorgânica. Manual de laboratório com 41 práticas de síntese; a cópia consultada (digitalizada) não traz editora, ano nem ISBN — o autor aparece no cabeçalho das páginas. Páginas impressas."
+    "farias": "FARIAS, R. F. de. Práticas de Química Inorgânica. Manual de laboratório com 41 práticas de síntese; a cópia consultada (digitalizada) não traz editora, ano nem ISBN — o autor aparece no cabeçalho das páginas. Páginas impressas.",
+    "reyes-morales-2021": "REYES-MORALES, Q. L.; REYES-CRUZ, V. E.; TRUJILLO-ESTRADA, A.; COBOS-MURCIA, A.; URBANO-REYES, G.; PÉREZ-LABRA, M. Selenium and sulphur reactions involved in manganese reduction from sulphate solutions. RSC Advances, v. 11, p. 25542–25550, 2021. DOI 10.1039/D1RA03679C. Artigo revisado por pares (acesso aberto).",
+    "reyes-morales-2022": "REYES-MORALES, Q. L. et al. The effect of two anionic membranes (AMI 7001s and Neosepta AMX) on the electrodeposition of manganese from sulphate solutions. RSC Advances, v. 12, p. 17661, 2022. DOI 10.1039/D2RA02737B. Artigo revisado por pares (acesso aberto).",
+    "fukuda-koga": "FUKUDA, M.; FAVERGEON, L.; KOGA, N. Universal Kinetic Description for Thermal Decomposition of Copper(II) Hydroxide over Different Water Vapor Pressures. Artigo de pesquisa; versão no repositório HAL: https://hal-emse.ccsd.cnrs.fr/emse-02363324 (a revista não foi conferida).",
+    "wikipedia": "WIKIPEDIA (em inglês). Verbetes citados pelo título: 'Flame test' e 'Magnesium carbonate'. Consultados em novembro de 2026, por meio de busca.",
+    "mfa-cameo": "MUSEUM OF FINE ARTS, BOSTON. CAMEO (Conservation & Art Materials Encyclopedia Online): verbete 'Flame test'. https://cameo.mfa.org/wiki/Flame_test. Consultado em novembro de 2026, por meio de busca."
   }
 }

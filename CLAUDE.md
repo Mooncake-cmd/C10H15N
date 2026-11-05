@@ -24,13 +24,28 @@ Detalhes de arquitetura, estrutura de pastas e "como adicionar conteúdo" estão
   regra grupo 2 + Cl2 → MCl2 e + O2 → MO (Be, Mg, Ca, Sr; Ba fica "não sei" porque forma BaO2,
   p. 112–113, 121); decomposição de carbonatos de Li, Sr e Ba (temperaturas da p. 114) e de
   hidróxidos de Ca, Sr e Ba (p. 119); Fe + S com fonte (p. 662, 649). **Ainda em aberto**:
-  1. Exceções sem página: carbonato básico de Mg²⁺ (o Greenwood não traz) e o limite de −1,0 V
-     para "não se deposita" (estimativa a partir das p. 543–544 do A&J).
-  2. Metais de transição + O2/Cl2 sem regra geral (o produto varia).
+  **Resolvido com pesquisa na internet + Greenwood** (nov. 2026): carbonato básico de Mg²⁺ (fonte da
+  internet, Wikipédia); limite de deposição em água passou de −1,0 V para −1,5 V, entre o Mn (−1,18 V,
+  eletrodepositado industrialmente — Reyes-Morales et al., RSC Advances 2021/2022) e o Al (−1,66 V),
+  sem mudar nada para os metais do jogo; Fe + Cl2 → FeCl3 (Greenwood p. 1084), Zn + Cl2 → ZnCl2 e
+  Zn + O2 → ZnO (p. 1205) curados; cu-o2 corrigido (p. 1181: CuO e Cu2O se formam no aquecimento, o
+  Cu2O predomina em alta temperatura); Cu(OH)2 → CuO confirmado por artigo (Fukuda, Favergeon e
+  Koga); cor de chama do cobre (verde; verde-azulada nos haletos — MFA CAMEO/Wikipédia, marcada
+  como fonte da internet). **Ainda em aberto**:
+  1. Exceções: nenhuma sem fonte (a do Mg²⁺ é só da internet).
+  2. Metais de transição + O2/Cl2 sem regra geral: Cu + Cl2 (sem página de livro para CuCl2 × CuCl)
+     e Fe + O2 (três óxidos de composição variável, Greenwood p. 1079; a reação curada fe-o2, do
+     Brown, usa Fe2O3 como simplificação).
   3. Regras só para pares; combinações de 3+ substâncias não passam pelo motor (é decisão de
      projeto, não de fonte).
-  4. Ácido nítrico + outros metais continua "não sei": o Greenwood (p. 467) confirma que depende
-     da concentração (e da passivação de Al, Cr, Fe), mas não dá os produtos metal a metal.
+  4. Ácido nítrico + outros metais continua "não sei": o Greenwood (p. 467, 1206) confirma que depende
+     da concentração e da temperatura (e da passivação de Al, Cr, Fe), mas não dá os produtos metal a
+     metal; exemplos de sites de vestibular (Zn → NH4NO3 no muito diluído; Mg e Mn → H2) não entram
+     como fonte.
+- **Fontes da internet** (`sources.json` → `_meta.web`): artigos revisados por pares valem como
+  confirmação; Wikipédia e enciclopédias de museu só para dados simples e sempre marcadas como fonte
+  da internet; sites de vestibular nunca. Neste ambiente a busca funciona, mas abrir as páginas
+  (wikipedia.org, pubs.rsc.org etc.) está bloqueado pela rede; citações completas vêm da busca.
 - **Fase 3 (avançado) — CONCLUÍDA**, em etapas publicadas uma a uma:
   - **3A Energia — CONCLUÍDA**: ΔH°/ΔS°/ΔG° pela lei de Hess (`data/thermo.json`, `src/core/thermo.js`),
     painel "Energia", calor na calculadora, nível "Energia das reações". Dados: Atkins FQ 12. ed.

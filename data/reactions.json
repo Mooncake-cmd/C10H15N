@@ -108,13 +108,64 @@
       "tags": ["redox"],
       "conditions": [["calor"]],
       "explanation": "Um fio de cobre aquecido na chama fica coberto por uma camada preta de óxido de cobre(II).",
-      "why": "O cobre é pouco reativo: à temperatura ambiente oxida muito devagar, mas com calor a reação com o oxigênio fica rápida. Não pega fogo como o magnésio — compare as duas reações e veja a série de reatividade em ação.",
+      "why": "O cobre é pouco reativo: à temperatura ambiente oxida muito devagar, mas com calor a reação com o oxigênio fica rápida. Não pega fogo como o magnésio — compare as duas reações e veja a série de reatividade em ação. Na verdade, aquecido no ar o cobre forma dois óxidos: o CuO, preto, e o Cu2O, avermelhado, que predomina em temperaturas mais altas. O jogo mostra o CuO.",
       "safety": {
         "level": "cuidado",
         "why": "O risco aqui é o da própria chama e do metal muito quente.",
         "home": "Só com supervisão: segure o fio com pinça, nunca com a mão."
       },
-      "source": { "ref": "greenwood", "topic": "Cobre: óxidos", "justification": "2 Cu(s) + O2(g) → 2 CuO(s) por aquecimento ao ar é a preparação usual do CuO." }
+      "source": { "ref": "greenwood", "topic": "Seção 28.3.1: os dois óxidos de cobre, Cu2O (amarelo ou vermelho) e CuO (preto), se formam quando o metal é aquecido no ar ou em O2; o Cu2O é favorecido em temperaturas altas (p. 1179: ao rubro, forma-se Cu2O)", "pages": "1181", "justification": "2 Cu(s) + O2(g) → 2 CuO(s) por aquecimento moderado. Para preparar CuO puro, o livro recomenda calcinar o nitrato ou o carbonato básico de cobre(II)." }
+    },
+    {
+      "id": "fe-cl2",
+      "name": "Ferro queimando no cloro",
+      "reactants": [{ "id": "Fe", "coef": 2 }, { "id": "Cl2", "coef": 3 }],
+      "products": [{ "id": "FeCl3", "coef": 2, "state": "s" }],
+      "types": ["sintese"],
+      "tags": ["redox", "exotermica"],
+      "conditions": [["calor"]],
+      "explanation": "Lã de aço aquecida e mergulhada no cloro brilha e forma uma fumaça castanha de cloreto de ferro(III).",
+      "why": "O cloro é um oxidante forte: leva o ferro direto ao estado +3. O cloreto de ferro(II), FeCl2, não se faz assim; para ele, passa-se HCl sobre ferro aquecido. Compare com o ferro no ácido clorídrico, que dá ferro(II).",
+      "safety": {
+        "level": "perigo",
+        "why": "O cloro é um gás tóxico, e a reação libera muito calor. O FeCl3 é corrosivo.",
+        "home": "Não faça em casa em nenhuma hipótese."
+      },
+      "source": { "ref": "greenwood", "topic": "Seção 25.3.3: os trialetos anidros FeX3 (F, Cl, Br) se preparam aquecendo os elementos; os dialetos, passando HX sobre ferro aquecido", "pages": "1084", "justification": "2 Fe(s) + 3 Cl2(g) → 2 FeCl3(s) por aquecimento." }
+    },
+    {
+      "id": "zn-cl2",
+      "name": "Zinco + cloro",
+      "reactants": [{ "id": "Zn", "coef": 1 }, { "id": "Cl2", "coef": 1 }],
+      "products": [{ "id": "ZnCl2", "coef": 1, "state": "s" }],
+      "types": ["sintese"],
+      "tags": ["redox", "exotermica"],
+      "conditions": [["calor"]],
+      "explanation": "Aquecido no cloro, o zinco forma cloreto de zinco, um sólido branco.",
+      "why": "O zinco só forma íons Zn²⁺: por isso, com o cloro, o produto é sempre ZnCl2 (não há a dúvida entre dois cloretos que existe no ferro e no cobre).",
+      "safety": {
+        "level": "perigo",
+        "why": "O cloro é um gás tóxico; o ZnCl2 é corrosivo.",
+        "home": "Não faça em casa em nenhuma hipótese."
+      },
+      "source": { "ref": "greenwood", "topic": "Seção 29.2.4: zinco e cádmio se combinam com oxigênio, enxofre, fósforo e halogênios quando aquecidos", "pages": "1205", "justification": "Zn(s) + Cl2(g) → ZnCl2(s) por aquecimento." }
+    },
+    {
+      "id": "zn-o2",
+      "name": "Zinco queimando",
+      "reactants": [{ "id": "Zn", "coef": 2 }, { "id": "O2", "coef": 1 }],
+      "products": [{ "id": "ZnO", "coef": 2, "state": "s" }],
+      "types": ["sintese"],
+      "tags": ["redox", "exotermica"],
+      "conditions": [["calor"]],
+      "explanation": "Aquecido no ar, o zinco se combina com o oxigênio e forma óxido de zinco, um pó branco.",
+      "why": "Como o zinco só forma Zn²⁺, o óxido é sempre ZnO. No ar úmido, mesmo sem aquecer, ele se cobre aos poucos de uma película que o protege.",
+      "safety": {
+        "level": "cuidado",
+        "why": "Metal muito quente queima a pele; a fumaça de óxido de zinco não deve ser respirada.",
+        "home": "Não faça em casa."
+      },
+      "source": { "ref": "greenwood", "topic": "Seção 29.2.4: zinco e cádmio escurecem rapidamente no ar úmido e se combinam com oxigênio, enxofre, fósforo e halogênios quando aquecidos", "pages": "1205", "justification": "2 Zn(s) + O2(g) → 2 ZnO(s) por aquecimento." }
     },
     {
       "id": "s-o2",
@@ -799,7 +850,8 @@
         "ref": "farias",
         "topic": "Prática \"Do cobre ao cobre\", etapa 3: aquecer o precipitado de Cu(OH)2 a 120 °C forma um precipitado preto; nos comentários, 'preparar o óxido de cobre(II) a partir de seu hidróxido'",
         "pages": "85–86",
-        "justification": "Cu(OH)2(s) → CuO(s) + H2O(g) por aquecimento. Mesmo padrão da decomposição do Mg(OH)2 no Atkins & Jones (seção 15.8, p. 626), que não traz a do cobre; ideal conferir no Greenwood."
+        "justification": "Cu(OH)2(s) → CuO(s) + H2O(g) por aquecimento. Mesmo padrão da decomposição do Mg(OH)2 no Atkins & Jones (seção 15.8, p. 626), que não traz a do cobre; o Greenwood (p. 1181) descreve o Cu(OH)2 azul-claro, mas não o seu aquecimento.",
+        "seeAlso": [{ "ref": "fukuda-koga", "topic": "Estudo da decomposição térmica do Cu(OH)2 em CuO (a temperatura em que começa depende do vapor de água no ambiente)", "pages": "online" }]
       }
     },
     {

@@ -190,7 +190,11 @@ test('bicarbonato é anfiprótico: com OH⁻ forma carbonato (p. 627)', () => {
 test('metal alcalino + cloro (seção 15.5) e exceções com fonte', () => {
   assert.equal(eq(reactionOf('K', 'Cl2')), '2 K(s) + 1 Cl2(g) → 2 KCl(s)');
   assert.equal(eq(reactionOf('Cs', 'Cl2')), '2 Cs(s) + 1 Cl2(g) → 2 CsCl(s)');
-  assert.notEqual(combine('Fe', 'Cl2').kind, 'reaction', 'Fe + Cl2 não tem regra (o produto depende)');
+  // Metais de transição não têm regra geral; Fe e Zn são curados pelo Greenwood (p. 1084, 1205).
+  assert.equal(reactionOf('Fe', 'Cl2').id, 'fe-cl2', 'o cloro leva o ferro a +3: FeCl3');
+  assert.equal(reactionOf('Zn', 'Cl2').id, 'zn-cl2');
+  assert.equal(reactionOf('Zn', 'O2').id, 'zn-o2');
+  assert.notEqual(combine('Cu', 'Cl2').kind, 'reaction', 'Cu + Cl2: sem página de livro-texto para o produto');
   assert.equal(combine('CuSO4', 'Na2CO3').source?.pages, '677–678');
   assert.equal(combine('NH4Cl', 'KOH').source?.pages, '425, 436');
 });
@@ -220,5 +224,9 @@ test('Greenwood: exceções com página (acetatos de Fe³⁺ e Al³⁺, carbonat
   assert.equal(combine('FeCl3', 'CH3COONa').source?.pages, '1090');
   assert.equal(combine('AlCl3', 'CH3COONa').source?.pages, '225');
   assert.equal(combine('FeSO4', 'Na2CO3').source?.pages, '1092');
-  assert.equal(combine('Zn', 'HNO3').source?.pages, '467');
+  assert.equal(combine('Zn', 'HNO3').source?.pages, '467, 1206');
+  assert.equal(combine('MgCl2', 'Na2CO3').source?.ref, 'wikipedia', 'carbonato básico de Mg: fonte da internet');
+  const al = combine('Mg', 'AlCl3');
+  assert.equal(al.reasonId, 'rule:nao-deposita', 'o Al (−1,66 V) não se deposita em água');
+  assert.equal(al.source?.ref, 'reyes-morales-2021');
 });

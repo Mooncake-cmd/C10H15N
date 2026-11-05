@@ -4,14 +4,14 @@
     "acidos": "strongAcids: Tabela J.1 (Atkins & Jones, p. F75). oxidizingAcids: atacam metais pelo ânion, não só pelo H⁺, e saem da regra 'metal + ácido'. weakAcidSkip: ácidos que a regra não usa com metais e carbonatos.",
     "coldWaterReactive": "metais que reagem com a água fria, segundo Atkins & Jones: todo o grupo 1 (p. 621) e Ca, Sr, Ba (p. 625; o Mg só com água quente, o Be nem ao rubro). Numa solução, eles atacam a água antes de deslocar outro metal.",
     "passivated": "metais protegidos por uma película de óxido: alumínio (p. 629) e berílio (p. 625). Ácidos fracos não a removem.",
-    "depositMinE0": "um metal com E° abaixo deste valor não se deposita a partir de solução aquosa, porque a água é reduzida antes. Base: a pH 7, reduzir a água exige −0,41 V e, havendo duas espécies redutíveis, reduz-se a de potencial maior (p. 544); a sobretensão do H2 (cerca de 0,6 V, p. 543) é o que ainda permite depositar zinco (−0,76 V). −1,0 V é uma estimativa que separa Zn/Fe (depositam) de Al/Mg/Be (não depositam)."
+    "depositMinE0": "um metal com E° abaixo deste valor não se deposita a partir de solução aquosa, porque a água é reduzida antes. Base: a pH 7, reduzir a água exige −0,41 V e, havendo duas espécies redutíveis, reduz-se a de potencial maior (p. 544); a sobretensão do H2 (cerca de 0,6 V, p. 543) é o que ainda permite depositar zinco (−0,76 V). O limite real fica entre o manganês (−1,18 V), que é depositado industrialmente a partir de solução aquosa de sulfato apesar do H2 que também se forma (Reyes-Morales et al., RSC Advances 2021 e 2022), e o alumínio (−1,66 V), que não é. −1,5 V separa os dois; para os metais do jogo dá o mesmo resultado que antes: Zn e Fe depositam, Al, Mg e Be não."
   },
   "strongAcids": ["HCl", "HNO3", "H2SO4"],
   "oxidizingAcids": ["HNO3"],
   "weakAcidSkip": ["H2CO3"],
   "coldWaterReactive": ["Li", "Na", "K", "Rb", "Cs", "Ca", "Sr", "Ba"],
   "passivated": ["Al", "Be"],
-  "depositMinE0": -1.0,
+  "depositMinE0": -1.5,
   "carbonateDecomposition": ["Li+", "Mg^2+", "Ca^2+", "Sr^2+", "Ba^2+"],
   "carbonateDecompositionTemp": { "Mg^2+": 540, "Ca^2+": 900, "Sr^2+": 1289, "Ba^2+": 1360 },
   "carbonateTempText": " O {carbonate} precisa de cerca de {T} °C (temperatura em que a pressão do CO2 liberado chega a 1 atm); descendo o grupo 2, os carbonatos ficam mais estáveis.",
@@ -211,8 +211,8 @@
     "acido-oxidante": {
       "kind": "unknown",
       "title": "Ácido oxidante: outra reação",
-      "reason": "O {acid} é um ácido OXIDANTE: o íon nitrato rouba elétrons dos metais, e os produtos costumam ser óxidos de nitrogênio (NO, NO2) em vez de hidrogênio. Por exemplo, o cobre se dissolve em ácido nítrico diluído liberando NO. Os produtos dependem da concentração (concentrado, ele ataca quase todos os metais, e alguns, como Al e Fe, ficam protegidos por uma película de óxido), por isso o motor de regras não monta essa equação; ela precisa ser curada.",
-      "source": { "ref": "greenwood", "topic": "Seção 11.3.7: diluído (< 2 M) o ácido nítrico age como ácido forte; concentrado, é fortemente oxidante e ataca quase todos os metais, exceto Au, Pt, Rh e Ir; Al, Cr e Fe ficam passivados", "pages": "467" }
+      "reason": "O {acid} é um ácido OXIDANTE: o íon nitrato rouba elétrons dos metais, e os produtos costumam ser óxidos de nitrogênio (NO, NO2) em vez de hidrogênio. Por exemplo, o cobre se dissolve em ácido nítrico diluído liberando NO. Os produtos dependem da concentração e da temperatura: com o zinco, por exemplo, saem óxidos de nitrogênio diferentes (como NO2, NO ou N2O) conforme o caso. Concentrado, ele ataca quase todos os metais, e alguns, como Al e Fe, ficam protegidos por uma película de óxido. Por isso o motor de regras não monta essa equação; ela precisa ser curada.",
+      "source": { "ref": "greenwood", "topic": "Seção 11.3.7: diluído (< 2 M) o ácido nítrico age como ácido forte; concentrado, é fortemente oxidante e ataca quase todos os metais, exceto Au, Pt, Rh e Ir; Al, Cr e Fe ficam passivados. Seção 29.2.4 (p. 1206): com o zinco, o ácido nítrico produz vários óxidos de nitrogênio, conforme a concentração e a temperatura", "pages": "467, 1206" }
     },
     "bario-oxigenio": {
       "kind": "unknown",
@@ -254,7 +254,8 @@
     "nao-deposita": {
       "kind": "unknown",
       "title": "O {otherMetal} não se deposita em água",
-      "reason": "Pela série eletroquímica o {metal} é mais reativo, mas o {otherMetal} (E° = {E0b}) é tão reativo que não se forma como metal dentro da água: antes disso a própria água é reduzida, liberando hidrogênio, e pode precipitar um hidróxido. O motor não monta essa equação."
+      "reason": "Pela série eletroquímica o {metal} é mais reativo, mas o {otherMetal} (E° = {E0b}) é tão reativo que não se forma como metal dentro da água: antes disso a própria água é reduzida, liberando hidrogênio, e pode precipitar um hidróxido. Até o manganês (E° = −1,18 V) ainda dá para depositar a partir de solução aquosa, com muito esforço; metais bem mais reativos, como alumínio e magnésio, não. O motor não monta essa equação.",
+      "source": { "ref": "reyes-morales-2021", "topic": "Eletrodeposição de manganês a partir de soluções de sulfato, competindo com a formação de H2", "pages": "25542–25550" }
     },
     "reagente-pouco-soluvel": {
       "kind": "unknown",

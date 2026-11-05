@@ -265,7 +265,15 @@ conferidas no livro.
 regras do grupo 2 com cloro e oxigênio (o bário fica "não sei", porque também forma o peróxido
 BaO2), decomposição dos carbonatos de Li, Sr e Ba (com a temperatura) e dos hidróxidos de Ca, Sr e
 Ba, a síntese Fe + S, as exceções dos acetatos de Fe³⁺ e Al³⁺ e do carbonato de Fe²⁺, o motivo de o
-ácido nítrico com metais continuar "não sei" e as cores de chama de Li, K, Rb e Cs.
+ácido nítrico com metais continuar "não sei" e as cores de chama de Li, K, Rb e Cs. Também
+FeCl3 a partir dos elementos (p. 1084), zinco com cloro e oxigênio (p. 1205) e os dois óxidos de
+cobre no aquecimento (p. 1181, que corrigiu o texto da reação do cobre com oxigênio).
+
+**Fontes da internet** (`sources.json` → `_meta.web`), para conferir o Greenwood (1997) e cobrir o
+que ele não traz: artigos revisados por pares (eletrodeposição de manganês, RSC Advances 2021/2022,
+que levou o limite de "metal que não se deposita em água" para −1,5 V; decomposição do Cu(OH)2) e,
+marcadas como fonte da internet, a Wikipédia e a enciclopédia CAMEO do MFA Boston (carbonato básico
+de magnésio, cor de chama do cobre).
 
 Dados dos elementos: [Periodic-Table-JSON](https://github.com/Bowserinator/Periodic-Table-JSON),
 compilado da Wikipédia (CC BY-SA). As massas atômicas são arredondadas a 5 algarismos
