@@ -325,7 +325,12 @@
       "cation": "Mg^2+",
       "anion": "CO3^2-",
       "scope": "precipitation",
-      "why": "O MgCO3 existe como mineral, mas misturar soluções de Mg²⁺ e carbonato precipita um carbonato básico de magnésio (com OH⁻), não MgCO3 puro."
+      "why": "O MgCO3 existe como mineral (magnesita), mas misturar soluções de Mg²⁺ e carbonato precipita um carbonato BÁSICO hidratado de magnésio (com OH⁻ e água, como a hidromagnesita, Mg5(CO3)4(OH)2·4H2O), não MgCO3 puro.",
+      "source": {
+        "ref": "wikipedia",
+        "topic": "Verbete 'Magnesium carbonate': tratar cloreto ou sulfato de magnésio com carbonato de sódio aquoso dá uma mistura hidratada de carbonato e hidróxido de magnésio (hidromagnesita), não MgCO3 (fonte da internet)",
+        "pages": "online"
+      }
     },
     {
       "cation": "Fe^2+",

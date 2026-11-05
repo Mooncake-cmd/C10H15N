@@ -178,6 +178,10 @@
       "source": { "ref": "atkins-jones", "topic": "Seção 15.7: estrôncio dá chama carmim; fogos de artifício", "pages": "625" } },
     "Ba": { "color": "verde-amarelada", "css": "#9be22e", "text": "Verde-amarelado: o verde dos fogos de artifício.",
       "source": { "ref": "atkins-jones", "topic": "Seção 15.7: bário dá chama verde-amarelada", "pages": "625" } },
+    "Cu": { "color": "verde", "css": "#2ecf6b", "text": "Verde (nos sais de cobre que não são haletos, como o sulfato). O tom varia com a chama: o teste de chama sozinho não é uma prova definitiva. (Fonte da internet.)",
+      "source": { "ref": "mfa-cameo", "topic": "Verbete 'Flame test': verde-esmeralda para sais de cobre exceto haletos; verde-azulado para haletos de cobre (também na Wikipédia, 'Flame test')", "pages": "online" },
+      "halide": { "color": "verde-azulada", "css": "#1fb5a8", "text": "Verde-azulado (nos haletos de cobre, como o cloreto). Nos fogos de artifício, o azul vem do CuCl formado na chama. (Fonte da internet, com o Greenwood p. 867.)",
+        "source": { "ref": "mfa-cameo", "topic": "Verbete 'Flame test': verde-azulado para haletos de cobre; Greenwood p. 867: o azul dos fogos é a emissão do CuCl (420–460 nm)", "pages": "online" } } },
     "H": { "color": null, "css": null, "text": "A chama continua azul: o ácido clorídrico não dá cor (por isso ele é usado para limpar o fio entre um teste e outro).",
       "source": { "ref": "bernoulli", "topic": "v. 1, Frente C, Módulo 03: teste de chama (HCl não dá cor; CaCl2, SrCl2, BaCl2)", "pages": "53" } }
   },
