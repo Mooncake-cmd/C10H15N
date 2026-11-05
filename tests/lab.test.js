@@ -81,7 +81,8 @@ test('teste de chama: cores com fonte, pelo cátion do sal', () => {
   assert.equal(flameTest('BaCl2', data).element, 'Ba');
   assert.equal(flameTest('CaCl2', data).element, 'Ca');
   assert.equal(flameTest('HCl', data).color, null, 'o HCl não dá cor');
-  assert.equal(flameTest('KCl', data), null, 'sem fonte para o potássio: o jogo não inventa a cor');
+  assert.equal(flameTest('KCl', data).element, 'K');
+  assert.equal(flameTest('CuSO4', data), null, 'sem fonte para o cobre: o jogo não inventa a cor');
   for (const s of L.flameSource) okSource(s, 'chama');
 });
 

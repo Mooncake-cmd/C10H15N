@@ -292,22 +292,22 @@
       "cation": "Fe^3+",
       "anion": "CH3COO-",
       "scope": "never",
-      "why": "O acetato de ferro(III) simples não se forma: em água o Fe³⁺ dá acetatos 'básicos', com íons OH⁻ na estrutura.",
+      "why": "O acetato de ferro(III) simples não se forma: o Fe³⁺ dá acetatos 'básicos', com três íons de ferro em volta de um oxigênio central, [Fe3O(CH3COO)6]⁺.",
       "source": {
-        "ref": "atkins-jones",
-        "topic": "Seção 11.13: Fe³⁺ é um cátion ácido em água (a formação dos acetatos básicos em si não está no livro)",
-        "pages": "450"
+        "ref": "greenwood",
+        "topic": "Seção 25.3.4: os carboxilatos básicos trinucleares [Fe3O(O2CR)6L3]⁺, análogos aos do Cr(III)",
+        "pages": "1090"
       }
     },
     {
       "cation": "Al^3+",
       "anion": "CH3COO-",
       "scope": "never",
-      "why": "O acetato de alumínio simples não se forma: em água o Al³⁺ dá acetatos 'básicos', com íons OH⁻ na estrutura.",
+      "why": "O acetato de alumínio não existe em água: como o acetato é a base de um ácido fraco, o Al³⁺ (cátion ácido) o hidrolisa, e o que precipita é hidróxido de alumínio.",
       "source": {
-        "ref": "atkins-jones",
-        "topic": "Seção 11.13: Al³⁺ é um cátion ácido em água (a formação dos acetatos básicos em si não está no livro)",
-        "pages": "450"
+        "ref": "greenwood",
+        "topic": "Cap. 7: compostos de alumínio com ácidos fracos (cianeto, acetato, carbonato) são instáveis em água, extensamente hidrolisados",
+        "pages": "225"
       }
     },
     {
@@ -331,7 +331,12 @@
       "cation": "Fe^2+",
       "anion": "CO3^2-",
       "scope": "precipitation",
-      "why": "O FeCO3 existe (mineral siderita), mas em contato com o ar o ferro(II) se oxida rapidamente e o precipitado muda de composição."
+      "why": "Com carbonato, o Fe²⁺ precipita FeCO3 branco (o mineral siderita), mas o precipitado úmido se oxida rapidamente no ar e muda de composição.",
+      "source": {
+        "ref": "greenwood",
+        "topic": "Seção 25.3: em solução aquosa, CO3²⁻ precipita FeCO3 branco, que se oxida rapidamente no ar",
+        "pages": "1092"
+      }
     }
   ],
   "hazards": [

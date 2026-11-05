@@ -811,18 +811,19 @@
       "tags": ["redox", "exotermica"],
       "conditions": [["calor"]],
       "explanation": "Aquecida, a mistura de limalha de ferro com enxofre em pó brilha e vira um sólido escuro: sulfeto de ferro(II).",
-      "why": "Antes do aquecimento era só uma MISTURA: cada componente guardava suas propriedades (o ímã puxava o ferro, o enxofre continuava amarelo). O calor fornece a energia de ativação, o ferro entrega 2 elétrons ao enxofre e forma-se um COMPOSTO, com propriedades novas. Agora o ímã não separa mais nada, e a proporção é fixa: 1 Fe para 1 S (lei de Proust).",
+      "why": "Antes do aquecimento era só uma MISTURA: cada componente guardava suas propriedades (o ímã puxava o ferro, o enxofre continuava amarelo). O calor fornece a energia de ativação, o ferro entrega 2 elétrons ao enxofre e forma-se um COMPOSTO, com propriedades novas. Agora o ímã não separa mais nada, e a proporção é fixa: 1 Fe para 1 S (lei de Proust). Na natureza, o sulfeto de ferro (pirrotita) costuma ter um pouco menos ferro que a fórmula ideal (Fe₁₋ₓS); o jogo usa a fórmula simples FeS.",
       "safety": {
         "level": "perigo",
         "why": "A reação libera muito calor, e o enxofre aquecido queima e solta SO2, gás tóxico. O FeS formado, em contato com ácidos, solta H2S, também tóxico.",
         "home": "Não faça em casa: exige capela de exaustão e aquecimento forte."
       },
       "source": {
-        "ref": "reis-ufv",
-        "topic": "Prática nº 2: o composto sulfeto de ferro(II) (FeS) × o material ferro + enxofre, que mantém as propriedades de cada um e se separa com facilidade",
-        "pages": "45–46 (do PDF)",
-        "justification": "Fe(s) + S(s) → FeS(s) por aquecimento. O Atkins & Jones não traz esta síntese; a apostila (exercício de lei de Proust: 'aquecendo-se 21 g de ferro com 15 g de enxofre obtêm-se 33 g de sulfeto ferroso, restando 3 g de enxofre', proporção 1:1) e o ΔfG° negativo do FeS (Atkins FQ, Tabela 2C.7) confirmam. Ideal conferir no Greenwood.",
+        "ref": "greenwood",
+        "topic": "Seção 15.1.5: os metais de transição (exceto Ir, Pt e Au) reagem mais ou menos vigorosamente quando aquecidos com enxofre, formando sulfetos binários; Tabela 15.1: pirrotita, Fe₁₋ₓS",
+        "pages": "662, 649",
+        "justification": "Fe(s) + S(s) → FeS(s) por aquecimento. Conferem também a proporção 1:1 do exercício de lei de Proust da apostila ('aquecendo-se 21 g de ferro com 15 g de enxofre obtêm-se 33 g de sulfeto ferroso, restando 3 g de enxofre') e o ΔfG° negativo do FeS (Atkins FQ, Tabela 2C.7).",
         "seeAlso": [
+          { "ref": "reis-ufv", "topic": "Prática nº 2: o composto FeS × o material ferro + enxofre", "pages": "45–46 (do PDF)" },
           { "ref": "bernoulli", "topic": "v. 1: aquecimento de ferro com enxofre forma sulfeto ferroso (exercício de leis ponderais)", "pages": "38" },
           { "ref": "bernoulli", "topic": "v. 2, Frente A, Módulo 03: separação magnética de limalha de ferro + pó de enxofre", "pages": "4" }
         ]
