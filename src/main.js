@@ -3,7 +3,7 @@
 
 import { loadGameData } from './loader.js';
 import { createEngine } from './core/engine.js';
-import { initialState, applyResult, inventory, restoreState, unlockLevelMap, isObjectiveDone, answerObjective, startMission, abandonMission, missionCombine, answerMission } from './core/progression.js';
+import { initialState, applyResult, inventory, restoreState, unlockLevelMap, isObjectiveDone, answerObjective, startMission, abandonMission, missionCombine, answerMission, missionLab } from './core/progression.js';
 import { missionInventory, calcWorked, isMissionAvailable } from './core/missions.js';
 import { lookupReaction } from './core/engine.js';
 import { formatFormulaHTML, formatFormulaText } from './core/formula.js';
@@ -18,6 +18,7 @@ import { mountCalculators } from './ui/calculators.js';
 import { mountEquilibriumLab } from './ui/equilibrium-lab.js';
 import { renderMoleculeCard, galleryGroups, moleculeName } from './ui/molecule-card.js';
 import { missionListHTML, missionPanelHTML, missionCompleteHTML, chemText } from './ui/missions-ui.js';
+import { mountLab, separationResultHTML, flameResultHTML } from './ui/lab-ui.js';
 
 const SAVE_KEY = 'elementar:v1';
 const MAX_SUBSTANCES = 4;
@@ -336,6 +337,32 @@ async function main() {
     renderAll();
   }
 
+  /** Ação de laboratório na missão: separar a mistura com um método ou levar uma amostra à chama. */
+  function submitLab(action) {
+    if (state.missionRun?.failed) {
+      toast('As tentativas acabaram: recomece a missão ou saia dela.');
+      return;
+    }
+    const prevLevel = state.levelIndex;
+    const res = missionLab(state, action, data);
+    state = res.state;
+    storage.save(state);
+    const done = res.events.filter((e) => e.type === 'mission-step').map((e) => `<p>✔ ${chemText(e.step.done)}</p>`).join('');
+    const failedNow = res.events.some((e) => e.type === 'mission-failed');
+    if (action.type === 'separate') {
+      const method = data.lab.methodsById.get(action.method);
+      // Separou, mas não do jeito que a etapa pede (ex.: evaporar quando ela pede para guardar a água).
+      const notThis = res.outcome.ok && !done ? '<p class="small">Mas não é o que esta etapa pede (gastou uma tentativa): releia a etapa e a dica.</p>' : '';
+      missionFeedback = failedNow ? null : { kind: res.outcome.ok && done ? 'good' : res.outcome.ok ? 'info' : 'bad', html: separationResultHTML(res.outcome, method) + done + notThis };
+    } else {
+      const sub = data.substancesById.get(action.substance);
+      missionFeedback = failedNow ? null : { kind: done ? 'good' : 'info', html: flameResultHTML(sub, res.outcome) + (done || '<p class="small">Não é a cor que falta encontrar (gastou uma tentativa).</p>') };
+    }
+    for (const e of res.events) if (e.type === 'objective') toast(`🎯 Objetivo concluído: ${e.objective.text}`, 'good');
+    showEndDialogs(res.events, prevLevel);
+    renderAll();
+  }
+
   function showDialogHTML(body) {
     const dlg = $('#level-dialog');
     $('#level-dialog-body').innerHTML = body;
@@ -459,6 +486,10 @@ async function main() {
     else submitStoich(form.dataset.objective, answer);
   });
   $('#objectives').addEventListener('click', (ev) => {
+    const sep = ev.target.closest('[data-lab-separate]');
+    if (sep) return submitLab({ type: 'separate', mixture: sep.dataset.mixture, method: sep.dataset.labSeparate });
+    const fl = ev.target.closest('[data-lab-flame]');
+    if (fl) return submitLab({ type: 'flame', substance: fl.dataset.labFlame });
     const b = ev.target.closest('.stoich-choice');
     if (!b) return;
     const form = b.closest('.stoich-form');
@@ -503,6 +534,9 @@ async function main() {
     if (b) eqLab.open(JSON.parse(b.dataset.openEquilibrium || '{}'));
   });
   $('#btn-calcs').addEventListener('click', () => calculators.open());
+  // Laboratório (utensílios, separação de misturas, teste de chama).
+  const lab = mountLab($('#lab-dialog'), data);
+  $('#btn-lab').addEventListener('click', () => lab.open());
   document.addEventListener('click', (ev) => {
     const b = ev.target.closest('[data-open-kinetics]');
     if (b) kineticsLab.open(b.dataset.openKinetics || null);
@@ -531,7 +565,7 @@ async function main() {
   renderWelcome($('#result'));
   renderAll();
   // Glossário: termos dos textos explicativos viram links para a definição.
-  initGlossaryUI(data, ['#result', '#objectives', '.pt-info', '#level-dialog-body', '#kinetics-dialog .kin-body', '#calc-dil-out', '#calc-mix-out', '#calc-formula-out', '#calc-conc-out', '#equilibrium-dialog .eq-out', '#mol-gallery-card', '#missions-dialog .missions-list']);
+  initGlossaryUI(data, ['#result', '#objectives', '.pt-info', '#level-dialog-body', '#kinetics-dialog .kin-body', '#calc-dil-out', '#calc-mix-out', '#calc-formula-out', '#calc-conc-out', '#equilibrium-dialog .eq-out', '#mol-gallery-card', '#missions-dialog .missions-list', '#lab-dialog .lab-body']);
 }
 
 main();

@@ -4,13 +4,17 @@
 //
 // Uma missão tem um kit limitado (só ele vale na bancada), um máximo de tentativas (cada
 // combinação e cada resposta errada gasta uma) e etapas: ações (fazer uma reação, produzir uma
-// substância, observar um resultado) e perguntas (escolha, ou conta com o caminho mostrado).
+// substância, observar um resultado; no laboratório, separar uma mistura ou fazer o teste de
+// chama) e perguntas (escolha, ou conta com o caminho mostrado).
 
 import { lookupReaction } from './engine.js';
 import { stoichiometry, MOLAR_VOLUME_L } from './stoichiometry.js';
 import { molarMass } from './formula.js';
+import { separate, flameTest } from './lab.js';
 
-export const ACTION_KINDS = ['reaction', 'produce', 'observe'];
+export const ACTION_KINDS = ['reaction', 'produce', 'observe', 'separate', 'flame'];
+/** Ações feitas no laboratório (botões da missão), e não na bancada. */
+export const LAB_KINDS = ['separate', 'flame'];
 export const QUESTION_KINDS = ['choice', 'calc'];
 export const isAction = (step) => ACTION_KINDS.includes(step.kind);
 
@@ -94,6 +98,26 @@ export function runCombine(run, mission, selection, result) {
 }
 
 /**
+ * Uma ação de laboratório durante a missão: separar a mistura de uma etapa com um método, ou
+ * levar uma substância do kit à chama. Gasta uma tentativa, como uma combinação.
+ * @param action { type: 'separate', mixture, method } | { type: 'flame', substance }
+ * @returns {{ run, completed: object[], finished: boolean, outcome }}
+ *   outcome: o resultado da separação ({ ok, text, ... }) ou da chama ({ element, color, ... })
+ */
+export function runLab(run, mission, action, data) {
+  const outcome = action.type === 'separate' ? separate(action.mixture, action.method, data.lab) : flameTest(action.substance, data);
+  if (run.failed || isComplete(run, mission)) return { run, completed: [], finished: false, outcome };
+  const step = currentSteps(run, mission).find((s) =>
+    s.kind === 'separate'
+      ? action.type === 'separate' && s.mixture === action.mixture && outcome.ok && (!s.method || s.method === action.method)
+      : s.kind === 'flame' && action.type === 'flame' && outcome?.element === s.element,
+  );
+  let r = step ? { ...run, done: [...run.done, step.id] } : run;
+  r = spend(r, mission);
+  return { run: r, completed: step ? [step] : [], finished: isComplete(r, mission), outcome };
+}
+
+/**
  * Resposta a uma pergunta da missão (a pergunta precisa ser a etapa atual).
  * @returns {{ run, correct: boolean, finished: boolean, why?: string }}
  */
@@ -130,6 +154,18 @@ export function titration(calc, data) {
   return { nTitrant, nAnalyte, M, molarMass: mm, gL: M * mm, ratio: [cA, cT] };
 }
 
+/**
+ * Pilha (Atkins & Jones, seção 13.6): E°pilha = E°(cátodo, onde há redução) − E°(ânodo, onde há
+ * oxidação), com os potenciais-padrão da série de reatividade do jogo.
+ */
+export function cellPotential(c, data) {
+  const E0 = (metal) => data.reactivitySeries.find((x) => x.metal === metal)?.E0;
+  const cat = E0(c.cathode);
+  const an = E0(c.anode);
+  if (cat == null || an == null) throw new Error(`sem E° para ${c.cathode} ou ${c.anode}`);
+  return { cathode: cat, anode: an, E: cat - an };
+}
+
 /** Resposta certa de uma pergunta de conta. */
 export function calcAnswer(step, data) {
   const c = step.calc;
@@ -142,6 +178,7 @@ export function calcAnswer(step, data) {
     const p = res.products.find((x) => x.id === c.ask);
     return c.unit === 'mol' ? p.mol : c.unit === 'L' ? p.liters : p.grams;
   }
+  if (c.type === 'cell') return cellPotential(c, data).E;
   throw new Error(`conta desconhecida: ${c.type}`);
 }
 
@@ -169,6 +206,15 @@ export function calcWorked(step, data) {
     ];
     if (c.ask === 'gL') lines.push(`massa por litro = ${fmt(t.M)} mol/L × ${fmt(t.molarMass, 4)} g/mol = ${fmt(t.gL)} g/L`);
     return lines;
+  }
+  if (c.type === 'cell') {
+    const e = cellPotential(c, data);
+    const v = (x) => x.toFixed(2).replace('.', ',').replace('-', '−');
+    const sign = (x) => (x < 0 ? `(${v(x)})` : v(x));
+    return [
+      `cátodo (redução): ${c.cathode}, E° = ${v(e.cathode)} V; ânodo (oxidação): ${c.anode}, E° = ${v(e.anode)} V`,
+      `E°pilha = E°cátodo − E°ânodo = ${v(e.cathode)} − ${sign(e.anode)} = ${v(e.E)} V`,
+    ];
   }
   if (c.type === 'stoich') {
     const r = lookupReaction(data, c.reaction);

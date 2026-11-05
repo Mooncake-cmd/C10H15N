@@ -116,8 +116,22 @@ export function oxidationProfileFromLewis(lewis, data) {
   return out;
 }
 
+/** Hidrato (CuSO4·5H2O): o sal e a água de hidratação, cada um com o seu NOX. */
+const hydrateOf = (sub, data) => {
+  const e = data.structures?.substances?.[sub.id];
+  return e?.kind === 'hydrate' ? { salt: data.substancesById.get(e.salt), water: data.substancesById.get('H2O'), n: e.water } : null;
+};
+
 export function oxidationStates(sub, data) {
   if (sub.elementOf) return { [sub.elementOf]: [frac(0)] };
+  const hyd = hydrateOf(sub, data);
+  if (hyd) {
+    const out = { ...oxidationStates(hyd.salt, data) };
+    for (const [el, fs] of Object.entries(oxidationStates(hyd.water, data))) {
+      for (const f of fs) if (!(out[el] ??= []).some((x) => fracEq(x, f))) out[el] = [...out[el], f];
+    }
+    return out;
+  }
   const lewis = lewisFor(sub.id, data);
   if (lewis) {
     const byAtom = oxidationStatesFromLewis(lewis, data);
@@ -129,7 +143,8 @@ export function oxidationStates(sub, data) {
     const l = data.structures?.ions?.[formula] ? lewisFor(formula, data) : null;
     return (l && oxidationStatesFromLewis(l, data)) ?? wrap(oxidationStatesOfFormula(formula, data));
   };
-  const io = sub.ions;
+  // Íons do composto: de substances.json ou, se não houver (CuO, FeS), do desenho iônico.
+  const io = sub.ions ?? (data.structures?.substances?.[sub.id]?.kind === 'ionic' ? data.structures.substances[sub.id] : null);
   if (io) {
     const c = ionStates(io.cation.formula);
     const a = ionStates(io.anion.formula);
@@ -154,6 +169,21 @@ export function oxidationStates(sub, data) {
 export function oxidationProfile(sub, data) {
   const count = (formula) => parseFormula(formula).atoms;
   if (sub.elementOf) return { [sub.elementOf]: [{ v: frac(0), n: count(sub.formula)[sub.elementOf] }] };
+  const hyd = hydrateOf(sub, data);
+  if (hyd) {
+    const out = {};
+    for (const [part, times] of [[oxidationProfile(hyd.salt, data), 1], [oxidationProfile(hyd.water, data), hyd.n]]) {
+      for (const [el, list] of Object.entries(part)) {
+        for (const x of list) {
+          const l = (out[el] ??= []);
+          const hit = l.find((y) => fracEq(y.v, x.v));
+          if (hit) hit.n += x.n * times;
+          else l.push({ v: x.v, n: x.n * times });
+        }
+      }
+    }
+    return out;
+  }
   const lewis = lewisFor(sub.id, data);
   if (lewis) {
     const p = oxidationProfileFromLewis(lewis, data);
@@ -170,7 +200,8 @@ export function oxidationProfile(sub, data) {
     const p = l && oxidationProfileFromLewis(l, data);
     return p ? Object.fromEntries(Object.entries(p).map(([el, list]) => [el, list.map((x) => ({ v: x.v, n: x.n * times }))])) : fromFormula(formula, times);
   };
-  const io = sub.ions;
+  // Íons do composto: de substances.json ou, se não houver (CuO, FeS), do desenho iônico.
+  const io = sub.ions ?? (data.structures?.substances?.[sub.id]?.kind === 'ionic' ? data.structures.substances[sub.id] : null);
   if (io) {
     const c = ion(io.cation.formula, io.cation.count);
     const a = ion(io.anion.formula, io.anion.count);

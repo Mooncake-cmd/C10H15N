@@ -9,6 +9,7 @@ import { initialState, startMission, missionCombine, answerMission, abandonMissi
 import { currentSteps, isAction, missionAnswer, calcAnswer, calcWorked, titration, isMissionAvailable, ACTION_KINDS, QUESTION_KINDS } from '../src/core/missions.js';
 import { solutionPH } from '../src/core/equilibrium.js';
 import { molarMass } from '../src/core/formula.js';
+import { separate, flameTest } from '../src/core/lab.js';
 
 const data = loadData();
 const engine = createEngine(data);
@@ -45,6 +46,16 @@ test('missões: dados coerentes', () => {
       if (s.kind === 'reaction') assert.ok(lookupReaction(data, s.reaction), `${s.id}: reação`);
       if (s.kind === 'produce') assert.ok(data.substancesById.has(s.substance), `${s.id}: substância`);
       if (s.kind === 'observe') assert.equal(engine.combine(s.selection).kind, s.expect, `${s.id}: observação`);
+      if (s.kind === 'separate') {
+        assert.ok(data.lab.mixturesById.has(s.mixture), `${s.id}: mistura ${s.mixture}`);
+        if (s.method) assert.ok(separate(s.mixture, s.method, data.lab).ok, `${s.id}: o método pedido não separa`);
+        assert.ok((m.kit.methods ?? []).some((x) => separate(s.mixture, x, data.lab).ok), `${s.id}: nenhum método do kit separa`);
+        assert.ok((m.kit.methods ?? []).some((x) => !separate(s.mixture, x, data.lab).ok), `${s.id}: o kit precisa ter métodos que não servem (para pensar)`);
+      }
+      if (s.kind === 'flame') {
+        assert.ok(data.lab.flame[s.element]?.color, `${s.id}: sem cor de chama para ${s.element}`);
+        assert.ok(m.kit.substances.some((id) => flameTest(id, data)?.element === s.element), `${s.id}: nenhuma substância do kit tem ${s.element}`);
+      }
       if (isAction(s)) assert.ok(s.done, `${s.id}: o que se observa`);
       if (s.kind === 'choice') {
         assert.ok(s.choices.length >= 3, `${s.id}: pelo menos 3 alternativas`);
@@ -58,6 +69,9 @@ test('missões: dados coerentes', () => {
       }
     }
     assert.ok(m.steps.some(isAction) && m.steps.some((s) => !isAction(s)), `${m.id}: ações e perguntas`);
+    for (const x of m.kit.methods ?? []) assert.ok(data.lab.methodsById.has(x), `${m.id}: método ${x}`);
+    // Teste de chama: toda substância do kit tem resultado com fonte (cor ou "não muda").
+    if (m.steps.some((s) => s.kind === 'flame')) for (const id of m.kit.substances) assert.ok(flameTest(id, data), `${m.id}: ${id} sem resultado de chama`);
   }
 });
 

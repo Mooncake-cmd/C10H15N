@@ -21,6 +21,7 @@ const FILES = {
   equilibrium: 'equilibrium.json',
   molecules: 'molecules.json',
   missions: 'missions.json',
+  lab: 'lab.json',
 };
 
 export async function loadGameData(base = './data/') {

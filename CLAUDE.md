@@ -67,6 +67,12 @@ Detalhes de arquitetura, estrutura de pastas e "como adicionar conteúdo" estão
     painel 🗺️ (`src/ui/missions-ui.js`), objetivo `mission` e nível 18 (n17). Cada alternativa errada
     explica o porquê; conta errada mostra o caminho sem o número. Reação nova: Cu(OH)2 + calor →
     CuO (Farias p. 85–86; o A&J não tem a do cobre — ideal conferir no Greenwood).
+  - **Laboratório e mais missões — CONCLUÍDO** (pedido do usuário: aplicar as partes não usadas dos
+    manuais e os itens adiados): painel 🧰 com 20 utensílios, 8 métodos de separação × 7 misturas
+    (cada combinação explicada) e teste de chama; 10 missões novas (etapas `separate`/`flame`, conta
+    `cell`) e nível 19 (n18, "Laboratório de verdade"); reações Fe + S → FeS, NaHCO3 + calor e
+    CuSO4 + 5 H2O → CuSO4·5H2O; desenho `hydrate`. Algumas missões são liberadas logo depois do
+    nível 1 (fundamentos: utensílios, medidas, separação, método científico).
   - Próxima: **Fase 4 (aprendizagem)**.
   - **Curiosidades dos elementos — CONCLUÍDA**: os 118 elementos têm descrição e curiosidades no
     painel da tabela periódica (`data/element-facts.json`), escritas com palavras próprias a partir
@@ -87,8 +93,8 @@ Detalhes de arquitetura, estrutura de pastas e "como adicionar conteúdo" estão
      laboratórios mostram a resposta pronta das perguntas de cálculo (mostrar o caminho da conta
      e pedir raciocínio, com explicação do erro).
 3. **Guardados para depois** (o usuário pediu para não perder): as pendências da Fase 2 (acima),
-   os itens "médios" das apostilas, as etapas novas possíveis e os itens adiados pelo usuário
-   (utensílios de laboratório e separação de misturas) — todos listados na seção abaixo.
+   os itens "médios" das apostilas e as etapas novas possíveis — listados na seção abaixo. (Os
+   itens adiados, utensílios e separação de misturas, já foram feitos.)
 
 ## Apostilas Bernoulli (ensino médio) — mapeamento
 
@@ -119,8 +125,8 @@ por eletrólise; o quadro do v. 5 p. 49 generaliza demais a decomposição de ox
   eletrólise, Faraday (v. 5 B09–B10, v. 6 B11; aqui entraria a pilha de mercúrio); coligativas e
   coloides (v. 6 A11–A12); reações nucleares (v. 6 B12; A&J cap. 17); química ambiental
   (v. 6 D23–D24, tema para as missões 3F); metalurgia (v. 5 p. 52–53).
-- **Adiado pelo usuário**: utensílios de laboratório e separação de misturas (v. 2 A03 —
-  filtração, decantação, destilação, centrifugação).
+- **Adiado pelo usuário — FEITO**: utensílios de laboratório e separação de misturas (v. 2 A03 —
+  filtração, decantação, destilação; centrifugação ficou de fora).
 - **Pendências da Fase 2**: o quadro do v. 5 p. 49 dá pistas (hidreto/peróxido/superóxido + água,
   decomposição de hidróxidos e oxissais, ustulação), mas cada regra precisa de confirmação no
   A&J/Greenwood; HNO₃ + metais e carbonatos básicos não são resolvidos pelas apostilas.
@@ -143,14 +149,20 @@ cada reação continua conferida no Atkins & Jones.
 - **Farias, *Práticas de Química Inorgânica*** (`farias`; cópia digitalizada sem editora/ano/ISBN).
   41 sínteses; usada "Do cobre ao cobre" (p. 85–86). Há práticas perigosas ou avançadas demais
   para iniciantes (solução sulfocrômica, HF/ácido hexafluorossilícico, compostos de coordenação).
-- **Já usados**: segurança com fogo, catálise da H2O2, titulação, do cobre ao cobre.
-- **Ainda não usados** (bons para missões novas ou para a Fase 4): análise pela chama (precisa de
-  dados de cor de emissão com fonte), método científico com a vela, algarismos significativos,
-  vidraria e separação de misturas (itens que o usuário adiou), pilhas e eletrólise (etapa de
-  eletroquímica), H2 e Cl2 por síntese, NaHCO3 → Na2CO3, calor de hidratação do CuSO4.
-- **Livro que ajudaria** (pedir ao usuário se precisar): **Greenwood & Earnshaw, *Chemistry of the
-  Elements*** — confirmaria Cu(OH)2 → CuO e as pendências da Fase 2 (carbonatos básicos, acetatos
-  básicos, metais + O2/Cl2, HNO3 + metais).
+- **Página do Lenzi**: o EPUB não traz número em toda página; a página = número do arquivo
+  `eb-N` + 0 (parte 1), +236 (parte 2) ou +486 (parte 3) — confere com os números impressos.
+- **Já usados**: segurança (fogo, respingos), catálise da H2O2, titulação, do cobre ao cobre,
+  utensílios (UFV Prática 1), separação de misturas (UFV Prática 2; Lenzi UD 10–12), algarismos
+  significativos (Lenzi UD 04, p. 130–132), método científico com a vela (Lenzi UD 03), análise
+  pela chama (Lenzi UD 19; cores do A&J p. 50 e 625 e do Bernoulli v. 1 p. 53), pilha e eletrólise
+  (UFV Práticas 13–14), NaHCO3 → Na2CO3 (Farias p. 87–88), hidratação do CuSO4 (Farias p. 65–66).
+- **Ainda não usados**: síntese de HCl e Cl2 (perigosas e precisam de substâncias novas, como
+  MnO2/KMnO4), cores de chama de K, Li e Cu (sem fonte de livro-texto ainda), cristalização,
+  cromatografia, Faraday (quantidade de eletricidade) — ficam para a etapa de eletroquímica.
+- **Adiados pelo usuário — FEITOS**: utensílios de laboratório e separação de misturas.
+- **Livro que ajudaria** (o usuário está procurando): **Greenwood & Earnshaw, *Chemistry of the
+  Elements*** — confirmaria Cu(OH)2 → CuO, Fe + S → FeS e as pendências da Fase 2 (carbonatos
+  básicos, acetatos básicos, metais + O2/Cl2, HNO3 + metais), e daria cores de chama de K, Li, Cu.
 
 ## Requisitos que valem para qualquer mudança
 

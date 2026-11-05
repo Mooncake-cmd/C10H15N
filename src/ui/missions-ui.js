@@ -5,11 +5,12 @@ import { esc } from './dom.js';
 import { formatFormulaHTML } from '../core/formula.js';
 import { sourceText } from './kinetics-lab.js';
 import { currentSteps, isAction, attemptsLeft, isMissionAvailable } from '../core/missions.js';
+import { chemText } from './chem-text.js';
+import { flameTest } from '../core/lab.js';
 
 export const FORMAT_LABEL = { historia: 'História', laboratorio: 'Laboratório', ambiental: 'Ambiental' };
 
-/** Fórmulas químicas no meio de um texto já escapado ganham subscritos (H2O → H₂O). */
-export const chemText = (text) => esc(text).replace(/\b((?:[A-Z][a-z]?\d*|\((?:[A-Z][a-z]?\d*)+\)\d+){2,})\b/g, (f) => (/\d/.test(f) ? formatFormulaHTML(f) : f));
+export { chemText };
 
 function levelTitle(data, id) {
   const i = data.progression.levels.findIndex((l) => l.id === id);
@@ -39,7 +40,25 @@ export function missionListHTML(state, data) {
 }
 
 const kitHTML = (m, data) =>
-  [...m.kit.substances.map((id) => formatFormulaHTML(data.substancesById.get(id).formula)), ...(m.kit.items ?? []).map((id) => `${data.itemsById.get(id).icon} ${esc(data.itemsById.get(id).name)}`)].join(', ');
+  [
+    ...m.kit.substances.map((id) => formatFormulaHTML(data.substancesById.get(id).formula)),
+    ...(m.kit.items ?? []).map((id) => `${data.itemsById.get(id).icon} ${esc(data.itemsById.get(id).name)}`),
+    ...(m.kit.methods ?? []).map((id) => `${data.lab.methodsById.get(id).icon} ${esc(data.lab.methodsById.get(id).name.toLowerCase())}`),
+  ].join(', ');
+
+/** Botões de laboratório de uma etapa atual: métodos para separar a mistura, ou amostras para a chama. */
+function labButtons(step, m, data) {
+  if (step.kind === 'separate') {
+    const mix = data.lab.mixturesById.get(step.mixture);
+    const methods = m.kit.methods.map((id) => {
+      const x = data.lab.methodsById.get(id);
+      return `<button type="button" class="btn btn-ghost" data-lab-separate="${esc(id)}" data-mixture="${esc(step.mixture)}" title="${esc(x.principle)}">${x.icon} ${esc(x.name)}</button>`;
+    });
+    return `<p class="small mission-mixture"><strong>${esc(mix.name)}</strong>: ${chemText(mix.components)} <span class="muted">(${chemText(mix.phases)})</span></p><div class="lab-methods">${methods.join('')}</div>`;
+  }
+  const subs = m.kit.substances.filter((id) => flameTest(id, data));
+  return `<div class="lab-methods">${subs.map((id) => `<button type="button" class="btn btn-ghost" data-lab-flame="${esc(id)}">🔥 ${formatFormulaHTML(data.substancesById.get(id).formula)}</button>`).join('')}</div>`;
+}
 
 function questionForm(step) {
   if (step.kind === 'choice') {
@@ -62,6 +81,7 @@ export function missionPanelHTML(state, data, feedback) {
   const now = new Set(currentSteps(run, m).map((s) => s.id));
   const left = attemptsLeft(run, m);
   let hiddenAhead = 0;
+  let flameShown = false;
   const items = m.steps
     .map((s) => {
       const done = run.done.includes(s.id);
@@ -69,12 +89,15 @@ export function missionPanelHTML(state, data, feedback) {
         hiddenAhead += 1;
         return '';
       }
-      const icon = isAction(s) ? '⚗️' : s.kind === 'calc' ? '🧮' : '❓';
+      const icon = s.kind === 'separate' ? '🧪' : s.kind === 'flame' ? '🔥' : isAction(s) ? '⚗️' : s.kind === 'calc' ? '🧮' : '❓';
+      // Teste de chama: as várias etapas abertas ao mesmo tempo usam os mesmos botões (só na primeira).
+      const firstFlame = !done && s.kind === 'flame' && !flameShown && (flameShown = true);
+      const lab = !run.failed && (s.kind === 'separate' || firstFlame) ? labButtons(s, m, data) : '';
       const body = done
         ? isAction(s)
           ? `<p class="small muted">${chemText(s.done)}</p>`
           : ''
-        : `${run.failed ? '' : isAction(s) ? '' : questionForm(s)}${s.hint && !run.failed ? `<details class="hint"><summary>Dica</summary>${chemText(s.hint)}</details>` : ''}`;
+        : `${run.failed ? '' : isAction(s) ? lab : questionForm(s)}${s.hint && !run.failed ? `<details class="hint"><summary>Dica</summary>${chemText(s.hint)}</details>` : ''}`;
       return `<li class="${done ? 'is-done' : 'is-now'}"><span class="check" aria-hidden="true">${done ? '✔' : icon}</span><div><span>${chemText(s.text)}</span>${body}</div></li>`;
     })
     .join('');
@@ -88,7 +111,7 @@ export function missionPanelHTML(state, data, feedback) {
     <h2>${m.icon} ${chemText(m.title)}</h2>
     <details class="mission-story" ${run.done.length ? '' : 'open'}><summary>A história</summary><p class="small">${chemText(m.story)}</p></details>
     <p class="small"><strong>Kit:</strong> ${kitHTML(m, data)}</p>
-    <p class="mission-attempts small" aria-label="Tentativas restantes: ${left} de ${m.maxAttempts}">Tentativas: ${'●'.repeat(left)}${'○'.repeat(m.maxAttempts - left)} <span class="muted">(${left} de ${m.maxAttempts}; cada combinação e cada resposta errada gasta uma)</span></p>
+    <p class="mission-attempts small" aria-label="Tentativas restantes: ${left} de ${m.maxAttempts}">Tentativas: ${'●'.repeat(left)}${'○'.repeat(m.maxAttempts - left)} <span class="muted">(${left} de ${m.maxAttempts}; cada ${m.steps.some((s) => s.kind === 'separate' || s.kind === 'flame') ? 'teste' : 'combinação'} e cada resposta errada gasta uma)</span></p>
     ${fb}${failed}
     <ul class="objective-list mission-steps">${items}</ul>
     ${hiddenAhead ? `<p class="small muted">+ ${hiddenAhead} ${hiddenAhead === 1 ? 'etapa' : 'etapas'} depois desta${now.size > 1 ? 's' : ''}.</p>` : ''}

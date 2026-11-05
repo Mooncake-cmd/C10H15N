@@ -14,7 +14,7 @@
       "after": "n7",
       "ordered": false,
       "story": "Na feira de ciências, uma colega encheu três balões com gases feitos no laboratório da escola: hidrogênio, oxigênio e gás carbônico. Ela esqueceu de etiquetar. Solto no ar, um balão sobe até o teto, outro desce devagar e o terceiro cai rápido. Prepare uma amostra de cada gás com o kit e descubra qual é qual.",
-      "kit": { "substances": ["Zn", "HCl", "H2O2", "CaCO3", "Cu"], "items": ["catalisador"] },
+      "kit": {"substances": ["Zn", "HCl", "H2O2", "CaCO3", "Cu"], "items": ["catalisador"]},
       "maxAttempts": 7,
       "steps": [
         { "id": "m-balao-h2", "kind": "produce", "substance": "H2", "text": "Produza hidrogênio (H2)", "hint": "Um metal mais reativo que o hidrogênio, junto com um ácido.", "done": "Bolhas sobem do zinco no ácido: é o H2, recolhido num tubo invertido." },
@@ -38,7 +38,7 @@
         }
       ],
       "conclusion": "Gases diferentes têm densidades diferentes porque a densidade de um gás é proporcional à sua massa molar (na mesma temperatura e pressão). Por isso o H2 sobe, o O2 desce devagar e o CO2 cai. E cada gás tem um teste simples: estalo (H2), brasa que reacende (O2), água de cal turva (CO2).",
-      "safety": { "level": "perigo", "why": "Balões de hidrogênio pegam fogo e explodem com uma faísca (foi o que destruiu o dirigível Hindenburg, em 1937). Por isso balões de festa usam hélio, que não queima.", "home": "Nunca encha balões com hidrogênio em casa. Os testes de gás só se fazem com tubos de ensaio pequenos, no laboratório." },
+      "safety": {"level": "perigo", "why": "Balões de hidrogênio pegam fogo e explodem com uma faísca (foi o que destruiu o dirigível Hindenburg, em 1937). Por isso balões de festa usam hélio, que não queima.", "home": "Nunca encha balões com hidrogênio em casa. Os testes de gás só se fazem com tubos de ensaio pequenos, no laboratório."},
       "sources": [
         { "ref": "atkins-jones", "topic": "Seção 4.6: a densidade de um gás aumenta com a massa molar", "pages": "145" },
         { "ref": "bernoulli", "topic": "v. 5, Frente C, Módulo 18: identificação de H2, O2 e CO2", "pages": "49" },
@@ -53,12 +53,13 @@
       "after": "n11",
       "ordered": true,
       "story": "Uma demonstração de feira de ciências: uma vela acesa no fundo de uma jarra e, num copo ao lado, bicarbonato com vinagre. Quando se inclina o copo sobre a jarra, sem derramar líquido nenhum, a vela apaga. O que saiu do copo? Descubra, faça a conta do gás e entenda como funcionam os extintores de verdade.",
-      "kit": { "substances": ["NaHCO3", "CH3COOH", "H2O"], "items": [] },
+      "kit": {"substances": ["NaHCO3", "CH3COOH", "H2O"], "items": []},
       "maxAttempts": 6,
       "steps": [
         { "id": "m-extintor-co2", "kind": "produce", "substance": "CO2", "text": "Faça o gás que sai do copo", "hint": "Bicarbonato + um ácido do kit.", "done": "A mistura espuma: é o CO2 escapando." },
-        { "id": "m-extintor-litros", "kind": "calc", "text": "Uma colher com 8,4 g de bicarbonato reage com vinagre em excesso. Quantos litros de CO2 se formam (25 °C e 1 atm)?", "unitLabel": "L", "hint": "Gramas de NaHCO3 → mol (divida pela massa molar) → mol de CO2 (veja os coeficientes) → litros (1 mol de gás ocupa 24,47 L a 25 °C e 1 atm).",
-          "calc": { "type": "stoich", "reaction": "nahco3-vinagre", "given": { "NaHCO3": { "g": 8.4 } }, "ask": "CO2", "unit": "L" } },
+        {
+          "id": "m-extintor-litros", "kind": "calc", "text": "Uma colher com 8,4 g de bicarbonato reage com vinagre em excesso. Quantos litros de CO2 se formam (25 °C e 1 atm)?", "unitLabel": "L", "hint": "Gramas de NaHCO3 → mol (divida pela massa molar) → mol de CO2 (veja os coeficientes) → litros (1 mol de gás ocupa 24,47 L a 25 °C e 1 atm).", "calc": {"type": "stoich", "reaction": "nahco3-vinagre", "given": {"NaHCO3": {"g": 8.4}}, "ask": "CO2", "unit": "L"}
+        },
         {
           "id": "m-extintor-porque", "kind": "choice", "text": "Por que o CO2 apagou a vela?", "answer": "abafa",
           "choices": [
@@ -85,12 +86,12 @@
         }
       ],
       "conclusion": "Para haver fogo é preciso combustível, comburente (O2) e calor. O CO2 apaga a chama por abafamento: é mais denso que o ar, não queima e afasta o O2. Mas cada fogo tem seu extintor: nunca use água em óleo quente nem em equipamento elétrico, e nem água nem CO2 em metais como o magnésio.",
-      "safety": { "level": "cuidado", "why": "A demonstração com vela é segura em pequena escala, mas o CO2 acumulado num lugar fechado e baixo pode sufocar. Combater incêndios de verdade exige o extintor certo para cada tipo de fogo.", "home": "A vela com bicarbonato e vinagre pode ser feita em casa com um adulto, num lugar ventilado e longe de coisas que queimam. Em incêndio de verdade, saia e chame os bombeiros (193)." },
+      "safety": {"level": "cuidado", "why": "A demonstração com vela é segura em pequena escala, mas o CO2 acumulado num lugar fechado e baixo pode sufocar. Combater incêndios de verdade exige o extintor certo para cada tipo de fogo.", "home": "A vela com bicarbonato e vinagre pode ser feita em casa com um adulto, num lugar ventilado e longe de coisas que queimam. Em incêndio de verdade, saia e chame os bombeiros (193)."},
       "sources": [
         { "ref": "atkins-jones", "topic": "Seção 4.6: densidade de um gás e massa molar", "pages": "145" },
         { "ref": "atkins-jones", "topic": "Seção 15.7: nem água nem CO2 em fogo de magnésio", "pages": "625" },
         { "ref": "reis-ufv", "topic": "Acidentes por agentes físicos: produtos inflamáveis em combustão (abafar; CO2; nunca água em óleo nem em fogo elétrico)", "pages": "16 (do PDF)" },
-        { "ref": "lenzi", "topic": "Unidade Didática 01: introdução ao laboratório (o extintor; dispará-lo na base da chama)", "pages": "UD 01" }
+        { "ref": "lenzi", "topic": "UD 01: introdução ao laboratório (em caso de incêndio, disparar o extintor na base da chama)", "pages": "68" }
       ]
     },
     {
@@ -101,7 +102,7 @@
       "after": "n9",
       "ordered": true,
       "story": "Um desafio clássico de laboratório: começar com um fio de cobre, transformá-lo em quatro compostos diferentes, um depois do outro, e terminar com cobre metálico de novo. O kit é pequeno e cada tentativa conta: pense antes de juntar.",
-      "kit": { "substances": ["Cu", "HNO3", "NaOH", "H2SO4", "Zn"], "items": ["calor"] },
+      "kit": {"substances": ["Cu", "HNO3", "NaOH", "H2SO4", "Zn"], "items": ["calor"]},
       "maxAttempts": 8,
       "steps": [
         { "id": "m-cobre-nitrato", "kind": "produce", "substance": "Cu(NO3)2", "text": "1. Dissolva o cobre: transforme-o em nitrato de cobre(II)", "hint": "O cobre não reage com ácidos comuns, mas o ácido nítrico é também oxidante.", "done": "O cobre some, a solução fica azul (íons Cu²⁺) e sai um gás que fica castanho no ar (NO → NO2)." },
@@ -127,7 +128,7 @@
         }
       ],
       "conclusion": "Em cinco reações (redox com ácido nítrico, precipitação, decomposição por aquecimento, óxido básico + ácido e deslocamento por um metal mais reativo), o cobre passou por quatro compostos e voltou a ser cobre. Os átomos do elemento atravessam todas as transformações: só os parceiros mudam.",
-      "safety": { "level": "perigo", "why": "O ácido nítrico é corrosivo e, com o cobre, solta NO, que vira NO2 castanho e tóxico no ar. O hidróxido de sódio ataca a pele, e o ácido sulfúrico também é corrosivo.", "home": "Não faça em casa: exige capela de exaustão, luvas e óculos de proteção." },
+      "safety": {"level": "perigo", "why": "O ácido nítrico é corrosivo e, com o cobre, solta NO, que vira NO2 castanho e tóxico no ar. O hidróxido de sódio ataca a pele, e o ácido sulfúrico também é corrosivo.", "home": "Não faça em casa: exige capela de exaustão, luvas e óculos de proteção."},
       "sources": [
         { "ref": "farias", "topic": "Prática \"Do cobre ao cobre\" (HNO3 → NaOH → aquecimento a 120 °C → H2SO4 → zinco)", "pages": "85–86" },
         { "ref": "atkins-jones", "topic": "Glossário: lei da conservação da massa", "pages": "B16" }
@@ -141,7 +142,7 @@
       "after": "n13",
       "ordered": true,
       "story": "O frasco de água oxigenada passa meses na farmácia sem mudar. Mas, posta num machucado ou com uma pitada de dióxido de manganês, ela espuma na hora. Investigue o que está acontecendo, como numa aula prática de catálise.",
-      "kit": { "substances": ["H2O2"], "items": ["catalisador", "calor"] },
+      "kit": {"substances": ["H2O2"], "items": ["catalisador", "calor"]},
       "maxAttempts": 5,
       "steps": [
         { "id": "m-h2o2-sozinha", "kind": "observe", "selection": ["H2O2"], "expect": "needs-condition", "text": "Primeiro, observe a água oxigenada sozinha, sem ajuda", "hint": "Coloque só a água oxigenada na bancada, sem ferramentas.", "done": "Quase nada acontece: a decomposição é favorável, mas lenta demais para ver." },
@@ -165,7 +166,7 @@
         }
       ],
       "conclusion": "Uma reação pode ser favorável e mesmo assim lenta: a barreira (energia de ativação) é alta. O catalisador abre um caminho com barreira menor, a reação acelera, e ele sai inalterado. Ele não muda o ΔH nem o equilíbrio, só a velocidade. No corpo, a enzima catalase faz o mesmo papel: é por isso que a água oxigenada espuma no machucado.",
-      "safety": { "level": "seguro", "why": "A água oxigenada de farmácia (10 volumes, cerca de 3%) é segura. Concentrada, é corrosiva. O MnO2 em pó não deve ser inalado.", "home": "Pode fazer em casa com água oxigenada 10 volumes e um pedaço de batata crua (a catalase da batata é o catalisador)." },
+      "safety": {"level": "seguro", "why": "A água oxigenada de farmácia (10 volumes, cerca de 3%) é segura. Concentrada, é corrosiva. O MnO2 em pó não deve ser inalado.", "home": "Pode fazer em casa com água oxigenada 10 volumes e um pedaço de batata crua (a catalase da batata é o catalisador)."},
       "sources": [
         { "ref": "reis-ufv", "topic": "Prática nº 9: Catálise (H2O2 com MnO2, catálise heterogênea; brasa que reacende)", "pages": "89–91 (do PDF)" },
         { "ref": "atkins-jones", "topic": "Seção 14.14: catálise", "pages": "595–596" },
@@ -180,7 +181,7 @@
       "after": "n14",
       "ordered": true,
       "story": "O rótulo de um vinagre sumiu e a fábrica quer saber se ele tem a acidez certa. No laboratório de controle de qualidade, mede-se isso por titulação: uma base de concentração conhecida é pingada de uma bureta até todo o ácido ser neutralizado, e um indicador avisa a hora de parar.",
-      "kit": { "substances": ["CH3COOH", "NaOH"], "items": [] },
+      "kit": {"substances": ["CH3COOH", "NaOH"], "items": []},
       "maxAttempts": 6,
       "steps": [
         { "id": "m-vinagre-neutra", "kind": "produce", "substance": "CH3COONa", "text": "Faça a reação da titulação: neutralize o ácido acético", "hint": "Ácido + base → sal + água.", "done": "CH3COOH + NaOH → CH3COONa + H2O: cada mol de NaOH consome 1 mol de ácido acético." },
@@ -192,13 +193,15 @@
             { "value": "bromotimol", "label": "Azul de bromotimol (muda entre pH 6,0 e 7,6)", "why": "Quase, mas ainda muda antes da hora: no fim desta titulação o pH passa de 7, porque o acetato que sobra é básico. Ele serve bem para ácido forte com base forte." }
           ]
         },
-        { "id": "m-vinagre-mol", "kind": "calc", "text": "Em 10,0 mL de vinagre, foram gastos 16,7 mL de NaOH 0,500 mol/L até a cor rosa aparecer. Qual a concentração de ácido acético, em mol/L?", "unitLabel": "mol/L", "hint": "mol de NaOH = concentração × volume (em litros). Pela equação, 1 mol de NaOH reage com 1 mol de ácido. Concentração do ácido = mol ÷ volume da amostra (em litros).",
-          "calc": { "type": "titration", "reaction": "gen:CH3COOH+NaOH", "analyte": "CH3COOH", "titrant": "NaOH", "sampleML": 10.0, "titrantML": 16.7, "titrantM": 0.5, "ask": "M" } },
-        { "id": "m-vinagre-gl", "kind": "calc", "text": "E quantos gramas de ácido acético há em cada litro desse vinagre?", "unitLabel": "g/L", "hint": "Multiplique a concentração em mol/L pela massa molar do CH3COOH (cerca de 60 g/mol).",
-          "calc": { "type": "titration", "reaction": "gen:CH3COOH+NaOH", "analyte": "CH3COOH", "titrant": "NaOH", "sampleML": 10.0, "titrantML": 16.7, "titrantM": 0.5, "ask": "gL" } }
+        {
+          "id": "m-vinagre-mol", "kind": "calc", "text": "Em 10,0 mL de vinagre, foram gastos 16,7 mL de NaOH 0,500 mol/L até a cor rosa aparecer. Qual a concentração de ácido acético, em mol/L?", "unitLabel": "mol/L", "hint": "mol de NaOH = concentração × volume (em litros). Pela equação, 1 mol de NaOH reage com 1 mol de ácido. Concentração do ácido = mol ÷ volume da amostra (em litros).", "calc": {"type": "titration", "reaction": "gen:CH3COOH+NaOH", "analyte": "CH3COOH", "titrant": "NaOH", "sampleML": 10.0, "titrantML": 16.7, "titrantM": 0.5, "ask": "M"}
+        },
+        {
+          "id": "m-vinagre-gl", "kind": "calc", "text": "E quantos gramas de ácido acético há em cada litro desse vinagre?", "unitLabel": "g/L", "hint": "Multiplique a concentração em mol/L pela massa molar do CH3COOH (cerca de 60 g/mol).", "calc": {"type": "titration", "reaction": "gen:CH3COOH+NaOH", "analyte": "CH3COOH", "titrant": "NaOH", "sampleML": 10.0, "titrantML": 16.7, "titrantM": 0.5, "ask": "gL"}
+        }
       ],
       "conclusion": "Cerca de 50 g de ácido acético por litro: são 5 g em cada 100 mL, ou seja, um vinagre com cerca de 5% de acidez. A titulação transforma uma mudança de cor numa medida: conhecendo a base (concentração e volume gasto) e a proporção da equação, descobre-se quanto ácido havia. O indicador certo é o que muda de cor no pH do ponto estequiométrico.",
-      "safety": { "level": "cuidado", "why": "O vinagre é seguro, mas o hidróxido de sódio, mesmo diluído, irrita a pele e os olhos.", "home": "Titulação de verdade exige bureta e NaOH: faça só na escola, com óculos de proteção." },
+      "safety": {"level": "cuidado", "why": "O vinagre é seguro, mas o hidróxido de sódio, mesmo diluído, irrita a pele e os olhos.", "home": "Titulação de verdade exige bureta e NaOH: faça só na escola, com óculos de proteção."},
       "sources": [
         { "ref": "atkins-jones", "topic": "Seção L.3: análise volumétrica (titulação, ponto estequiométrico, fenolftaleína)", "pages": "F89–F90" },
         { "ref": "atkins-jones", "topic": "Exemplo 12.5: no ponto estequiométrico de ácido fraco com base forte, pH > 7", "pages": "487" },
@@ -214,7 +217,7 @@
       "after": "n14",
       "ordered": false,
       "story": "Uma cidade tem uma usina que queima carvão com enxofre. Depois que ela abriu, a chuva ficou mais ácida e as estátuas de mármore da praça começaram a se desgastar. Refaça a química do problema, do enxofre que queima até o mármore que se dissolve.",
-      "kit": { "substances": ["S", "O2", "CO2", "H2O", "H2SO4", "CaCO3"], "items": ["calor"] },
+      "kit": {"substances": ["S", "O2", "CO2", "H2O", "H2SO4", "CaCO3"], "items": ["calor"]},
       "maxAttempts": 7,
       "steps": [
         { "id": "m-chuva-so2", "kind": "reaction", "reaction": "s-o2", "text": "Queime o enxofre como na caldeira da usina", "hint": "Enxofre + oxigênio, com a energia de ativação certa.", "done": "O enxofre queima com chama azulada e forma SO2, um gás de cheiro sufocante." },
@@ -246,10 +249,424 @@
         }
       ],
       "conclusion": "Combustíveis com enxofre soltam SO2. No ar, ele vira ácido sulfuroso e ácido sulfúrico. Os óxidos de nitrogênio dos motores fazem o mesmo, formando ácido nítrico. A chuva, que naturalmente já tem pH perto de 5,7 por causa do CO2, fica ainda mais ácida, ataca carbonatos (mármore, calcário) e muda a química do solo. Tirar o enxofre dos combustíveis e usar conversores catalíticos nos carros já reduziu a chuva ácida em muitos lugares.",
-      "safety": { "level": "perigo", "why": "O SO2 é tóxico e irritante para os pulmões, e o ácido sulfúrico é corrosivo.", "home": "Não queime enxofre em casa. Dá para ver o efeito de um ácido num carbonato com segurança: uma casca de ovo ou um pedaço de giz de calcário no vinagre solta bolhas de CO2." },
+      "safety": {"level": "perigo", "why": "O SO2 é tóxico e irritante para os pulmões, e o ácido sulfúrico é corrosivo.", "home": "Não queime enxofre em casa. Dá para ver o efeito de um ácido num carbonato com segurança: uma casca de ovo ou um pedaço de giz de calcário no vinagre solta bolhas de CO2."},
       "sources": [
         { "ref": "atkins-jones", "topic": "Quadro 11.1: chuva ácida (pH da chuva natural ~5,7; SO2 + H2O → H2SO3; SO2 → SO3 → H2SO4; óxidos de nitrogênio)", "pages": "462–463" },
         { "ref": "atkins-jones", "topic": "Seção 12.12: a dissolução de carbonatos por ácidos danifica monumentos de mármore e calcário", "pages": "504" }
+      ]
+    },
+    {
+      "id": "m-primeiro-dia",
+      "icon": "🥽",
+      "title": "Primeiro dia no laboratório",
+      "format": "laboratorio",
+      "after": "n1",
+      "ordered": true,
+      "story": "Seu primeiro dia num laboratório de verdade. Antes de qualquer reação, a professora quer ver se você sabe escolher o utensílio certo, anotar uma medida do jeito certo e agir num acidente. Depois, você vai neutralizar um ácido com uma base — medido com cuidado.",
+      "kit": {"substances": ["HCl", "NaOH"], "items": []},
+      "maxAttempts": 5,
+      "steps": [
+        {
+          "id": "m-dia-pipeta", "kind": "choice", "text": "Você precisa transferir exatamente 25,00 mL de ácido clorídrico. Qual utensílio usa?", "answer": "pipeta",
+          "choices": [
+            { "value": "pipeta", "label": "Pipeta volumétrica de 25 mL", "why": "Isso! A pipeta volumétrica tem uma só marca e transfere aquele volume com muita exatidão — dá para escrever 25,00 mL. Encha com uma pera de borracha, nunca com a boca." },
+            { "value": "bequer", "label": "Béquer de 50 mL", "why": "Não. As marcas do béquer são só aproximadas: ele serve para conter e misturar, não para medir." },
+            { "value": "proveta", "label": "Proveta de 100 mL", "why": "Quase: a proveta mede volumes, mas com bem menos exatidão que a pipeta volumétrica (e uma de 100 mL é grande demais para 25 mL)." }
+          ]
+        },
+        {
+          "id": "m-dia-regua", "kind": "choice", "text": "Uma régua com divisões de 1 mm mostra que um objeto passa de 15,6 cm, mas não chega a 15,7 cm (fica mais ou menos no meio). Como anotar a medida?", "answer": "15,63",
+          "choices": [
+            { "value": "15,63", "label": "15,63 cm", "why": "Isso! Os algarismos 1, 5 e 6 são certos (estão marcados na escala) e o último, 3, é estimado — duvidoso, mas significativo. Com essa régua, a medida tem 4 algarismos significativos." },
+            { "value": "15,6", "label": "15,6 cm", "why": "Faltou um algarismo: com divisões de 1 mm, dá para estimar mais um dígito entre as marcas. Jogar fora essa estimativa desperdiça informação da medida." },
+            { "value": "15,630", "label": "15,630 cm", "why": "Sobrou um algarismo: a régua não permite saber o terceiro dígito depois da vírgula. Escrever 15,630 finge uma precisão que a medida não tem." }
+          ]
+        },
+        { "id": "m-dia-neutraliza", "kind": "reaction", "reaction": "hcl-naoh", "text": "Neutralize o ácido clorídrico com hidróxido de sódio", "hint": "Ácido + base → sal + água.", "done": "Forma-se sal de cozinha dissolvido e água, e o béquer esquenta: a neutralização libera calor." },
+        {
+          "id": "m-dia-respingo", "kind": "choice", "text": "Respingou um pouco de ácido na sua mão. O que fazer primeiro?", "answer": "agua",
+          "choices": [
+            { "value": "agua", "label": "Lavar com muita água corrente (pelo menos 5 minutos) e avisar a professora", "why": "Isso! Muita água dilui e remove o ácido depressa; se cair numa área grande do corpo, use o chuveiro de segurança. Depois, avise sempre — mesmo que pareça pouca coisa." },
+            { "value": "base", "label": "Jogar hidróxido de sódio em cima para neutralizar", "why": "Não! A base também é corrosiva, e a neutralização libera calor na pele. Primeiro, muita água." },
+            { "value": "pano", "label": "Esfregar com um pano seco", "why": "Não: esfregar espalha o ácido e machuca a pele. O certo é lavar com bastante água corrente." }
+          ]
+        },
+        {
+          "id": "m-dia-tubo", "kind": "choice", "text": "Na próxima aula você vai aquecer um líquido num tubo de ensaio. Para onde aponta a boca do tubo?", "answer": "longe",
+          "choices": [
+            { "value": "longe", "label": "Para longe de você e de qualquer pessoa", "why": "Isso! Ao ferver, o líquido pode espirrar de repente pela boca do tubo." },
+            { "value": "rosto", "label": "Para o seu rosto, para ver melhor o que acontece", "why": "Nunca! Um espirro de líquido quente (ou de ácido) iria direto no rosto. Observe de lado, de óculos de proteção." },
+            { "value": "colega", "label": "Tanto faz, desde que não seja para você", "why": "Não: o mesmo cuidado vale para os colegas. A boca do tubo vai para onde não há ninguém." }
+          ]
+        }
+      ],
+      "conclusion": "Cada utensílio tem seu papel: béquer e erlenmeyer contêm; proveta, bureta e pipetas medem (a pipeta volumétrica e o balão volumétrico, com mais exatidão). Uma medida se anota com todos os algarismos certos mais um estimado — os algarismos significativos dizem quanto se confia nela. E segurança vem antes de tudo: óculos, nada apontado para pessoas, muita água num respingo e avisar sempre.",
+      "safety": {"level": "cuidado", "why": "Ácido clorídrico e hidróxido de sódio são corrosivos, mesmo diluídos.", "home": "Não faça em casa: no laboratório, sempre com óculos, jaleco e a professora por perto."},
+      "sources": [
+        { "ref": "reis-ufv", "topic": "Prática nº 1: materiais de laboratório (béquer, proveta, pipetas, tubo de ensaio aquecido com a boca para longe)", "pages": "25–42 (do PDF)" },
+        { "ref": "lenzi", "topic": "UD 04: algarismos significativos em medições (régua de 1 mm: 15,63 cm, 4 algarismos; o último é incerto) e instrumentos exatos (pipeta volumétrica)", "pages": "130–132" },
+        { "ref": "lenzi", "topic": "UD 01: segurança — produto químico na pele: enxaguar com água (chuveiro de segurança, pelo menos 5 minutos) e avisar o professor", "pages": "67–68" },
+        { "ref": "reis-ufv", "topic": "Prática nº 4: a neutralização de NaOH com HCl esquenta o béquer", "pages": "62 (do PDF)" }
+      ]
+    },
+    {
+      "id": "m-agua-rio",
+      "icon": "🏞️",
+      "title": "Água do rio para o laboratório",
+      "format": "ambiental",
+      "after": "n1",
+      "ordered": true,
+      "story": "O laboratório da escola ficou sem água destilada. Há um balde com água barrenta do rio. Você consegue, só com métodos físicos, chegar a uma água pura? Cada método que não funciona gasta uma tentativa — pense em que tipo de mistura você tem antes de escolher.",
+      "kit": {"substances": [], "items": [], "methods": ["decantacao", "filtracao", "funil-separacao", "evaporacao", "destilacao-simples", "separacao-magnetica"]},
+      "maxAttempts": 6,
+      "steps": [
+        { "id": "m-rio-areia", "kind": "separate", "mixture": "agua-barrenta", "text": "Tire a areia e o barro da água", "hint": "É uma mistura heterogênea: há um sólido que não se dissolve na água.", "done": "A areia ficou separada e a água está clara." },
+        {
+          "id": "m-rio-pura", "kind": "choice", "text": "A água ficou límpida. Ela já é pura?", "answer": "nao",
+          "choices": [
+            { "value": "nao", "label": "Não: ainda tem sais dissolvidos, que passaram junto com a água", "why": "Isso! Ficou uma mistura homogênea: os sais dissolvidos estão em partículas tão pequenas que passam pelo filtro e não assentam no fundo." },
+            { "value": "sim", "label": "Sim: se está transparente, é pura", "why": "Não. Uma mistura homogênea parece uma substância pura: água com sal dissolvido é transparente. Só a aparência não basta." },
+            { "value": "filtrar", "label": "Ainda não, mas basta filtrar de novo", "why": "Não adianta: o que está dissolvido passa pelo papel de filtro quantas vezes você filtrar." }
+          ]
+        },
+        { "id": "m-rio-destila", "kind": "separate", "mixture": "agua-salgada", "method": "destilacao-simples", "text": "Separe a água pura e guarde a água (não deixe que ela se perca)", "hint": "Um método que transforma a água em vapor e depois a recolhe de novo.", "done": "No erlenmeyer pinga água destilada; os sais ficaram no balão." },
+        {
+          "id": "m-rio-condensador", "kind": "choice", "text": "Na destilação, qual utensílio transforma o vapor de volta em líquido?", "answer": "condensador",
+          "choices": [
+            { "value": "condensador", "label": "O condensador", "why": "Isso! É um tubo com água fria circulando por fora: o vapor que passa por dentro esfria e condensa." },
+            { "value": "balao", "label": "O balão de destilação", "why": "Não: no balão a mistura é aquecida e a água vira vapor. A volta para líquido acontece no condensador." },
+            { "value": "bico", "label": "O bico de Bunsen", "why": "Não: o bico de Bunsen aquece. Para condensar é preciso esfriar." }
+          ]
+        },
+        {
+          "id": "m-rio-salina", "kind": "choice", "text": "As salinas tiram sal da água do mar deixando-a evaporar ao sol. Por que esse método não serviria para você?", "answer": "perde",
+          "choices": [
+            { "value": "perde", "label": "Porque a água vai embora como vapor; sobra o sal, e você queria a água", "why": "Isso! Evaporação guarda o sólido e perde o líquido. Para guardar a água é preciso condensar o vapor: destilação." },
+            { "value": "lento", "label": "Porque é lento demais", "why": "Também é lento, mas o problema principal é outro: a água se perde no ar." },
+            { "value": "nao-separa", "label": "Porque a evaporação não separa sal de água", "why": "Separa sim — é assim que se obtém sal marinho. O problema é que a água evapora e se perde." }
+          ]
+        }
+      ],
+      "conclusion": "Primeiro se separam as fases da mistura heterogênea (decantação ou filtração tiram o sólido que não dissolve). O que sobra é uma mistura homogênea, que precisa de métodos que mudam o estado físico: a destilação ferve a água e a condensa de volta, pura, deixando os sais. A evaporação também separa, mas perde o líquido.",
+      "safety": {"level": "cuidado", "why": "Destilar exige aquecimento: vidro quente, vapor e chama queimam. Água destilada não é para beber todo dia (faltam os sais minerais).", "home": "Dá para ver a filtração em casa com um coador de papel e água com terra. A destilação só no laboratório."},
+      "sources": [
+        { "ref": "atkins-jones", "topic": "Seção G.1–G.2: misturas homogêneas e heterogêneas; decantação, filtração e destilação; água com sal destilada", "pages": "F52–F54" },
+        { "ref": "lenzi", "topic": "UD 10–11: filtração, evaporação e destilação simples", "pages": "253–275" },
+        { "ref": "reis-ufv", "topic": "Prática nº 2: materiais homogêneos × substâncias; filtração e destilação", "pages": "43–49 (do PDF)" },
+        { "ref": "bernoulli", "topic": "v. 2, Frente A, Módulo 03: análise imediata (obtenção de sais da água do mar)", "pages": "3–7" }
+      ]
+    },
+    {
+      "id": "m-liquidos",
+      "icon": "🫗",
+      "title": "Água, óleo e álcool",
+      "format": "laboratorio",
+      "after": "n2",
+      "ordered": true,
+      "story": "Duas garrafas chegaram ao laboratório: uma com água e óleo de cozinha, outra com água e álcool (como num vinho). Os dois líquidos de cada garrafa precisam ser separados. Um par se mistura, o outro não — e isso muda tudo.",
+      "kit": {"substances": [], "items": [], "methods": ["decantacao", "filtracao", "funil-separacao", "evaporacao", "destilacao-simples", "destilacao-fracionada"]},
+      "maxAttempts": 6,
+      "steps": [
+        { "id": "m-liq-oleo", "kind": "separate", "mixture": "agua-oleo", "text": "Separe a água do óleo", "hint": "Os dois formam camadas: o óleo, menos denso, fica em cima.", "done": "A água escoou pela torneira; o óleo ficou no funil." },
+        { "id": "m-liq-alcool", "kind": "separate", "mixture": "agua-alcool", "text": "Separe o álcool da água", "hint": "Eles se misturam em qualquer proporção, mas fervem em temperaturas diferentes.", "done": "O álcool foi recolhido primeiro, no alto da coluna; a água ficou para trás." },
+        {
+          "id": "m-liq-primeiro", "kind": "choice", "text": "Na destilação, qual líquido sai primeiro?", "answer": "alcool",
+          "choices": [
+            { "value": "alcool", "label": "O álcool, que ferve a 78 °C", "why": "Isso! O componente de ponto de ebulição mais baixo vira vapor primeiro." },
+            { "value": "agua", "label": "A água, que ferve a 100 °C", "why": "Não: a água precisa de mais aquecimento. Sai primeiro quem ferve a uma temperatura menor — o álcool, a 78 °C." },
+            { "value": "juntos", "label": "Os dois juntos, sempre na mesma proporção", "why": "Não: o vapor é bem mais rico em álcool. É por isso que a destilação separa (quase todo) o álcool." }
+          ]
+        },
+        {
+          "id": "m-liq-azeotropo", "kind": "choice", "text": "Mesmo com uma boa coluna, o álcool destilado fica com cerca de 95,6% de etanol e 4,4% de água. Por quê?", "answer": "azeotropo",
+          "choices": [
+            { "value": "azeotropo", "label": "Nessa proporção a mistura ferve como se fosse uma substância só (azeótropo)", "why": "Isso! A mistura azeotrópica ferve a uma temperatura fixa e o vapor tem a mesma composição do líquido, então a destilação não separa mais nada." },
+            { "value": "coluna", "label": "Porque a coluna era curta; com uma maior chegaria a 100%", "why": "Não: a partir de 95,6% nenhuma coluna resolve, porque líquido e vapor têm a mesma composição. Para tirar o resto da água é preciso outro truque." },
+            { "value": "reage", "label": "Porque o álcool reage com a água na destilação", "why": "Não há reação: é só uma mistura que, nessa proporção, se comporta como uma substância pura ao ferver." }
+          ]
+        }
+      ],
+      "conclusion": "Líquidos que não se misturam (imiscíveis) formam camadas e se separam no funil de separação, pela densidade. Líquidos que se misturam (miscíveis) se separam pelo ponto de ebulição: destilação, melhor ainda com coluna de fracionamento — até o limite do azeótropo.",
+      "safety": {"level": "cuidado", "why": "O álcool é inflamável: na destilação, o vapor não pode chegar perto de chama aberta (use manta ou chapa elétrica).", "home": "Separar água e óleo dá para ver em casa, num copo. Destilar álcool, não: o vapor é inflamável."},
+      "sources": [
+        { "ref": "bernoulli", "topic": "v. 2, Frente A, Módulo 03: água e óleo no funil de decantação; destilação fracionada", "pages": "5–7" },
+        { "ref": "reis-ufv", "topic": "Prática nº 2: água (PE 100 °C) e álcool (PE 78 °C), destilação do vinho", "pages": "48–49 (do PDF)" },
+        { "ref": "lenzi", "topic": "UD 11: destilação simples e fracionada; azeótropo etanol (95,6%) + água", "pages": "275–276" }
+      ]
+    },
+    {
+      "id": "m-ferro-enxofre",
+      "icon": "🧲",
+      "title": "Ferro e enxofre: mistura ou composto?",
+      "format": "laboratorio",
+      "after": "n2",
+      "ordered": true,
+      "story": "Num pote há limalha de ferro misturada com enxofre em pó. A professora pergunta: o que muda quando essa mistura é aquecida? Separe, aqueça e teste de novo.",
+      "kit": {"substances": ["Fe", "S"], "items": ["calor"], "methods": ["decantacao", "filtracao", "separacao-magnetica", "dissolucao-fracionada"]},
+      "maxAttempts": 6,
+      "steps": [
+        { "id": "m-fes-ima", "kind": "separate", "mixture": "ferro-enxofre", "text": "Separe o ferro do enxofre, sem aquecer", "hint": "Um dos dois é atraído por um ímã.", "done": "O ímã levou o ferro; o enxofre amarelo ficou." },
+        { "id": "m-fes-aquece", "kind": "reaction", "reaction": "fe-s", "text": "Agora aqueça o ferro com o enxofre", "hint": "Ferro + enxofre, com calor.", "done": "A mistura brilha ao reagir e vira um sólido escuro: sulfeto de ferro(II)." },
+        {
+          "id": "m-fes-depois", "kind": "choice", "text": "Depois de aquecer, o ímã ainda consegue tirar o ferro do sólido escuro?", "answer": "nao",
+          "choices": [
+            { "value": "nao", "label": "Não: formou-se um composto (FeS), com propriedades novas", "why": "Isso! Na mistura, cada componente guardava suas propriedades. No composto, o ferro está ligado quimicamente ao enxofre: não é mais atraído pelo ímã e só uma reação química o separaria." },
+            { "value": "sim", "label": "Sim: o ferro continua lá dentro", "why": "Os átomos de ferro continuam lá, mas não como ferro metálico: agora são íons Fe²⁺ presos ao enxofre. O composto não tem a propriedade magnética do ferro." },
+            { "value": "metade", "label": "Só a metade, porque a outra metade reagiu", "why": "Com as quantidades na proporção certa (1 Fe para 1 S), todo o ferro reage. A proporção fixa é uma marca de composto (lei de Proust)." }
+          ]
+        },
+        {
+          "id": "m-fes-diferenca", "kind": "choice", "text": "Qual destas é uma diferença entre mistura e composto?", "answer": "proporcao",
+          "choices": [
+            { "value": "proporcao", "label": "Numa mistura a composição pode variar; num composto ela é fixa", "why": "Isso! Dá para misturar ferro e enxofre em qualquer proporção, mas o FeS tem sempre 1 Fe para 1 S. E a mistura se separa por métodos físicos; o composto, não." },
+            { "value": "cor", "label": "Misturas são sempre coloridas e compostos, incolores", "why": "Não: a cor não define nada disso. O próprio FeS é escuro." },
+            { "value": "solido", "label": "Misturas são líquidas e compostos são sólidos", "why": "Não: há misturas sólidas (como esta, ou as ligas metálicas) e compostos líquidos ou gasosos (como a água e o CO2)." }
+          ]
+        }
+      ],
+      "conclusion": "Numa mistura, os componentes mantêm as suas propriedades e se separam por métodos físicos (o ímã); a composição varia. Numa reação química forma-se um composto: propriedades novas, proporção fixa, e a separação só por outra reação química.",
+      "safety": {"level": "perigo", "why": "A reação libera muito calor; o enxofre aquecido pode queimar e soltar SO2, tóxico.", "home": "Não faça em casa. A separação com ímã, sim: ímã e limalha de ferro misturada com areia funcionam igual."},
+      "sources": [
+        { "ref": "atkins-jones", "topic": "Tabela G.1: diferenças entre misturas e compostos", "pages": "F52" },
+        { "ref": "reis-ufv", "topic": "Prática nº 2: FeS (composto) × ferro + enxofre (material)", "pages": "45–46 (do PDF)" },
+        { "ref": "bernoulli", "topic": "v. 2, Frente A, Módulo 03: separação magnética de limalha de ferro + enxofre", "pages": "4" }
+      ]
+    },
+    {
+      "id": "m-vela",
+      "icon": "🕯️",
+      "title": "O que uma vela produz?",
+      "format": "historia",
+      "after": "n2",
+      "ordered": true,
+      "story": "O método científico começa observando. Uma vela acesa parece simples, mas: o que sai da chama? Para não usar parafina (que não está no kit), você vai usar o metano, um hidrocarboneto como os da parafina, que vem do petróleo.",
+      "kit": {"substances": ["CH4", "O2", "Ca(OH)2"], "items": ["faisca"]},
+      "maxAttempts": 6,
+      "steps": [
+        {
+          "id": "m-vela-observacao", "kind": "choice", "text": "Qual destas frases é uma OBSERVAÇÃO (e não uma hipótese)?", "answer": "chama",
+          "choices": [
+            { "value": "chama", "label": "\"A chama é amarela e a parafina perto do pavio derrete.\"", "why": "Isso! É o que se vê, registrado com os sentidos — o primeiro passo do método científico." },
+            { "value": "oxigenio", "label": "\"A vela precisa de oxigênio para queimar.\"", "why": "Isso é uma hipótese: uma explicação provisória, que ainda precisa ser testada por um experimento." },
+            { "value": "agua", "label": "\"A vela deve produzir água.\"", "why": "É uma hipótese (uma previsão). Vamos testá-la já já." }
+          ]
+        },
+        { "id": "m-vela-queima", "kind": "reaction", "reaction": "ch4-o2", "text": "Queime o hidrocarboneto, como faz o pavio", "hint": "Combustível + comburente + uma faísca.", "done": "A chama aparece. Um vidro frio sobre ela fica embaçado de gotinhas: é água." },
+        { "id": "m-vela-cal", "kind": "reaction", "reaction": "caoh2-co2", "text": "Teste o gás que sai da chama com água de cal", "hint": "A água de cal (Ca(OH)2) fica turva com um certo gás da combustão.", "done": "A água de cal ficou turva, branca como leite: a chama produz CO2." },
+        {
+          "id": "m-vela-teste", "kind": "choice", "text": "Um copo emborcado sobre a vela faz a chama apagar. Hipótese: \"apaga porque o oxigênio do copo acaba\". Qual experimento testa melhor essa hipótese?", "answer": "copos",
+          "choices": [
+            { "value": "copos", "label": "Repetir com copos de tamanhos diferentes, mantendo o resto igual, e medir quanto tempo a chama dura", "why": "Isso! Varia-se um fator só (a quantidade de ar), mantendo os outros iguais, e mede-se a resposta (o tempo). Se a hipótese estiver certa, copos maiores duram mais." },
+            { "value": "olhar", "label": "Olhar de novo com mais atenção", "why": "Observar é o começo, mas não testa a hipótese. É preciso um experimento que mude alguma coisa e meça o efeito." },
+            { "value": "tudo", "label": "Mudar o copo, a vela e o lugar ao mesmo tempo", "why": "Assim não dá para saber qual mudança causou o efeito. Num experimento, varia-se um fator de cada vez." }
+          ]
+        }
+      ],
+      "conclusion": "O método científico: observar e registrar, criar uma hipótese (explicação provisória), testá-la com um experimento em que se varia um fator de cada vez, e então generalizar. A chama de uma vela é uma combustão: hidrocarbonetos + oxigênio dão água (o vidro embaça) e gás carbônico (a água de cal turva).",
+      "safety": {"level": "cuidado", "why": "Chama e gás combustível: risco de queimadura e incêndio. O metano em ambiente fechado pode explodir com uma faísca.", "home": "Observar uma vela (e embaçar um vidro frio sobre ela) dá para fazer em casa, com um adulto, longe de coisas que queimam."},
+      "sources": [
+        { "ref": "lenzi", "topic": "UD 03: o método científico (observação, hipótese, experimentação variando um fator, generalização); observar uma vela", "pages": "99–103" },
+        { "ref": "bernoulli", "topic": "v. 2, Frente A, Módulo 03: a parafina é uma das frações do petróleo", "pages": "7" },
+        { "ref": "atkins-jones", "topic": "Seção H: a queima do metano forma CO2 e água", "pages": "F62" }
+      ]
+    },
+    {
+      "id": "m-fogos",
+      "icon": "🎆",
+      "title": "As cores dos fogos de artifício",
+      "format": "historia",
+      "after": "g2",
+      "ordered": false,
+      "story": "Uma fábrica de fogos de artifício perdeu as etiquetas de quatro sais e de um frasco de ácido. Ela precisa de vermelho, verde e amarelo para a festa. Faça o teste de chama: mergulhe um fio limpo em cada amostra e leve à chama do bico de Bunsen. Cada teste gasta uma tentativa.",
+      "kit": {"substances": ["NaCl", "CaCl2", "SrCl2", "BaCl2", "HCl"], "items": []},
+      "maxAttempts": 7,
+      "steps": [
+        { "id": "m-fogos-vermelho", "kind": "flame", "element": "Sr", "text": "Ache o sal que dá a chama vermelha (carmim)", "hint": "Pense nos metais alcalino-terrosos (grupo 2).", "done": "Chama vermelho-carmim: é o estrôncio." },
+        { "id": "m-fogos-verde", "kind": "flame", "element": "Ba", "text": "Ache o sal que dá a chama verde", "hint": "Outro alcalino-terroso, mais pesado.", "done": "Chama verde-amarelada: é o bário." },
+        { "id": "m-fogos-amarelo", "kind": "flame", "element": "Na", "text": "Ache o sal que dá a chama amarela", "hint": "É a mesma cor das lâmpadas de rua antigas.", "done": "Chama amarela intensa: é o sódio." },
+        {
+          "id": "m-fogos-porque", "kind": "choice", "text": "Por que cada elemento dá uma cor diferente na chama?", "answer": "eletrons",
+          "choices": [
+            { "value": "eletrons", "label": "O calor excita os elétrons; ao voltarem, eles emitem luz com energia (cor) típica de cada elemento", "why": "Isso! Os níveis de energia dos elétrons são diferentes em cada elemento, então o 'salto' de volta libera luz de cores diferentes. É como uma impressão digital do elemento." },
+            { "value": "queima", "label": "Cada metal queima com o oxigênio e o produto tem uma cor", "why": "Não: a cor vem da luz emitida pelos elétrons excitados, não da cor de um produto. Até o sal dissolvido, sem 'queimar', dá a cor." },
+            { "value": "cloro", "label": "Por causa do cloro, que está em todos os sais", "why": "Não: todos os sais testados têm cloreto, e mesmo assim as cores são diferentes. A cor vem do metal." }
+          ]
+        },
+        {
+          "id": "m-fogos-nitrato", "kind": "choice", "text": "Nos fogos de verdade, os sais costumam ser nitratos ou cloratos, não cloretos. Por quê?", "answer": "oxigenio",
+          "choices": [
+            { "value": "oxigenio", "label": "Porque esses ânions fornecem oxigênio extra para a queima", "why": "Isso! Nitratos e cloratos são oxidantes: soltam oxigênio na queima, e a mistura queima depressa mesmo dentro do rojão." },
+            { "value": "cor", "label": "Porque o nitrato muda a cor da chama", "why": "Não: a cor vem do metal (estrôncio, bário…). O ânion entra para ajudar a queima." },
+            { "value": "barato", "label": "Só porque são mais baratos", "why": "Não é isso: o nitrato e o clorato têm uma função química — fornecem oxigênio para a combustão." }
+          ]
+        }
+      ],
+      "conclusion": "No teste de chama, o calor excita os elétrons do metal; ao voltarem, eles emitem luz com cor característica: sódio amarelo, cálcio vermelho-alaranjado, estrôncio vermelho, bário verde. Os fogos de artifício usam esses metais como sais oxidantes (nitratos, cloratos), que também alimentam a queima.",
+      "safety": {"level": "perigo", "why": "Fogos de artifício são explosivos: misturam oxidantes fortes e combustíveis. Sais de bário são tóxicos.", "home": "Nunca fabrique nem desmonte fogos. O teste de chama é feito só no laboratório, com o fio limpo em ácido e boa ventilação."},
+      "sources": [
+        { "ref": "atkins-jones", "topic": "Seção 15.7: cores de chama de Ca, Sr e Ba; fogos usam nitratos e cloratos, que fornecem oxigênio", "pages": "625" },
+        { "ref": "lenzi", "topic": "UD 19: análise pela chama (elétron excitado emite o fóton típico do elemento)", "pages": "438–453" },
+        { "ref": "bernoulli", "topic": "v. 1, Frente C, Módulo 03: teste de chama e níveis de energia", "pages": "53" }
+      ]
+    },
+    {
+      "id": "m-fermento",
+      "icon": "🍞",
+      "title": "O segredo do fermento",
+      "format": "historia",
+      "after": "n4",
+      "ordered": false,
+      "story": "Uma receita de bolo leva bicarbonato de sódio e um pouco de vinagre; outra leva só bicarbonato e vai ao forno. As duas crescem. De onde vem o gás que faz a massa subir?",
+      "kit": {"substances": ["NaHCO3", "CH3COOH", "H2O"], "items": ["calor"]},
+      "maxAttempts": 6,
+      "steps": [
+        { "id": "m-fermento-acido", "kind": "reaction", "reaction": "nahco3-vinagre", "text": "Faça o bicarbonato soltar gás sem aquecer", "hint": "Bicarbonato + um ácido fraco.", "done": "Espuma na hora: o ácido do vinagre libera CO2 do bicarbonato." },
+        { "id": "m-fermento-forno", "kind": "reaction", "reaction": "nahco3-calor", "text": "Agora faça o bicarbonato soltar gás sem ácido nenhum", "hint": "Como no forno.", "done": "Aquecido, o bicarbonato vira carbonato de sódio e solta vapor de água e CO2." },
+        {
+          "id": "m-fermento-bolo", "kind": "choice", "text": "Por que o gás faz o bolo crescer?", "answer": "bolhas",
+          "choices": [
+            { "value": "bolhas", "label": "As bolhas de CO2 ficam presas na massa e se expandem no calor do forno", "why": "Isso! A massa vai firmando com o calor e as bolhas ficam presas, deixando o bolo fofo." },
+            { "value": "massa", "label": "Porque o gás aumenta a massa do bolo", "why": "Não: o gás até sai em parte. O bolo cresce em volume (as bolhas), não em massa." },
+            { "value": "agua", "label": "Porque o bicarbonato absorve água e incha", "why": "Não: quem faz a massa subir é o gás carbônico que se forma." }
+          ]
+        },
+        {
+          "id": "m-fermento-po", "kind": "choice", "text": "O fermento químico em pó tem bicarbonato e um ácido sólido misturados no mesmo pote. Por que não reage no pote?", "answer": "agua",
+          "choices": [
+            { "value": "agua", "label": "Porque secos eles quase não reagem; a reação começa quando a água da massa os dissolve", "why": "Isso! Dissolvidos, o ácido e o íon bicarbonato se encontram e soltam CO2 — por isso o fermento só age na massa molhada." },
+            { "value": "separados", "label": "Porque ficam em pacotinhos separados dentro do pote", "why": "Não: estão misturados no mesmo pó. O que impede a reação é estarem secos." },
+            { "value": "frio", "label": "Porque só reagem acima de 100 °C", "why": "Não: com água, reagem já na temperatura ambiente (você viu com o vinagre)." }
+          ]
+        }
+      ],
+      "conclusion": "O fermento químico solta gás carbônico de dois jeitos: o bicarbonato reage com um ácido (vinagre, limão, o ácido sólido do fermento em pó, assim que tudo se dissolve) e também se decompõe com o calor do forno. As bolhas de CO2, presas na massa, fazem o bolo crescer.",
+      "safety": {"level": "seguro", "why": "Bicarbonato, vinagre e fermento são de cozinha.", "home": "Pode fazer em casa: bicarbonato com vinagre num copo, e veja a diferença de um bolo com e sem fermento."},
+      "sources": [
+        { "ref": "atkins-jones", "topic": "Seção 15.6: bicarbonato e ácidos fracos fazem a massa crescer; o fermento em pó tem um ácido sólido e solta CO2 quando se adiciona água", "pages": "623" },
+        { "ref": "farias", "topic": "Síntese do bicarbonato e do carbonato de sódio (carbonato por aquecimento do bicarbonato)", "pages": "87–88" }
+      ]
+    },
+    {
+      "id": "m-pilha",
+      "icon": "🔋",
+      "title": "A pilha de Daniell",
+      "format": "laboratorio",
+      "after": "n5",
+      "ordered": true,
+      "story": "Em 1836, os telégrafos precisavam de uma corrente elétrica estável. John Daniell separou em dois copos uma reação que você já conhece — zinco com sulfato de cobre — e ligou os dois por um fio. Monte a pilha e descubra de onde vem a eletricidade.",
+      "kit": {"substances": ["Zn", "CuSO4", "Cu"], "items": []},
+      "maxAttempts": 6,
+      "steps": [
+        { "id": "m-pilha-reacao", "kind": "produce", "substance": "Cu", "text": "Faça a reação da pilha: zinco com sulfato de cobre", "hint": "O metal mais reativo desloca o cobre da solução.", "done": "O zinco se cobre de cobre avermelhado e a solução azul descora: o zinco entregou elétrons aos íons Cu²⁺." },
+        {
+          "id": "m-pilha-anodo", "kind": "choice", "text": "Na pilha, qual eletrodo perde elétrons (sofre oxidação) e é o polo negativo?", "answer": "zinco",
+          "choices": [
+            { "value": "zinco", "label": "O zinco (ânodo)", "why": "Isso! Zn → Zn²⁺ + 2 e⁻. A oxidação acontece no ânodo, e os elétrons saem por ele para o fio: é o polo negativo da pilha." },
+            { "value": "cobre", "label": "O cobre (cátodo)", "why": "Não: no cobre os íons Cu²⁺ recebem elétrons (redução). Ali é o cátodo, o polo positivo." },
+            { "value": "fio", "label": "O fio que liga os dois", "why": "O fio só conduz os elétrons de um eletrodo ao outro; quem se oxida é o zinco." }
+          ]
+        },
+        {
+          "id": "m-pilha-ddp", "kind": "calc", "text": "Use os potenciais-padrão de redução (Cu²⁺/Cu = +0,34 V; Zn²⁺/Zn = −0,76 V) para calcular a voltagem da pilha.", "unitLabel": "V", "hint": "E°pilha = E°(cátodo, onde há redução) − E°(ânodo, onde há oxidação). Cuidado com o sinal negativo.", "calc": {"type": "cell", "cathode": "Cu", "anode": "Zn"}
+        },
+        {
+          "id": "m-pilha-ponte", "kind": "choice", "text": "Para que serve a ponte salina (ou a parede porosa) entre os dois copos?", "answer": "ions",
+          "choices": [
+            { "value": "ions", "label": "Deixa íons passarem de um lado para o outro, fechando o circuito e mantendo as soluções neutras", "why": "Isso! Sem ela, um copo ficaria com carga positiva sobrando (Zn²⁺) e o outro com falta, e a corrente pararia logo." },
+            { "value": "eletrons", "label": "Por ela passam os elétrons", "why": "Não: os elétrons vão pelo fio. Pela ponte salina passam íons." },
+            { "value": "misturar", "label": "Para misturar as duas soluções", "why": "Ao contrário: ela evita que as soluções se misturem. Se o Cu²⁺ chegasse ao zinco, a reação aconteceria ali mesmo, sem passar corrente pelo fio." }
+          ]
+        }
+      ],
+      "conclusion": "Uma pilha separa uma reação de oxirredução espontânea em dois compartimentos: no ânodo (zinco, polo negativo) acontece a oxidação; no cátodo (cobre, polo positivo), a redução. Os elétrons vão pelo fio, os íons pela ponte salina. A voltagem vem da diferença dos potenciais: 0,34 − (−0,76) = 1,10 V.",
+      "safety": {"level": "cuidado", "why": "Sais de cobre e de zinco são tóxicos se ingeridos.", "home": "Uma versão segura: pilha de limão com uma moeda de cobre e um prego galvanizado (zinco) — sem ingerir nada."},
+      "sources": [
+        { "ref": "atkins-jones", "topic": "Cap. 13 (células galvânicas): pilha de Daniell (1836), ânodo e cátodo, ponte salina, 1,10 V", "pages": "523–526" },
+        { "ref": "atkins-jones", "topic": "Glossário: potencial-padrão da pilha, E° = E°(cátodo) − E°(ânodo)", "pages": "B26" },
+        { "ref": "reis-ufv", "topic": "Prática nº 13: células galvânicas (pilha Zn/Cu, ponte salina e parede porosa)", "pages": "116–124 (do PDF)" }
+      ]
+    },
+    {
+      "id": "m-eletrolise",
+      "icon": "⚡",
+      "title": "Eletrólise da água",
+      "format": "laboratorio",
+      "after": "n7",
+      "ordered": true,
+      "story": "Uma pilha usa uma reação espontânea para gerar eletricidade. E o contrário? Com uma fonte de corrente, dá para obrigar a água a se separar em hidrogênio e oxigênio. Monte a célula, com dois tubos cheios de água sobre os eletrodos para recolher os gases.",
+      "kit": {"substances": ["H2O", "H2", "O2"], "items": ["eletricidade", "faisca"]},
+      "maxAttempts": 6,
+      "steps": [
+        { "id": "m-eletro-reacao", "kind": "reaction", "reaction": "h2o-eletrolise", "text": "Faça a eletrólise da água", "hint": "Água + uma ferramenta que força reações não espontâneas.", "done": "Bolhas sobem nos dois eletrodos: o gás de um tubo se acumula duas vezes mais depressa que o do outro." },
+        {
+          "id": "m-eletro-volume", "kind": "choice", "text": "Num tubo juntaram-se 20 mL de hidrogênio. Quanto oxigênio há no outro tubo (mesma temperatura e pressão)?", "answer": "10",
+          "choices": [
+            { "value": "10", "label": "10 mL", "why": "Isso! A equação 2 H2O → 2 H2 + O2 dá 2 mol de H2 para 1 mol de O2, e volumes iguais de gás têm o mesmo número de moléculas: o volume de O2 é a metade." },
+            { "value": "20", "label": "20 mL", "why": "Não: os coeficientes da equação mostram que sai metade de O2 em relação ao H2 — em mol e em volume." },
+            { "value": "40", "label": "40 mL", "why": "Ao contrário: o oxigênio é o que sai em menor quantidade (1 O2 para 2 H2)." }
+          ]
+        },
+        {
+          "id": "m-eletro-catodo", "kind": "choice", "text": "O hidrogênio aparece no eletrodo ligado ao polo negativo da fonte (o cátodo). Por quê?", "answer": "reducao",
+          "choices": [
+            { "value": "reducao", "label": "Porque ali a água recebe elétrons (redução) e forma H2", "why": "Isso! No cátodo há redução: 2 H2O + 2 e⁻ → H2 + 2 OH⁻. No ânodo (polo positivo) a água perde elétrons e forma O2." },
+            { "value": "leve", "label": "Porque o hidrogênio é leve e sobe por aquele lado", "why": "Não: cada gás se forma num eletrodo específico, pelo tipo de reação (redução ou oxidação) que acontece ali." },
+            { "value": "oxidacao", "label": "Porque ali a água sofre oxidação", "why": "Não: a oxidação acontece no ânodo e forma O2. O H2 vem da redução, no cátodo." }
+          ]
+        },
+        {
+          "id": "m-eletro-sal", "kind": "choice", "text": "Na prática, põe-se um pouco de sulfato de sódio na água. Para quê?", "answer": "conduzir",
+          "choices": [
+            { "value": "conduzir", "label": "Para a água conduzir corrente; e nem o Na⁺ nem o SO4²⁻ reagem nos eletrodos", "why": "Isso! A água pura quase não conduz eletricidade. O sulfato de sódio fornece íons e é escolhido porque nenhum dos seus íons é consumido: quem reage continua sendo a água." },
+            { "value": "catalisador", "label": "É um catalisador que torna a eletrólise espontânea", "why": "Não: nenhum catalisador torna espontânea uma reação não espontânea. A energia vem da fonte elétrica." },
+            { "value": "produz", "label": "É dele que vem o hidrogênio", "why": "Não: o sulfato de sódio não tem hidrogênio. O H2 e o O2 vêm da água." }
+          ]
+        },
+        { "id": "m-eletro-volta", "kind": "reaction", "reaction": "h2-o2", "text": "Junte os gases de novo com uma faísca", "hint": "O que acontece com H2 e O2 e uma faísca?", "done": "Um estalo: H2 e O2 voltam a formar água, liberando a energia que a eletricidade tinha fornecido." }
+      ],
+      "conclusion": "Na eletrólise, a energia elétrica força uma reação não espontânea: a água se separa em H2 (no cátodo, por redução) e O2 (no ânodo, por oxidação), na proporção de volumes 2 : 1, que é a dos coeficientes da equação. Um eletrólito como o sulfato de sódio deixa a água conduzir sem reagir. Juntar os gases de volta devolve a energia.",
+      "safety": {"level": "perigo", "why": "A mistura de hidrogênio e oxigênio explode com uma faísca.", "home": "Não faça em casa: além do risco de explosão, eletrólise com sal de cozinha forma cloro, tóxico."},
+      "sources": [
+        { "ref": "atkins-jones", "topic": "Seções 13.11–13.12: eletrólise (na célula eletrolítica o ânodo é + e o cátodo é −); a água é eletrolisada com sulfato de sódio, cujos íons não reagem", "pages": "542–544" },
+        { "ref": "atkins-jones", "topic": "Seção 4.4: princípio de Avogadro (na mesma temperatura e pressão, volume proporcional à quantidade de gás)", "pages": "140" },
+        { "ref": "reis-ufv", "topic": "Prática nº 14: células eletrolíticas", "pages": "125–129 (do PDF)" }
+      ]
+    },
+    {
+      "id": "m-detector",
+      "icon": "💧",
+      "title": "O detector de água",
+      "format": "laboratorio",
+      "after": "n5",
+      "ordered": true,
+      "story": "Um pó branco muda de cor quando encontra água — o suficiente para avisar se há umidade num frasco de reagente. Descubra que pó é esse e o que acontece com ele.",
+      "kit": {"substances": ["CuSO4", "H2O"], "items": ["calor"]},
+      "maxAttempts": 5,
+      "steps": [
+        { "id": "m-detector-azul", "kind": "reaction", "reaction": "cuso4-hidratacao", "text": "Molhe o sulfato de cobre anidro (o pó branco)", "hint": "Sulfato de cobre + água.", "done": "O pó fica azul e esquenta: formou-se o sulfato de cobre penta-hidratado." },
+        {
+          "id": "m-detector-calor", "kind": "choice", "text": "Ao virar azul, a mistura esquentou. A hidratação é…", "answer": "exo",
+          "choices": [
+            { "value": "exo", "label": "Exotérmica: libera calor (ΔH ≈ −79 kJ por mol de CuSO4)", "why": "Isso! As moléculas de água se prendem ao sal e liberam energia. Pelos dados de formação, ΔH° ≈ −79 kJ/mol; num calorímetro mede-se cerca de −78,5 kJ/mol." },
+            { "value": "endo", "label": "Endotérmica: absorve calor", "why": "Não: se absorvesse, a mistura esfriaria. Esquentou, então liberou calor." },
+            { "value": "nada", "label": "Nem uma coisa nem outra: é só uma mudança de cor", "why": "Não: há uma reação (a água se liga ao sal), e ela libera calor." }
+          ]
+        },
+        {
+          "id": "m-detector-volta", "kind": "choice", "text": "E se o pó azul for aquecido a mais de 150 °C?", "answer": "branco",
+          "choices": [
+            { "value": "branco", "label": "Perde a água e volta a ser o pó branco anidro", "why": "Isso! A água de hidratação sai como vapor, e o sal pode ser usado de novo como detector." },
+            { "value": "preto", "label": "Vira óxido de cobre preto na hora", "why": "Não a essa temperatura: primeiro só sai a água de hidratação, e fica o CuSO4 branco." },
+            { "value": "azul", "label": "Continua azul: a mudança é permanente", "why": "Não: a hidratação vai e volta. Aquecendo, a água sai e a cor branca volta." }
+          ]
+        }
+      ],
+      "conclusion": "O sulfato de cobre anidro (branco) atrai tanto a água que forma o penta-hidratado azul, CuSO4·5H2O, liberando calor. Aquecido acima de ~150 °C, perde a água e volta a ser branco. Por isso serve para detectar água — e mostra que 'água de hidratação' faz parte do cristal.",
+      "safety": {"level": "cuidado", "why": "Sulfato de cobre é tóxico se ingerido e irrita pele e olhos.", "home": "Não faça em casa."},
+      "sources": [
+        { "ref": "atkins-jones", "topic": "Seção D.3 e Fig. D.1: CuSO4·5H2O azul, anidro branco acima de 150 °C; o anidro fica azul com água", "pages": "F31" },
+        { "ref": "farias", "topic": "Entalpia de hidratação do sulfato de cobre (−78,5 kJ/mol; anidro branco, hidratado azul)", "pages": "65–66" },
+        { "ref": "atkins-fq", "topic": "Tabela 2C.7: ΔfH° de CuSO4 e CuSO4·5H2O", "pages": "892" }
       ]
     }
   ]
