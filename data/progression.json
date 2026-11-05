@@ -348,6 +348,21 @@
           "hint": "Os dois são alcanos (mesma função). O que muda é o esqueleto de carbonos." }
       ],
       "lesson": "Grupos funcionais decidem como uma molécula orgânica reage: alcanos só fazem substituição (com luz); alcenos fazem adição na ligação dupla; ácido + álcool formam éster e água (esterificação, uma condensação). O nome oficial é prefixo + infixo + sufixo: prop-an-2-ol = 3 carbonos, só ligações simples, álcool no carbono 2. Isômeros têm a mesma fórmula molecular e estruturas diferentes: de função, de cadeia ou de posição."
+    },
+    {
+      "id": "n17",
+      "phase": 3,
+      "title": "Missões de laboratório",
+      "intro": "Fase 3F: missões. Cada uma conta uma história e traz um kit pequeno de substâncias: durante a missão, só ele vale na bancada, e as tentativas são contadas (cada combinação e cada resposta errada gasta uma). Pense antes de juntar! Abra o painel 🗺️ Missões para escolher uma; as missões vão sendo liberadas ao longo do jogo, então algumas você pode já ter feito.",
+      "objectives": [
+        { "id": "n17-balao", "type": "mission", "mission": "m-balao", "text": "Missão 🎈: descubra o gás de cada balão" },
+        { "id": "n17-cobre", "type": "mission", "mission": "m-cobre", "text": "Missão 🔁: do cobre ao cobre" },
+        { "id": "n17-extintor", "type": "mission", "mission": "m-extintor", "text": "Missão 🧯: por que o CO2 apaga o fogo?" },
+        { "id": "n17-h2o2", "type": "mission", "mission": "m-agua-oxigenada", "text": "Missão 🫧: a água oxigenada que borbulha" },
+        { "id": "n17-vinagre", "type": "mission", "mission": "m-vinagre", "text": "Missão 🧪: quanto ácido tem o vinagre?" },
+        { "id": "n17-chuva", "type": "mission", "mission": "m-chuva-acida", "text": "Missão 🌧️: chuva ácida na cidade" }
+      ],
+      "lesson": "No laboratório, a química vira método: planejar antes de misturar, observar (bolhas, cor, precipitado), identificar o que se formou com testes simples e medir (titulação, volume de gás). As mesmas reações explicam problemas reais: por que o CO2 apaga o fogo, como um catalisador acelera uma reação, por que a chuva ácida desgasta o mármore. E, numa sequência de reações, os átomos de um elemento atravessam todas as etapas: só mudam de parceiro."
     }
   ]
 }

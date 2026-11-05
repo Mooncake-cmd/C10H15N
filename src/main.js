@@ -3,7 +3,8 @@
 
 import { loadGameData } from './loader.js';
 import { createEngine } from './core/engine.js';
-import { initialState, applyResult, inventory, restoreState, unlockLevelMap, isObjectiveDone, answerObjective } from './core/progression.js';
+import { initialState, applyResult, inventory, restoreState, unlockLevelMap, isObjectiveDone, answerObjective, startMission, abandonMission, missionCombine, answerMission } from './core/progression.js';
+import { missionInventory, calcWorked, isMissionAvailable } from './core/missions.js';
 import { lookupReaction } from './core/engine.js';
 import { formatFormulaHTML, formatFormulaText } from './core/formula.js';
 import { renderPeriodicTable } from './ui/periodic-table.js';
@@ -16,6 +17,7 @@ import { mountKineticsLab } from './ui/kinetics-lab.js';
 import { mountCalculators } from './ui/calculators.js';
 import { mountEquilibriumLab } from './ui/equilibrium-lab.js';
 import { renderMoleculeCard, galleryGroups, moleculeName } from './ui/molecule-card.js';
+import { missionListHTML, missionPanelHTML, missionCompleteHTML, chemText } from './ui/missions-ui.js';
 
 const SAVE_KEY = 'elementar:v1';
 const MAX_SUBSTANCES = 4;
@@ -59,6 +61,11 @@ async function main() {
   let state = restoreState(storage.load(), data) ?? initialState(data);
   let bench = []; // ids na bancada (substâncias e ferramentas)
   let lastNew = new Set(); // destacadas como "novas" no inventário
+  let missionFeedback = null; // último retorno da missão: { kind, html }
+
+  // Durante uma missão (Fase 3F), só o kit dela (e o que foi produzido nela) vale na bancada.
+  const activeMission = () => (state.missionRun ? data.missionsById.get(state.missionRun.id) : null);
+  const currentInventory = () => (state.missionRun ? missionInventory(state.missionRun, activeMission()) : inventory(state, data));
 
   // ---------- Tabela periódica ----------
   const table = renderPeriodicTable($('#periodic-table'), data, {
@@ -83,7 +90,9 @@ async function main() {
 
   // ---------- Inventário ----------
   function renderInventory() {
-    const inv = inventory(state, data);
+    const inv = currentInventory();
+    $('#inventory').classList.toggle('is-mission', !!state.missionRun);
+    $('#inventory h2').textContent = state.missionRun ? `Kit da missão ${activeMission().icon}` : 'Inventário';
     const filter = $('#inv-search').value.trim().toLowerCase();
     const subs = inv.substances
       .map((id) => data.substancesById.get(id))
@@ -102,13 +111,20 @@ async function main() {
     const collection = data.substances.filter((s) => !s.elementOf && !s.derived);
     const found = collection.filter((s) => inv.substances.includes(s.id)).length;
     const extras = inv.substances.filter((id) => data.substancesById.get(id).derived).length;
-    $('#inv-count').textContent = `${found}/${collection.length} compostos${extras ? ` · +${extras} extras` : ''}`;
+    $('#inv-count').textContent = state.missionRun ? 'só o kit vale na missão' : `${found}/${collection.length} compostos${extras ? ` · +${extras} extras` : ''}`;
   }
 
   // ---------- Bancada ----------
   function addToBench(id) {
     if (bench.includes(id)) return;
     const isItem = data.itemsById.has(id);
+    if (state.missionRun) {
+      const inv = currentInventory();
+      if (!(isItem ? inv.items : inv.substances).includes(id)) {
+        toast('Nesta missão, só vale o kit (veja o inventário).');
+        return;
+      }
+    }
     if (!isItem && bench.filter((x) => !data.itemsById.has(x)).length >= MAX_SUBSTANCES) {
       toast(`A bancada aceita até ${MAX_SUBSTANCES} substâncias.`);
       return;
@@ -142,11 +158,24 @@ async function main() {
   }
 
   function react() {
+    if (state.missionRun?.failed) {
+      toast('As tentativas acabaram: recomece a missão ou saia dela.');
+      return;
+    }
     const result = engine.combine(bench);
     const prevLevel = state.levelIndex;
-    const { state: next, events } = applyResult(state, result, data);
+    const inMission = !!state.missionRun;
+    const { state: next, events } = inMission ? missionCombine(state, [...bench], result, data) : applyResult(state, result, data);
     state = next;
     storage.save(state);
+    if (inMission) {
+      const steps = events.filter((e) => e.type === 'mission-step');
+      missionFeedback = steps.length
+        ? { kind: 'good', html: steps.map((e) => `✔ ${chemText(e.step.done)}`).join('<br>') }
+        : events.some((e) => e.type === 'mission-failed')
+          ? null
+          : { kind: 'info', html: 'Essa combinação não cumpriu nenhuma etapa da missão (gastou uma tentativa). Veja o resultado ao lado e a dica da etapa.' };
+    }
 
     const discovered = events.filter((e) => e.type === 'discovered').map((e) => e.substance);
     lastNew = new Set(discovered.map((s) => s.id));
@@ -159,9 +188,18 @@ async function main() {
     }
     if (result.kind === 'reaction') bench = [];
 
-    const completed = events.filter((e) => e.type === 'level-complete').map((e) => e.level);
-    if (completed.length) showLevelDialog(completed, state.levelIndex !== prevLevel ? data.progression.levels[state.levelIndex] : null);
+    showEndDialogs(events, prevLevel);
     renderAll();
+  }
+
+  /** Missão concluída e/ou nível concluído: uma tela só, com as duas coisas. */
+  function showEndDialogs(events, prevLevel) {
+    const doneMission = events.find((e) => e.type === 'mission-complete')?.mission;
+    if (doneMission) missionFeedback = null;
+    const completed = events.filter((e) => e.type === 'level-complete').map((e) => e.level);
+    const prefix = doneMission ? missionCompleteHTML(doneMission, data) : '';
+    if (completed.length) showLevelDialog(completed, state.levelIndex !== prevLevel ? data.progression.levels[state.levelIndex] : null, prefix);
+    else if (prefix) showDialogHTML(prefix);
   }
 
   // ---------- Objetivos ----------
@@ -175,7 +213,7 @@ async function main() {
     $('#progress-bar').style.width = `${pct}%`;
     $('#progress-bar').parentElement.setAttribute('aria-valuenow', String(pct));
 
-    $('#objectives').innerHTML = html`
+    $('#objectives').innerHTML = (state.missionRun ? missionPanelHTML(state, data, missionFeedback) : '') + html`
       <h2>${state.finished ? '🏆 Todas as fases concluídas!' : level.title}</h2>
       <p class="small">${state.finished ? 'Você completou todos os níveis. Continue explorando combinações: com as regras da Fase 2, há centenas de reações e "não-reações" para descobrir.' : level.intro}</p>
       ${raw(
@@ -188,7 +226,7 @@ async function main() {
               .map((o) => {
                 const ok = state.completedObjectives.includes(o.id) || isObjectiveDone(o, state, data);
                 return html`<li class="${ok ? 'is-done' : ''}"><span class="check" aria-hidden="true">${ok ? '✔' : '○'}</span>
-                  <div><span>${o.text}</span>${raw(!ok && o.type === 'stoich' ? stoichForm(o) : '')}${raw(!ok && o.type === 'kinetics' ? kineticsForm(o) : '')}${raw(!ok && o.type === 'equilibrium' ? equilibriumForm(o) : '')}${raw(!ok && o.type === 'molecule' ? moleculeForm(o) : '')}${raw(!ok && o.type === 'organic' ? organicForm(o) : '')}${raw(!ok && o.hint ? `<details class="hint"><summary>Dica</summary>${esc(o.hint)}</details>` : '')}</div></li>`;
+                  <div><span>${o.text}</span>${raw(!ok && o.type === 'stoich' ? stoichForm(o) : '')}${raw(!ok && o.type === 'kinetics' ? kineticsForm(o) : '')}${raw(!ok && o.type === 'equilibrium' ? equilibriumForm(o) : '')}${raw(!ok && o.type === 'molecule' ? moleculeForm(o) : '')}${raw(!ok && o.type === 'organic' ? organicForm(o) : '')}${raw(!ok && o.type === 'mission' && state.missionRun?.id !== o.mission ? html`<div><button type="button" class="btn btn-ghost btn-small" data-mission-start="${o.mission}">🗺️ Começar esta missão</button></div>` : '')}${raw(!ok && o.hint ? `<details class="hint"><summary>Dica</summary>${esc(o.hint)}</details>` : '')}</div></li>`;
               })
               .join(''),
           )}
@@ -271,12 +309,41 @@ async function main() {
     state = next;
     storage.save(state);
     for (const e of events) if (e.type === 'objective') toast(`🎯 Objetivo concluído: ${e.objective.text}`, 'good');
-    const completed = events.filter((e) => e.type === 'level-complete').map((e) => e.level);
-    if (completed.length) showLevelDialog(completed, state.levelIndex !== prevLevel ? data.progression.levels[state.levelIndex] : null);
+    showEndDialogs(events, prevLevel);
     renderAll();
   }
 
-  function showLevelDialog(completedLevels, nextLevel) {
+  /** Resposta a uma pergunta da missão: o porquê (certo ou errado) ou o caminho da conta. */
+  function submitMission(stepId, answer) {
+    const step = activeMission()?.steps.find((x) => x.id === stepId);
+    if (!step) return;
+    const prevLevel = state.levelIndex;
+    const res = answerMission(state, stepId, answer, data);
+    state = res.state;
+    storage.save(state);
+    if (!res.correct) {
+      missionFeedback = state.missionRun?.failed
+        ? null
+        : { kind: 'bad', html: step.kind === 'choice' ? `✘ ${chemText(res.why ?? 'Não.')}` : `✘ Ainda não (gastou uma tentativa). O caminho: ${chemText(step.hint)}` };
+    } else {
+      missionFeedback =
+        step.kind === 'choice'
+          ? { kind: 'good', html: `✔ ${chemText(res.why)}` }
+          : { kind: 'good', html: `✔ Certo! O caminho da conta:<ol>${calcWorked(step, data).map((l) => `<li>${chemText(l)}</li>`).join('')}</ol>` };
+      for (const e of res.events) if (e.type === 'objective') toast(`🎯 Objetivo concluído: ${e.objective.text}`, 'good');
+    }
+    showEndDialogs(res.events, prevLevel);
+    renderAll();
+  }
+
+  function showDialogHTML(body) {
+    const dlg = $('#level-dialog');
+    $('#level-dialog-body').innerHTML = body;
+    if (typeof dlg.showModal === 'function') dlg.showModal();
+    else dlg.setAttribute('open', '');
+  }
+
+  function showLevelDialog(completedLevels, nextLevel, prefix = '') {
     const dlg = $('#level-dialog');
     const last = completedLevels[completedLevels.length - 1];
     const u = nextLevel?.unlocks ?? {};
@@ -285,7 +352,7 @@ async function main() {
       ...(u.substances ?? []).map((id) => data.substancesById.get(id).name),
       ...(u.items ?? []).map((id) => `${data.itemsById.get(id).icon} ${data.itemsById.get(id).name}`),
     ];
-    $('#level-dialog-body').innerHTML = html`
+    $('#level-dialog-body').innerHTML = (prefix ? `${prefix}<hr>` : '') + html`
       <p class="result-kicker">Nível concluído</p>
       <h2>${last.title}</h2>
       <p><strong>O que você aprendeu:</strong> ${last.lesson}</p>
@@ -309,7 +376,49 @@ async function main() {
     setTimeout(() => el.remove(), 3700);
   }
 
+  // ---------- Missões ----------
+  const missionsDlg = $('#missions-dialog');
+  function renderMissionsBadge() {
+    const n = data.missions.filter((m) => isMissionAvailable(m, state, data) && !state.missionsDone.includes(m.id) && state.missionRun?.id !== m.id).length;
+    const b = $('#missions-badge');
+    b.hidden = n === 0;
+    b.textContent = String(n);
+    b.setAttribute('aria-label', `${n} ${n === 1 ? 'missão nova' : 'missões novas'}`);
+  }
+  function openMissions() {
+    missionsDlg.querySelector('.missions-list').innerHTML = missionListHTML(state, data);
+    if (typeof missionsDlg.showModal === 'function') missionsDlg.showModal();
+    else missionsDlg.setAttribute('open', '');
+  }
+  const closeMissions = () => missionsDlg.close?.() ?? missionsDlg.removeAttribute('open');
+  function beginMission(id) {
+    if (state.missionRun && state.missionRun.id !== id && !state.missionRun.failed && !confirm('Sair da missão atual? O progresso dela se perde.')) return;
+    state = startMission(state, id, data);
+    storage.save(state);
+    bench = [];
+    missionFeedback = null;
+    closeMissions();
+    renderAll();
+    $('#objectives-panel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  $('#btn-missions').addEventListener('click', openMissions);
+  missionsDlg.querySelector('.missions-close').addEventListener('click', closeMissions);
+  document.addEventListener('click', (ev) => {
+    const start = ev.target.closest('[data-mission-start]');
+    if (start) return beginMission(start.dataset.missionStart);
+    if (ev.target.closest('[data-mission-close]')) return closeMissions();
+    if (ev.target.closest('[data-missions-open]')) return openMissions();
+    if (ev.target.closest('[data-mission-quit]') && confirm('Sair da missão? O progresso dela se perde (o que você descobriu fica).')) {
+      state = abandonMission(state);
+      storage.save(state);
+      bench = [];
+      missionFeedback = null;
+      renderAll();
+    }
+  });
+
   function renderAll() {
+    renderMissionsBadge();
     renderInventory();
     renderBench();
     renderObjectives();
@@ -345,11 +454,16 @@ async function main() {
     const form = ev.target.closest('.stoich-form');
     if (!form) return;
     ev.preventDefault();
-    submitStoich(form.dataset.objective, form.elements.answer?.value ?? '');
+    const answer = form.elements.answer?.value ?? '';
+    if (form.dataset.missionStep) submitMission(form.dataset.missionStep, answer);
+    else submitStoich(form.dataset.objective, answer);
   });
   $('#objectives').addEventListener('click', (ev) => {
     const b = ev.target.closest('.stoich-choice');
-    if (b) submitStoich(b.closest('.stoich-form').dataset.objective, b.dataset.answer);
+    if (!b) return;
+    const form = b.closest('.stoich-form');
+    if (form.dataset.missionStep) submitMission(form.dataset.missionStep, b.dataset.answer);
+    else submitStoich(form.dataset.objective, b.dataset.answer);
   });
   // Laboratório de velocidade (Fase 3B): abre pelo topo, pelo painel de resultado ou pelos objetivos.
   const kineticsLab = mountKineticsLab($('#kinetics-dialog'), data);
@@ -405,6 +519,7 @@ async function main() {
     state = initialState(data);
     bench = [];
     lastNew = new Set();
+    missionFeedback = null;
     renderWelcome($('#result'));
     renderAll();
   });
@@ -416,7 +531,7 @@ async function main() {
   renderWelcome($('#result'));
   renderAll();
   // Glossário: termos dos textos explicativos viram links para a definição.
-  initGlossaryUI(data, ['#result', '#objectives', '.pt-info', '#level-dialog-body', '#kinetics-dialog .kin-body', '#calc-dil-out', '#calc-mix-out', '#calc-formula-out', '#calc-conc-out', '#equilibrium-dialog .eq-out', '#mol-gallery-card']);
+  initGlossaryUI(data, ['#result', '#objectives', '.pt-info', '#level-dialog-body', '#kinetics-dialog .kin-body', '#calc-dil-out', '#calc-mix-out', '#calc-formula-out', '#calc-conc-out', '#equilibrium-dialog .eq-out', '#mol-gallery-card', '#missions-dialog .missions-list']);
 }
 
 main();

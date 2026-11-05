@@ -28,7 +28,7 @@ Detalhes de arquitetura, estrutura de pastas e "como adicionar conteúdo" estão
   3. Regras só para pares; combinações de 3+ substâncias não passam pelo motor (é decisão de
      projeto, não de fonte).
   4. Ácido nítrico + outros metais continua "não sei" (produtos dependem da concentração).
-- **Fase 3 (avançado) — EM ANDAMENTO**, em etapas publicadas uma a uma:
+- **Fase 3 (avançado) — CONCLUÍDA**, em etapas publicadas uma a uma:
   - **3A Energia — CONCLUÍDA**: ΔH°/ΔS°/ΔG° pela lei de Hess (`data/thermo.json`, `src/core/thermo.js`),
     painel "Energia", calor na calculadora, nível "Energia das reações". Dados: Atkins FQ 12. ed.
     (Tabela 2C.7) + Atkins & Jones (Apêndice 2A). No PDF do Atkins & Jones o sinal de menos vem como
@@ -59,7 +59,15 @@ Detalhes de arquitetura, estrutura de pastas e "como adicionar conteúdo" estão
     (Bernoulli v. 4 p. 31), e uma reação só é redox se mudam o NOX dos átomos E a média de cada
     molécula (esterificação e adição de HCl/H2O ao eteno não são; desproporcionamento é).
     Divergência do livro registrada: ΔcH° do acetato de etila (Atkins FQ, Tabela 2C.6).
-  - Próxima: **3F Missões** (formato a decidir com o usuário). Depois, Fase 4 (aprendizagem).
+  - **3F Missões — CONCLUÍDA**: mistura dos 3 formatos que o usuário aprovou (história, laboratório
+    com recursos limitados, ambiental). `data/missions.json` (6 missões: balões H2/O2/CO2, do cobre
+    ao cobre, CO2 e extintores, água oxigenada e catalisador, titulação do vinagre, chuva ácida),
+    `src/core/missions.js` (kit limitado, tentativas — cada combinação e cada resposta errada gasta
+    uma —, etapas de ação em grupo ou em ordem, contas `stoich`/`titration` com o caminho mostrado),
+    painel 🗺️ (`src/ui/missions-ui.js`), objetivo `mission` e nível 18 (n17). Cada alternativa errada
+    explica o porquê; conta errada mostra o caminho sem o número. Reação nova: Cu(OH)2 + calor →
+    CuO (Farias p. 85–86; o A&J não tem a do cobre — ideal conferir no Greenwood).
+  - Próxima: **Fase 4 (aprendizagem)**.
   - **Curiosidades dos elementos — CONCLUÍDA**: os 118 elementos têm descrição e curiosidades no
     painel da tabela periódica (`data/element-facts.json`), escritas com palavras próprias a partir
     do livro da DK (*The Periodic Table Book*, 2017), como leitura complementar com página. Erros do
@@ -67,7 +75,7 @@ Detalhes de arquitetura, estrutura de pastas e "como adicionar conteúdo" estão
 
 ## Plano combinado com o usuário (ordem)
 
-1. Terminar a Fase 3: 3E Orgânica (feita), depois **3F Missões** (formato a decidir com o usuário).
+1. ~~Terminar a Fase 3~~ — feito (3A–3F). Mais missões podem entrar a qualquer momento (ideias abaixo).
 2. **Fase 4 — aprendizagem** (pedido do usuário, depois da Fase 3), para que um iniciante aprenda
    de verdade ao terminar os níveis:
    - **Fundamentos** no começo do jogo: átomo e distribuição eletrônica, estados da matéria,
@@ -116,6 +124,33 @@ por eletrólise; o quadro do v. 5 p. 49 generaliza demais a decomposição de ox
 - **Pendências da Fase 2**: o quadro do v. 5 p. 49 dá pistas (hidreto/peróxido/superóxido + água,
   decomposição de hidróxidos e oxissais, ustulação), mas cada regra precisa de confirmação no
   A&J/Greenwood; HNO₃ + metais e carbonatos básicos não são resolvidos pelas apostilas.
+
+## Manuais de laboratório (enviados para a 3F) — mapeamento
+
+Fontes de **roteiro, observação e segurança** (`sources.json` → `_meta.labManuals`); a química de
+cada reação continua conferida no Atkins & Jones.
+- **Lenzi et al., *Química Geral Experimental*, 3. ed., Freitas Bastos, 2024** (`lenzi`; EPUB sem
+  página impressa → citar por Unidade Didática, "UD 01"). 28 UDs: laboratório e segurança,
+  vidraria, bico de Bunsen, método científico (observar uma vela), medidas e algarismos
+  significativos, **separação de misturas (UD 10–12)**, propriedades físicas, soluções e
+  padronização, **análise pela chama (UD 19)**, reações (UD 20–22), cinética, equilíbrio/Kps,
+  calor de reação, eletroquímica (UD 28).
+- **Reis (org.), *Química Geral: práticas fundamentais*, Editora UFV, 2021** (`reis-ufv`; páginas
+  do PDF, sem numeração impressa). Segurança e primeiros socorros (p. 16: fogo em óleo/elétrico)
+  e 14 práticas: materiais de laboratório, pureza/fracionamento, soluções, reações e energia,
+  obtenção/purificação, família periódica, equilíbrio, velocidade, catálise (nº 9, p. 89–91),
+  ácido-base, titulação (nº 11, p. 107), oxirredução, pilhas, eletrólise.
+- **Farias, *Práticas de Química Inorgânica*** (`farias`; cópia digitalizada sem editora/ano/ISBN).
+  41 sínteses; usada "Do cobre ao cobre" (p. 85–86). Há práticas perigosas ou avançadas demais
+  para iniciantes (solução sulfocrômica, HF/ácido hexafluorossilícico, compostos de coordenação).
+- **Já usados**: segurança com fogo, catálise da H2O2, titulação, do cobre ao cobre.
+- **Ainda não usados** (bons para missões novas ou para a Fase 4): análise pela chama (precisa de
+  dados de cor de emissão com fonte), método científico com a vela, algarismos significativos,
+  vidraria e separação de misturas (itens que o usuário adiou), pilhas e eletrólise (etapa de
+  eletroquímica), H2 e Cl2 por síntese, NaHCO3 → Na2CO3, calor de hidratação do CuSO4.
+- **Livro que ajudaria** (pedir ao usuário se precisar): **Greenwood & Earnshaw, *Chemistry of the
+  Elements*** — confirmaria Cu(OH)2 → CuO e as pendências da Fase 2 (carbonatos básicos, acetatos
+  básicos, metais + O2/Cl2, HNO3 + metais).
 
 ## Requisitos que valem para qualquer mudança
 

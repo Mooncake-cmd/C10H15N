@@ -11,6 +11,7 @@ import { kineticsAnswer } from './kinetics.js';
 import { equilibriumAnswer } from './equilibrium.js';
 import { moleculeAnswer } from './vsepr.js';
 import { organicAnswer } from './organic.js';
+import { newRun, runCombine, runAnswer, isMissionAvailable } from './missions.js';
 
 export const STATE_VERSION = 2;
 // v1 → v2: um nível novo (metais alcalino-terrosos) entrou no meio da Fase 1, então o
@@ -29,6 +30,8 @@ export function initialState(data) {
     nonReactionsSeen: [],
     completedObjectives: [],
     stoichSolved: [], // objetivos de cálculo (estequiometria, cinética) respondidos corretamente
+    missionsDone: [], // missões concluídas (Fase 3F)
+    missionRun: null, // missão em andamento: { id, done, got, attempts, failed }
   };
   return applyUnlocks(state, data.progression.levels[0]);
 }
@@ -75,6 +78,8 @@ const OBJECTIVE_CHECKS = {
   molecule: (o, h) => h.stoichSolved.has(o.id),
   // Fase 3E: pergunta de química orgânica (nome oficial, função, isomeria).
   organic: (o, h) => h.stoichSolved.has(o.id),
+  // Fase 3F: concluir uma missão.
+  mission: (o, h) => h.missionsDone.has(o.mission),
   // Fase 3A: ter feito uma reação que libera (exo) ou absorve (endo) calor, opcionalmente com |ΔH°| mínimo.
   thermo: (o, h, data) =>
     [...h.reactionsDone].some((rid) => {
@@ -93,6 +98,7 @@ export function isObjectiveDone(objective, state, data) {
     reactionsDone: new Set(state.reactionsDone),
     nonReactionsSeen: new Set(state.nonReactionsSeen),
     stoichSolved: new Set(state.stoichSolved ?? []),
+    missionsDone: new Set(state.missionsDone ?? []),
   };
   return check(objective, history, data);
 }
@@ -234,6 +240,56 @@ export function answerObjective(state, objectiveId, answer, data) {
   return { state: s, events, correct };
 }
 
+// ---------------- Missões (Fase 3F) ----------------
+
+/** Começa (ou recomeça do zero) uma missão liberada. */
+export function startMission(state, missionId, data) {
+  const m = data.missionsById.get(missionId);
+  if (!m || !isMissionAvailable(m, state, data)) return state;
+  return { ...state, missionRun: newRun(m) };
+}
+
+/** Sai da missão em andamento (o progresso dela se perde; o que foi descoberto fica). */
+export const abandonMission = (state) => ({ ...state, missionRun: null });
+
+function finishRun(s, mission, finished, events, data, wasFailed) {
+  if (s.missionRun.failed && !wasFailed) events.push({ type: 'mission-failed', mission });
+  if (!finished) return s;
+  events.push({ type: 'mission-complete', mission });
+  const done = s.missionsDone.includes(mission.id) ? s.missionsDone : [...s.missionsDone, mission.id];
+  return advance({ ...s, missionsDone: done, missionRun: null }, data, events);
+}
+
+/**
+ * Combinação feita na bancada durante uma missão: aplica o resultado ao jogo (descobertas,
+ * objetivos) e à missão (etapas, tentativas).
+ * @returns {{ state, events }}
+ */
+export function missionCombine(state, selection, result, gameData) {
+  const base = applyResult(state, result, gameData);
+  const run = base.state.missionRun;
+  if (!run) return base;
+  const mission = gameData.missionsById.get(run.id);
+  const res = runCombine(run, mission, selection, result);
+  const events = [...base.events, ...res.completed.map((step) => ({ type: 'mission-step', mission, step }))];
+  const s = finishRun({ ...base.state, missionRun: res.run }, mission, res.finished, events, gameData, run.failed);
+  return { state: s, events };
+}
+
+/**
+ * Resposta a uma pergunta da missão em andamento.
+ * @returns {{ state, events, correct, why? }}
+ */
+export function answerMission(state, stepId, answer, gameData) {
+  const run = state.missionRun;
+  if (!run) return { state, events: [], correct: false };
+  const mission = gameData.missionsById.get(run.id);
+  const res = runAnswer(run, mission, stepId, answer, gameData);
+  const events = res.correct ? [{ type: 'mission-step', mission, step: mission.steps.find((x) => x.id === stepId) }] : [];
+  const s = finishRun({ ...state, missionRun: res.run }, mission, res.finished, events, gameData, run.failed);
+  return { state: s, events, correct: res.correct, why: res.why };
+}
+
 /** Em qual nível cada elemento/substância/ferramenta é desbloqueado (para dicas na UI). */
 export function unlockLevelMap(data) {
   const map = new Map();
@@ -255,6 +311,8 @@ export function restoreState(saved, data) {
     nonReactionsSeen: known(saved.nonReactionsSeen, () => true),
     completedObjectives: known(saved.completedObjectives, () => true),
     stoichSolved: known(saved.stoichSolved, () => true),
+    missionsDone: known(saved.missionsDone, (id) => data.missionsById.has(id)),
+    missionRun: saved.missionRun && data.missionsById.has(saved.missionRun.id) ? saved.missionRun : null,
   };
   if (saved.version === STATE_VERSION) {
     if (saved.levelIndex >= data.progression.levels.length) return null;

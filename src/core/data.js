@@ -45,6 +45,9 @@ export function buildGameData(raw) {
     equilibrium: buildEquilibrium(raw.equilibrium),
     // Forma das moléculas (Fase 3D): nomes das formas e dados medidos (cap. 3 de Atkins & Jones).
     molecules: raw.molecules ?? null,
+    // Missões (Fase 3F): história, kit limitado, tentativas e etapas.
+    missions: raw.missions?.missions ?? [],
+    missionsById: new Map((raw.missions?.missions ?? []).map((m) => [m.id, m])),
     sources: raw.sources.sources,
     complementarySources: raw.sources._meta.complementaryOnly ?? [],
     reactivitySeries: raw.reactivitySeries.series,

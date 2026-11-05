@@ -16,6 +16,7 @@
       <div class="progress" role="progressbar" aria-label="Progresso no jogo" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div id="progress-bar"></div></div>
     </div>
     <button class="btn btn-ghost" type="button" data-glossary-open="" title="O que significa cada palavra da química">📖 <span class="hide-narrow">Glossário</span></button>
+    <button id="btn-missions" class="btn btn-ghost" type="button" title="Missões: histórias com kit limitado e tentativas contadas">🗺️ <span class="hide-narrow">Missões</span><span id="missions-badge" class="nav-badge" hidden></span></button>
     <button id="btn-kinetics" class="btn btn-ghost" type="button" title="Laboratório de velocidade das reações">⏱️ <span class="hide-narrow">Velocidade</span></button>
     <button id="btn-equilibrium" class="btn btn-ghost" type="button" title="Laboratório de equilíbrio: pH, tampão, solubilidade, K e Le Chatelier">⚖️ <span class="hide-narrow">Equilíbrio</span></button>
     <button id="btn-molecules" class="btn btn-ghost" type="button" title="Moléculas em 3D: forma, ângulos e polaridade">🧊 <span class="hide-narrow">Moléculas</span></button>
@@ -197,6 +198,15 @@
     <p class="small">Pelo modelo VSEPR, as regiões de elétrons em volta de cada átomo (ligações e pares isolados) se afastam ao máximo — e isso decide a forma da molécula.</p>
     <div class="kin-controls"><label>Molécula <select id="mol-select"></select></label></div>
     <div id="mol-gallery-card" class="mol-card"></div>
+  </dialog>
+
+  <dialog id="missions-dialog" class="level-dialog kinetics-dialog" aria-labelledby="missions-title">
+    <div class="glossary-head">
+      <h2 id="missions-title">🗺️ Missões</h2>
+      <button class="btn btn-ghost missions-close" type="button" aria-label="Fechar as missões">×</button>
+    </div>
+    <p class="small">Cada missão conta uma história e traz um kit pequeno: durante a missão, só ele vale na bancada, e as tentativas são contadas. Pense antes de juntar! Os roteiros vêm de aulas práticas de laboratório.</p>
+    <div class="missions-list"></div>
   </dialog>
 
   <div id="toasts" class="toasts" aria-live="polite"></div>

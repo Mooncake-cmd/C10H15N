@@ -4,7 +4,9 @@
     "complementaryOnly": ["dk-elements"],
     "secondary": ["bernoulli"],
     "secondaryNote": "Fonte secundária, para linguagem de iniciante e convenções do ensino médio brasileiro. O que vier dela é conferido em Atkins & Jones; quando o livro-texto tem o assunto, ele é citado junto.",
-    "complementaryOnlyNote": "Fontes de divulgação: só podem aparecer em 'seeAlso' (contexto, curiosidades), nunca como fonte principal de uma reação ou não-reação. Os testes conferem isso. dk-elements: livro completo recebido; as páginas citadas são as impressas no livro."
+    "complementaryOnlyNote": "Fontes de divulgação: só podem aparecer em 'seeAlso' (contexto, curiosidades), nunca como fonte principal de uma reação ou não-reação. Os testes conferem isso. dk-elements: livro completo recebido; as páginas citadas são as impressas no livro.",
+    "labManuals": ["lenzi", "reis-ufv", "farias"],
+    "labManualsNote": "Manuais de laboratório (Fase 3F): roteiros, observações e segurança das práticas que viram missões. A química de cada reação continua conferida no livro-texto; quando só o manual traz a reação (Cu(OH)2 → CuO por aquecimento, na prática 'Do cobre ao cobre'), isso fica dito na justificativa."
   },
   "sources": {
     "brown": "BROWN, T. L.; LEMAY, H. E.; BURSTEN, B. E.; MURPHY, C. J.; WOODWARD, P. M. Química: a ciência central. 13. ed. São Paulo: Pearson, 2016.",
@@ -15,6 +17,9 @@
     "atkins-jones": "ATKINS, P.; JONES, L. Chemical Principles: the quest for insight. 5th ed. New York: W. H. Freeman, 2010. ISBN 978-1-4292-1955-6.",
     "dk-elements": "JACKSON, T. The Periodic Table Book: a visual encyclopedia of the elements. Consultor: Jack Challoner. London: Dorling Kindersley (DK), 2017. ISBN 978-0-2412-4043-4.",
     "bernoulli": "BERNOULLI SISTEMA DE ENSINO. Coleção Estudo: Química. v. 1–6. Belo Horizonte: Editora Bernoulli. Apostilas de ensino médio (a cópia consultada não traz ISBN nem ano; os exercícios citam vestibulares até 2010). Citadas como v. X, Frente Y, Módulo Z, página impressa.",
-    "crc": "HAYNES, W. M. (ed.). CRC Handbook of Chemistry and Physics. 97th ed. Boca Raton: CRC Press, 2016. Seção 'Electrochemical Series' (potenciais-padrão de redução)."
+    "crc": "HAYNES, W. M. (ed.). CRC Handbook of Chemistry and Physics. 97th ed. Boca Raton: CRC Press, 2016. Seção 'Electrochemical Series' (potenciais-padrão de redução).",
+    "lenzi": "LENZI, E.; FAVERO, L. O. B.; SILVA, M. B. da; GIMENES, M. J. G.; VIANNA FILHO, E. de A.; TANAKA, A. S. Química Geral Experimental. 3. ed. [S. l.]: Freitas Bastos, 2024. ISBN 978-65-5675-367-6. Manual de laboratório; a cópia é um EPUB sem páginas impressas, então é citado por Unidade Didática (UD).",
+    "reis-ufv": "REIS, E. L. (org.); PROFESSORES DE QUÍMICA DA UFV. Química Geral: práticas fundamentais. Viçosa: Editora UFV, 2021 (Série Didática; 1. ed. 1988). ISBN 978-65-5925-034-9. Manual de laboratório; as páginas do PDF não trazem numeração impressa, então são citadas como 'do PDF'.",
+    "farias": "FARIAS, R. F. de. Práticas de Química Inorgânica. Manual de laboratório com 41 práticas de síntese; a cópia consultada (digitalizada) não traz editora, ano nem ISBN — o autor aparece no cabeçalho das páginas. Páginas impressas."
   }
 }
