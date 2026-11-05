@@ -35,8 +35,16 @@ const sideHTML = (side) =>
   side.map((e) => `${e.coef > 1 ? e.coef + ' ' : ''}${formatFormulaHTML(e.formula)}${e.name ? ` <span class="small muted">(${esc(e.name)})</span>` : ''}`).join(' + ');
 export const kineticsEquationHTML = (e) => `${sideHTML(e.reactants)} → ${sideHTML(e.products)}`;
 
-const SHORT = { 'atkins-jones': 'Atkins & Jones, Chemical Principles, 5. ed.' };
-export const sourceText = (data, list) => list.map((s) => `${esc(SHORT[s.ref] ?? data.sources[s.ref] ?? s.ref)} — ${esc(s.topic)}, p. ${esc(s.pages)}`).join('; ');
+const SHORT = {
+  'atkins-jones': 'Atkins & Jones, Chemical Principles, 5. ed.',
+  bernoulli: 'Bernoulli, Química (apostila)',
+  lenzi: 'Lenzi et al., Química Geral Experimental, 3. ed.',
+  'reis-ufv': 'Reis (org.), Química Geral: práticas fundamentais (UFV)',
+  farias: 'Farias, Práticas de Química Inorgânica',
+};
+/** "p. 85" para páginas; referências que não são página (ex.: "UD 01") vão como estão. */
+const where = (pages) => (/^[BF]?\d/.test(pages) ? `p. ${pages}` : pages);
+export const sourceText = (data, list) => list.map((s) => `${esc(SHORT[s.ref] ?? data.sources[s.ref] ?? s.ref)} — ${esc(s.topic)}, ${esc(where(String(s.pages)))}`).join('; ');
 
 /** Curva [A] × t em SVG, com a meia-vida marcada. */
 function curveSVG(sim, A0) {

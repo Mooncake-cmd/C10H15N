@@ -6,23 +6,24 @@ o porquê, a conservação de átomos e massa, os riscos de segurança e a fonte
 livro-texto. Quando não há reação, o jogo diz isso e explica o motivo.
 
 **Fases 1 e 2 concluídas.** 25 elementos jogáveis (os 118 aparecem na tabela), 59 compostos
-curados e mais 81 gerados a partir de íons, 49 reações curadas, 17 "não-reações" curadas e um
+curados e mais 81 gerados a partir de íons, 50 reações curadas, 17 "não-reações" curadas e um
 **motor de regras** que monta e balanceia sozinho cerca de 750 reações a partir de regras gerais
 (solubilidade, ácido-base, série eletroquímica, combustão, decomposição), com explicação, fonte e
 segurança. Há também uma calculadora de estequiometria (massa, mol, litros de gás, solução em
-mol/L e rendimento), 17 níveis de progressão e um **glossário** com mais de 210 termos: nos textos, as palavras de química ficam sublinhadas e mostram a
+mol/L e rendimento), 18 níveis de progressão e um **glossário** com mais de 220 termos: nos textos, as palavras de química ficam sublinhadas e mostram a
 definição ao toque. Na tabela periódica, cada um dos 118 elementos tem **curiosidades** (leitura
 complementar, com a página do livro da DK), e a tabela pode ser colorida por raio atômico,
 energia de ionização, afinidade eletrônica ou eletronegatividade.
 
-**Fase 3 em andamento**: energia (3A), velocidade (3B), equilíbrio (3C), moléculas em 3D (3D) e química orgânica (3E) prontos. Cada
+**Fase 3 concluída**: energia (3A), velocidade (3B), equilíbrio (3C), moléculas em 3D (3D), química orgânica (3E) e **missões** (3F). Cada
 reação mostra ΔH°/ΔS°/ΔG°, a velocidade (dado medido, catálise ou barreira de ativação), a
 constante de equilíbrio e o princípio de Le Chatelier, o Kps dos precipitados, o pH de ácidos e
 bases, a forma 3D das moléculas (VSEPR, com polaridade e hibridização), os
 números de oxidação (quem oxida e quem reduz), a composição em massa dos produtos com as leis de
 Proust e Dalton e, quando sai H₂, O₂ ou CO₂, como identificar o gás. No topo da página ficam o
 **laboratório de velocidade**, o **laboratório de equilíbrio** (pH, tampão, Kps, K/Q/Le Chatelier) e as **calculadoras** (concentração, diluição, mistura de soluções e
-fórmula mínima).
+fórmula mínima). No painel 🗺️ **Missões**, seis histórias com kit limitado e tentativas
+contadas, montadas a partir de aulas práticas de laboratório.
 
 ## Como rodar
 
@@ -91,6 +92,7 @@ data/                       TODO o conteúdo (JSON) — dá para editar sem mexe
   gas-tests.json            testes de identificação de H2, O2 e CO2
   molecules.json            nomes das formas VSEPR, hibridização, ângulos e dipolos medidos (Fase 3D)
   equilibrium.json          K (Tabela 10.2), Kw, Ka/Kb (11.1, 11.2, 11.10), indicadores (12.3), Kps (12.4) (Fase 3C)
+  missions.json             missões: história, kit, tentativas, etapas e perguntas com o porquê (Fase 3F)
   items.json                ferramentas (calor, faísca, luz, eletricidade, catalisador)
   reactivity-series.json    série de reatividade (E°), usada pelas regras
   progression.json          níveis, desbloqueios e objetivos
@@ -101,7 +103,8 @@ src/core/                   química e regras do jogo — sem DOM, testável no 
   equation.js               conservação de átomos/carga/massa, formatação de equações
   engine.js                 motor de combinação (resolvers + explainers)
   rules/                    explicações de "não reage" (gás nobre, só metais, série de reatividade...)
-  progression.js            estado do jogador, objetivos, níveis
+  progression.js            estado do jogador, objetivos, níveis (e as transições das missões)
+  missions.js               corrida de uma missão: kit, etapas, tentativas, contas e o caminho da conta (Fase 3F)
   balancer.js               balanceamento automático (espaço nulo com frações exatas)
   ions.js                   solubilidade, fórmula e nome de compostos iônicos, compostos derivados
   stoichiometry.js          massas, mol, litros de gás, solução, reagente limitante e rendimento
@@ -127,6 +130,7 @@ src/ui/, src/main.js        interface
   molecule3d.js             visualizador 3D próprio em <canvas> (esferas e bastões, pares isolados)
   molecule-card.js          cartão da molécula: 3D + explicação; usado no painel e na galeria
   equilibrium-lab.js        laboratório de equilíbrio: pH com indicadores, tampão, Kps, K/Q/Le Chatelier
+  missions-ui.js            lista de missões, quadro da missão em andamento e tela de missão concluída
 tests/                      testes (node:test)
 ```
 
@@ -220,9 +224,17 @@ revise uma amostra das equações geradas.
 **Novo nível/objetivo**: em `progression.json` (cada nível tem `phase`). Tipos de objetivo:
 `produce`, `produceCategory`, `reactionType`, `nonReaction`, `reaction`, `thermo` (fazer uma reação
 que libera ou absorve calor) e `stoich` (pergunta de estequiometria em g, mol, L de gás, solução,
-rendimento ou calor em kJ; a resposta certa é calculada). O teste de progressão avisa se um objetivo ficar
+rendimento ou calor em kJ; a resposta certa é calculada); na Fase 3, também `kinetics`, `equilibrium`,
+`molecule`, `organic` (perguntas) e `mission` (concluir uma missão). O teste de progressão avisa se um objetivo ficar
 impossível. Inserir um nível no meio muda os índices dos saves: suba `STATE_VERSION` em
 `src/core/progression.js`; saves antigos são migrados refazendo o caminho pelo histórico.
+
+**Nova missão**: em `data/missions.json` (o `_meta` descreve os campos). Etapas de ação
+(`reaction`, `produce`, `observe`) usam as reações do jogo — se faltar uma, ela entra antes em
+`reactions.json`, com fonte. Perguntas de escolha precisam do porquê de **cada** alternativa;
+contas (`stoich`, `titration`) têm a resposta e o caminho calculados. O teste joga cada missão
+com um jogador que só usa o kit e confere que ela fecha com uma combinação por etapa e folga de
+pelo menos 2 tentativas. Para contar no jogo, ponha um objetivo `mission` num nível.
 
 **Atualizar os elementos**: troque `data/source/PeriodicTableJSON.json` e rode
 `npm run build:elements`.
@@ -293,6 +305,40 @@ Kw (p. 430), 11.1 e 11.2 (Ka e Kb, p. 436–437), 11.10 (ácidos polipróticos, 
   - os Kps conferidos contra a regra de solubilidade usada pelo motor (todo "insolúvel" dissolve
     menos que todo "pouco solúvel");
   - os exemplos 10.3, 10.13, 11.7, 12.1, 12.8 e o Self-Test 11.15A reproduzidos.
+
+## Fase 3F: missões
+
+Seis missões, misturando os três formatos combinados — histórias, desafios de laboratório com
+recursos limitados e química ambiental:
+
+| Missão | Formato | Libera depois do | O que se faz |
+| --- | --- | --- | --- |
+| 🎈 O gás misterioso dos balões | história | nível 8 | produzir H₂, O₂ e CO₂; densidade × massa molar; testes de identificação |
+| 🔁 Do cobre ao cobre | laboratório | nível 10 | Cu → Cu(NO₃)₂ → Cu(OH)₂ → CuO → CuSO₄ → Cu; conservação da massa; o zinco como redutor |
+| 🧯 Por que o CO₂ apaga o fogo? | história | nível 12 | CO₂ do bicarbonato com vinagre; litros de gás; abafamento; óleo e magnésio em chamas |
+| 🫧 A água oxigenada que borbulha | laboratório | nível 14 | observar a decomposição lenta, acelerar com catalisador; o que o catalisador muda e o que não muda |
+| 🧪 Quanto ácido tem o vinagre? | laboratório | nível 15 | titulação: escolher o indicador, calcular mol/L e g/L |
+| 🌧️ Chuva ácida na cidade | ambiental | nível 15 | SO₂ da queima do enxofre, pH da chuva natural, ácidos no ar, ataque ao mármore |
+
+- **Kit limitado e tentativas contadas**: durante a missão, só o kit (e o que foi produzido nela)
+  vale na bancada; cada combinação e cada resposta errada gasta uma tentativa. Isso tira a
+  vantagem de "combinar tudo até dar certo". Respostas certas não gastam nada. Se as tentativas
+  acabam, a missão é recomeçada (o que foi descoberto fica no inventário).
+- **Feedback que explica**: cada alternativa errada diz por que está errada; numa conta errada
+  aparece o caminho (as fórmulas, sem o número), e na certa, a conta inteira com os números.
+- **Nível 18 (Missões de laboratório)**: um objetivo por missão. As missões vão sendo liberadas
+  ao longo do jogo, então quem já as fez cumpre o nível ao chegar nele.
+- **Reação nova**: Cu(OH)₂ aquecido → CuO + H₂O (prática "Do cobre ao cobre" de Farias, p. 85–86;
+  o Atkins & Jones traz o mesmo padrão para o Mg(OH)₂, p. 626, mas não o do cobre).
+- **Fontes novas — manuais de laboratório** (`sources.json` → `_meta.labManuals`): Lenzi et al.,
+  *Química Geral Experimental* (3. ed., 2024); Reis (org.), *Química Geral: práticas
+  fundamentais* (Editora UFV, 2021); Farias, *Práticas de Química Inorgânica*. Dão os roteiros, as
+  observações e a segurança; a química continua conferida no Atkins & Jones (densidade dos gases,
+  p. 145; titulação, p. F89–F90 e 487–493; catálise, p. 413 e 595–596; chuva ácida, p. 462–463;
+  carbonatos e monumentos, p. 504; magnésio e CO₂, p. 625).
+- Testes (`tests/missions.test.js`): dados, cada missão concluível com o kit, regras de
+  tentativa e falha, contas (0,835 mol/L; 2,45 L), o pH no fim da titulação (~9, dentro da faixa
+  da fenolftaleína e fora das outras alternativas) e as massas molares citadas nos textos.
 
 ## Fase 3E: química orgânica
 
@@ -387,5 +433,6 @@ massas molares que já existiam. A Fase 3 segue o mesmo caminho:
 - Equilíbrio (3C): pronto, no mesmo formato (`equilibrium.json`, painel, laboratório, objetivo).
 - Moléculas 3D (3D): pronto, com renderizador próprio e geometria deduzida pelo VSEPR.
 - Química orgânica (3E): pronta, com nomes, funções e isomeria deduzidos das estruturas.
-- Missões: novos tipos em `OBJECTIVE_CHECKS` e um campo `missions` em `progression.json`
-  (o estado salvo tem `version` para migração).
+- Missões (3F): prontas, como dados à parte (`missions.json`), um módulo puro (`missions.js`), o
+  tipo de objetivo `mission` e campos novos no estado salvo (`missionsDone`, `missionRun`), sem
+  mudar a versão do save.

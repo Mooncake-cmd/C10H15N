@@ -4271,6 +4271,100 @@
         "topic": "Glossário: chain reaction",
         "pages": "B5"
       }
+    },
+    {
+      "id": "titulacao",
+      "term": "Titulação",
+      "aliases": [
+        "titulações"
+      ],
+      "definition": "Técnica para descobrir quanto de uma substância há numa solução: pinga-se, de uma bureta, uma solução de concentração conhecida até a reação se completar, e mede-se o volume gasto.",
+      "example": "Pingar NaOH de concentração conhecida no vinagre, com fenolftaleína, até aparecer a cor rosa, mostra quanto ácido acético havia.",
+      "related": [
+        "ponto-estequiometrico",
+        "indicador",
+        "bureta",
+        "concentracao-molar"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: titration; seção L.3",
+        "pages": "B28"
+      }
+    },
+    {
+      "id": "ponto-estequiometrico",
+      "term": "Ponto estequiométrico",
+      "aliases": [
+        "ponto de equivalência"
+      ],
+      "definition": "O momento de uma titulação em que foi adicionada a quantidade exata de solução que a equação pede para consumir todo o reagente. Escolhe-se um indicador que mude de cor perto desse ponto (a mudança de cor é o 'ponto final').",
+      "example": "Na titulação do vinagre com NaOH, no ponto estequiométrico só sobra acetato de sódio e o pH fica perto de 9.",
+      "related": [
+        "titulacao",
+        "indicador",
+        "estequiometria"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: stoichiometric point; end point (B10)",
+        "pages": "B27"
+      }
+    },
+    {
+      "id": "bureta",
+      "term": "Bureta",
+      "aliases": [
+        "buretas"
+      ],
+      "definition": "Tubo de vidro estreito, graduado, com uma torneira embaixo: serve para pingar um líquido e medir com precisão o volume que saiu.",
+      "example": "Na titulação, a solução de NaOH fica na bureta e cai gota a gota no frasco com o vinagre.",
+      "related": [
+        "titulacao"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Glossário: buret",
+        "pages": "B5"
+      }
+    },
+    {
+      "id": "chuva-acida",
+      "term": "Chuva ácida",
+      "aliases": [
+        "chuvas ácidas"
+      ],
+      "definition": "Chuva mais ácida que o normal, por causa de óxidos de enxofre e de nitrogênio lançados no ar por combustíveis e motores: eles formam ácidos (sulfuroso, sulfúrico, nítrico) com a água. A chuva sem poluição já é levemente ácida (pH perto de 5,7) por causa do CO2 do ar.",
+      "example": "Estátuas de mármore (carbonato de cálcio) se desgastam com a chuva ácida, porque o ácido reage com o carbonato.",
+      "related": [
+        "oxido-acido",
+        "ph",
+        "acido-forte"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Quadro 11.1: chuva ácida",
+        "pages": "462–463"
+      }
+    },
+    {
+      "id": "densidade",
+      "term": "Densidade",
+      "aliases": [
+        "densidades"
+      ],
+      "definition": "Quanta massa cabe num certo volume (massa ÷ volume). Entre gases na mesma temperatura e pressão, quanto maior a massa molar, maior a densidade.",
+      "example": "O CO2 (44 g/mol) é mais denso que o ar e desce; o H2 (2 g/mol) é muito menos denso e sobe.",
+      "related": [
+        "massa-molar",
+        "gas",
+        "lei-dos-gases"
+      ],
+      "source": {
+        "ref": "atkins-jones",
+        "topic": "Seção 4.6: densidade de um gás",
+        "pages": "145"
+      }
     }
   ]
 }

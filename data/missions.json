@@ -1,0 +1,256 @@
+{
+  "_meta": {
+    "description": "Fase 3F: missões. Cada missão tem uma história, um kit limitado de substâncias e ferramentas (só ele vale durante a missão), um número máximo de tentativas e etapas: reações a fazer e perguntas (escolha com explicação de cada alternativa, ou conta com o caminho mostrado no fim). Os roteiros vêm de práticas de laboratório reais (Farias; Reis/UFV; Lenzi et al.); a química de cada reação é a do jogo, com a fonte de cada uma.",
+    "fields": "missions: [{ id, icon, title, format ('historia'|'laboratorio'|'ambiental'), after (id do nível que precisa estar concluído), ordered (etapas de ação em ordem estrita), story, kit { substances, items }, maxAttempts (cada combinação na bancada e cada resposta errada gasta uma), steps [...], conclusion, safety { level, why, home }, sources [{ ref, topic, pages }] }]",
+    "steps": "Ação: { id, kind: 'reaction' (reaction: id) | 'produce' (substance: id) | 'observe' (selection: ids, expect: 'needs-condition'|'no-reaction'|'unknown'), text, hint?, done (o que se observa) }. Pergunta: { id, kind: 'choice', text, choices [{ value, label, why }], answer } ou { id, kind: 'calc', text, unitLabel, calc { type: 'stoich' (reaction, given, ask, unit) | 'titration' (reaction, analyte, titrant, sampleML, titrantML, titrantM, ask 'M'|'gL') }, hint? }.",
+    "attempts": "Etapas de ação seguidas formam um grupo que pode ser feito em qualquer ordem (a não ser que a missão seja 'ordered'); perguntas são respondidas na ordem."
+  },
+  "missions": [
+    {
+      "id": "m-balao",
+      "icon": "🎈",
+      "title": "O gás misterioso dos balões",
+      "format": "historia",
+      "after": "n7",
+      "ordered": false,
+      "story": "Na feira de ciências, uma colega encheu três balões com gases feitos no laboratório da escola: hidrogênio, oxigênio e gás carbônico. Ela esqueceu de etiquetar. Solto no ar, um balão sobe até o teto, outro desce devagar e o terceiro cai rápido. Prepare uma amostra de cada gás com o kit e descubra qual é qual.",
+      "kit": { "substances": ["Zn", "HCl", "H2O2", "CaCO3", "Cu"], "items": ["catalisador"] },
+      "maxAttempts": 7,
+      "steps": [
+        { "id": "m-balao-h2", "kind": "produce", "substance": "H2", "text": "Produza hidrogênio (H2)", "hint": "Um metal mais reativo que o hidrogênio, junto com um ácido.", "done": "Bolhas sobem do zinco no ácido: é o H2, recolhido num tubo invertido." },
+        { "id": "m-balao-o2", "kind": "produce", "substance": "O2", "text": "Produza oxigênio (O2)", "hint": "A água oxigenada se decompõe e libera O2, mas sozinha é lenta.", "done": "A água oxigenada borbulha com o catalisador: o gás é O2." },
+        { "id": "m-balao-co2", "kind": "produce", "substance": "CO2", "text": "Produza gás carbônico (CO2)", "hint": "Carbonato + ácido solta CO2 (como o calcário no vinagre).", "done": "O calcário chia no ácido: o gás é CO2." },
+        {
+          "id": "m-balao-sobe", "kind": "choice", "text": "Qual gás está no balão que sobe até o teto?", "answer": "H2",
+          "choices": [
+            { "value": "H2", "label": "Hidrogênio (H2, 2 g/mol)", "why": "Isso! Na mesma temperatura e pressão, quanto menor a massa molar de um gás, menor a sua densidade. O H2 (2 g/mol) é muito mais leve que o ar, que é quase todo N2 (28 g/mol) e O2 (32 g/mol), então o balão sobe." },
+            { "value": "O2", "label": "Oxigênio (O2, 32 g/mol)", "why": "Não. O O2 (32 g/mol) é um pouco mais pesado que o ar, que é quase todo N2 (28 g/mol): esse é o balão que desce devagar." },
+            { "value": "CO2", "label": "Gás carbônico (CO2, 44 g/mol)", "why": "Não. O CO2 (44 g/mol) é bem mais denso que o ar: esse balão cai rápido." }
+          ]
+        },
+        {
+          "id": "m-balao-teste", "kind": "choice", "text": "Para ter certeza de que o balão que desce devagar tem O2, que teste você faz com uma amostra do gás?", "answer": "brasa",
+          "choices": [
+            { "value": "brasa", "label": "Coloco um palito em brasa: ele reacende", "why": "Isso! O O2 é o comburente: com oxigênio puro, a brasa volta a ter chama." },
+            { "value": "estalo", "label": "Aproximo um palito aceso: ouço um estalo", "why": "Não: o estalo é o teste do H2, que queima com o oxigênio do ar." },
+            { "value": "cal", "label": "Borbulho na água de cal: ela fica turva", "why": "Não: a água de cal turva é o teste do CO2 (forma CaCO3, pouco solúvel)." }
+          ]
+        }
+      ],
+      "conclusion": "Gases diferentes têm densidades diferentes porque a densidade de um gás é proporcional à sua massa molar (na mesma temperatura e pressão). Por isso o H2 sobe, o O2 desce devagar e o CO2 cai. E cada gás tem um teste simples: estalo (H2), brasa que reacende (O2), água de cal turva (CO2).",
+      "safety": { "level": "perigo", "why": "Balões de hidrogênio pegam fogo e explodem com uma faísca (foi o que destruiu o dirigível Hindenburg, em 1937). Por isso balões de festa usam hélio, que não queima.", "home": "Nunca encha balões com hidrogênio em casa. Os testes de gás só se fazem com tubos de ensaio pequenos, no laboratório." },
+      "sources": [
+        { "ref": "atkins-jones", "topic": "Seção 4.6: a densidade de um gás aumenta com a massa molar", "pages": "145" },
+        { "ref": "bernoulli", "topic": "v. 5, Frente C, Módulo 18: identificação de H2, O2 e CO2", "pages": "49" },
+        { "ref": "reis-ufv", "topic": "Prática nº 9 (Catálise): a brasa reacende no O2 da água oxigenada", "pages": "89–91 (do PDF)" }
+      ]
+    },
+    {
+      "id": "m-extintor",
+      "icon": "🧯",
+      "title": "Por que o CO2 apaga o fogo?",
+      "format": "historia",
+      "after": "n11",
+      "ordered": true,
+      "story": "Uma demonstração de feira de ciências: uma vela acesa no fundo de uma jarra e, num copo ao lado, bicarbonato com vinagre. Quando se inclina o copo sobre a jarra, sem derramar líquido nenhum, a vela apaga. O que saiu do copo? Descubra, faça a conta do gás e entenda como funcionam os extintores de verdade.",
+      "kit": { "substances": ["NaHCO3", "CH3COOH", "H2O"], "items": [] },
+      "maxAttempts": 6,
+      "steps": [
+        { "id": "m-extintor-co2", "kind": "produce", "substance": "CO2", "text": "Faça o gás que sai do copo", "hint": "Bicarbonato + um ácido do kit.", "done": "A mistura espuma: é o CO2 escapando." },
+        { "id": "m-extintor-litros", "kind": "calc", "text": "Uma colher com 8,4 g de bicarbonato reage com vinagre em excesso. Quantos litros de CO2 se formam (25 °C e 1 atm)?", "unitLabel": "L", "hint": "Gramas de NaHCO3 → mol (divida pela massa molar) → mol de CO2 (veja os coeficientes) → litros (1 mol de gás ocupa 24,47 L a 25 °C e 1 atm).",
+          "calc": { "type": "stoich", "reaction": "nahco3-vinagre", "given": { "NaHCO3": { "g": 8.4 } }, "ask": "CO2", "unit": "L" } },
+        {
+          "id": "m-extintor-porque", "kind": "choice", "text": "Por que o CO2 apagou a vela?", "answer": "abafa",
+          "choices": [
+            { "value": "abafa", "label": "É mais denso que o ar e não alimenta a chama: desce, cobre a vela e afasta o O2", "why": "Isso! O CO2 (44 g/mol) é mais denso que o ar e escorre para baixo como um líquido invisível. Ele não queima nem mantém a queima, e cobre a chama, que fica sem oxigênio: é o efeito de abafamento." },
+            { "value": "frio", "label": "Porque sai gelado e esfria a vela", "why": "Não. O gás sai praticamente na temperatura ambiente. O que apaga a chama é ficar sem oxigênio." },
+            { "value": "destroi", "label": "Porque reage com a chama e destrói o fogo", "why": "Não. O CO2 já é o produto final da queima do carbono: ele não reage com a chama da vela. Ele só tira o oxigênio do caminho." }
+          ]
+        },
+        {
+          "id": "m-extintor-oleo", "kind": "choice", "text": "Uma panela com óleo pega fogo no fogão. Qual atitude é PERIGOSA?", "answer": "agua",
+          "choices": [
+            { "value": "agua", "label": "Jogar água", "why": "Isso, é a perigosa. A água afunda no óleo quente, vira vapor de repente e espalha o óleo em chamas pela cozinha. Para fogo em óleo: nunca água." },
+            { "value": "tampa", "label": "Desligar o gás e tampar a panela", "why": "Essa atitude é correta. Tampar abafa: tira o oxigênio da chama, que é o mesmo efeito do CO2." },
+            { "value": "co2", "label": "Usar um extintor de CO2", "why": "Essa atitude é correta: o CO2 abafa a chama sem espalhar o óleo." }
+          ]
+        },
+        {
+          "id": "m-extintor-mg", "kind": "choice", "text": "Por que um extintor de CO2 NÃO serve para magnésio em chamas?", "answer": "reage",
+          "choices": [
+            { "value": "reage", "label": "O magnésio quente reage até com o CO2 e continua queimando", "why": "Isso! O magnésio é tão reativo que, quente, tira o oxigênio do próprio CO2 (e da água). Jogar CO2 ou água num fogo de magnésio só piora. Usa-se areia seca ou extintor de pó especial." },
+            { "value": "leve", "label": "O CO2 é leve demais e sobe", "why": "Não: o CO2 é mais denso que o ar. O problema é químico: o magnésio reage com ele." },
+            { "value": "pouco", "label": "Precisaria de muito mais CO2", "why": "Não é questão de quantidade: o magnésio quente reage com o CO2, então mais gás só alimenta o fogo." }
+          ]
+        }
+      ],
+      "conclusion": "Para haver fogo é preciso combustível, comburente (O2) e calor. O CO2 apaga a chama por abafamento: é mais denso que o ar, não queima e afasta o O2. Mas cada fogo tem seu extintor: nunca use água em óleo quente nem em equipamento elétrico, e nem água nem CO2 em metais como o magnésio.",
+      "safety": { "level": "cuidado", "why": "A demonstração com vela é segura em pequena escala, mas o CO2 acumulado num lugar fechado e baixo pode sufocar. Combater incêndios de verdade exige o extintor certo para cada tipo de fogo.", "home": "A vela com bicarbonato e vinagre pode ser feita em casa com um adulto, num lugar ventilado e longe de coisas que queimam. Em incêndio de verdade, saia e chame os bombeiros (193)." },
+      "sources": [
+        { "ref": "atkins-jones", "topic": "Seção 4.6: densidade de um gás e massa molar", "pages": "145" },
+        { "ref": "atkins-jones", "topic": "Seção 15.7: nem água nem CO2 em fogo de magnésio", "pages": "625" },
+        { "ref": "reis-ufv", "topic": "Acidentes por agentes físicos: produtos inflamáveis em combustão (abafar; CO2; nunca água em óleo nem em fogo elétrico)", "pages": "16 (do PDF)" },
+        { "ref": "lenzi", "topic": "Unidade Didática 01: introdução ao laboratório (o extintor; dispará-lo na base da chama)", "pages": "UD 01" }
+      ]
+    },
+    {
+      "id": "m-cobre",
+      "icon": "🔁",
+      "title": "Do cobre ao cobre",
+      "format": "laboratorio",
+      "after": "n9",
+      "ordered": true,
+      "story": "Um desafio clássico de laboratório: começar com um fio de cobre, transformá-lo em quatro compostos diferentes, um depois do outro, e terminar com cobre metálico de novo. O kit é pequeno e cada tentativa conta: pense antes de juntar.",
+      "kit": { "substances": ["Cu", "HNO3", "NaOH", "H2SO4", "Zn"], "items": ["calor"] },
+      "maxAttempts": 8,
+      "steps": [
+        { "id": "m-cobre-nitrato", "kind": "produce", "substance": "Cu(NO3)2", "text": "1. Dissolva o cobre: transforme-o em nitrato de cobre(II)", "hint": "O cobre não reage com ácidos comuns, mas o ácido nítrico é também oxidante.", "done": "O cobre some, a solução fica azul (íons Cu²⁺) e sai um gás que fica castanho no ar (NO → NO2)." },
+        { "id": "m-cobre-hidroxido", "kind": "produce", "substance": "Cu(OH)2", "text": "2. Precipite o cobre como hidróxido de cobre(II)", "hint": "Uma base forte com íons Cu²⁺ forma um hidróxido insolúvel.", "done": "Forma-se um precipitado azul-claro, gelatinoso: Cu(OH)2." },
+        { "id": "m-cobre-oxido", "kind": "produce", "substance": "CuO", "text": "3. Transforme o hidróxido em óxido de cobre(II)", "hint": "Muitos hidróxidos perdem água quando aquecidos.", "done": "Aquecido, o precipitado azul fica preto: é o CuO." },
+        { "id": "m-cobre-sulfato", "kind": "produce", "substance": "CuSO4", "text": "4. Dissolva o óxido: faça sulfato de cobre(II)", "hint": "Óxido básico + ácido → sal + água.", "done": "O pó preto se dissolve no ácido sulfúrico e a solução volta a ficar azul." },
+        { "id": "m-cobre-volta", "kind": "produce", "substance": "Cu", "text": "5. Recupere o cobre metálico", "hint": "Um metal mais reativo que o cobre o expulsa da solução (série de reatividade).", "done": "O zinco se cobre de um pó avermelhado: o cobre voltou!" },
+        {
+          "id": "m-cobre-massa", "kind": "choice", "text": "Você começou com 100 mg de cobre (como no roteiro do livro). Se nada se perdesse no caminho, quanto cobre metálico sairia no fim?", "answer": "igual",
+          "choices": [
+            { "value": "igual", "label": "100 mg", "why": "Isso! Os átomos de cobre não somem nem aparecem: em cada etapa eles só trocam de parceiro (nitrato, hidróxido, óxido, sulfato). É a conservação da massa (Lavoisier)." },
+            { "value": "menos", "label": "Menos de 100 mg, porque cada reação gasta um pouco de cobre", "why": "Não. As reações não destroem átomos. Na prática sai um pouco menos por perdas (respingos, filtração), não por causa da química." },
+            { "value": "mais", "label": "Mais de 100 mg, porque o zinco vira cobre", "why": "Não. Um elemento não vira outro numa reação química: o zinco vira íon Zn²⁺ e fica na solução." }
+          ]
+        },
+        {
+          "id": "m-cobre-zinco", "kind": "choice", "text": "Qual foi o papel do zinco na última etapa?", "answer": "redutor",
+          "choices": [
+            { "value": "redutor", "label": "Ele entrega elétrons aos íons Cu²⁺, que viram cobre metálico", "why": "Isso! O zinco é mais reativo que o cobre (série de reatividade): ele se oxida a Zn²⁺ e reduz o Cu²⁺ a Cu. O zinco é o agente redutor." },
+            { "value": "catalisador", "label": "É um catalisador: acelera a reação sem participar", "why": "Não. O zinco é consumido: vira Zn²⁺ e aparece na equação. Catalisador sai inalterado." },
+            { "value": "neutraliza", "label": "Neutraliza o ácido que sobrou", "why": "O zinco até reage com o ácido que sobra (soltando H2), mas não é isso que traz o cobre de volta: é a troca de elétrons com o Cu²⁺." }
+          ]
+        }
+      ],
+      "conclusion": "Em cinco reações (redox com ácido nítrico, precipitação, decomposição por aquecimento, óxido básico + ácido e deslocamento por um metal mais reativo), o cobre passou por quatro compostos e voltou a ser cobre. Os átomos do elemento atravessam todas as transformações: só os parceiros mudam.",
+      "safety": { "level": "perigo", "why": "O ácido nítrico é corrosivo e, com o cobre, solta NO, que vira NO2 castanho e tóxico no ar. O hidróxido de sódio ataca a pele, e o ácido sulfúrico também é corrosivo.", "home": "Não faça em casa: exige capela de exaustão, luvas e óculos de proteção." },
+      "sources": [
+        { "ref": "farias", "topic": "Prática \"Do cobre ao cobre\" (HNO3 → NaOH → aquecimento a 120 °C → H2SO4 → zinco)", "pages": "85–86" },
+        { "ref": "atkins-jones", "topic": "Glossário: lei da conservação da massa", "pages": "B16" }
+      ]
+    },
+    {
+      "id": "m-agua-oxigenada",
+      "icon": "🫧",
+      "title": "A água oxigenada que borbulha",
+      "format": "laboratorio",
+      "after": "n13",
+      "ordered": true,
+      "story": "O frasco de água oxigenada passa meses na farmácia sem mudar. Mas, posta num machucado ou com uma pitada de dióxido de manganês, ela espuma na hora. Investigue o que está acontecendo, como numa aula prática de catálise.",
+      "kit": { "substances": ["H2O2"], "items": ["catalisador", "calor"] },
+      "maxAttempts": 5,
+      "steps": [
+        { "id": "m-h2o2-sozinha", "kind": "observe", "selection": ["H2O2"], "expect": "needs-condition", "text": "Primeiro, observe a água oxigenada sozinha, sem ajuda", "hint": "Coloque só a água oxigenada na bancada, sem ferramentas.", "done": "Quase nada acontece: a decomposição é favorável, mas lenta demais para ver." },
+        { "id": "m-h2o2-catalise", "kind": "reaction", "reaction": "h2o2-decomposicao", "text": "Agora acelere a decomposição sem aquecer", "hint": "Uma ferramenta que acelera reações sem ser gasta.", "done": "Com uma pitada de MnO2, a água oxigenada borbulha forte: sai O2." },
+        {
+          "id": "m-h2o2-papel", "kind": "choice", "text": "O que o catalisador (MnO2) fez?", "answer": "caminho",
+          "choices": [
+            { "value": "caminho", "label": "Ofereceu um caminho com energia de ativação menor, e sai inalterado no fim", "why": "Isso! A reação ficou mais rápida porque mais moléculas conseguem passar pela barreira, que ficou mais baixa. O MnO2 não é gasto: por isso não aparece na equação." },
+            { "value": "consumido", "label": "Foi consumido: virou parte do gás", "why": "Não. O catalisador sai igual ao que entrou; o O2 vem todo do H2O2 (confira os átomos da equação)." },
+            { "value": "calor", "label": "Fez a reação liberar mais calor (mudou o ΔH)", "why": "Não. O ΔH só depende do estado inicial e do final (lei de Hess); o catalisador muda o caminho, não o começo nem o fim." },
+            { "value": "equilibrio", "label": "Deslocou o equilíbrio para os produtos", "why": "Não. Um catalisador acelera a ida e a volta igualmente: chega-se mais depressa ao mesmo equilíbrio, sem mudar a composição final." }
+          ]
+        },
+        {
+          "id": "m-h2o2-prova", "kind": "choice", "text": "No roteiro da aula, a professora mostra que o gás é oxigênio. Como?", "answer": "brasa",
+          "choices": [
+            { "value": "brasa", "label": "Põe uma lasca de madeira em brasa na boca do frasco: ela reacende", "why": "Isso! A brasa reacende porque o gás é rico em O2, o comburente." },
+            { "value": "estalo", "label": "Aproxima um fósforo aceso e ouve um estalo", "why": "Não: o estalo é o teste do hidrogênio." },
+            { "value": "cheiro", "label": "Cheira o gás", "why": "Não. Nunca se identifica gás pelo cheiro no laboratório (e o O2 nem tem cheiro)." }
+          ]
+        }
+      ],
+      "conclusion": "Uma reação pode ser favorável e mesmo assim lenta: a barreira (energia de ativação) é alta. O catalisador abre um caminho com barreira menor, a reação acelera, e ele sai inalterado. Ele não muda o ΔH nem o equilíbrio, só a velocidade. No corpo, a enzima catalase faz o mesmo papel: é por isso que a água oxigenada espuma no machucado.",
+      "safety": { "level": "seguro", "why": "A água oxigenada de farmácia (10 volumes, cerca de 3%) é segura. Concentrada, é corrosiva. O MnO2 em pó não deve ser inalado.", "home": "Pode fazer em casa com água oxigenada 10 volumes e um pedaço de batata crua (a catalase da batata é o catalisador)." },
+      "sources": [
+        { "ref": "reis-ufv", "topic": "Prática nº 9: Catálise (H2O2 com MnO2, catálise heterogênea; brasa que reacende)", "pages": "89–91 (do PDF)" },
+        { "ref": "atkins-jones", "topic": "Seção 14.14: catálise", "pages": "595–596" },
+        { "ref": "atkins-jones", "topic": "Seção 10.12: o catalisador não muda a composição de equilíbrio", "pages": "413" }
+      ]
+    },
+    {
+      "id": "m-vinagre",
+      "icon": "🧪",
+      "title": "Quanto ácido tem o vinagre?",
+      "format": "laboratorio",
+      "after": "n14",
+      "ordered": true,
+      "story": "O rótulo de um vinagre sumiu e a fábrica quer saber se ele tem a acidez certa. No laboratório de controle de qualidade, mede-se isso por titulação: uma base de concentração conhecida é pingada de uma bureta até todo o ácido ser neutralizado, e um indicador avisa a hora de parar.",
+      "kit": { "substances": ["CH3COOH", "NaOH"], "items": [] },
+      "maxAttempts": 6,
+      "steps": [
+        { "id": "m-vinagre-neutra", "kind": "produce", "substance": "CH3COONa", "text": "Faça a reação da titulação: neutralize o ácido acético", "hint": "Ácido + base → sal + água.", "done": "CH3COOH + NaOH → CH3COONa + H2O: cada mol de NaOH consome 1 mol de ácido acético." },
+        {
+          "id": "m-vinagre-indicador", "kind": "choice", "text": "Qual indicador avisa melhor o fim desta titulação?", "answer": "fenolftaleina",
+          "choices": [
+            { "value": "fenolftaleina", "label": "Fenolftaleína (muda de cor entre pH 8,2 e 10,0)", "why": "Isso! No ponto estequiométrico só sobra acetato de sódio, e o acetato é uma base fraca: o pH fica perto de 9. A fenolftaleína muda de incolor para rosa justamente nessa faixa." },
+            { "value": "alaranjado", "label": "Alaranjado de metila (muda entre pH 3,2 e 4,4)", "why": "Não. Ele mudaria de cor cedo demais, com muito ácido acético ainda sem reagir: a conta daria menos ácido do que há." },
+            { "value": "bromotimol", "label": "Azul de bromotimol (muda entre pH 6,0 e 7,6)", "why": "Quase, mas ainda muda antes da hora: no fim desta titulação o pH passa de 7, porque o acetato que sobra é básico. Ele serve bem para ácido forte com base forte." }
+          ]
+        },
+        { "id": "m-vinagre-mol", "kind": "calc", "text": "Em 10,0 mL de vinagre, foram gastos 16,7 mL de NaOH 0,500 mol/L até a cor rosa aparecer. Qual a concentração de ácido acético, em mol/L?", "unitLabel": "mol/L", "hint": "mol de NaOH = concentração × volume (em litros). Pela equação, 1 mol de NaOH reage com 1 mol de ácido. Concentração do ácido = mol ÷ volume da amostra (em litros).",
+          "calc": { "type": "titration", "reaction": "gen:CH3COOH+NaOH", "analyte": "CH3COOH", "titrant": "NaOH", "sampleML": 10.0, "titrantML": 16.7, "titrantM": 0.5, "ask": "M" } },
+        { "id": "m-vinagre-gl", "kind": "calc", "text": "E quantos gramas de ácido acético há em cada litro desse vinagre?", "unitLabel": "g/L", "hint": "Multiplique a concentração em mol/L pela massa molar do CH3COOH (cerca de 60 g/mol).",
+          "calc": { "type": "titration", "reaction": "gen:CH3COOH+NaOH", "analyte": "CH3COOH", "titrant": "NaOH", "sampleML": 10.0, "titrantML": 16.7, "titrantM": 0.5, "ask": "gL" } }
+      ],
+      "conclusion": "Cerca de 50 g de ácido acético por litro: são 5 g em cada 100 mL, ou seja, um vinagre com cerca de 5% de acidez. A titulação transforma uma mudança de cor numa medida: conhecendo a base (concentração e volume gasto) e a proporção da equação, descobre-se quanto ácido havia. O indicador certo é o que muda de cor no pH do ponto estequiométrico.",
+      "safety": { "level": "cuidado", "why": "O vinagre é seguro, mas o hidróxido de sódio, mesmo diluído, irrita a pele e os olhos.", "home": "Titulação de verdade exige bureta e NaOH: faça só na escola, com óculos de proteção." },
+      "sources": [
+        { "ref": "atkins-jones", "topic": "Seção L.3: análise volumétrica (titulação, ponto estequiométrico, fenolftaleína)", "pages": "F89–F90" },
+        { "ref": "atkins-jones", "topic": "Exemplo 12.5: no ponto estequiométrico de ácido fraco com base forte, pH > 7", "pages": "487" },
+        { "ref": "atkins-jones", "topic": "Tabela 12.3: faixas de viragem dos indicadores", "pages": "493" },
+        { "ref": "reis-ufv", "topic": "Prática nº 11: titulação e escolha do indicador", "pages": "107–110 (do PDF)" }
+      ]
+    },
+    {
+      "id": "m-chuva-acida",
+      "icon": "🌧️",
+      "title": "Chuva ácida na cidade",
+      "format": "ambiental",
+      "after": "n14",
+      "ordered": false,
+      "story": "Uma cidade tem uma usina que queima carvão com enxofre. Depois que ela abriu, a chuva ficou mais ácida e as estátuas de mármore da praça começaram a se desgastar. Refaça a química do problema, do enxofre que queima até o mármore que se dissolve.",
+      "kit": { "substances": ["S", "O2", "CO2", "H2O", "H2SO4", "CaCO3"], "items": ["calor"] },
+      "maxAttempts": 7,
+      "steps": [
+        { "id": "m-chuva-so2", "kind": "reaction", "reaction": "s-o2", "text": "Queime o enxofre como na caldeira da usina", "hint": "Enxofre + oxigênio, com a energia de ativação certa.", "done": "O enxofre queima com chama azulada e forma SO2, um gás de cheiro sufocante." },
+        { "id": "m-chuva-natural", "kind": "reaction", "reaction": "co2-h2o", "text": "Mostre por que até a chuva sem poluição é um pouco ácida", "hint": "Um gás que sempre existe no ar, dissolvido na água.", "done": "O CO2 do ar se dissolve na água da chuva e forma ácido carbônico, um ácido fraco." },
+        {
+          "id": "m-chuva-ph", "kind": "choice", "text": "Qual é, aproximadamente, o pH da chuva numa região sem poluição?", "answer": "5,7",
+          "choices": [
+            { "value": "7", "label": "7,0 (neutro)", "why": "Não. Água pura seria neutra, mas a chuva dissolve o CO2 do ar e forma ácido carbônico." },
+            { "value": "5,7", "label": "Cerca de 5,7", "why": "Isso! O ácido carbônico, fraco, deixa a chuva natural levemente ácida, com pH perto de 5,7." },
+            { "value": "4,5", "label": "Cerca de 4,5", "why": "Não. Valores assim aparecem em regiões industriais, por causa dos ácidos fortes formados a partir de SO2 e dos óxidos de nitrogênio: isso já é chuva ácida." }
+          ]
+        },
+        {
+          "id": "m-chuva-ar", "kind": "choice", "text": "E o SO2 que saiu da chaminé: no ar úmido, ele vira o quê?", "answer": "acidos",
+          "choices": [
+            { "value": "acidos", "label": "Ácido sulfuroso (com a água) e, oxidado a SO3, ácido sulfúrico", "why": "Isso! SO2 + H2O → H2SO3, um ácido fraco. E o SO2 também se oxida a SO3 no ar (com ajuda de partículas), e o SO3 com água dá ácido sulfúrico, um ácido forte." },
+            { "value": "nada", "label": "Nada: o SO2 sobe e se perde no espaço", "why": "Não. O SO2 é um óxido ácido: reage com a água das nuvens e volta na chuva." },
+            { "value": "co2", "label": "Vira CO2", "why": "Não. Uma reação química não transforma enxofre em carbono: os átomos se conservam." }
+          ]
+        },
+        { "id": "m-chuva-marmore", "kind": "produce", "substance": "CaSO4", "text": "Mostre o que o ácido sulfúrico da chuva faz com o mármore das estátuas", "hint": "Mármore e calcário são CaCO3.", "done": "O carbonato chia no ácido: forma CO2, água e sulfato de cálcio. A pedra se desgasta." },
+        {
+          "id": "m-chuva-estatua", "kind": "choice", "text": "Por que o mármore é atacado pela chuva ácida, e o granito quase não?", "answer": "carbonato",
+          "choices": [
+            { "value": "carbonato", "label": "O mármore é carbonato de cálcio, e carbonatos reagem com ácidos soltando CO2", "why": "Isso! O íon carbonato aceita os H⁺ do ácido e vira CO2 e água. Mármore e calcário são formas de CaCO3. O granito é feito de silicatos, que não reagem assim." },
+            { "value": "mole", "label": "Porque o mármore é mais mole e a chuva o lixa", "why": "Não é só desgaste mecânico: é uma reação química entre o carbonato e o ácido (dá até para ver as bolhas de CO2)." },
+            { "value": "quente", "label": "Porque a chuva ácida é quente", "why": "Não. A chuva ácida tem a temperatura de qualquer chuva; o que ataca a pedra são os íons H⁺." }
+          ]
+        }
+      ],
+      "conclusion": "Combustíveis com enxofre soltam SO2. No ar, ele vira ácido sulfuroso e ácido sulfúrico. Os óxidos de nitrogênio dos motores fazem o mesmo, formando ácido nítrico. A chuva, que naturalmente já tem pH perto de 5,7 por causa do CO2, fica ainda mais ácida, ataca carbonatos (mármore, calcário) e muda a química do solo. Tirar o enxofre dos combustíveis e usar conversores catalíticos nos carros já reduziu a chuva ácida em muitos lugares.",
+      "safety": { "level": "perigo", "why": "O SO2 é tóxico e irritante para os pulmões, e o ácido sulfúrico é corrosivo.", "home": "Não queime enxofre em casa. Dá para ver o efeito de um ácido num carbonato com segurança: uma casca de ovo ou um pedaço de giz de calcário no vinagre solta bolhas de CO2." },
+      "sources": [
+        { "ref": "atkins-jones", "topic": "Quadro 11.1: chuva ácida (pH da chuva natural ~5,7; SO2 + H2O → H2SO3; SO2 → SO3 → H2SO4; óxidos de nitrogênio)", "pages": "462–463" },
+        { "ref": "atkins-jones", "topic": "Seção 12.12: a dissolução de carbonatos por ácidos danifica monumentos de mármore e calcário", "pages": "504" }
+      ]
+    }
+  ]
+}

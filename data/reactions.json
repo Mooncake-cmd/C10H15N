@@ -781,6 +781,28 @@
       }
     },
     {
+      "id": "cuoh2-calor",
+      "name": "Hidróxido de cobre aquecido",
+      "reactants": [{ "id": "Cu(OH)2", "coef": 1 }],
+      "products": [{ "id": "CuO", "coef": 1 }, { "id": "H2O", "coef": 1, "state": "g" }],
+      "types": ["decomposicao"],
+      "tags": [],
+      "conditions": [["calor"]],
+      "explanation": "Aquecido, o precipitado azul-claro de hidróxido de cobre(II) perde água e fica preto: virou óxido de cobre(II).",
+      "why": "Como no hidróxido de magnésio, os íons OH⁻ se combinam dois a dois: um vira água, que sai como vapor, e o outro deixa um O²⁻ no sólido (2 OH⁻ → O²⁻ + H₂O). A cor muda porque o CuO é outro composto, com outro arranjo em volta do Cu²⁺.",
+      "safety": {
+        "level": "cuidado",
+        "why": "Exige aquecimento (cerca de 120 °C no roteiro do livro); a mistura quente pode espirrar. Compostos de cobre são tóxicos se ingeridos.",
+        "home": "Não faça em casa."
+      },
+      "source": {
+        "ref": "farias",
+        "topic": "Prática \"Do cobre ao cobre\", etapa 3: aquecer o precipitado de Cu(OH)2 a 120 °C forma um precipitado preto; nos comentários, 'preparar o óxido de cobre(II) a partir de seu hidróxido'",
+        "pages": "85–86",
+        "justification": "Cu(OH)2(s) → CuO(s) + H2O(g) por aquecimento. Mesmo padrão da decomposição do Mg(OH)2 no Atkins & Jones (seção 15.8, p. 626), que não traz a do cobre; ideal conferir no Greenwood."
+      }
+    },
+    {
       "id": "cu-hno3",
       "name": "Cobre no ácido nítrico diluído",
       "reactants": [{ "id": "Cu", "coef": 3 }, { "id": "HNO3", "coef": 8 }],

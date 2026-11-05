@@ -3,7 +3,7 @@
 
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { loadData } from './helpers.js';
+import { loadData, playMission } from './helpers.js';
 import { createEngine } from '../src/core/engine.js';
 import { initialState, applyResult, inventory, restoreState, STATE_VERSION, OBJECTIVE_TYPES, answerObjective, stoichAnswer } from '../src/core/progression.js';
 import { kineticsAnswer, kAt } from '../src/core/kinetics.js';
@@ -60,7 +60,7 @@ test('todo elemento jogável é desbloqueado em algum nível', () => {
 });
 
 /** Um "jogador exaustivo": tenta todas as reações e não-reações possíveis com o inventário atual. */
-function playLevel(state) {
+async function playLevel(state) {
   let changed = true;
   const allEvents = [];
   const startLevel = state.levelIndex;
@@ -94,15 +94,25 @@ function playLevel(state) {
       state = answerObjective(state, o.id, answer, data).state;
       if (JSON.stringify(state) !== before) changed = true;
     }
+    // Missões (Fase 3F): o jogador faz as que estão liberadas e ainda não concluiu.
+    for (const m of data.missions) {
+      if (state.levelIndex !== startLevel || state.finished) break;
+      if ((state.missionsDone ?? []).includes(m.id)) continue;
+      const before = JSON.stringify(state);
+      const res = await playMission(state, m.id, data, engine);
+      if (res.stuck === 'não liberada') continue;
+      state = res.state;
+      if (JSON.stringify(state) !== before) changed = true;
+    }
   }
   return { state, events: allEvents };
 }
 
-test('o jogo inteiro pode ser concluído, nível por nível, só com o que está desbloqueado', () => {
+test('o jogo inteiro pode ser concluído, nível por nível, só com o que está desbloqueado', async () => {
   let state = initialState(data);
   for (let i = 0; i < levels.length; i++) {
     assert.equal(state.levelIndex, i);
-    const res = playLevel(state);
+    const res = await playLevel(state);
     state = res.state;
     const pending = levels[i].objectives.filter((o) => !state.completedObjectives.includes(o.id)).map((o) => o.id);
     assert.deepEqual(pending, [], `Nível ${levels[i].id}: objetivos inalcançáveis`);
@@ -167,9 +177,9 @@ test('estequiometria: resposta errada não conta; certa (com vírgula e arredond
   assert.equal(answerObjective(s0, lim.id, 'H2', data).correct, false);
 });
 
-test('quem terminou a Fase 1 entra na Fase 2 ao carregar o jogo', () => {
+test('quem terminou a Fase 1 entra na Fase 2 ao carregar o jogo', async () => {
   let s = initialState(data);
-  for (let i = 0; i < levels.length && levels[i].phase === 1; i++) s = playLevel(s).state;
+  for (let i = 0; i < levels.length && levels[i].phase === 1; i++) s = (await playLevel(s)).state;
   const phase1Last = levels.findLastIndex((l) => l.phase === 1);
   const oldSave = { ...s, finished: true, levelIndex: phase1Last };
   const restored = restoreState(JSON.parse(JSON.stringify(oldSave)), data);
