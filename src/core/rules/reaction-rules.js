@@ -128,7 +128,7 @@ export function createRules(data) {
   }
 
   // ---------- Montagem de uma reação gerada ----------
-  function build(ruleId, reactantSubs, productSubs, vars, { productStates = {}, safetyLevel, safetyWhy } = {}) {
+  function build(ruleId, reactantSubs, productSubs, vars, { productStates = {}, reactantStates = {}, safetyLevel, safetyWhy } = {}) {
     const rule = R.rules[ruleId];
     let coefs;
     try {
@@ -138,7 +138,7 @@ export function createRules(data) {
       throw err;
     }
     const fixedState = { H2O: 'l', CO2: 'g', H2: 'g', O2: 'g' };
-    const reactants = reactantSubs.map((s, i) => ({ id: s.id, coef: coefs.reactants[i], state: fixedState[s.id] ?? stateIn(s, true) }));
+    const reactants = reactantSubs.map((s, i) => ({ id: s.id, coef: coefs.reactants[i], state: reactantStates[s.id] ?? fixedState[s.id] ?? stateIn(s, true) }));
     const products = productSubs.map((s, i) => ({ id: s.id, coef: coefs.products[i], state: productStates[s.id] ?? fixedState[s.id] ?? stateIn(s) }));
     if (vars.saltState === undefined) vars.saltState = '';
 
@@ -325,20 +325,30 @@ export function createRules(data) {
     });
   }
 
+  /** Cátion de um metal do jogo (pela série de reatividade), com o grupo. */
+  const metalCation = (m) => (isMetal(m) ? ions.cationsByFormula.get(series.get(m.elementOf)?.cation) : null);
+
   function pair(a, b) {
     if (a.id === 'O2' || b.id === 'O2') {
       const fuel = a.id === 'O2' ? b : a;
       if (isOrganicFuel(fuel)) return build('combustao', [fuel, sub('O2')], [sub('CO2'), sub('H2O')], { fuel: short(fuel), Fuel: cap(short(fuel)) });
-      return null;
+      // Metal do grupo 2 + oxigênio → óxido MO (Greenwood p. 112–113, 121); o bário forma
+      // também peróxido (BaO2) no ar a ~500 °C, então o produto depende das condições.
+      const cation = metalCation(fuel);
+      if (cation?.group !== 2) return null;
+      if (!R.groupTwoOxide.includes(fuel.elementOf)) return outcome('bario-oxigenio', { a: short(fuel) });
+      const oxide = compound(cation.formula, O2m);
+      return oxide ? build('metal2-oxigenio', [fuel, sub('O2')], [oxide], { metal: short(fuel), oxide: short(oxide) }, { productStates: { [oxide.id]: 's' } }) : null;
     }
 
-    // Metal alcalino + cloro → cloreto (seção 15.5)
+    // Metal + cloro → cloreto: grupo 1 (A&J seção 15.5) e grupo 2 (Greenwood p. 112–113)
     if (a.id === 'Cl2' || b.id === 'Cl2') {
       const m = a.id === 'Cl2' ? b : a;
-      const cation = isMetal(m) ? ions.cationsByFormula.get(series.get(m.elementOf)?.cation) : null;
-      if (cation?.group !== 1) return null;
+      const cation = metalCation(m);
+      if (cation?.group !== 1 && cation?.group !== 2) return null;
       const salt = compound(cation.formula, 'Cl-');
-      return salt ? build('metal-cloro', [m, sub('Cl2')], [salt], { metal: short(m), cation: formatIon(cation.formula), salt: short(salt) }, { productStates: { [salt.id]: 's' } }) : null;
+      const rule = cation.group === 1 ? 'metal-cloro' : 'metal2-cloro';
+      return salt ? build(rule, [m, sub('Cl2')], [salt], { metal: short(m), cation: formatIon(cation.formula), salt: short(salt) }, { productStates: { [salt.id]: 's' } }) : null;
     }
 
     if (isAcid(a)) return acidPlus(a, b);
@@ -405,11 +415,20 @@ export function createRules(data) {
 
   function single(s, itemIds) {
     const io = ionicNonAcid(s);
-    if (!io || io.anion !== 'CO3^2-') return null;
+    if (!io) return null;
+    // Hidróxidos do grupo 2 perdem água ao rubro e viram óxido (Greenwood p. 119).
+    if (io.anion === OH && R.hydroxideDecomposition.includes(io.cation)) {
+      const oxide = compound(io.cation, O2m);
+      if (!oxide) return null;
+      return build('decomposicao-hidroxido', [s], [oxide, sub('H2O')], { hydroxide: short(s), oxide: short(oxide) }, { productStates: { [oxide.id]: 's', H2O: 'g' }, reactantStates: { [s.id]: 's' } });
+    }
+    if (io.anion !== 'CO3^2-') return null;
     if (R.carbonateDecomposition.includes(io.cation)) {
       const oxide = compound(io.cation, O2m);
       if (!oxide) return null;
-      return build('decomposicao-carbonato', [s], [oxide, sub('CO2')], { carbonate: short(s), oxide: short(oxide) }, { productStates: { [oxide.id]: 's' } });
+      const T = R.carbonateDecompositionTemp[io.cation];
+      const tempNote = T ? fill(R.carbonateTempText, { carbonate: short(s), T: String(T) }) : '';
+      return build('decomposicao-carbonato', [s], [oxide, sub('CO2')], { carbonate: short(s), oxide: short(oxide), tempNote }, { productStates: { [oxide.id]: 's' }, reactantStates: { [s.id]: 's' } });
     }
     return itemIds.includes('calor') ? outcome('decomposicao-alta', { a: short(s) }) : null;
   }

@@ -19,15 +19,18 @@ Detalhes de arquitetura, estrutura de pastas e "como adicionar conteúdo" estão
 - **Pendências da Fase 2**: o que o livro (Atkins & Jones) cobria foi feito — fontes com página nas
   exceções, limites trocados pelo que o livro diz, metal alcalino + Cl2, Mg(OH)2 → MgO, Cu + HNO3
   diluído (com o radical NO), etanol e propano, estequiometria com mol, litros de gás, solução e
-  rendimento. **Ainda em aberto** (o livro não supre):
-  1. Exceções sem página: carbonatos básicos de Mg²⁺ e Fe²⁺ (escopo "precipitation"), a formação
-     dos acetatos básicos de Fe³⁺/Al³⁺ em si, e o limite de −1,0 V para "não se deposita" (é uma
-     estimativa a partir das p. 543–544). Ideal: conferir no Greenwood.
-  2. Sem regra geral para metais do grupo 2 e de transição + O2/Cl2 (o produto varia); só o grupo 1
-     + Cl2 tem regra. Decomposição: só carbonatos de Mg/Ca e o Mg(OH)2 curado.
+  rendimento. **Resolvido com o Greenwood** (2. ed., recebido completo): páginas para o acetato
+  básico de Fe³⁺ (p. 1090), o acetato de Al³⁺ (hidrólise, p. 225) e o carbonato de Fe²⁺ (p. 1092);
+  regra grupo 2 + Cl2 → MCl2 e + O2 → MO (Be, Mg, Ca, Sr; Ba fica "não sei" porque forma BaO2,
+  p. 112–113, 121); decomposição de carbonatos de Li, Sr e Ba (temperaturas da p. 114) e de
+  hidróxidos de Ca, Sr e Ba (p. 119); Fe + S com fonte (p. 662, 649). **Ainda em aberto**:
+  1. Exceções sem página: carbonato básico de Mg²⁺ (o Greenwood não traz) e o limite de −1,0 V
+     para "não se deposita" (estimativa a partir das p. 543–544 do A&J).
+  2. Metais de transição + O2/Cl2 sem regra geral (o produto varia).
   3. Regras só para pares; combinações de 3+ substâncias não passam pelo motor (é decisão de
      projeto, não de fonte).
-  4. Ácido nítrico + outros metais continua "não sei" (produtos dependem da concentração).
+  4. Ácido nítrico + outros metais continua "não sei": o Greenwood (p. 467) confirma que depende
+     da concentração (e da passivação de Al, Cr, Fe), mas não dá os produtos metal a metal.
 - **Fase 3 (avançado) — CONCLUÍDA**, em etapas publicadas uma a uma:
   - **3A Energia — CONCLUÍDA**: ΔH°/ΔS°/ΔG° pela lei de Hess (`data/thermo.json`, `src/core/thermo.js`),
     painel "Energia", calor na calculadora, nível "Energia das reações". Dados: Atkins FQ 12. ed.
@@ -160,9 +163,20 @@ cada reação continua conferida no Atkins & Jones.
   MnO2/KMnO4), cores de chama de K, Li e Cu (sem fonte de livro-texto ainda), cristalização,
   cromatografia, Faraday (quantidade de eletricidade) — ficam para a etapa de eletroquímica.
 - **Adiados pelo usuário — FEITOS**: utensílios de laboratório e separação de misturas.
-- **Livro que ajudaria** (o usuário está procurando): **Greenwood & Earnshaw, *Chemistry of the
-  Elements*** — confirmaria Cu(OH)2 → CuO, Fe + S → FeS e as pendências da Fase 2 (carbonatos
-  básicos, acetatos básicos, metais + O2/Cl2, HNO3 + metais), e daria cores de chama de K, Li, Cu.
+- **Greenwood & Earnshaw, *Chemistry of the Elements*, 2. ed. (1997)** — recebido (RAR em 8 partes;
+  PDF escaneado, sem texto: ler com OCR — `pdfimages -tiff` + `tesseract -l eng`; a página impressa
+  está no cabeçalho de cada página, e a imagem N do PDF corresponde à página impressa ~N−16 a
+  N−22, conforme o trecho). Já usado: cores de chama de Li, K, Rb, Cs (p. 75) e de Ca/Sr/Ba (p. 108),
+  grupo 2 (p. 112–121), Fe + S (p. 649, 662), acetatos/carbonatos de Fe e Al (p. 225, 1090, 1092),
+  HNO3 (p. 467). Não resolve: Cu(OH)2 → CuO (p. 1181 só diz que o CuO se obtém calcinando o
+  nitrato ou o carbonato básico; fonte continua o Farias), a cor de chama do cobre (p. 867 fala
+  só do CuCl azul nos fogos) e o carbonato básico de Mg. Útil para o futuro: vidro e silicatos
+  (p. 345–346, "vidro feito da terra") e cloro/hipoclorito (cap. 17, p. 789+, "água sanitária").
+- **Vídeos do canal Bounty Breaker** (pedido do usuário, ainda não aplicados): "X feito de Y" vira
+  missão em várias etapas. Avaliado: vidro da terra (viável), bala de banana/éster (viável),
+  baunilha das fezes (só separação/identificação), dinamite da picanha (só a saponificação; a
+  nitroglicerina só como explicação, sem reação nem roteiro), refrigerante zero da água sanitária
+  (aguarda transcrição). O usuário pode mandar as transcrições.
 
 ## Requisitos que valem para qualquer mudança
 

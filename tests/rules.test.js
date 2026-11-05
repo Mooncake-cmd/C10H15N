@@ -194,3 +194,31 @@ test('metal alcalino + cloro (seção 15.5) e exceções com fonte', () => {
   assert.equal(combine('CuSO4', 'Na2CO3').source?.pages, '677–678');
   assert.equal(combine('NH4Cl', 'KOH').source?.pages, '425, 436');
 });
+
+test('Greenwood: grupo 2 + cloro e oxigênio (p. 112–113, 121), com o bário como exceção', () => {
+  assert.equal(eq(reactionOf('Ca', 'Cl2')), '1 Ca(s) + 1 Cl2(g) → 1 CaCl2(s)');
+  assert.equal(eq(reactionOf('Ba', 'Cl2')), '1 Ba(s) + 1 Cl2(g) → 1 BaCl2(s)');
+  assert.equal(engine.combine(['Ca', 'Cl2']).kind, 'needs-condition', 'precisa de aquecimento para começar');
+  assert.equal(eq(reactionOf('Ca', 'O2')), '2 Ca(s) + 1 O2(g) → 2 CaO(s)');
+  assert.equal(eq(reactionOf('Sr', 'O2')), '2 Sr(s) + 1 O2(g) → 2 SrO(s)');
+  const ba = combine('Ba', 'O2');
+  assert.equal(ba.reasonId, 'rule:bario-oxigenio', 'o bário também forma peróxido: o jogo não afirma o produto');
+  assert.equal(ba.source?.pages, '121');
+});
+
+test('Greenwood: decomposição de carbonatos (Li, Sr, Ba) e de hidróxidos do grupo 2 (p. 76, 114, 119)', () => {
+  assert.equal(eq(reactionOf('SrCO3')), '1 SrCO3(s) → 1 SrO(s) + 1 CO2(g)');
+  assert.equal(eq(reactionOf('BaCO3')), '1 BaCO3(s) → 1 BaO(s) + 1 CO2(g)');
+  assert.equal(eq(reactionOf('Li2CO3')), '1 Li2CO3(s) → 1 Li2O(s) + 1 CO2(g)');
+  assert.match(reactionOf('BaCO3').why, /1360 °C/);
+  assert.equal(eq(reactionOf('Ca(OH)2')), '1 Ca(OH)2(s) → 1 CaO(s) + 1 H2O(g)');
+  assert.equal(eq(reactionOf('Ba(OH)2')), '1 Ba(OH)2(s) → 1 BaO(s) + 1 H2O(g)');
+  assert.equal(reasonOf('Na2CO3'), 'rule:decomposicao-alta', 'o Na2CO3 é bem mais estável: sem fonte, não se afirma');
+});
+
+test('Greenwood: exceções com página (acetatos de Fe³⁺ e Al³⁺, carbonato de Fe²⁺)', () => {
+  assert.equal(combine('FeCl3', 'CH3COONa').source?.pages, '1090');
+  assert.equal(combine('AlCl3', 'CH3COONa').source?.pages, '225');
+  assert.equal(combine('FeSO4', 'Na2CO3').source?.pages, '1092');
+  assert.equal(combine('Zn', 'HNO3').source?.pages, '467');
+});

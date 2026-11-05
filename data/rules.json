@@ -12,7 +12,11 @@
   "coldWaterReactive": ["Li", "Na", "K", "Rb", "Cs", "Ca", "Sr", "Ba"],
   "passivated": ["Al", "Be"],
   "depositMinE0": -1.0,
-  "carbonateDecomposition": ["Mg^2+", "Ca^2+"],
+  "carbonateDecomposition": ["Li+", "Mg^2+", "Ca^2+", "Sr^2+", "Ba^2+"],
+  "carbonateDecompositionTemp": { "Mg^2+": 540, "Ca^2+": 900, "Sr^2+": 1289, "Ba^2+": 1360 },
+  "carbonateTempText": " O {carbonate} precisa de cerca de {T} °C (temperatura em que a pressão do CO2 liberado chega a 1 atm); descendo o grupo 2, os carbonatos ficam mais estáveis.",
+  "hydroxideDecomposition": ["Ca^2+", "Sr^2+", "Ba^2+"],
+  "groupTwoOxide": ["Be", "Mg", "Ca", "Sr"],
   "amphotericMetals": ["Al", "Zn", "Be"],
   "netIonicNote": "Os íons espectadores (iguais dos dois lados) foram cancelados; ácidos fortes e compostos iônicos solúveis aparecem separados em íons.",
 
@@ -128,9 +132,42 @@
       "name": "Aquecendo {carbonate}",
       "conditions": [["calor"]],
       "explanation": "Aquecido, {carbonate} se decompõe em {oxide} e gás carbônico.",
-      "why": "A decomposição dos carbonatos absorve energia (é endotérmica), por isso só acontece com aquecimento forte. É assim que se faz cal virgem a partir de calcário.",
-      "source": { "ref": "atkins-jones", "topic": "Seções 15.7–15.8: carbonatos de magnésio e cálcio se decompõem no aquecimento", "pages": "624, 627, F51", "justification": "MCO3(s) → MO(s) + CO2(g) sob aquecimento, para M = Mg, Ca." },
+      "why": "A decomposição dos carbonatos absorve energia (é endotérmica), por isso só acontece com aquecimento forte. É assim que se faz cal virgem a partir de calcário.{tempNote}",
+      "source": { "ref": "atkins-jones", "topic": "Seções 15.7–15.8: carbonatos de magnésio e cálcio se decompõem no aquecimento", "pages": "624, 627, F51", "justification": "MCO3(s) → MO(s) + CO2(g) sob aquecimento, para M = Mg, Ca; para Li, Sr e Ba, Greenwood (p. 76, 114).",
+        "seeAlso": [
+          { "ref": "greenwood", "topic": "Seção 5.3: temperaturas em que a pressão de CO2 chega a 1 atm — BeCO3 250 °C, MgCO3 540 °C, CaCO3 900 °C, SrCO3 1289 °C, BaCO3 1360 °C; os óxidos MO se obtêm calcinando os carbonatos", "pages": "114, 119" },
+          { "ref": "greenwood", "topic": "Cap. 4: o Li2CO3, como o MgCO3, se decompõe com mais facilidade no aquecimento que os dos outros metais alcalinos", "pages": "76" }
+        ] },
       "safety": { "level": "cuidado", "why": "Exige temperaturas muito altas (forno), e o óxido formado é cáustico.", "home": "Não faça em casa." }
+    },
+    "decomposicao-hidroxido": {
+      "types": ["decomposicao"], "tags": ["endotermica"],
+      "name": "Aquecendo {hydroxide}",
+      "conditions": [["calor"]],
+      "explanation": "Aquecido ao rubro, {hydroxide} perde água (que sai como vapor) e vira {oxide}.",
+      "why": "Os íons OH⁻ se combinam dois a dois: um vira água e o outro deixa um O²⁻ no sólido (2 OH⁻ → O²⁻ + H2O). É o caminho inverso da cal virgem com água, e exige aquecimento forte.",
+      "source": { "ref": "greenwood", "topic": "Seção 5.3.3: os óxidos MO do grupo 2 se obtêm calcinando os carbonatos; desidratar os hidróxidos ao rubro é um caminho alternativo", "pages": "119", "justification": "M(OH)2(s) → MO(s) + H2O(g) por aquecimento forte, M = Ca, Sr, Ba (o Mg(OH)2 é curado, A&J p. 626)." },
+      "safety": { "level": "cuidado", "why": "Exige aquecimento muito forte; os hidróxidos e os óxidos formados são cáusticos.", "home": "Não faça em casa." }
+    },
+    "metal2-cloro": {
+      "types": ["sintese"], "tags": ["redox", "exotermica"],
+      "name": "{metal} + cloro",
+      "conditions": [["calor"]],
+      "conditionNote": "Precisa de aquecimento para começar (o berílio, só acima de ~600 °C); o magnésio pega fogo no cloro, principalmente se úmido.",
+      "explanation": "O {metal} entrega os seus dois elétrons de valência a dois átomos de cloro: formam-se íons {cation} e Cl⁻, que se juntam num cristal de {salt}.",
+      "why": "Os metais do grupo 2 têm 2 elétrons de valência e os perdem com facilidade (cada vez mais descendo o grupo); cada cloro precisa de 1 elétron. Por isso o cloreto tem fórmula MCl2.",
+      "source": { "ref": "greenwood", "topic": "Seção 5.2.4: o magnésio pega fogo com os halogênios e forma MgX2; o berílio reage acima de ~600 °C; Ca, Sr e Ba reagem ainda mais facilmente com os ametais", "pages": "112–113", "justification": "M(s) + Cl2(g) → MCl2(s) para M do grupo 2." },
+      "safety": { "level": "perigo", "why": "O cloro é um gás tóxico; a reação libera muito calor e luz.", "home": "Não faça em casa em nenhuma hipótese." }
+    },
+    "metal2-oxigenio": {
+      "types": ["sintese"], "tags": ["redox", "exotermica"],
+      "name": "{metal} queimando no oxigênio",
+      "conditions": [["calor"]],
+      "conditionNote": "Precisa de aquecimento para começar. No ar (que tem nitrogênio), forma-se também um pouco de nitreto.",
+      "explanation": "Aquecido, o {metal} queima no oxigênio e forma {oxide}, um pó branco.",
+      "why": "O metal entrega 2 elétrons a cada átomo de oxigênio (O²⁻). Descendo o grupo 2 os metais reagem cada vez mais fácil; para o bário, porém, o produto pode ser o peróxido BaO2, e o jogo não afirma qual se forma.",
+      "source": { "ref": "greenwood", "topic": "Seção 5.2.4: o magnésio queima no ar formando MgO (e Mg3N2); Ca, Sr e Ba reagem ainda mais facilmente. Seção 5.3.3: peróxidos — nenhum de Be, MgO2 e CaO2 não se formam por oxidação direta, SrO2 só sob alta pressão de O2", "pages": "112–113, 121", "justification": "2 M(s) + O2(g) → 2 MO(s) para M = Be, Mg, Ca, Sr." },
+      "safety": { "level": "perigo", "why": "A queima é muito quente e brilhante: a luz forte machuca os olhos, e metal em chamas não se apaga com água nem com CO2.", "home": "Não faça em casa." }
     }
   },
 
@@ -174,7 +211,14 @@
     "acido-oxidante": {
       "kind": "unknown",
       "title": "Ácido oxidante: outra reação",
-      "reason": "O {acid} é um ácido OXIDANTE: o íon nitrato rouba elétrons dos metais, e os produtos costumam ser óxidos de nitrogênio (NO, NO2) em vez de hidrogênio. Por exemplo, o cobre se dissolve em ácido nítrico diluído liberando NO. Os produtos dependem da concentração, por isso o motor de regras não monta essa equação; ela precisa ser curada."
+      "reason": "O {acid} é um ácido OXIDANTE: o íon nitrato rouba elétrons dos metais, e os produtos costumam ser óxidos de nitrogênio (NO, NO2) em vez de hidrogênio. Por exemplo, o cobre se dissolve em ácido nítrico diluído liberando NO. Os produtos dependem da concentração (concentrado, ele ataca quase todos os metais, e alguns, como Al e Fe, ficam protegidos por uma película de óxido), por isso o motor de regras não monta essa equação; ela precisa ser curada.",
+      "source": { "ref": "greenwood", "topic": "Seção 11.3.7: diluído (< 2 M) o ácido nítrico age como ácido forte; concentrado, é fortemente oxidante e ataca quase todos os metais, exceto Au, Pt, Rh e Ir; Al, Cr e Fe ficam passivados", "pages": "467" }
+    },
+    "bario-oxigenio": {
+      "kind": "unknown",
+      "title": "{a} + oxigênio: o produto depende das condições",
+      "reason": "Os metais do grupo 2 queimam formando o óxido MO, mas o bário também forma facilmente o PERÓXIDO, BaO2 (no ar, a cerca de 500 °C). Qual dos dois se forma depende da temperatura e da pressão de oxigênio, por isso o jogo não monta uma única equação.",
+      "source": { "ref": "greenwood", "topic": "Seção 5.3.3: o BaO2 se forma facilmente no ar a 500 °C", "pages": "121" }
     },
     "agua-regia": {
       "kind": "unknown",
@@ -245,7 +289,7 @@
     "decomposicao-alta": {
       "kind": "unknown",
       "title": "Decomposição de {a}: não conferida",
-      "reason": "Muitos carbonatos se decompõem em óxido e CO2 quando aquecidos, mas a temperatura necessária varia muito (os do grupo 1 e os de Sr e Ba exigem temperaturas bem acima de um forno comum). O jogo só afirma essa decomposição para os carbonatos de magnésio e cálcio."
+      "reason": "Muitos carbonatos se decompõem em óxido e CO2 quando aquecidos, mas a temperatura e os produtos variam muito: os de sódio e potássio, por exemplo, são bem mais estáveis que o de lítio. O jogo só afirma essa decomposição para os carbonatos de lítio, magnésio, cálcio, estrôncio e bário, que têm fonte."
     },
     "co2-base-insoluvel": {
       "kind": "unknown",

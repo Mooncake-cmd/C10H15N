@@ -261,6 +261,12 @@ Essas citações indicam o **tópico**, sem página. As regras da Fase 2 e as co
 `seeAlso` citam **seção e página** de Atkins & Jones, *Chemical Principles*, 5. ed. (2010),
 conferidas no livro.
 
+**Greenwood & Earnshaw, *Chemistry of the Elements*, 2. ed. (1997)** — conferido com página:
+regras do grupo 2 com cloro e oxigênio (o bário fica "não sei", porque também forma o peróxido
+BaO2), decomposição dos carbonatos de Li, Sr e Ba (com a temperatura) e dos hidróxidos de Ca, Sr e
+Ba, a síntese Fe + S, as exceções dos acetatos de Fe³⁺ e Al³⁺ e do carbonato de Fe²⁺, o motivo de o
+ácido nítrico com metais continuar "não sei" e as cores de chama de Li, K, Rb e Cs.
+
 Dados dos elementos: [Periodic-Table-JSON](https://github.com/Bowserinator/Periodic-Table-JSON),
 compilado da Wikipédia (CC BY-SA). As massas atômicas são arredondadas a 5 algarismos
 significativos e conferidas com a IUPAC nos testes.
@@ -363,7 +369,7 @@ tinha adiado (utensílios e separação de misturas):
   de separação, filtração, evaporação, destilação simples e fracionada, ímã, dissolução
   fracionada) testáveis livremente em 7 misturas, cada combinação com o porquê (Atkins & Jones,
   seção G, p. F52–F54; Bernoulli v. 2, Frente A, Módulo 03; Lenzi, UD 10–12); e o teste de chama
-  (Na, Ca, Sr, Ba e o HCl que não dá cor; Atkins & Jones p. 50 e 625). Cores sem fonte (K, Li,
+  (Na, Ca, Sr, Ba, e Li, K, Rb, Cs pelo Greenwood p. 75; o HCl não dá cor). Cores sem fonte (como
   Cu) não entram.
 - **10 missões novas** e o **nível 19, "Laboratório de verdade"**. Algumas são liberadas logo no
   começo do jogo e funcionam como fundamentos: 🥽 primeiro dia no laboratório (utensílio certo,

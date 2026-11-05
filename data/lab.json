@@ -163,7 +163,15 @@
   ],
   "flame": {
     "Na": { "color": "amarela", "css": "#ffc21a", "text": "Amarelo intenso — a mesma luz das lâmpadas de vapor de sódio dos postes.",
-      "source": { "ref": "atkins-jones", "topic": "Exercício 1.19: lâmpadas de vapor de sódio emitem luz amarela (589 nm)", "pages": "50" } },
+      "source": { "ref": "atkins-jones", "topic": "Exercício 1.19: lâmpadas de vapor de sódio emitem luz amarela (589 nm); Greenwood, p. 75: linha D do sódio, 589,0/589,6 nm", "pages": "50" } },
+    "Li": { "color": "vermelha (carmim)", "css": "#e0103a", "text": "Vermelho-carmim (670,8 nm). Curiosamente, quem emite essa luz não é o átomo de lítio sozinho, mas a espécie LiOH formada na chama.",
+      "source": { "ref": "greenwood", "topic": "Cap. 4, propriedades dos metais alcalinos: cores de chama e comprimentos de onda", "pages": "75" } },
+    "K": { "color": "violeta (lilás)", "css": "#a45cff", "text": "Violeta (lilás), em 766,5 nm. É uma cor fraca: um pouco de sódio como impureza a encobre com amarelo.",
+      "source": { "ref": "greenwood", "topic": "Cap. 4, propriedades dos metais alcalinos: cores de chama e comprimentos de onda", "pages": "75" } },
+    "Rb": { "color": "vermelho-violeta", "css": "#c0306a", "text": "Vermelho-violeta (780,0 nm) — daí o nome rubídio, do latim para vermelho-escuro.",
+      "source": { "ref": "greenwood", "topic": "Cap. 4, propriedades dos metais alcalinos: cores de chama e comprimentos de onda", "pages": "75" } },
+    "Cs": { "color": "azul", "css": "#3d7bff", "text": "Azul (455,5 nm) — daí o nome césio, do latim para azul-celeste.",
+      "source": { "ref": "greenwood", "topic": "Cap. 4, propriedades dos metais alcalinos: cores de chama e comprimentos de onda", "pages": "75" } },
     "Ca": { "color": "vermelho-alaranjada", "css": "#ff6a1a", "text": "Vermelho-alaranjado (vermelho-tijolo).",
       "source": { "ref": "atkins-jones", "topic": "Seção 15.7: cálcio dá chama vermelho-alaranjada", "pages": "625" } },
     "Sr": { "color": "vermelha (carmim)", "css": "#e8102e", "text": "Vermelho intenso (carmim): o vermelho dos fogos de artifício.",
@@ -175,6 +183,7 @@
   },
   "flameSource": [
     { "ref": "lenzi", "topic": "UD 19: análise química qualitativa de elementos pela chama (fio limpo com HCl; o elétron excitado volta e emite a cor do elemento)", "pages": "438–453" },
-    { "ref": "bernoulli", "topic": "v. 1, Frente C, Módulo 03: teste de chama", "pages": "53" }
+    { "ref": "bernoulli", "topic": "v. 1, Frente C, Módulo 03: teste de chama", "pages": "53" },
+    { "ref": "greenwood", "topic": "Cores de chama dos metais alcalinos (p. 75) e alcalino-terrosos (p. 108: Ba verde-amarelado, Sr vermelho vivo, Ca vermelho-alaranjado)", "pages": "75, 108" }
   ]
 }
