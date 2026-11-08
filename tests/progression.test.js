@@ -191,22 +191,28 @@ test('save da versão 1 é migrado refazendo o caminho pelo histórico', () => {
   assert.ok(restored.produced.includes('Ca(OH)2'), 'histórico preservado');
 });
 
-test('save da versão 2 (antes dos fundamentos) continua no mesmo nível', async () => {
-  // Jogador da v2 que tinha concluído n1–n4 e estava no n5. Na v2 não havia os níveis de
-  // fundamentos, então o levelIndex salvo era 5 posições menor.
+test('níveis novos (since) só têm perguntas, para a migração poder contá-los como feitos', () => {
+  for (const l of levels.filter((x) => x.since)) {
+    for (const o of l.objectives) assert.ok(FUNDAMENTAL_TYPES.includes(o.type), `${l.id}/${o.id}: tipo ${o.type} não é pergunta`);
+  }
+});
+
+test('save da versão 2 (antes da Fase 4) continua no mesmo nível', async () => {
+  // Jogador da v2 que estava no n14 (equilíbrio). Na v2 não havia os fundamentos nem os degraus,
+  // então o levelIndex salvo era menor.
   let s = skipFundamentals(initialState(data));
-  while (levels[s.levelIndex].id !== 'n5') s = (await playLevel(s)).state;
+  while (levels[s.levelIndex].id !== 'n14') s = (await playLevel(s)).state;
   const fIds = new Set(levels.filter((l) => l.since === 3).flatMap((l) => l.objectives.map((o) => o.id)));
   const v2 = {
     ...s,
     version: 2,
-    levelIndex: idx('n5') - levels.filter((l) => l.since === 3).length,
+    levelIndex: idx('n14') - levels.slice(0, idx('n14')).filter((l) => l.since === 3).length,
     stoichSolved: s.stoichSolved.filter((id) => !fIds.has(id)),
     completedObjectives: s.completedObjectives.filter((id) => !fIds.has(id)),
   };
   const restored = restoreState(JSON.parse(JSON.stringify(v2)), data);
   assert.equal(restored.version, STATE_VERSION);
-  assert.equal(levels[restored.levelIndex].id, 'n5', 'não volta para os fundamentos');
+  assert.equal(levels[restored.levelIndex].id, 'n14', 'não volta para os fundamentos nem para os degraus');
   assert.ok([...fIds].every((id) => restored.completedObjectives.includes(id)), 'fundamentos contam como feitos');
   assert.deepEqual(restored.produced, s.produced);
 });

@@ -13,6 +13,7 @@
       "quiz": "{ choices: [{ value, label, why }], answer, source } — pergunta de escolha (Fase 4A); cada alternativa explica por que está certa ou errada",
       "atom": "{ element, massNumber, charge?, ask: 'protons' | 'neutrons' | 'electrons' } — partículas de um átomo ou íon (Fase 4A); resposta calculada pelo Z do dataset",
       "electrons": "{ element, ask: 'shells' | 'config' | 'valence' } — distribuição eletrônica (Fase 4A): camadas do dataset, subcamadas pelo diagrama de Pauling ou elétrons de valência",
+      "math": "{ ask: 'exponent' (value) | 'sigfigs' (value como texto) | 'moles' (substance, grams) | 'pH' (h) | 'ratio' (pHa, pHb) } — matemática da química (Fase 4B); resposta calculada",
       "state": "{ element } — estado físico do elemento (Fase 4A), do dataset (phaseAtSTP)",
       "naming": "{ cation, anion, ask: 'name' | 'formula', choices: [{ value, why }] } — nome ou fórmula de um composto iônico (Fase 4A); resposta calculada por ions.js",
       "stoich": "{ reaction, given: { idDoReagente: medida }, ask: idDoProduto | 'limiting' | 'yield' | 'heat', unit?: 'g' | 'mol' | 'L', actual?: { id, g } } — pergunta de estequiometria; a resposta certa é calculada (tolerância de 2%). medida: gramas, { mol }, { L } de gás (25 °C, 1 atm) ou { mL, M } de solução"
@@ -356,6 +357,20 @@
       "lesson": "Os ácidos fortes da tabela são HCl, HNO3 e H2SO4 (além de HBr, HI, HClO4 e HClO3); quase todos os outros são fracos. Um metal com potencial-padrão negativo libera H2 de um ácido NÃO oxidante; com o ácido nítrico, que é oxidante, sai outro gás."
     },
     {
+      "id": "d1",
+      "phase": 2,
+      "since": 3,
+      "title": "Contas da química",
+      "intro": "A química lida com números enormes e minúsculos: um copo d'água tem perto de 10²⁵ moléculas, e um átomo mede cerca de 10⁻¹⁰ m. Por isso se usa a notação científica, N × 10ⁿ, com N entre 1 e 10. Toda medida também tem uma precisão: os algarismos significativos são os dígitos conhecidos com certeza, mais um estimado. E para contar partículas existe o mol: 6,022 × 10²³ unidades. A massa de 1 mol de uma substância, a massa molar, é a soma das massas atômicas, em gramas.",
+      "objectives": [
+        {"id": "d1-exp-grande", "type": "math", "ask": "exponent", "value": 602000, "unitLabel": "expoente", "text": "602 000 em notação científica é 6,02 × 10ⁿ. Qual é o expoente n?", "hint": "Conte quantas casas a vírgula anda para a esquerda até sobrar um algarismo antes dela.", "source": {"ref": "kotz", "topic": "Revisão: notação científica", "pages": "36"}},
+        {"id": "d1-exp-pequeno", "type": "math", "ask": "exponent", "value": 0.00042, "unitLabel": "expoente", "text": "E 0,00042 = 4,2 × 10ⁿ. Qual é o n?", "hint": "Agora a vírgula anda para a direita até o 4. Número menor que 1 tem expoente negativo.", "source": {"ref": "kotz", "topic": "Revisão: notação científica (números menores que 1)", "pages": "36"}},
+        {"id": "d1-algarismos", "type": "math", "ask": "sigfigs", "value": "0,0720", "unitLabel": "algarismos", "text": "Uma balança marcou 0,0720 g. Quantos algarismos significativos tem essa medida?", "hint": "Zeros do começo só marcam a vírgula; zeros no fim, depois da vírgula, foram medidos.", "source": {"ref": "kotz", "topic": "Revisão: algarismos significativos (exemplos da balança)", "pages": "37–38"}},
+        {"id": "d1-mol", "type": "math", "ask": "moles", "substance": "H2O", "grams": 36, "unitLabel": "mol", "text": "Quantos mol de moléculas há em 36 g de água (H2O)?", "hint": "Massa molar da água: 2 × 1 + 16 ≈ 18 g/mol. Número de mol = massa ÷ massa molar.", "source": {"ref": "kotz", "topic": "Cap. 2: o mol e a massa molar", "pages": "88–90"}}
+      ],
+      "lesson": "Notação científica: a vírgula anda e o expoente conta as casas (para a esquerda, positivo; para a direita, negativo). Algarismos significativos dizem quão precisa é uma medida. Mol = massa ÷ massa molar: é a ponte entre a balança e os átomos, e é a conta que a estequiometria usa no próximo nível."
+    },
+    {
       "id": "n10",
       "phase": 2,
       "title": "Estequiometria",
@@ -414,6 +429,20 @@
       "lesson": "ΔH° < 0: a reação libera calor (exotérmica); ΔH° > 0: absorve (endotérmica). Pela lei de Hess, ΔH° = soma das entalpias de formação dos produtos − soma das dos reagentes. Já ΔG° < 0 diz que a reação é espontânea — o que não quer dizer rápida: o metano é estável no ar até uma faísca vencer a energia de ativação."
     },
     {
+      "id": "d2",
+      "phase": 3,
+      "since": 3,
+      "title": "Rápido ou devagar",
+      "intro": "Algumas reações levam um instante (o hidrogênio explodindo com uma faísca); outras levam anos (o ferro enferrujando). A velocidade de uma reação depende da concentração dos reagentes, da temperatura, da superfície de contato (quando há sólido) e da presença de um catalisador. Para reagir, as partículas precisam se chocar com energia suficiente — a energia de ativação. Sem contas por enquanto: só o porquê.",
+      "objectives": [
+        {"id": "d2-geladeira", "type": "quiz", "text": "Por que a comida estraga mais devagar na geladeira?", "answer": "frio", "choices": [{"value": "frio", "label": "o frio deixa as reações mais lentas", "why": "Isso: em temperatura menor as partículas se movem mais devagar e menos choques têm a energia de ativação. As reações que estragam a comida — inclusive as dos microrganismos — ficam mais lentas."}, {"value": "mata", "label": "o frio mata os micróbios", "why": "Não exatamente: a geladeira não mata os microrganismos (a comida ainda estraga, só que devagar). O frio deixa as reações mais lentas."}, {"value": "ar", "label": "na geladeira não tem ar", "why": "Não: dentro da geladeira há ar comum. O que muda é a temperatura."}], "source": {"ref": "kotz", "topic": "Cap. 14: condições de reação e velocidade (temperatura)", "pages": "622–623"}},
+        {"id": "d2-po", "type": "quiz", "text": "Um comprimido efervescente se dissolve mais rápido inteiro ou em pó?", "answer": "po", "choices": [{"value": "inteiro", "label": "inteiro", "why": "Não: inteiro, só a superfície de fora toca a água; o miolo espera a vez."}, {"value": "po", "label": "em pó", "why": "Isso: em pó, a superfície de contato com a água é muito maior, e muito mais partículas reagem ao mesmo tempo."}, {"value": "igual", "label": "tanto faz", "why": "Não: a massa é a mesma, mas a superfície de contato muda — e é na superfície que a reação acontece."}], "source": {"ref": "kotz", "topic": "Cap. 14: condições de reação e velocidade (área de superfície de sólidos)", "pages": "622"}},
+        {"id": "d2-concentrado", "type": "quiz", "text": "Zinco em ácido clorídrico: onde as bolhas de H2 saem mais rápido?", "answer": "concentrado", "choices": [{"value": "concentrado", "label": "no ácido concentrado", "why": "Isso: há mais partículas de ácido no mesmo volume, então mais choques com o zinco por segundo."}, {"value": "diluido", "label": "no ácido diluído", "why": "Não: com menos partículas de ácido por volume, há menos choques por segundo, e a reação é mais lenta."}, {"value": "igual", "label": "tanto faz", "why": "Não: a reação é a mesma, mas a velocidade depende da concentração dos reagentes."}], "source": {"ref": "kotz", "topic": "Cap. 14: condições de reação e velocidade (concentração)", "pages": "622–623"}},
+        {"id": "d2-catalisador", "type": "quiz", "text": "Na decomposição da água oxigenada (2 H2O2 → 2 H2O + O2), o catalisador…", "answer": "acelera", "choices": [{"value": "acelera", "label": "acelera e não é gasto", "why": "Isso: ele abre um caminho com energia de ativação menor e sai inteiro no fim da reação."}, {"value": "gasto", "label": "acelera e é gasto", "why": "Não: o catalisador não é consumido. No fim, a quantidade dele é a mesma do começo."}, {"value": "produto", "label": "muda os produtos", "why": "Não: os produtos continuam sendo água e oxigênio; o catalisador só faz a reação chegar lá mais rápido."}], "source": {"ref": "kotz", "topic": "Cap. 14: catalisadores e a decomposição do H2O2", "pages": "623"}}
+      ],
+      "lesson": "Reação mais rápida = mais choques, ou choques com mais energia. Concentração e superfície de contato aumentam o número de choques; a temperatura aumenta a energia deles; o catalisador baixa a energia necessária. No próximo nível essas ideias viram números: meia-vida e constante de velocidade."
+    },
+    {
       "id": "n13",
       "phase": 3,
       "title": "Velocidade das reações",
@@ -435,6 +464,21 @@
           "hint": "Na 2ª ordem, t½ = 1 ÷ (k·[A]₀): ela depende da concentração inicial." }
       ],
       "lesson": "A velocidade de reação segue uma lei de velocidade: na 1ª ordem, a taxa é k[A] e a meia-vida (ln 2/k) não depende da concentração; na 2ª ordem, a taxa é k[A]² e a meia-vida cresce conforme o reagente acaba. Pela equação de Arrhenius, k = A·e^(−Ea/RT): quanto maior a energia de ativação, mais a temperatura pesa. Um catalisador abre um caminho com Ea menor e sai intacto no fim."
+    },
+    {
+      "id": "d3",
+      "phase": 3,
+      "since": 3,
+      "title": "Ida e volta",
+      "intro": "Muitas reações andam nos dois sentidos: os reagentes formam produtos, e os produtos voltam a formar reagentes. Quando as duas velocidades ficam iguais, as quantidades param de mudar — é o equilíbrio químico, que é dinâmico: as reações continuam, só que se compensam. Se algo perturba o equilíbrio, ele se desloca para diminuir a perturbação (princípio de Le Chatelier). E a acidez se mede pelo pH: pH = −log[H₃O⁺], uma escala em que cada unidade vale 10 vezes.",
+      "objectives": [
+        {"id": "d3-dinamico", "type": "quiz", "text": "No equilíbrio N2 + 3 H2 ⇌ 2 NH3, as duas reações (ida e volta)…", "answer": "continuam", "choices": [{"value": "param", "label": "param de acontecer", "why": "Não: elas continuam. As quantidades ficam constantes porque a ida e a volta têm a mesma velocidade — por isso se diz equilíbrio dinâmico."}, {"value": "continuam", "label": "continuam, na mesma velocidade", "why": "Isso: a amônia se forma e se decompõe ao mesmo tempo, na mesma velocidade, e as quantidades não mudam."}, {"value": "so-produto", "label": "acabam: só sobra amônia", "why": "Não: no equilíbrio há reagentes e produtos ao mesmo tempo (N2, H2 e NH3 juntos)."}], "source": {"ref": "kotz", "topic": "Cap. 3: equilíbrio dinâmico (N2 + H2 ⇌ NH3)", "pages": "124–126"}},
+        {"id": "d3-chatelier", "type": "quiz", "text": "Num equilíbrio, você acrescenta mais de um dos reagentes. Para que lado ele se desloca?", "answer": "produtos", "choices": [{"value": "produtos", "label": "para o lado dos produtos", "why": "Isso: o sistema consome parte do reagente acrescentado formando mais produto, e diminui a perturbação."}, {"value": "reagentes", "label": "para o lado dos reagentes", "why": "Não: isso aumentaria ainda mais os reagentes. O equilíbrio reage contra a perturbação, gastando o que foi acrescentado."}, {"value": "nada", "label": "não muda nada", "why": "Não: o equilíbrio responde. Acrescentar reagente aumenta a velocidade da ida até as duas se igualarem de novo."}], "source": {"ref": "kotz", "topic": "Cap. 15: perturbando um equilíbrio — princípio de Le Chatelier", "pages": "697"}},
+        {"id": "d3-ph", "type": "math", "ask": "pH", "h": 0.001, "unitLabel": "pH", "text": "Uma solução tem [H₃O⁺] = 0,001 mol/L (10⁻³ mol/L). Qual é o pH?", "hint": "pH = −log[H₃O⁺]. Para uma potência de 10, o log é o próprio expoente.", "source": {"ref": "kotz", "topic": "Cap. 4: a escala de pH", "pages": "191"}},
+        {"id": "d3-vezes", "type": "math", "ask": "ratio", "pHa": 3, "pHb": 5, "unitLabel": "vezes", "text": "Um suco tem pH 3 e outro tem pH 5. Quantas vezes mais H₃O⁺ tem o suco de pH 3?", "hint": "Cada unidade de pH é um fator 10 na concentração.", "source": {"ref": "kotz", "topic": "Cap. 4: a escala de pH (cada unidade, um fator 10)", "pages": "191–192"}},
+        {"id": "d3-basico", "type": "quiz", "text": "A água pura, a 25 °C, tem pH 7. Uma solução com pH 9 é…", "answer": "basica", "choices": [{"value": "acida", "label": "ácida", "why": "Não: soluções ácidas têm pH abaixo de 7 (mais H₃O⁺ que a água pura)."}, {"value": "neutra", "label": "neutra", "why": "Não: neutra é pH 7, como a água pura."}, {"value": "basica", "label": "básica", "why": "Isso: pH acima de 7 quer dizer menos H₃O⁺ que na água pura — a solução é básica."}], "source": {"ref": "kotz", "topic": "Cap. 4: a escala de pH (ácido, neutro, básico)", "pages": "191"}}
+      ],
+      "lesson": "O equilíbrio é dinâmico e reage às perturbações (Le Chatelier). pH abaixo de 7 é ácido, 7 é neutro e acima de 7 é básico; cada unidade a menos é 10 vezes mais H₃O⁺. No próximo nível vêm as contas: K, Ka, tampão e Kps."
     },
     {
       "id": "n14",

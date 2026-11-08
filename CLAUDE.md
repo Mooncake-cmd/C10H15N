@@ -102,11 +102,13 @@ Detalhes de arquitetura, estrutura de pastas e "como adicionar conteúdo" estão
     `since` maior que a versão do save contam como feitos para quem já jogava (o jogador não volta
     ao começo). Os desbloqueios do n1 passaram para o f1. Fonte: Kotz v. 1 com página; Bernoulli
     v. 1 p. 61–62 para camadas/diagrama. Missões de fundamentos continuam liberadas depois do n1.
-  - **4B Degraus intermediários** (próxima): nível de matemática da química (notação científica,
-    algarismos significativos, logaritmo — Kotz Revisão p. 26–53 e Apêndice A, p. A-2) e níveis
-    qualitativos de velocidade (Kotz 14-1/14-2) e de equilíbrio/pH (Kotz 15, escala de pH p. 191)
-    antes dos níveis de conta (n13 e n14).
-  - **4C Revisões espaçadas**: perguntas que voltam e misturam assuntos (modelo: "Questões para
+  - **4B Degraus intermediários — CONCLUÍDA**: d1 "Contas da química" antes do n10 (expoente da
+    notação científica, algarismos significativos, mol; tipo `math`), d2 "Rápido ou devagar" antes
+    do n13 (fatores da velocidade, Kotz p. 622–623) e d3 "Ida e volta" antes do n14 (equilíbrio
+    dinâmico, Le Chatelier, pH com potências de 10 e fator 10 por unidade; Kotz p. 124–126,
+    191–192, 697). Regra: nível com `since` só pode ter perguntas (tipos de `FUNDAMENTAL_TYPES`),
+    senão a migração do save mandaria o jogador de volta (há teste).
+  - **4C Revisões espaçadas** (próxima): perguntas que voltam e misturam assuntos (modelo: "Questões para
     estudo" do Kotz, respostas no Apêndice N).
   - **4D**: limite de tentativas nos objetivos dos níveis; laboratórios mostram o caminho da conta
     em vez da resposta pronta.
@@ -190,7 +192,8 @@ iniciante, em português); reações continuam conferidas no Atkins & Jones/Gree
   p. 776, titulação p. 784, ácidos de Lewis p. 752; cap. 19 eletroquímica (eletrólise p. 907,
   Faraday p. 913); cap. 20 os 12 princípios da química verde p. 961, CO2 p. 958, cloração p. 939;
   caps. 21–23 dureza da água p. 988, polímeros p. 1114, PET p. 1120; cap. 25 nuclear p. 1168.
-- **Já usado**: fundamentos da 4A (caps. 1, 2, 5 e 7).
+- **Já usado**: fundamentos da 4A (caps. 1, 2, 5 e 7) e degraus da 4B (Revisão p. 36–38; cap. 2
+  p. 88–90; cap. 3 p. 124–126; cap. 4 p. 191–192; cap. 14 p. 622–623; cap. 15 p. 697).
 
 ## Manuais de laboratório (enviados para a 3F) — mapeamento
 

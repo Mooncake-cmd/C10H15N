@@ -14,6 +14,8 @@ import {
   isFundamentalsAnswerRight,
   fundamentalsExplain,
   fundamentalsMistake,
+  sciExponent,
+  sigFigs,
 } from '../src/core/fundamentals.js';
 
 const data = loadData();
@@ -112,4 +114,34 @@ test('erros comuns são explicados sem entregar a resposta', () => {
     const right = String(fundamentalsAnswer(o, data));
     if (/^\d+$/.test(right)) assert.ok(!new RegExp(`(^|[^\\d])${right}([^\\d]|$)`).test(text.replace(/Z = \d+|\d+ elétrons \(/g, '')), `${id}: entregou a resposta: ${text}`);
   }
+});
+
+test('Fase 4B: matemática da química', () => {
+  assert.equal(sciExponent(602000), 5);
+  assert.equal(sciExponent(0.00042), -4);
+  assert.equal(sciExponent(1000), 3, 'potência exata de 10');
+  assert.equal(sciExponent(6.022e23), 23);
+  assert.equal(sigFigs('0,0720'), 3);
+  assert.equal(sigFigs('13,456'), 5, 'exemplo da balança do Kotz');
+  assert.equal(sigFigs('0,072'), 2, 'exemplo da balança do Kotz');
+  assert.equal(sigFigs('305'), 3);
+  assert.throws(() => sigFigs('1500'), /ambíguos/);
+  for (const o of objectives.filter((x) => x.type === 'math' && x.ask === 'sigfigs')) assert.doesNotThrow(() => sigFigs(o.value), o.id);
+  assert.ok(Math.abs(fundamentalsAnswer(O('d1-mol'), data) - 36 / 18.015) < 0.01);
+  assert.ok(isFundamentalsAnswerRight(O('d1-mol'), '2', data), 'arredondado, dentro de 2%');
+  assert.ok(isFundamentalsAnswerRight(O('d1-exp-pequeno'), '−4', data), 'sinal de menos tipográfico');
+  assert.ok(!isFundamentalsAnswerRight(O('d1-exp-pequeno'), '4', data));
+  assert.equal(fundamentalsAnswer(O('d3-ph'), data), 3);
+  assert.equal(fundamentalsAnswer(O('d3-vezes'), data), 100);
+  const cases = [
+    ['d1-exp-pequeno', '4', /sinal/],
+    ['d1-exp-grande', '6', /conte de novo/],
+    ['d1-algarismos', '5', /zeros do começo/i],
+    ['d1-algarismos', '2', /zeros no fim/i],
+    ['d1-mol', '648', /multiplicou/],
+    ['d1-mol', '0,5', /invertida/],
+    ['d3-ph', '-3', /sinal de menos/],
+    ['d3-vezes', '2', /diferença de pH/],
+  ];
+  for (const [id, answer, re] of cases) assert.match(fundamentalsMistake(O(id), answer, data), re, `${id} ← ${answer}`);
 });
