@@ -119,8 +119,9 @@ Detalhes de arquitetura, estrutura de pastas e "como adicionar conteúdo" estão
     outro objetivo ou uma revisão certa (`attempts`, `reviewHits`); nunca trava o nível.
     Laboratórios de velocidade/equilíbrio e a calculadora de estequiometria escondem só o número
     final (mostram o caminho) quando a configuração é uma pergunta pendente do nível atual
-    (`pendingQuestion`). Ideias para depois: limitar combinações nos objetivos de bancada (hoje
-    ainda dá para "combinar tudo"), perguntas próprias de revisão.
+    (`pendingQuestion`). Ideia para depois: perguntas próprias de revisão. **Decisão do usuário**:
+    os objetivos de bancada continuam aceitando tentativa e erro, de propósito ("o aprendizado fica
+    por conta do usuário") — não propor limite de combinações, pontuação nem pergunta de fechamento.
   - **Curiosidades dos elementos — CONCLUÍDA**: os 118 elementos têm descrição e curiosidades no
     painel da tabela periódica (`data/element-facts.json`), escritas com palavras próprias a partir
     do livro da DK (*The Periodic Table Book*, 2017), como leitura complementar com página. Erros do
@@ -139,7 +140,7 @@ Detalhes de arquitetura, estrutura de pastas e "como adicionar conteúdo" estão
    - Problemas já identificados: dá para cumprir objetivos combinando tudo por tentativa, e os
      laboratórios mostram a resposta pronta das perguntas de cálculo (mostrar o caminho da conta
      e pedir raciocínio, com explicação do erro). Resolvido na 4D para as perguntas; os objetivos
-     de bancada ("produza X") ainda aceitam tentativa e erro.
+     de bancada ("produza X") continuam aceitando tentativa e erro por decisão do usuário.
 3. **Guardados para depois** (o usuário pediu para não perder): as pendências da Fase 2 (acima),
    os itens "médios" das apostilas e as etapas novas possíveis — listados na seção abaixo. (Os
    itens adiados, utensílios e separação de misturas, já foram feitos.)
