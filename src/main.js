@@ -19,6 +19,7 @@ import { mountEquilibriumLab } from './ui/equilibrium-lab.js';
 import { renderMoleculeCard, galleryGroups, moleculeName } from './ui/molecule-card.js';
 import { missionListHTML, missionPanelHTML, missionCompleteHTML, chemText } from './ui/missions-ui.js';
 import { mountLab, separationResultHTML, flameResultHTML } from './ui/lab-ui.js';
+import { FUNDAMENTAL_TYPES, fundamentalsExplain, fundamentalsMistake } from './core/fundamentals.js';
 
 const SAVE_KEY = 'elementar:v1';
 const MAX_SUBSTANCES = 4;
@@ -63,6 +64,7 @@ async function main() {
   let bench = []; // ids na bancada (substâncias e ferramentas)
   let lastNew = new Set(); // destacadas como "novas" no inventário
   let missionFeedback = null; // último retorno da missão: { kind, html }
+  let objectiveFeedback = null; // último erro numa pergunta dos fundamentos: { id, text }
 
   // Durante uma missão (Fase 3F), só o kit dela (e o que foi produzido nela) vale na bancada.
   const activeMission = () => (state.missionRun ? data.missionsById.get(state.missionRun.id) : null);
@@ -208,7 +210,7 @@ async function main() {
     const levels = data.progression.levels;
     const level = levels[state.levelIndex];
     const done = level.objectives.filter((o) => state.completedObjectives.includes(o.id)).length;
-    $('#level-name').textContent = state.finished ? 'Todas as fases concluídas — modo livre' : `Fase ${level.phase ?? 1} · Nível ${state.levelIndex + 1}/${levels.length}: ${level.title}`;
+    $('#level-name').textContent = state.finished ? 'Todas as fases concluídas — modo livre' : `${level.phaseLabel ?? `Fase ${level.phase ?? 1}`} · Nível ${state.levelIndex + 1}/${levels.length}: ${level.title}`;
     const overall = levels.flatMap((l) => l.objectives);
     const pct = Math.round((100 * state.completedObjectives.length) / overall.length);
     $('#progress-bar').style.width = `${pct}%`;
@@ -227,7 +229,7 @@ async function main() {
               .map((o) => {
                 const ok = state.completedObjectives.includes(o.id) || isObjectiveDone(o, state, data);
                 return html`<li class="${ok ? 'is-done' : ''}"><span class="check" aria-hidden="true">${ok ? '✔' : '○'}</span>
-                  <div><span>${o.text}</span>${raw(!ok && o.type === 'stoich' ? stoichForm(o) : '')}${raw(!ok && o.type === 'kinetics' ? kineticsForm(o) : '')}${raw(!ok && o.type === 'equilibrium' ? equilibriumForm(o) : '')}${raw(!ok && o.type === 'molecule' ? moleculeForm(o) : '')}${raw(!ok && o.type === 'organic' ? organicForm(o) : '')}${raw(!ok && o.type === 'mission' && state.missionRun?.id !== o.mission ? html`<div><button type="button" class="btn btn-ghost btn-small" data-mission-start="${o.mission}">🗺️ Começar esta missão</button></div>` : '')}${raw(!ok && o.hint ? `<details class="hint"><summary>Dica</summary>${esc(o.hint)}</details>` : '')}</div></li>`;
+                  <div><span>${raw(chemText(o.text))}</span>${raw(!ok && o.type === 'stoich' ? stoichForm(o) : '')}${raw(!ok && o.type === 'kinetics' ? kineticsForm(o) : '')}${raw(!ok && o.type === 'equilibrium' ? equilibriumForm(o) : '')}${raw(!ok && o.type === 'molecule' ? moleculeForm(o) : '')}${raw(!ok && o.type === 'organic' ? organicForm(o) : '')}${raw(FUNDAMENTAL_TYPES.includes(o.type) ? (ok ? html`<p class="small muted objective-why">${raw(chemText(fundamentalsExplain(o, data)))}</p>` : fundamentalsForm(o)) : '')}${raw(!ok && o.type === 'mission' && state.missionRun?.id !== o.mission ? html`<div><button type="button" class="btn btn-ghost btn-small" data-mission-start="${o.mission}">🗺️ Começar esta missão</button></div>` : '')}${raw(!ok && o.hint ? `<details class="hint"><summary>Dica</summary>${esc(o.hint)}</details>` : '')}</div></li>`;
               })
               .join(''),
           )}
@@ -299,11 +301,36 @@ async function main() {
     return html`<form class="stoich-form" data-objective="${o.id}"><div class="stoich-row">${raw(opts)}</div>${raw(view)}</form>`;
   }
 
+  /** Perguntas dos fundamentos (Fase 4A): escolha ou campo, e o porquê do último erro. */
+  function fundamentalsForm(o) {
+    const fb = objectiveFeedback?.id === o.id ? html`<div class="mission-feedback is-bad" role="status">✘ ${raw(chemText(objectiveFeedback.text))}</div>` : '';
+    const STATES = [
+      { value: 's', label: 'sólido' },
+      { value: 'l', label: 'líquido' },
+      { value: 'g', label: 'gasoso' },
+    ];
+    const choices = o.type === 'state' ? STATES : o.choices;
+    if (choices) {
+      const label = (c) => (o.type === 'naming' && o.ask === 'formula' ? formatFormulaHTML(c.value) : chemText(c.label ?? c.value));
+      const opts = choices.map((c) => html`<button type="button" class="btn btn-ghost stoich-choice" data-answer="${c.value}">${raw(label(c))}</button>`).join('');
+      return html`<form class="stoich-form" data-objective="${o.id}"><div class="stoich-row">${raw(opts)}</div>${raw(fb)}</form>`;
+    }
+    const numeric = o.type === 'atom' || o.ask === 'valence';
+    return html`<form class="stoich-form" data-objective="${o.id}">
+      <div class="stoich-row"><input name="answer" inputmode="${numeric ? 'numeric' : 'text'}" autocomplete="off" spellcheck="false" aria-label="Resposta (${o.unitLabel})" placeholder="${o.unitLabel}">${raw(numeric ? html`<span class="small">${o.unitLabel}</span>` : '')}
+      <button class="btn btn-primary" type="submit">Conferir</button></div>${raw(fb)}</form>`;
+  }
+
   function submitStoich(objectiveId, answer) {
     const prevLevel = state.levelIndex;
     const { state: next, events, correct } = answerObjective(state, objectiveId, answer, data);
+    const objective = data.progression.levels.flatMap((l) => l.objectives).find((o) => o.id === objectiveId);
+    if (objective && FUNDAMENTAL_TYPES.includes(objective.type)) {
+      objectiveFeedback = correct ? null : { id: objectiveId, text: fundamentalsMistake(objective, answer, data) };
+      if (!correct) return renderObjectives();
+    }
     if (!correct) {
-      const kind = data.progression.levels.flatMap((l) => l.objectives).find((o) => o.id === objectiveId)?.type;
+      const kind = objective?.type;
       toast(kind === 'organic' ? 'Ainda não. Abra a molécula na galeria: lá o nome e a função aparecem explicados (a dica ajuda).' : kind === 'molecule' ? 'Ainda não. Gire a molécula em 3D e conte ligações e pares isolados (a dica ajuda).' : kind === 'kinetics' || kind === 'equilibrium' ? 'Ainda não. Confira a fórmula e as unidades (a dica ajuda).' : 'Ainda não. Confira a conversão gramas → mol → gramas (a dica ajuda).');
       return;
     }

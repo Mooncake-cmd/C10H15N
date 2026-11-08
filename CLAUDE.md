@@ -91,7 +91,25 @@ Detalhes de arquitetura, estrutura de pastas e "como adicionar conteúdo" estão
     `cell`) e nível 19 (n18, "Laboratório de verdade"); reações Fe + S → FeS, NaHCO3 + calor e
     CuSO4 + 5 H2O → CuSO4·5H2O; desenho `hydrate`. Algumas missões são liberadas logo depois do
     nível 1 (fundamentos: utensílios, medidas, separação, método científico).
-  - Próxima: **Fase 4 (aprendizagem)**.
+- **Fase 4 (aprendizagem) — EM ANDAMENTO**, em etapas publicadas uma a uma (recomendação aprovada
+  pelo usuário):
+  - **4A Fundamentos — CONCLUÍDA**: 5 níveis antes do n1 (`f1`–`f5`, `phase: 4`,
+    `phaseLabel: "Fundamentos"`, `since: 3`): matéria/misturas e mudança física × química, átomo
+    (prótons, nêutrons, isótopos, massa atômica), elétrons (camadas, diagrama de Pauling, valência),
+    estados físicos e mudanças de estado, nomes e fórmulas de compostos iônicos. Tipos de objetivo
+    `quiz`, `atom`, `electrons`, `state`, `naming` (`src/core/fundamentals.js`; resposta calculada,
+    o porquê de cada alternativa e dos erros comuns sem entregar a resposta). Save v3: níveis com
+    `since` maior que a versão do save contam como feitos para quem já jogava (o jogador não volta
+    ao começo). Os desbloqueios do n1 passaram para o f1. Fonte: Kotz v. 1 com página; Bernoulli
+    v. 1 p. 61–62 para camadas/diagrama. Missões de fundamentos continuam liberadas depois do n1.
+  - **4B Degraus intermediários** (próxima): nível de matemática da química (notação científica,
+    algarismos significativos, logaritmo — Kotz Revisão p. 26–53 e Apêndice A, p. A-2) e níveis
+    qualitativos de velocidade (Kotz 14-1/14-2) e de equilíbrio/pH (Kotz 15, escala de pH p. 191)
+    antes dos níveis de conta (n13 e n14).
+  - **4C Revisões espaçadas**: perguntas que voltam e misturam assuntos (modelo: "Questões para
+    estudo" do Kotz, respostas no Apêndice N).
+  - **4D**: limite de tentativas nos objetivos dos níveis; laboratórios mostram o caminho da conta
+    em vez da resposta pronta.
   - **Curiosidades dos elementos — CONCLUÍDA**: os 118 elementos têm descrição e curiosidades no
     painel da tabela periódica (`data/element-facts.json`), escritas com palavras próprias a partir
     do livro da DK (*The Periodic Table Book*, 2017), como leitura complementar com página. Erros do
@@ -148,6 +166,31 @@ por eletrólise; o quadro do v. 5 p. 49 generaliza demais a decomposição de ox
 - **Pendências da Fase 2**: o quadro do v. 5 p. 49 dá pistas (hidreto/peróxido/superóxido + água,
   decomposição de hidróxidos e oxissais, ustulação), mas cada regra precisa de confirmação no
   A&J/Greenwood; HNO₃ + metais e carbonatos básicos não são resolvidos pelas apostilas.
+
+## Kotz (enviado para a Fase 4) — mapeamento
+
+**Kotz, Treichel, Townsend e Treichel, *Química Geral e Reações Químicas*, tradução da 9. ed.
+norte-americana, Cengage, 2015** (`kotz`). v. 1: ISBN 978-85-221-1628-1 (caps. 1–13); v. 2: ISBN
+978-85-221-1630-4 (caps. 14–25, a partir da p. 616). PDF escaneado: OCR com `tesseract -l por`;
+página impressa = página do PDF − 27 (v. 1) e + 589 (v. 2). A numeração continua entre os volumes,
+então citar só a página. Papel: fonte principal dos fundamentos e dos degraus (linguagem de
+iniciante, em português); reações continuam conferidas no Atkins & Jones/Greenwood.
+- **v. 1**: cap. 1 (p. 1–25) — química verde p. 6, misturas p. 8–9, elementos/compostos p. 10–11,
+  mudança física × química p. 15 (H2 + O2 do balão); Revisão (p. 26–53) — notação científica e
+  algarismos significativos p. 36–41; cap. 2 — átomo p. 55–57 (sódio-23), isótopos p. 58, peso
+  atômico p. 60–61 (cloro 35,45), íons p. 76–77, fórmulas p. 79, nomes p. 81–82 (romanos p. 81);
+  cap. 3 — balanceamento p. 121, introdução ao equilíbrio p. 124; cap. 4 — economia atômica
+  p. 180, escala de pH p. 191; cap. 5 — mudanças de estado p. 233, gelo-seco sublima p. 237;
+  cap. 6 — cores dos fogos p. 287; cap. 7 — configuração p. 314, valência p. 316, íons p. 323;
+  caps. 8–9 ligações; cap. 10 efusão p. 478; cap. 11 forças intermoleculares p. 496–533; cap. 12
+  ligação metálica p. 550, diagramas de fase p. 561; cap. 13 solubilidade p. 583, coligativas
+  p. 588, coloides p. 602; Apêndice A, logaritmos p. A-2.
+- **v. 2**: cap. 14 cinética (p. 616; 14-1/14-2 qualitativo, 14-4 leis integradas); cap. 15
+  equilíbrio (p. 676; Le Chatelier p. 697, Haber-Bosch p. 701); caps. 16–17 pH p. 719, tampão
+  p. 776, titulação p. 784, ácidos de Lewis p. 752; cap. 19 eletroquímica (eletrólise p. 907,
+  Faraday p. 913); cap. 20 os 12 princípios da química verde p. 961, CO2 p. 958, cloração p. 939;
+  caps. 21–23 dureza da água p. 988, polímeros p. 1114, PET p. 1120; cap. 25 nuclear p. 1168.
+- **Já usado**: fundamentos da 4A (caps. 1, 2, 5 e 7).
 
 ## Manuais de laboratório (enviados para a 3F) — mapeamento
 

@@ -11,10 +11,23 @@ import { equilibriumAnswer } from '../src/core/equilibrium.js';
 import { moleculeAnswer } from '../src/core/vsepr.js';
 import { organicAnswer } from '../src/core/organic.js';
 import { lookupReaction } from '../src/core/engine.js';
+import { FUNDAMENTAL_TYPES, fundamentalsAnswer } from '../src/core/fundamentals.js';
 
 const data = loadData();
 const engine = createEngine(data);
 const levels = data.progression.levels;
+const idx = (id) => levels.findIndex((l) => l.id === id);
+
+/** Responde às perguntas dos níveis de fundamentos (Fase 4A) e chega ao nível n1 (a bancada). */
+function skipFundamentals(state) {
+  let s = state;
+  while (!s.finished && levels[s.levelIndex].since === 3 && levels[s.levelIndex].objectives.every((o) => FUNDAMENTAL_TYPES.includes(o.type))) {
+    const at = s.levelIndex;
+    for (const o of levels[at].objectives) s = answerObjective(s, o.id, fundamentalsAnswer(o, data), data).state;
+    assert.notEqual(s.levelIndex, at, `${levels[at].id}: as respostas certas não concluíram o nível`);
+  }
+  return s;
+}
 
 test('referências da progressão existem', () => {
   const objIds = new Set();
@@ -86,11 +99,11 @@ async function playLevel(state) {
       if (state.levelIndex !== startLevel || state.finished) break;
     }
     // Perguntas de estequiometria: o jogador "faz a conta" (a resposta certa calculada).
-    for (const o of data.progression.levels[startLevel].objectives.filter((x) => ['stoich', 'kinetics', 'equilibrium', 'molecule', 'organic'].includes(x.type))) {
+    for (const o of data.progression.levels[startLevel].objectives.filter((x) => ['stoich', 'kinetics', 'equilibrium', 'molecule', 'organic', ...FUNDAMENTAL_TYPES].includes(x.type))) {
       if (state.levelIndex !== startLevel || state.finished) break;
       const before = JSON.stringify(state);
       const answer =
-        o.type === 'kinetics' ? kineticsAnswer(o, data.kinetics) : o.type === 'equilibrium' ? equilibriumAnswer(o, data) : o.type === 'molecule' ? moleculeAnswer(o, data) : o.type === 'organic' ? organicAnswer(o, data) : stoichAnswer(o, data);
+        FUNDAMENTAL_TYPES.includes(o.type) ? fundamentalsAnswer(o, data) : o.type === 'kinetics' ? kineticsAnswer(o, data.kinetics) : o.type === 'equilibrium' ? equilibriumAnswer(o, data) : o.type === 'molecule' ? moleculeAnswer(o, data) : o.type === 'organic' ? organicAnswer(o, data) : stoichAnswer(o, data);
       state = answerObjective(state, o.id, answer, data).state;
       if (JSON.stringify(state) !== before) changed = true;
     }
@@ -111,6 +124,12 @@ async function playLevel(state) {
 test('o jogo inteiro pode ser concluído, nível por nível, só com o que está desbloqueado', async () => {
   let state = initialState(data);
   for (let i = 0; i < levels.length; i++) {
+    // Um nível pode já chegar cumprido pelo histórico (ex.: água feita na bancada durante os
+    // fundamentos); aí o jogo passa direto por ele.
+    if (state.levelIndex > i || state.finished) {
+      assert.ok(levels[i].objectives.every((o) => state.completedObjectives.includes(o.id)), `${levels[i].id}: pulado sem concluir`);
+      continue;
+    }
     assert.equal(state.levelIndex, i);
     const res = await playLevel(state);
     state = res.state;
@@ -120,8 +139,21 @@ test('o jogo inteiro pode ser concluído, nível por nível, só com o que está
   assert.equal(state.finished, true);
 });
 
-test('produzir água completa o objetivo e gera eventos de descoberta', () => {
+test('o jogo começa pelos fundamentos, com a bancada já liberada', () => {
   const s0 = initialState(data);
+  assert.equal(levels[s0.levelIndex].id, 'f1');
+  assert.ok(['H', 'O', 'Na', 'Cl'].every((x) => s0.unlockedElements.includes(x)));
+  const s1 = skipFundamentals(s0);
+  assert.equal(levels[s1.levelIndex].id, 'n1', 'respondendo às perguntas chega-se à bancada');
+  // Reações feitas durante os fundamentos contam quando o nível n1 chega.
+  let s = applyResult(s0, engine.combine(['H2', 'O2', 'faisca']), data).state;
+  assert.equal(s.levelIndex, 0);
+  s = skipFundamentals(s);
+  assert.ok(s.completedObjectives.includes('n1-agua'));
+});
+
+test('produzir água completa o objetivo e gera eventos de descoberta', () => {
+  const s0 = skipFundamentals(initialState(data));
   const { state, events } = applyResult(s0, engine.combine(['H2', 'O2', 'faisca']), data);
   assert.ok(state.produced.includes('H2O'));
   assert.ok(events.some((e) => e.type === 'discovered' && e.substance.id === 'H2O'));
@@ -129,10 +161,10 @@ test('produzir água completa o objetivo e gera eventos de descoberta', () => {
 });
 
 test('completar o nível 1 desbloqueia o nível 2', () => {
-  let s = initialState(data);
+  let s = skipFundamentals(initialState(data));
   s = applyResult(s, engine.combine(['H2', 'O2', 'faisca']), data).state;
   const { state, events } = applyResult(s, engine.combine(['Na', 'Cl2']), data);
-  assert.equal(state.levelIndex, 1);
+  assert.equal(state.levelIndex, idx('n2'));
   assert.ok(state.unlockedElements.includes('C'));
   assert.ok(events.some((e) => e.type === 'level-complete'));
 });
@@ -159,6 +191,26 @@ test('save da versão 1 é migrado refazendo o caminho pelo histórico', () => {
   assert.ok(restored.produced.includes('Ca(OH)2'), 'histórico preservado');
 });
 
+test('save da versão 2 (antes dos fundamentos) continua no mesmo nível', async () => {
+  // Jogador da v2 que tinha concluído n1–n4 e estava no n5. Na v2 não havia os níveis de
+  // fundamentos, então o levelIndex salvo era 5 posições menor.
+  let s = skipFundamentals(initialState(data));
+  while (levels[s.levelIndex].id !== 'n5') s = (await playLevel(s)).state;
+  const fIds = new Set(levels.filter((l) => l.since === 3).flatMap((l) => l.objectives.map((o) => o.id)));
+  const v2 = {
+    ...s,
+    version: 2,
+    levelIndex: idx('n5') - levels.filter((l) => l.since === 3).length,
+    stoichSolved: s.stoichSolved.filter((id) => !fIds.has(id)),
+    completedObjectives: s.completedObjectives.filter((id) => !fIds.has(id)),
+  };
+  const restored = restoreState(JSON.parse(JSON.stringify(v2)), data);
+  assert.equal(restored.version, STATE_VERSION);
+  assert.equal(levels[restored.levelIndex].id, 'n5', 'não volta para os fundamentos');
+  assert.ok([...fIds].every((id) => restored.completedObjectives.includes(id)), 'fundamentos contam como feitos');
+  assert.deepEqual(restored.produced, s.produced);
+});
+
 test('save da versão atual é restaurado como está', () => {
   let s = initialState(data);
   s = applyResult(s, engine.combine(['H2', 'O2', 'faisca']), data).state;
@@ -179,8 +231,8 @@ test('estequiometria: resposta errada não conta; certa (com vírgula e arredond
 
 test('quem terminou a Fase 1 entra na Fase 2 ao carregar o jogo', async () => {
   let s = initialState(data);
-  for (let i = 0; i < levels.length && levels[i].phase === 1; i++) s = (await playLevel(s)).state;
   const phase1Last = levels.findLastIndex((l) => l.phase === 1);
+  for (let i = 0; i <= phase1Last; i++) s = (await playLevel(s)).state;
   const oldSave = { ...s, finished: true, levelIndex: phase1Last };
   const restored = restoreState(JSON.parse(JSON.stringify(oldSave)), data);
   assert.equal(restored.finished, false);

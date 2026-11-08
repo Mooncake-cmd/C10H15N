@@ -4691,6 +4691,204 @@
         "topic": "Seção 15.7: cores de chama dos metais alcalino-terrosos",
         "pages": "625"
       }
+    },
+    {
+      "id": "mudanca-fisica",
+      "term": "Mudança física",
+      "aliases": [
+        "mudanças físicas",
+        "transformação física",
+        "transformações físicas"
+      ],
+      "definition": "Transformação em que a substância continua a mesma: muda o estado, a forma ou o tamanho, mas as partículas antes e depois são as mesmas.",
+      "example": "Gelo derretendo: antes e depois, só moléculas de H₂O.",
+      "related": [
+        "mudanca-quimica",
+        "estado-fisico",
+        "propriedade-fisica"
+      ],
+      "source": {
+        "ref": "kotz",
+        "topic": "Cap. 1: mudanças físicas e químicas",
+        "pages": "15"
+      }
+    },
+    {
+      "id": "mudanca-quimica",
+      "term": "Mudança química",
+      "aliases": [
+        "mudanças químicas",
+        "transformação química",
+        "transformações químicas"
+      ],
+      "definition": "Transformação em que uma ou mais substâncias (os reagentes) viram substâncias diferentes (os produtos) — é o mesmo que reação química.",
+      "example": "Hidrogênio queimando com oxigênio: os gases somem e aparece água.",
+      "related": [
+        "mudanca-fisica",
+        "reacao-quimica"
+      ],
+      "source": {
+        "ref": "kotz",
+        "topic": "Cap. 1: mudanças físicas e químicas (o balão de hidrogênio)",
+        "pages": "15"
+      }
+    },
+    {
+      "id": "massa-atomica",
+      "term": "Massa atômica",
+      "aliases": [
+        "massas atômicas",
+        "peso atômico",
+        "pesos atômicos"
+      ],
+      "definition": "A massa média dos átomos de um elemento, levando em conta quanto existe de cada isótopo na natureza. É o número com vírgula que aparece na tabela periódica.",
+      "example": "Cloro: 35,45 — a média de cerca de 76% de ³⁵Cl e 24% de ³⁷Cl.",
+      "related": [
+        "isotopo",
+        "numero-de-massa",
+        "massa-molar"
+      ],
+      "source": {
+        "ref": "kotz",
+        "topic": "Cap. 2: peso atômico",
+        "pages": "60–61"
+      }
+    },
+    {
+      "id": "fusao",
+      "term": "Fusão",
+      "aliases": [],
+      "exclude": [
+        "fusão nuclear"
+      ],
+      "definition": "Passagem do estado sólido para o líquido, quando o sólido recebe calor. A temperatura em que acontece é o ponto de fusão.",
+      "example": "Gelo derretendo a 0 °C: H₂O(s) → H₂O(l).",
+      "related": [
+        "solidificacao",
+        "estado-fisico",
+        "mudanca-fisica"
+      ],
+      "source": {
+        "ref": "kotz",
+        "topic": "Cap. 5: energia e mudanças de estado",
+        "pages": "233"
+      }
+    },
+    {
+      "id": "solidificacao",
+      "term": "Solidificação",
+      "aliases": [
+        "solidificar",
+        "solidifica"
+      ],
+      "definition": "Passagem do estado líquido para o sólido, quando o líquido perde calor. É o contrário da fusão.",
+      "example": "Água virando gelo no congelador.",
+      "related": [
+        "fusao",
+        "estado-fisico"
+      ],
+      "source": {
+        "ref": "kotz",
+        "topic": "Cap. 5: energia e mudanças de estado",
+        "pages": "233"
+      }
+    },
+    {
+      "id": "vaporizacao",
+      "term": "Vaporização",
+      "aliases": [
+        "ebulição",
+        "vaporizar"
+      ],
+      "definition": "Passagem do estado líquido para o gasoso. Quando acontece com bolhas por todo o líquido, na temperatura certa (o ponto de ebulição), chama-se ebulição.",
+      "example": "Água fervendo a 100 °C: as bolhas são vapor de H₂O.",
+      "related": [
+        "condensacao",
+        "evaporacao",
+        "estado-fisico"
+      ],
+      "source": {
+        "ref": "kotz",
+        "topic": "Cap. 5: energia e mudanças de estado (calor de vaporização)",
+        "pages": "233"
+      }
+    },
+    {
+      "id": "condensacao",
+      "term": "Condensação",
+      "aliases": [
+        "condensa",
+        "condensar",
+        "condensam"
+      ],
+      "definition": "Passagem do estado gasoso para o líquido, quando o gás perde calor. É o contrário da vaporização.",
+      "example": "Gotas no lado de fora de um copo gelado: o vapor do ar condensa.",
+      "related": [
+        "vaporizacao",
+        "estado-fisico"
+      ],
+      "source": {
+        "ref": "kotz",
+        "topic": "Cap. 5: energia e mudanças de estado",
+        "pages": "233"
+      }
+    },
+    {
+      "id": "sublimacao",
+      "term": "Sublimação",
+      "aliases": [
+        "sublima",
+        "sublimar"
+      ],
+      "definition": "Passagem direta do estado sólido para o gasoso, sem virar líquido.",
+      "example": "Gelo-seco (CO₂ sólido, a −78 °C) some no ar sem molhar nada.",
+      "related": [
+        "estado-fisico",
+        "mudanca-fisica"
+      ],
+      "source": {
+        "ref": "kotz",
+        "topic": "Cap. 5: o gelo-seco sublima",
+        "pages": "237"
+      }
+    },
+    {
+      "id": "subcamada",
+      "term": "Subcamada",
+      "aliases": [
+        "subcamadas",
+        "subnível",
+        "subníveis"
+      ],
+      "definition": "Parte de uma camada eletrônica. Há quatro tipos, s, p, d e f, que comportam no máximo 2, 6, 10 e 14 elétrons.",
+      "example": "Oxigênio: 1s² 2s² 2p⁴ — a camada 2 tem as subcamadas 2s (2 elétrons) e 2p (4).",
+      "related": [
+        "configuracao-eletronica",
+        "diagrama-de-pauling"
+      ],
+      "source": {
+        "ref": "bernoulli",
+        "topic": "v. 1, Frente C, Módulo 04: distribuição eletrônica (subníveis)",
+        "pages": "61–62"
+      }
+    },
+    {
+      "id": "diagrama-de-pauling",
+      "term": "Diagrama de Pauling",
+      "aliases": [
+        "diagrama de energia"
+      ],
+      "definition": "Ordem em que as subcamadas recebem elétrons: 1s 2s 2p 3s 3p 4s 3d 4p 5s… Alguns metais de transição (como Cr e Cu) fogem um pouco dela.",
+      "example": "Ferro (26 elétrons): 1s² 2s² 2p⁶ 3s² 3p⁶ 4s² 3d⁶ — a 4s enche antes da 3d.",
+      "related": [
+        "subcamada",
+        "configuracao-eletronica"
+      ],
+      "source": {
+        "ref": "bernoulli",
+        "topic": "v. 1, Frente C, Módulo 04: distribuição eletrônica (diagrama de Linus Pauling)",
+        "pages": "61–62"
+      }
     }
   ]
 }
