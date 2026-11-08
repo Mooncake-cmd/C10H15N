@@ -1,6 +1,7 @@
 {
   "_meta": {
-    "description": "Níveis da Fase 1. Ao completar todos os objetivos de um nível, o próximo é liberado e seus 'unlocks' entram no inventário. Os testes verificam que todo objetivo é alcançável com o que já foi desbloqueado até aquele nível.",
+    "description": "Níveis do jogo, em ordem (os da Fase 4A, fundamentos, vêm primeiro). Ao completar todos os objetivos de um nível, o próximo é liberado e seus 'unlocks' entram no inventário. Os testes verificam que todo objetivo é alcançável com o que já foi desbloqueado até aquele nível.",
+    "levelFields": "phase: número da fase; phaseLabel: nome mostrado no lugar de 'Fase N' (ex.: 'Fundamentos'); since: versão do save em que o nível entrou — para saves mais antigos, as perguntas dele contam como respondidas (o jogador não volta ao começo)",
     "unlocks": "elements: símbolos (entra a forma elementar, de substances.json); substances: reagentes entregues prontos; items: ferramentas",
     "objectiveTypes": {
       "produce": "{ substance } — obter a substância como PRODUTO de uma reação",
@@ -9,16 +10,197 @@
       "nonReaction": "{ reasonId } — tentar uma combinação que não reage e ver o porquê. reasonId é o id em non-reactions.json ou 'rule:<id>' de uma regra genérica",
       "reaction": "{ reaction } — fazer uma reação específica (id de reactions.json, ou 'gen:A+B' de uma reação gerada por regra); útil quando o produto já pode ter sido obtido por outro caminho",
       "thermo": "{ sign: 'exo' | 'endo', minKJ? } — ter feito uma reação que libera (exo) ou absorve (endo) calor, pelo ΔH° calculado; minKJ exige |ΔH°| mínimo (Fase 3A)",
+      "quiz": "{ choices: [{ value, label, why }], answer, source } — pergunta de escolha (Fase 4A); cada alternativa explica por que está certa ou errada",
+      "atom": "{ element, massNumber, charge?, ask: 'protons' | 'neutrons' | 'electrons' } — partículas de um átomo ou íon (Fase 4A); resposta calculada pelo Z do dataset",
+      "electrons": "{ element, ask: 'shells' | 'config' | 'valence' } — distribuição eletrônica (Fase 4A): camadas do dataset, subcamadas pelo diagrama de Pauling ou elétrons de valência",
+      "state": "{ element } — estado físico do elemento (Fase 4A), do dataset (phaseAtSTP)",
+      "naming": "{ cation, anion, ask: 'name' | 'formula', choices: [{ value, why }] } — nome ou fórmula de um composto iônico (Fase 4A); resposta calculada por ions.js",
       "stoich": "{ reaction, given: { idDoReagente: medida }, ask: idDoProduto | 'limiting' | 'yield' | 'heat', unit?: 'g' | 'mol' | 'L', actual?: { id, g } } — pergunta de estequiometria; a resposta certa é calculada (tolerância de 2%). medida: gramas, { mol }, { L } de gás (25 °C, 1 atm) ou { mL, M } de solução"
     }
   },
   "levels": [
     {
+      "id": "f1",
+      "phase": 4,
+      "phaseLabel": "Fundamentos",
+      "since": 3,
+      "title": "Do que as coisas são feitas",
+      "intro": "Antes de misturar, vale saber o que se mistura. Uma substância pura tem composição fixa: água (H2O), sal de cozinha (NaCl), ouro. Uma mistura junta duas ou mais substâncias que podem ser separadas por meios físicos. Se a mistura parece uma coisa só, mesmo de perto, é homogênea (água com sal, o ar); se dá para ver as partes, é heterogênea (água e óleo). Responda às perguntas — a bancada já está liberada, se quiser experimentar.",
+      "unlocks": { "elements": ["H", "O", "Na", "Cl"], "items": ["calor", "faisca"] },
+      "objectives": [
+        { "id": "f1-ar", "type": "quiz", "text": "O ar que respiramos é…", "answer": "homogenea",
+          "choices": [
+            { "value": "pura", "label": "uma substância pura", "why": "Não: o ar tem nitrogênio, oxigênio, argônio, gás carbônico e vapor de água — várias substâncias." },
+            { "value": "homogenea", "label": "uma mistura homogênea", "why": "Isso: são vários gases, mas a mistura é igual em qualquer ponto; nenhuma lupa mostra partes diferentes." },
+            { "value": "heterogenea", "label": "uma mistura heterogênea", "why": "Não: no ar limpo não dá para ver partes diferentes, nem com lupa. A mistura é igual em todo ponto, então é homogênea." }
+          ],
+          "source": { "ref": "kotz", "topic": "Cap. 1: misturas heterogêneas e homogêneas", "pages": "8–9" } },
+        { "id": "f1-oleo", "type": "quiz", "text": "Água e óleo no mesmo copo formam…", "answer": "heterogenea",
+          "choices": [
+            { "value": "pura", "label": "uma substância pura", "why": "Não: são duas substâncias (água e óleo), e cada uma continua lá, separada." },
+            { "value": "homogenea", "label": "uma mistura homogênea", "why": "Não: dá para ver duas camadas, com propriedades diferentes. Uma mistura homogênea seria igual em todo ponto." },
+            { "value": "heterogenea", "label": "uma mistura heterogênea", "why": "Isso: o óleo não se dissolve na água e fica numa camada por cima; dá para ver as partes." }
+          ],
+          "source": { "ref": "kotz", "topic": "Cap. 1: misturas heterogêneas e homogêneas", "pages": "9" } },
+        { "id": "f1-agua", "type": "quiz", "text": "A água destilada (só moléculas de H2O) é…", "answer": "composto",
+          "choices": [
+            { "value": "elemento", "label": "um elemento", "why": "Não: um elemento tem um tipo só de átomo. A água tem dois, hidrogênio e oxigênio." },
+            { "value": "composto", "label": "um composto (substância pura)", "why": "Isso: hidrogênio e oxigênio combinados numa proporção fixa, sempre 2 H para 1 O." },
+            { "value": "mistura", "label": "uma mistura", "why": "Não: na água destilada há uma substância só, H2O. Uma mistura teria duas ou mais." }
+          ],
+          "source": { "ref": "kotz", "topic": "Cap. 1: elementos, compostos e substâncias puras", "pages": "8–11" } },
+        { "id": "f1-gelo", "type": "quiz", "text": "Gelo derretendo é uma mudança…", "answer": "fisica",
+          "choices": [
+            { "value": "fisica", "label": "física", "why": "Isso: o estado muda (sólido → líquido), mas as moléculas continuam sendo H2O. Nenhuma substância nova aparece." },
+            { "value": "quimica", "label": "química", "why": "Não: numa mudança química aparece uma substância nova. A água derretida continua sendo H2O, como o gelo." }
+          ],
+          "source": { "ref": "kotz", "topic": "Cap. 1: mudanças físicas e químicas", "pages": "15" } },
+        { "id": "f1-queima", "type": "quiz", "text": "Hidrogênio queimando com oxigênio e virando água é uma mudança…", "answer": "quimica",
+          "choices": [
+            { "value": "fisica", "label": "física", "why": "Não: os gases H2 e O2 somem e aparece uma substância nova, a água. Isso é uma reação química." },
+            { "value": "quimica", "label": "química", "why": "Isso: os átomos se rearranjam e formam uma substância nova, H2O. É uma reação química — o tipo de coisa que a bancada faz." }
+          ],
+          "source": { "ref": "kotz", "topic": "Cap. 1: mudanças físicas e químicas", "pages": "15" } }
+      ],
+      "lesson": "Mudança física muda o estado, a forma ou o tamanho, mas a substância continua a mesma (gelo derretido ainda é H2O). Mudança química — a reação — forma substâncias novas. Misturas se separam por meios físicos; compostos, só por reações."
+    },
+    {
+      "id": "f2",
+      "phase": 4,
+      "phaseLabel": "Fundamentos",
+      "since": 3,
+      "title": "Dentro do átomo",
+      "intro": "Todo átomo tem um núcleo com prótons (carga +) e nêutrons (sem carga), e elétrons (carga −) em volta. O número de prótons é o número atômico, Z, e diz qual é o elemento: todo átomo com 11 prótons é sódio. O número de massa, A, é prótons + nêutrons. Um átomo neutro tem tantos elétrons quanto prótons; um íon ganhou ou perdeu elétrons. Abra a tabela periódica para achar o Z de cada elemento.",
+      "objectives": [
+        { "id": "f2-na-p", "type": "atom", "element": "Na", "massNumber": 23, "ask": "protons", "unitLabel": "prótons",
+          "text": "Quantos prótons tem um átomo de sódio-23 (²³Na)?", "hint": "Os prótons são o número atômico (Z) — está no quadradinho do sódio na tabela periódica.",
+          "source": { "ref": "kotz", "topic": "Cap. 2: número atômico e número de massa", "pages": "56–57" } },
+        { "id": "f2-na-n", "type": "atom", "element": "Na", "massNumber": 23, "ask": "neutrons", "unitLabel": "nêutrons",
+          "text": "E quantos nêutrons tem esse átomo de sódio-23?", "hint": "Número de massa = prótons + nêutrons. Então nêutrons = A − Z.",
+          "source": { "ref": "kotz", "topic": "Cap. 2: número de massa (exemplo do sódio-23)", "pages": "57" } },
+        { "id": "f2-c13", "type": "atom", "element": "C", "massNumber": 13, "ask": "neutrons", "unitLabel": "nêutrons",
+          "text": "O carbono-13 (¹³C) é um isótopo do carbono. Quantos nêutrons ele tem?", "hint": "Todo carbono tem 6 prótons; o que muda de um isótopo para outro é o número de nêutrons.",
+          "source": { "ref": "kotz", "topic": "Cap. 2: isótopos", "pages": "58" } },
+        { "id": "f2-cl-ion", "type": "atom", "element": "Cl", "massNumber": 35, "charge": -1, "ask": "electrons", "unitLabel": "elétrons",
+          "text": "O íon cloreto (³⁵Cl⁻) tem carga 1−. Quantos elétrons ele tem?", "hint": "Carga negativa = elétrons a mais que prótons. O cloro tem 17 prótons.",
+          "source": { "ref": "kotz", "topic": "Cap. 2: íons — ânions monoatômicos", "pages": "76–77" } },
+        { "id": "f2-massa", "type": "quiz", "text": "Na tabela, a massa atômica do cloro é 35,45. Por que não é um número inteiro?", "answer": "media",
+          "choices": [
+            { "value": "meio", "label": "o átomo tem 'meio' nêutron", "why": "Não: cada átomo tem um número inteiro de prótons e de nêutrons. O 35,45 descreve muitos átomos, não um só." },
+            { "value": "media", "label": "é a média dos isótopos", "why": "Isso: o cloro natural é uma mistura de cerca de 76% de ³⁵Cl e 24% de ³⁷Cl, e 35,45 é a média ponderada das massas." },
+            { "value": "eletrons", "label": "por causa dos elétrons", "why": "Não: o elétron tem cerca de 1/2000 da massa de um próton; isso não chega a explicar meia unidade." }
+          ],
+          "source": { "ref": "kotz", "topic": "Cap. 2: peso atômico (média dos isótopos do cloro)", "pages": "60–61" } }
+      ],
+      "lesson": "Z (prótons) define o elemento. Os nêutrons podem variar — são os isótopos, e a massa da tabela é a média deles. Os elétrons podem ser ganhos ou perdidos — são os íons: Na⁺ perdeu 1 elétron, Cl⁻ ganhou 1."
+    },
+    {
+      "id": "f3",
+      "phase": 4,
+      "phaseLabel": "Fundamentos",
+      "since": 3,
+      "title": "Onde ficam os elétrons",
+      "intro": "Os elétrons ocupam camadas em volta do núcleo: K, L, M, N… Cada camada tem subcamadas (s, p, d, f), que comportam no máximo 2, 6, 10 e 14 elétrons e são preenchidas numa ordem fixa, a do diagrama de Pauling: 1s 2s 2p 3s 3p 4s 3d 4p… Os elétrons da última camada são os elétrons de valência: são eles que decidem como o elemento reage.",
+      "objectives": [
+        { "id": "f3-na-camadas", "type": "electrons", "element": "Na", "ask": "shells", "unitLabel": "ex.: 2, 8, …",
+          "text": "Distribua os 11 elétrons do sódio nas camadas K, L, M (escreva os números separados por vírgula).", "hint": "K comporta 2, L comporta 8; o que sobrar vai para a M.",
+          "source": { "ref": "bernoulli", "topic": "v. 1, Frente C, Módulo 04: distribuição eletrônica em camadas", "pages": "61–62" } },
+        { "id": "f3-o-config", "type": "electrons", "element": "O", "ask": "config", "unitLabel": "ex.: 1s2 2s2 …",
+          "text": "Escreva a distribuição dos 8 elétrons do oxigênio em subcamadas.", "hint": "Siga a ordem 1s, 2s, 2p, enchendo cada uma (s cabe 2, p cabe 6) até completar 8.",
+          "source": { "ref": "kotz", "topic": "Cap. 7: configuração eletrônica dos átomos", "pages": "314" } },
+        { "id": "f3-cl-valencia", "type": "electrons", "element": "Cl", "ask": "valence", "unitLabel": "elétrons",
+          "text": "Quantos elétrons de valência tem o cloro (17 elétrons)?", "hint": "Distribua em camadas (2, 8, …) e conte os da última.",
+          "source": { "ref": "kotz", "topic": "Cap. 7: elétrons de valência", "pages": "316" } },
+        { "id": "f3-familia", "type": "quiz", "text": "Lítio, sódio e potássio reagem de modo muito parecido com a água. Por quê?", "answer": "valencia",
+          "choices": [
+            { "value": "massa", "label": "têm massas parecidas", "why": "Não: as massas são bem diferentes (cerca de 7, 23 e 39). O que se repete é outra coisa." },
+            { "value": "valencia", "label": "têm 1 elétron na última camada", "why": "Isso: os três são do grupo 1 e têm 1 elétron de valência, que perdem com facilidade. Mesmo grupo, química parecida." },
+            { "value": "metal", "label": "são metais", "why": "Ser metal não basta: o ferro e o cobre também são metais e não reagem assim com água fria. O que os três têm em comum é 1 elétron de valência." }
+          ],
+          "source": { "ref": "kotz", "topic": "Cap. 7: elétrons de valência; o grupo 1A tem um elétron s na última camada", "pages": "316" } }
+      ],
+      "lesson": "Elementos da mesma coluna (grupo) têm o mesmo número de elétrons de valência e, por isso, química parecida — é por isso que a tabela periódica tem esse formato. Nos próximos níveis você vai ver o sódio, que tem 1 elétron de valência, reagir com o cloro, que tem 7."
+    },
+    {
+      "id": "f4",
+      "phase": 4,
+      "phaseLabel": "Fundamentos",
+      "since": 3,
+      "title": "Sólido, líquido e gás",
+      "intro": "A mesma substância pode estar sólida, líquida ou gasosa, conforme a temperatura e a pressão. No sólido as partículas só vibram no lugar; no líquido deslizam umas sobre as outras; no gás ficam soltas e afastadas. As mudanças de estado têm nomes: fusão (sólido → líquido), solidificação (líquido → sólido), vaporização (líquido → gás; ebulição quando ferve), condensação (gás → líquido) e sublimação (sólido → gás, direto).",
+      "objectives": [
+        { "id": "f4-br", "type": "state", "element": "Br", "text": "Em que estado está o bromo (Br2) à temperatura ambiente?",
+          "hint": "O bromo é um dos dois únicos elementos líquidos nessas condições (o outro é o mercúrio)." },
+        { "id": "f4-cl", "type": "state", "element": "Cl", "text": "E o cloro (Cl2), vizinho do bromo na tabela?",
+          "hint": "Na coluna dos halogênios, flúor e cloro são gases, bromo é líquido e iodo é sólido." },
+        { "id": "f4-gelo-seco", "type": "quiz", "text": "O gelo-seco (CO2 sólido, a −78 °C) some sem nunca virar líquido. Que mudança é essa?", "answer": "sublimacao",
+          "choices": [
+            { "value": "fusao", "label": "fusão", "why": "Não: fusão é virar líquido, e o gelo-seco nunca fica molhado." },
+            { "value": "sublimacao", "label": "sublimação", "why": "Isso: o CO2 passa direto de sólido a gás. É uma mudança física — o gás continua sendo CO2." },
+            { "value": "condensacao", "label": "condensação", "why": "Não para o CO2: ele passa de sólido a gás. A névoa branca em volta é vapor de água do ar que condensa no frio — mas o gelo-seco em si sublima." }
+          ],
+          "source": { "ref": "kotz", "topic": "Cap. 5: o gelo-seco sublima", "pages": "237" } },
+        { "id": "f4-copo", "type": "quiz", "text": "Num dia quente, um copo com gelo fica molhado por fora. De onde vem essa água?", "answer": "condensacao",
+          "choices": [
+            { "value": "vazou", "label": "vazou pelo vidro", "why": "Não: o vidro não deixa a água passar. Uma lata de refrigerante gelada, sem gelo dentro, também fica molhada." },
+            { "value": "condensacao", "label": "do vapor do ar, que condensa", "why": "Isso: o vapor de água do ar esfria ao tocar o copo frio e condensa (gás → líquido)." },
+            { "value": "fusao", "label": "do gelo derretendo", "why": "Não: o gelo derrete dentro do copo. A água de fora vem do ar." }
+          ],
+          "source": { "ref": "kotz", "topic": "Cap. 5: mudanças de estado", "pages": "233" } },
+        { "id": "f4-ferver", "type": "quiz", "text": "Quando a água ferve, as bolhas grandes são feitas de…", "answer": "vapor",
+          "choices": [
+            { "value": "vapor", "label": "vapor de água (H2O gasoso)", "why": "Isso: são moléculas de H2O no estado gasoso. Ferver é mudança física — a água continua sendo H2O." },
+            { "value": "h2o2", "label": "hidrogênio e oxigênio", "why": "Não: ferver não quebra as moléculas de água. Separar H e O exige uma reação, como a eletrólise." },
+            { "value": "ar", "label": "ar", "why": "Não: no começo saem bolhinhas do ar que estava dissolvido, mas as bolhas grandes da fervura são vapor de água." }
+          ],
+          "source": { "ref": "kotz", "topic": "Cap. 1: mudança física (a evaporação de um líquido)", "pages": "15" } }
+      ],
+      "lesson": "Mudar de estado é mudança física: a substância continua a mesma, só muda o quanto as partículas estão presas umas às outras. Aquecer dá energia para soltá-las (fusão, vaporização, sublimação); esfriar faz o contrário (condensação, solidificação)."
+    },
+    {
+      "id": "f5",
+      "phase": 4,
+      "phaseLabel": "Fundamentos",
+      "since": 3,
+      "title": "Nomes e fórmulas",
+      "intro": "Um composto iônico junta um cátion (íon +) e um ânion (íon −). O nome vem nesta ordem: primeiro o ânion, depois 'de' e o cátion — cloreto de sódio, sulfato de cobre. Na fórmula vem primeiro o cátion, e os índices são os que fazem as cargas se anularem: Ca²⁺ com dois Cl⁻ dá CaCl2. Quando um metal pode ter mais de uma carga, como o ferro (Fe²⁺ ou Fe³⁺), a carga entra no nome em algarismo romano: cloreto de ferro(II), cloreto de ferro(III).",
+      "objectives": [
+        { "id": "f5-cacl2", "type": "naming", "cation": "Ca^2+", "anion": "Cl-", "ask": "formula", "text": "Qual a fórmula do composto de Ca²⁺ e Cl⁻?",
+          "choices": [
+            { "value": "CaCl", "why": "Não: Ca²⁺ tem carga +2 e um Cl⁻ só anula −1. Sobraria carga +1." },
+            { "value": "CaCl2", "why": "Isso: +2 + 2 × (−1) = 0." },
+            { "value": "Ca2Cl", "why": "Não: dois Ca²⁺ dão +4, e um Cl⁻ só −1. As cargas não se anulam." }
+          ],
+          "source": { "ref": "kotz", "topic": "Cap. 2: fórmulas de compostos iônicos (exemplo do CaCl2)", "pages": "79" } },
+        { "id": "f5-al2o3", "type": "naming", "cation": "Al^3+", "anion": "O^2-", "ask": "formula", "text": "Qual a fórmula do óxido de alumínio (Al³⁺ e O²⁻)?",
+          "choices": [
+            { "value": "AlO", "why": "Não: +3 − 2 = +1. As cargas não se anulam." },
+            { "value": "Al3O2", "why": "Não: 3 × (+3) + 2 × (−2) = +5. Os índices estão trocados." },
+            { "value": "Al2O3", "why": "Isso: 2 × (+3) + 3 × (−2) = 0. Dica: a carga de um vira o índice do outro." }
+          ],
+          "source": { "ref": "kotz", "topic": "Cap. 2: fórmulas de compostos iônicos (exemplo do CaCl2)", "pages": "79" } },
+        { "id": "f5-na2so4", "type": "naming", "cation": "Na+", "anion": "SO4^2-", "ask": "name", "text": "Qual o nome de Na2SO4 (Na⁺ e o íon sulfato, SO4²⁻)?",
+          "choices": [
+            { "value": "Sódio de sulfato", "why": "Não: o nome começa pelo ânion. Primeiro sulfato, depois 'de sódio'." },
+            { "value": "Sulfato de sódio", "why": "Isso: ânion (sulfato) + de + cátion (sódio)." },
+            { "value": "Sulfeto de sódio", "why": "Não: sulfeto é o S²⁻, só enxofre. O SO4²⁻, com oxigênio, é o sulfato." }
+          ],
+          "source": { "ref": "kotz", "topic": "Cap. 2: nomes de compostos iônicos e íons poliatômicos", "pages": "78–82" } },
+        { "id": "f5-fecl3", "type": "naming", "cation": "Fe^3+", "anion": "Cl-", "ask": "name", "text": "Qual o nome de FeCl3 (Fe³⁺ e Cl⁻)?",
+          "choices": [
+            { "value": "Cloreto de ferro", "why": "Incompleto: o ferro forma Fe²⁺ e Fe³⁺, então o nome precisa dizer qual (em algarismo romano)." },
+            { "value": "Cloreto de ferro(II)", "why": "Não: três Cl⁻ somam −3, então o ferro aqui é Fe³⁺ — ferro(III)." },
+            { "value": "Cloreto de ferro(III)", "why": "Isso: três Cl⁻ (−3) pedem Fe³⁺, e o (III) diz qual íon do ferro é." }
+          ],
+          "source": { "ref": "kotz", "topic": "Cap. 2: a carga dos cátions de metais de transição em algarismo romano", "pages": "81" } }
+      ],
+      "lesson": "Nome: ânion + 'de' + cátion, com a carga em algarismo romano se o metal tiver mais de uma. Fórmula: cátion primeiro e índices que anulam as cargas. Com isso você lê quase todos os sais e óxidos do jogo. Agora, à bancada!"
+    },
+    {
       "id": "n1",
       "phase": 1,
       "title": "Elementos e compostos",
       "intro": "Tudo à sua volta é feito de elementos químicos — os quadradinhos da tabela periódica. Quando elementos se combinam, formam compostos com propriedades novas. Comece com quatro: hidrogênio, oxigênio, sódio e cloro. Clique para colocar na bancada e aperte 'Reagir'.",
-      "unlocks": { "elements": ["H", "O", "Na", "Cl"], "items": ["calor", "faisca"] },
       "objectives": [
         { "id": "n1-agua", "type": "produce", "substance": "H2O", "text": "Produza água",
           "hint": "Hidrogênio + oxigênio. Será que basta misturar? Talvez precise de uma faísca..." },

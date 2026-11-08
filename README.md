@@ -10,7 +10,7 @@ curados e mais 81 gerados a partir de íons, 53 reações curadas, 17 "não-rea�
 **motor de regras** que monta e balanceia sozinho cerca de 750 reações a partir de regras gerais
 (solubilidade, ácido-base, série eletroquímica, combustão, decomposição), com explicação, fonte e
 segurança. Há também uma calculadora de estequiometria (massa, mol, litros de gás, solução em
-mol/L e rendimento), 19 níveis de progressão e um **glossário** com mais de 240 termos: nos textos, as palavras de química ficam sublinhadas e mostram a
+mol/L e rendimento), 24 níveis de progressão (os 5 primeiros são os fundamentos da Fase 4A) e um **glossário** com mais de 240 termos: nos textos, as palavras de química ficam sublinhadas e mostram a
 definição ao toque. Na tabela periódica, cada um dos 118 elementos tem **curiosidades** (leitura
 complementar, com a página do livro da DK), e a tabela pode ser colorida por raio atômico,
 energia de ionização, afinidade eletrônica ou eletronegatividade.
@@ -25,6 +25,10 @@ Proust e Dalton e, quando sai H₂, O₂ ou CO₂, como identificar o gás. No t
 fórmula mínima). No painel 🗺️ **Missões**, 16 histórias com kit limitado e tentativas
 contadas, montadas a partir de aulas práticas de laboratório; no 🧰 **Laboratório**, os utensílios
 (com desenho e uso), a separação de misturas e o teste de chama.
+
+**Fase 4 (aprendizagem) em andamento.** 4A pronta: o jogo começa por 5 níveis curtos de
+**fundamentos** — matéria e misturas, partículas do átomo, distribuição dos elétrons, estados
+físicos e nomes de compostos —, com respostas calculadas e o porquê de cada erro.
 
 ## Como rodar
 
@@ -106,6 +110,8 @@ src/core/                   química e regras do jogo — sem DOM, testável no 
   engine.js                 motor de combinação (resolvers + explainers)
   rules/                    explicações de "não reage" (gás nobre, só metais, série de reatividade...)
   progression.js            estado do jogador, objetivos, níveis (e as transições das missões)
+  fundamentals.js           fundamentos (Fase 4A): partículas do átomo, camadas e diagrama de Pauling,
+                            estado físico, nomes e fórmulas; resposta certa e o porquê de cada erro
   missions.js               corrida de uma missão: kit, etapas, tentativas, contas e o caminho da conta (Fase 3F)
   lab.js                    separação de misturas (método × mistura, com o porquê) e teste de chama
   balancer.js               balanceamento automático (espaço nulo com frações exatas)
@@ -257,7 +263,8 @@ diz que não tem a cor em vez de inventar.
 As reações citam livros-texto de química geral (Brown et al., *Química: a ciência central*;
 Atkins & Jones, *Princípios de Química*; Kotz et al., *Química Geral e Reações Químicas*;
 Greenwood & Earnshaw, *Chemistry of the Elements*) e o *CRC Handbook* para os potenciais-padrão.
-Essas citações indicam o **tópico**, sem página. As regras da Fase 2 e as confirmações em
+Essas citações indicam o **tópico**, sem página (os fundamentos da Fase 4A citam o Kotz com
+página; a numeração continua do v. 1 para o v. 2, que começa na p. 616). As regras da Fase 2 e as confirmações em
 `seeAlso` citam **seção e página** de Atkins & Jones, *Chemical Principles*, 5. ed. (2010),
 conferidas no livro.
 
@@ -278,6 +285,31 @@ de magnésio, cor de chama do cobre).
 Dados dos elementos: [Periodic-Table-JSON](https://github.com/Bowserinator/Periodic-Table-JSON),
 compilado da Wikipédia (CC BY-SA). As massas atômicas são arredondadas a 5 algarismos
 significativos e conferidas com a IUPAC nos testes.
+
+## Fase 4A: fundamentos
+
+Os 5 primeiros níveis (`f1`–`f5` em `progression.json`, `phaseLabel: "Fundamentos"`) ensinam a
+base antes da bancada: substância pura × mistura e mudança física × química; prótons, nêutrons,
+elétrons, isótopos e massa atômica; camadas, subcamadas (diagrama de Pauling) e elétrons de
+valência; estados físicos e mudanças de estado; nome e fórmula de compostos iônicos. Fonte
+principal: Kotz et al., *Química Geral e Reações Químicas*, v. 1 (caps. 1, 2, 5 e 7, com página);
+as camadas K–Q e o diagrama de Pauling, do Bernoulli (v. 1, p. 61–62).
+
+- **Tipos de objetivo novos** (`src/core/fundamentals.js`): `quiz` (escolha, cada alternativa com o
+  porquê), `atom` (prótons = Z, nêutrons = A − Z, elétrons = Z − carga), `electrons` (camadas do
+  dataset, subcamadas pelo diagrama de Pauling ou elétrons de valência), `state` (estado físico do
+  dataset) e `naming` (nome e fórmula por `ions.js`). Nada é digitado nos dados: a resposta certa é
+  calculada, e o teste confere que ela está entre as alternativas.
+- **O porquê do erro, sem entregar a resposta**: confundir número de massa com nêutrons, esquecer a
+  carga do íon, passar do limite de uma camada ou subcamada, somar elétrons a mais. Depois do acerto,
+  a explicação completa fica embaixo do objetivo.
+- **Teste do diagrama**: a ordem de Madelung bate com a configuração do dataset em todos os
+  elementos, menos as exceções reais (Cr, Cu, outros metais de transição, lantanídeos, actinídeos e
+  superpesados); nenhum elemento perguntado no jogo é exceção.
+- **Save**: a versão passou de 2 para 3. Níveis novos levam `since: 3`; para quem já jogava, as
+  perguntas deles contam como respondidas e o jogador continua no nível em que estava. A bancada
+  (H, O, Na, Cl, calor e faísca) já vem liberada no primeiro nível, e o que for feito nela durante
+  os fundamentos conta quando os níveis da Fase 1 chegarem.
 
 ## Fase 3A: energia das reações
 

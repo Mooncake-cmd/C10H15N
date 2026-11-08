@@ -12,10 +12,14 @@ import { equilibriumAnswer } from './equilibrium.js';
 import { moleculeAnswer } from './vsepr.js';
 import { organicAnswer } from './organic.js';
 import { newRun, runCombine, runAnswer, runLab, isMissionAvailable } from './missions.js';
+import { FUNDAMENTAL_TYPES, isFundamentalsAnswerRight } from './fundamentals.js';
 
-export const STATE_VERSION = 2;
+export const STATE_VERSION = 3;
 // v1 → v2: um nível novo (metais alcalino-terrosos) entrou no meio da Fase 1, então o
 // levelIndex salvo deixou de valer. A migração refaz o caminho a partir do histórico.
+// v2 → v3: Fase 4 (fundamentos no começo e degraus no meio). Níveis marcados com `since: 3`
+// são novos: para quem já jogava, as perguntas deles contam como respondidas (o jogador não
+// é mandado de volta ao começo) e o caminho é refeito pelo histórico.
 
 export function initialState(data) {
   const state = {
@@ -78,6 +82,8 @@ const OBJECTIVE_CHECKS = {
   molecule: (o, h) => h.stoichSolved.has(o.id),
   // Fase 3E: pergunta de química orgânica (nome oficial, função, isomeria).
   organic: (o, h) => h.stoichSolved.has(o.id),
+  // Fase 4: perguntas dos fundamentos (escolha, átomo, elétrons, estado físico, nomes).
+  ...Object.fromEntries(FUNDAMENTAL_TYPES.map((t) => [t, (o, h) => h.stoichSolved.has(o.id)])),
   // Fase 3F: concluir uma missão.
   mission: (o, h) => h.missionsDone.has(o.mission),
   // Fase 3A: ter feito uma reação que libera (exo) ou absorve (endo) calor, opcionalmente com |ΔH°| mínimo.
@@ -219,6 +225,7 @@ export function isMoleculeAnswerRight(objective, answer, data) {
 export const isOrganicAnswerRight = (objective, answer, data) => String(answer) === String(organicAnswer(objective, data));
 
 const ANSWER_CHECKS = {
+  ...Object.fromEntries(FUNDAMENTAL_TYPES.map((t) => [t, isFundamentalsAnswerRight])),
   stoich: isStoichAnswerRight,
   kinetics: isKineticsAnswerRight,
   equilibrium: isEquilibriumAnswerRight,
@@ -316,7 +323,7 @@ export function unlockLevelMap(data) {
 
 /** Valida/migra um estado salvo; devolve null se inválido. */
 export function restoreState(saved, data) {
-  if (!saved || ![1, STATE_VERSION].includes(saved.version)) return null;
+  if (!saved || ![1, 2, STATE_VERSION].includes(saved.version)) return null;
   if (typeof saved.levelIndex !== 'number' || saved.levelIndex < 0) return null;
   const known = (arr, has) => (Array.isArray(arr) ? arr.filter(has) : []);
   const history = {
@@ -337,6 +344,10 @@ export function restoreState(saved, data) {
     }
     return restored;
   }
+  // Saves antigos: as perguntas dos níveis novos (posteriores à versão do save) contam como
+  // respondidas, para o jogador continuar de onde parou.
+  const added = data.progression.levels.filter((l) => (l.since ?? 1) > saved.version).flatMap((l) => l.objectives);
+  history.stoichSolved = [...new Set([...history.stoichSolved, ...added.filter((o) => ANSWER_CHECKS[o.type]).map((o) => o.id)])];
   return replayHistory(history, data);
 }
 
