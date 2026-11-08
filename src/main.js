@@ -3,7 +3,8 @@
 
 import { loadGameData } from './loader.js';
 import { createEngine } from './core/engine.js';
-import { initialState, applyResult, inventory, restoreState, unlockLevelMap, isObjectiveDone, answerObjective, startMission, abandonMission, missionCombine, answerMission, missionLab } from './core/progression.js';
+import { initialState, applyResult, inventory, restoreState, unlockLevelMap, isObjectiveDone, answerObjective, startMission, abandonMission, missionCombine, answerMission, missionLab, reviewsDue, answerReview } from './core/progression.js';
+import { reviewsMastered, REVIEW_INTERVALS } from './core/review.js';
 import { missionInventory, calcWorked, isMissionAvailable } from './core/missions.js';
 import { lookupReaction } from './core/engine.js';
 import { formatFormulaHTML, formatFormulaText } from './core/formula.js';
@@ -65,6 +66,7 @@ async function main() {
   let lastNew = new Set(); // destacadas como "novas" no inventário
   let missionFeedback = null; // último retorno da missão: { kind, html }
   let objectiveFeedback = null; // último erro numa pergunta dos fundamentos: { id, text }
+  let reviewFeedback = null; // último retorno da revisão (Fase 4C): { kind, html }
 
   // Durante uma missão (Fase 3F), só o kit dela (e o que foi produzido nela) vale na bancada.
   const activeMission = () => (state.missionRun ? data.missionsById.get(state.missionRun.id) : null);
@@ -200,6 +202,7 @@ async function main() {
     const doneMission = events.find((e) => e.type === 'mission-complete')?.mission;
     if (doneMission) missionFeedback = null;
     const completed = events.filter((e) => e.type === 'level-complete').map((e) => e.level);
+    if (completed.length) reviewFeedback = null;
     const prefix = doneMission ? missionCompleteHTML(doneMission, data) : '';
     if (completed.length) showLevelDialog(completed, state.levelIndex !== prevLevel ? data.progression.levels[state.levelIndex] : null, prefix);
     else if (prefix) showDialogHTML(prefix);
@@ -216,7 +219,7 @@ async function main() {
     $('#progress-bar').style.width = `${pct}%`;
     $('#progress-bar').parentElement.setAttribute('aria-valuenow', String(pct));
 
-    $('#objectives').innerHTML = (state.missionRun ? missionPanelHTML(state, data, missionFeedback) : '') + html`
+    $('#objectives').innerHTML = (state.missionRun ? missionPanelHTML(state, data, missionFeedback) : '') + reviewHTML() + html`
       <h2>${state.finished ? '🏆 Todas as fases concluídas!' : level.title}</h2>
       <p class="small">${state.finished ? 'Você completou todos os níveis. Continue explorando combinações: com as regras da Fase 2, há centenas de reações e "não-reações" para descobrir.' : level.intro}</p>
       ${raw(
@@ -299,6 +302,43 @@ async function main() {
     const opts = o.choices.map((c) => html`<button type="button" class="btn btn-ghost stoich-choice" data-answer="${c.value}">${c.label}</button>`).join('');
     const view = html`<button type="button" class="btn btn-ghost btn-small" data-open-molecule="${o.molecule}">🧊 Ver ${formatFormulaText(o.molecule)} em 3D</button>`;
     return html`<form class="stoich-form" data-objective="${o.id}"><div class="stoich-row">${raw(opts)}</div>${raw(view)}</form>`;
+  }
+
+  /** Formulário de resposta de qualquer pergunta (usado nos níveis e na revisão). */
+  function answerForm(o) {
+    if (FUNDAMENTAL_TYPES.includes(o.type)) return fundamentalsForm(o);
+    return { stoich: stoichForm, kinetics: kineticsForm, equilibrium: equilibriumForm, molecule: moleculeForm, organic: organicForm }[o.type]?.(o) ?? '';
+  }
+
+  /** Revisão espaçada (Fase 4C): até 3 perguntas de níveis anteriores, de assuntos diferentes. */
+  function reviewHTML() {
+    const due = reviewsDue(state, data);
+    if (!due.length && !reviewFeedback) return '';
+    const fb = reviewFeedback ? `<div class="mission-feedback is-${reviewFeedback.kind}" role="status">${reviewFeedback.html}</div>` : '';
+    const items = due
+      .map(({ objective: o, level }) => html`<div class="review-item"><p class="small muted">De “${level.title}”</p><p>${raw(chemText(o.text))}</p>${raw(answerForm(o))}</div>`)
+      .join('');
+    const mastered = reviewsMastered(state);
+    return html`<section class="review-box" data-review aria-label="Revisão"><h3>🔁 Revisão</h3>
+      <p class="small muted">Perguntas de níveis anteriores. Acertou, ela volta mais tarde; errou, volta no próximo nível.${mastered ? ` ${mastered} já dominada${mastered > 1 ? 's' : ''}.` : ''}</p>
+      ${raw(fb)}${raw(items || '<p class="small">Nenhuma pergunta para revisar agora.</p>')}</section>`;
+  }
+
+  function submitReview(objectiveId, answer) {
+    const o = data.progression.levels.flatMap((l) => l.objectives).find((x) => x.id === objectiveId);
+    const res = answerReview(state, objectiveId, answer, data);
+    if (!res.entry) return;
+    state = res.state;
+    storage.save(state);
+    if (res.correct) {
+      const later = res.entry.done ? 'Essa você dominou: sai da revisão.' : `Volta daqui a ${REVIEW_INTERVALS[res.entry.box]} níveis.`;
+      const why = FUNDAMENTAL_TYPES.includes(o.type) ? ` ${chemText(fundamentalsExplain(o, data))}` : '';
+      reviewFeedback = { kind: 'good', html: `✔ Certo! ${esc(later)}${why}` };
+    } else {
+      const why = FUNDAMENTAL_TYPES.includes(o.type) ? fundamentalsMistake(o, answer, data) : `Ainda não.${o.hint ? ` Dica: ${o.hint}` : ''}`;
+      reviewFeedback = { kind: 'bad', html: `✘ ${chemText(why)} <span class="small">Ela volta no próximo nível.</span>` };
+    }
+    renderObjectives();
   }
 
   /** Perguntas dos fundamentos (Fase 4A): escolha ou campo, e o porquê do último erro. */
@@ -511,7 +551,8 @@ async function main() {
     if (!form) return;
     ev.preventDefault();
     const answer = form.elements.answer?.value ?? '';
-    if (form.dataset.missionStep) submitMission(form.dataset.missionStep, answer);
+    if (form.closest('[data-review]')) submitReview(form.dataset.objective, answer);
+    else if (form.dataset.missionStep) submitMission(form.dataset.missionStep, answer);
     else submitStoich(form.dataset.objective, answer);
   });
   $('#objectives').addEventListener('click', (ev) => {
@@ -522,7 +563,8 @@ async function main() {
     const b = ev.target.closest('.stoich-choice');
     if (!b) return;
     const form = b.closest('.stoich-form');
-    if (form.dataset.missionStep) submitMission(form.dataset.missionStep, b.dataset.answer);
+    if (form.closest('[data-review]')) submitReview(form.dataset.objective, b.dataset.answer);
+    else if (form.dataset.missionStep) submitMission(form.dataset.missionStep, b.dataset.answer);
     else submitStoich(form.dataset.objective, b.dataset.answer);
   });
   // Laboratório de velocidade (Fase 3B): abre pelo topo, pelo painel de resultado ou pelos objetivos.
@@ -583,6 +625,8 @@ async function main() {
     bench = [];
     lastNew = new Set();
     missionFeedback = null;
+    reviewFeedback = null;
+    objectiveFeedback = null;
     renderWelcome($('#result'));
     renderAll();
   });
