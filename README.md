@@ -30,7 +30,8 @@ contadas, montadas a partir de aulas práticas de laboratório; no 🧰 **Labora
 **fundamentos** — matéria e misturas, partículas do átomo, distribuição dos elétrons, estados
 físicos e nomes de compostos —, com respostas calculadas e o porquê de cada erro. 4B pronta: três
 **degraus** antes dos níveis de conta — matemática da química (antes da estequiometria), velocidade
-sem contas (antes da cinética) e equilíbrio/pH sem contas (antes do equilíbrio).
+sem contas (antes da cinética) e equilíbrio/pH sem contas (antes do equilíbrio). 4C pronta:
+**revisões espaçadas** — perguntas já respondidas voltam alguns níveis depois, misturando assuntos.
 
 ## Como rodar
 
@@ -114,6 +115,8 @@ src/core/                   química e regras do jogo — sem DOM, testável no 
   progression.js            estado do jogador, objetivos, níveis (e as transições das missões)
   fundamentals.js           fundamentos (Fase 4A): partículas do átomo, camadas e diagrama de Pauling,
                             estado físico, nomes e fórmulas; resposta certa e o porquê de cada erro
+  review.js                 revisão espaçada (Fase 4C): caixas de Leitner, relógio = nível atual,
+                            até 3 perguntas por vez de níveis diferentes
   missions.js               corrida de uma missão: kit, etapas, tentativas, contas e o caminho da conta (Fase 3F)
   lab.js                    separação de misturas (método × mistura, com o porquê) e teste de chama
   balancer.js               balanceamento automático (espaço nulo com frações exatas)
@@ -330,6 +333,20 @@ deles continua onde estava):
 
 Os testes garantem que níveis com `since` só têm perguntas (a migração do save consegue contá-las
 como feitas) e que um save da v2 no n14 volta exatamente para o n14.
+
+## Fase 4C: revisões espaçadas
+
+Toda pergunta respondida certo num nível (fundamentos, contas, cinética, equilíbrio, moléculas,
+orgânica) entra na revisão (`src/core/review.js`). O "relógio" é o nível atual, não o tempo
+real — a revisão acompanha o jogo e é determinística. Cada pergunta passa por caixas (Leitner):
+volta 1 nível depois de respondida; cada acerto dobra o intervalo (2, 4, 8 níveis) e, depois de
+4 acertos, ela sai da revisão ("dominada"); um erro a manda de volta para a caixa 0 (volta no
+próximo nível), com o porquê do erro. Aparecem no máximo 3 por vez, de níveis diferentes sempre
+que possível, numa caixa 🔁 acima dos objetivos.
+
+A revisão é opcional e nunca muda os objetivos dos níveis. O estado salvo ganhou o campo
+`reviews` (sem mudar a versão do save): uma pergunta respondida sem registro conta como caixa 0
+e vence no nível seguinte ao dela, então saves antigos entram na revisão sem migração.
 
 ## Fase 3A: energia das reações
 

@@ -108,9 +108,13 @@ Detalhes de arquitetura, estrutura de pastas e "como adicionar conteúdo" estão
     dinâmico, Le Chatelier, pH com potências de 10 e fator 10 por unidade; Kotz p. 124–126,
     191–192, 697). Regra: nível com `since` só pode ter perguntas (tipos de `FUNDAMENTAL_TYPES`),
     senão a migração do save mandaria o jogador de volta (há teste).
-  - **4C Revisões espaçadas** (próxima): perguntas que voltam e misturam assuntos (modelo: "Questões para
-    estudo" do Kotz, respostas no Apêndice N).
-  - **4D**: limite de tentativas nos objetivos dos níveis; laboratórios mostram o caminho da conta
+  - **4C Revisões espaçadas — CONCLUÍDA**: `src/core/review.js` (caixas de Leitner; relógio = nível
+    atual; intervalos 1, 2, 4, 8 níveis; 4 acertos e a pergunta sai; erro volta para a caixa 0;
+    até 3 por vez, de níveis diferentes). Caixa 🔁 acima dos objetivos, opcional, nunca muda os
+    objetivos dos níveis. Campo `reviews` no estado (sem mudar a versão do save; pergunta sem
+    registro = caixa 0, vence no nível seguinte ao dela). Ideia para depois: perguntas próprias de
+    revisão no modelo das "Questões para estudo" do Kotz (respostas no Apêndice N).
+  - **4D** (próxima): limite de tentativas nos objetivos dos níveis; laboratórios mostram o caminho da conta
     em vez da resposta pronta.
   - **Curiosidades dos elementos — CONCLUÍDA**: os 118 elementos têm descrição e curiosidades no
     painel da tabela periódica (`data/element-facts.json`), escritas com palavras próprias a partir

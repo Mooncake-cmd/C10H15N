@@ -13,6 +13,7 @@ import { moleculeAnswer } from './vsepr.js';
 import { organicAnswer } from './organic.js';
 import { newRun, runCombine, runAnswer, runLab, isMissionAvailable } from './missions.js';
 import { FUNDAMENTAL_TYPES, isFundamentalsAnswerRight } from './fundamentals.js';
+import { scheduleReview, sanitizeReviews, dueReviews } from './review.js';
 
 export const STATE_VERSION = 3;
 // v1 → v2: um nível novo (metais alcalino-terrosos) entrou no meio da Fase 1, então o
@@ -36,6 +37,7 @@ export function initialState(data) {
     stoichSolved: [], // objetivos de cálculo (estequiometria, cinética) respondidos corretamente
     missionsDone: [], // missões concluídas (Fase 3F)
     missionRun: null, // missão em andamento: { id, done, got, attempts, failed }
+    reviews: {}, // revisão espaçada (Fase 4C): { idDoObjetivo: { box, due, done? } }
   };
   return applyUnlocks(state, data.progression.levels[0]);
 }
@@ -233,6 +235,25 @@ const ANSWER_CHECKS = {
   organic: isOrganicAnswerRight,
 };
 
+/** O objetivo é uma pergunta (dá para responder de novo numa revisão)? */
+export const isAnswerObjective = (o) => !!ANSWER_CHECKS[o.type];
+
+/** Perguntas de revisão que vencem agora (Fase 4C). */
+export const reviewsDue = (state, data, max) => dueReviews(state, data, isAnswerObjective, max);
+
+/**
+ * Resposta a uma pergunta de revisão: só muda o agendamento da revisão (acerto: volta mais
+ * tarde; erro: volta no próximo nível), nunca os objetivos dos níveis.
+ * @returns {{ state, correct, entry }}
+ */
+export function answerReview(state, objectiveId, answer, data) {
+  const objective = data.progression.levels.flatMap((l) => l.objectives).find((o) => o.id === objectiveId);
+  if (!objective || !isAnswerObjective(objective) || !(state.stoichSolved ?? []).includes(objectiveId)) return { state, correct: false, entry: null };
+  const correct = ANSWER_CHECKS[objective.type](objective, answer, data);
+  const res = scheduleReview(state, objectiveId, correct, data);
+  return { state: res.state, correct, entry: res.entry };
+}
+
 /** O jogador respondeu a um objetivo de cálculo (estequiometria ou cinética). */
 export function answerObjective(state, objectiveId, answer, data) {
   const events = [];
@@ -334,6 +355,7 @@ export function restoreState(saved, data) {
     stoichSolved: known(saved.stoichSolved, () => true),
     missionsDone: known(saved.missionsDone, (id) => data.missionsById.has(id)),
     missionRun: saved.missionRun && data.missionsById.has(saved.missionRun.id) ? saved.missionRun : null,
+    reviews: sanitizeReviews(saved.reviews, data),
   };
   if (saved.version === STATE_VERSION) {
     if (saved.levelIndex >= data.progression.levels.length) return null;
