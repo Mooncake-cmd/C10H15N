@@ -315,9 +315,11 @@ async function main() {
       const opts = choices.map((c) => html`<button type="button" class="btn btn-ghost stoich-choice" data-answer="${c.value}">${raw(label(c))}</button>`).join('');
       return html`<form class="stoich-form" data-objective="${o.id}"><div class="stoich-row">${raw(opts)}</div>${raw(fb)}</form>`;
     }
-    const numeric = o.type === 'atom' || o.ask === 'valence';
+    const numeric = o.type === 'atom' || o.type === 'math' || o.ask === 'valence';
+    // Expoentes podem ser negativos, e o teclado numérico do celular não tem o sinal de menos.
+    const mode = o.type === 'math' ? (o.ask === 'exponent' ? 'text' : 'decimal') : numeric ? 'numeric' : 'text';
     return html`<form class="stoich-form" data-objective="${o.id}">
-      <div class="stoich-row"><input name="answer" inputmode="${numeric ? 'numeric' : 'text'}" autocomplete="off" spellcheck="false" aria-label="Resposta (${o.unitLabel})" placeholder="${o.unitLabel}">${raw(numeric ? html`<span class="small">${o.unitLabel}</span>` : '')}
+      <div class="stoich-row"><input name="answer" inputmode="${mode}" autocomplete="off" spellcheck="false" aria-label="Resposta (${o.unitLabel})" placeholder="${o.unitLabel}">${raw(numeric ? html`<span class="small">${o.unitLabel}</span>` : '')}
       <button class="btn btn-primary" type="submit">Conferir</button></div>${raw(fb)}</form>`;
   }
 

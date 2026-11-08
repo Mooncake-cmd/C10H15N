@@ -4889,6 +4889,43 @@
         "topic": "v. 1, Frente C, Módulo 04: distribuição eletrônica (diagrama de Linus Pauling)",
         "pages": "61–62"
       }
+    },
+    {
+      "id": "notacao-cientifica",
+      "term": "Notação científica",
+      "aliases": [
+        "notação exponencial"
+      ],
+      "definition": "Jeito de escrever números muito grandes ou muito pequenos como N × 10ⁿ, com N entre 1 e 10. O expoente n conta quantas casas a vírgula andou.",
+      "example": "602 000 = 6,02 × 10⁵; 0,00042 = 4,2 × 10⁻⁴; 1 mol = 6,022 × 10²³ partículas.",
+      "related": [
+        "algarismos-significativos",
+        "constante-de-avogadro"
+      ],
+      "source": {
+        "ref": "kotz",
+        "topic": "Revisão: notação científica",
+        "pages": "36"
+      }
+    },
+    {
+      "id": "logaritmo",
+      "term": "Logaritmo",
+      "aliases": [
+        "logaritmos",
+        "log"
+      ],
+      "definition": "O expoente a que se eleva 10 para obter um número: log 1000 = 3 porque 10³ = 1000. Números menores que 1 têm logaritmo negativo. É o que está por trás da escala de pH.",
+      "example": "[H₃O⁺] = 10⁻³ mol/L → log = −3 → pH = 3.",
+      "related": [
+        "ph",
+        "notacao-cientifica"
+      ],
+      "source": {
+        "ref": "kotz",
+        "topic": "Cap. 4: a escala de pH e os logaritmos",
+        "pages": "191–192"
+      }
     }
   ]
 }

@@ -3,8 +3,57 @@
 // Puro, sem DOM. As perguntas de escolha simples ('quiz') têm a resposta nos dados.
 
 import { compoundFormula, compoundName } from './ions.js';
+import { molarMass } from './formula.js';
 
-export const FUNDAMENTAL_TYPES = ['quiz', 'atom', 'electrons', 'state', 'naming'];
+export const FUNDAMENTAL_TYPES = ['quiz', 'atom', 'electrons', 'state', 'naming', 'math'];
+
+// ---------- Matemática da química (Fase 4B) ----------
+
+/** Expoente da notação científica: 602000 → 5 (6,02 × 10⁵); 0,00042 → −4. */
+export const sciExponent = (x) => Math.floor(Math.log10(Math.abs(x)) + 1e-9);
+
+/**
+ * Algarismos significativos de uma medida escrita (vírgula ou ponto decimal): zeros à esquerda
+ * não contam; zeros à direita contam quando há vírgula. Sem vírgula, zeros finais são ambíguos.
+ */
+export function sigFigs(text) {
+  const t = String(text).trim().replace(/^[-+−]/, '').split(/\s*[×x]\s*10/)[0].replace(/\s/g, '');
+  if (!/^\d*[.,]?\d*$/.test(t) || !/\d/.test(t)) throw new Error(`medida ${text}`);
+  const hasPoint = /[.,]/.test(t);
+  const digits = t.replace(/[.,]/, '').replace(/^0+/, '');
+  if (!hasPoint && /0$/.test(digits)) throw new Error(`${text}: zeros finais sem vírgula são ambíguos`);
+  return digits.length;
+}
+
+/** Resposta de uma pergunta de matemática da química. */
+export function mathAnswer(o, data) {
+  switch (o.ask) {
+    case 'exponent':
+      return sciExponent(o.value);
+    case 'sigfigs':
+      return sigFigs(o.value);
+    case 'moles':
+      return o.grams / molarMass(data.substancesById.get(o.substance)?.formula ?? o.substance, data.atomicMasses);
+    case 'pH':
+      return -Math.log10(o.h);
+    case 'ratio':
+      return 10 ** Math.abs(o.pHa - o.pHb);
+    default:
+      throw new Error(`pergunta ${o.ask}`);
+  }
+}
+
+const toNumber = (answer) => Number(String(answer).trim().replace(/−/g, '-').replace(/\s/g, '').replace(',', '.'));
+
+function isMathRight(o, answer, data) {
+  const right = mathAnswer(o, data);
+  const x = toNumber(answer);
+  if (!Number.isFinite(x)) return false;
+  if (o.ask === 'moles') return Math.abs(x - right) <= 0.02 * right;
+  if (o.ask === 'pH') return Math.abs(x - right) <= 0.02;
+  if (o.ask === 'ratio') return Math.abs(x - right) <= 0.01 * right;
+  return x === right;
+}
 
 const el = (data, symbol) => {
   const e = data.elementsBySymbol.get(symbol);
@@ -76,6 +125,8 @@ export function fundamentalsAnswer(o, data) {
       return aufbauConfig(el(data, o.element).Z);
     case 'state':
       return stateOf(o.element, data);
+    case 'math':
+      return mathAnswer(o, data);
     case 'naming':
       return o.ask === 'formula' ? compoundFormula(o.cation, o.anion) : compoundName(o.cation, o.anion, data.ions);
     default:
@@ -84,6 +135,7 @@ export function fundamentalsAnswer(o, data) {
 }
 
 export function isFundamentalsAnswerRight(o, answer, data) {
+  if (o.type === 'math') return isMathRight(o, answer, data);
   const right = fundamentalsAnswer(o, data);
   if (o.type === 'atom' || (o.type === 'electrons' && o.ask === 'valence')) {
     const x = Number(String(answer).trim().replace(',', '.'));
@@ -122,12 +174,56 @@ export function fundamentalsExplain(o, data) {
     const e = el(data, o.element);
     return `${e.name} é ${STATE_NAME[stateOf(o.element, data)]} à temperatura ambiente e pressão normal.`;
   }
+  if (o.type === 'math') return mathExplain(o, data);
   if (o.type === 'naming') {
     const cat = data.ions.cationsByFormula.get(o.cation);
     const an = data.ions.anionsByFormula.get(o.anion);
     return `Nome: o ânion (${an.name}) + "de" + o cátion (${cat.name}) = ${compoundName(o.cation, o.anion, data.ions)}. Fórmula: as cargas têm de se anular, então ${compoundFormula(o.cation, o.anion)}.`;
   }
   return '';
+}
+
+const fmt = (x, d = 2) => String(Math.round(x * 10 ** d) / 10 ** d).replace('.', ',');
+
+function mathExplain(o, data) {
+  const r = mathAnswer(o, data);
+  if (o.ask === 'exponent') {
+    const n = Math.abs(r);
+    return o.value >= 1
+      ? `A vírgula anda ${n} casa${n === 1 ? '' : 's'} para a esquerda até sobrar um algarismo antes dela: expoente +${n}.`
+      : `A vírgula anda ${n} casa${n === 1 ? '' : 's'} para a direita até o primeiro algarismo diferente de zero: expoente −${n} (número menor que 1, expoente negativo).`;
+  }
+  if (o.ask === 'sigfigs') return `Em ${o.value}, os zeros do começo só marcam a posição da vírgula e não contam; os outros dígitos, incluindo zeros no fim depois da vírgula, contam: ${r} algarismos significativos.`;
+  if (o.ask === 'moles') {
+    const f = data.substancesById.get(o.substance)?.formula ?? o.substance;
+    const M = molarMass(f, data.atomicMasses);
+    return `Massa molar de ${f}: ${fmt(M)} g/mol (soma das massas atômicas). n = massa ÷ massa molar = ${o.grams} g ÷ ${fmt(M)} g/mol = ${fmt(r)} mol.`;
+  }
+  if (o.ask === 'pH') return `pH = −log[H₃O⁺] = −log(${String(o.h).replace('.', ',')}) = ${fmt(r)}. Para potências de 10 é só pegar o expoente e trocar o sinal.`;
+  const d = Math.abs(o.pHa - o.pHb);
+  return `Cada unidade de pH é um fator 10 na concentração de H₃O⁺. A diferença é de ${d} unidade${d === 1 ? '' : 's'}: 10^${d} = ${fmt(r, 0)} vezes.`;
+}
+
+function mathMistake(o, answer, data) {
+  const right = mathAnswer(o, data);
+  const x = toNumber(answer);
+  const hint = o.hint ? ` Dica: ${o.hint}` : '';
+  if (!Number.isFinite(x)) return 'Escreva só o número.';
+  if (o.ask === 'exponent' && x === -right) return 'O sinal está trocado: número maior que 1 tem expoente positivo; menor que 1, negativo.';
+  if (o.ask === 'exponent' && Math.abs(x - right) === 1) return 'Quase: conte de novo as casas. Na notação científica fica exatamente um algarismo (de 1 a 9) antes da vírgula.';
+  if (o.ask === 'sigfigs') {
+    const lead = (String(o.value).match(/^[^1-9]*/)?.[0].match(/0/g) ?? []).length;
+    if (x === right + lead) return 'Os zeros do começo (antes do primeiro algarismo diferente de zero) não contam: só mostram onde fica a vírgula.';
+    if (x < right) return 'Zeros no fim, depois da vírgula, contam: a balança mediu aquele zero.';
+  }
+  if (o.ask === 'moles') {
+    const M = molarMass(data.substancesById.get(o.substance)?.formula ?? o.substance, data.atomicMasses);
+    if (Math.abs(x - o.grams * M) <= 0.02 * o.grams * M) return 'Você multiplicou. Para achar o número de mol, divida a massa pela massa molar.';
+    if (Math.abs(x - M / o.grams) <= 0.02 * (M / o.grams)) return 'A divisão está invertida: é massa ÷ massa molar.';
+  }
+  if (o.ask === 'pH' && Math.abs(x + right) <= 0.02) return 'Lembre do sinal de menos: pH = −log[H₃O⁺], e o pH de um ácido é positivo.';
+  if (o.ask === 'ratio' && x === Math.abs(o.pHa - o.pHb)) return 'Essa é a diferença de pH, não quantas vezes. Cada unidade de pH multiplica por 10.';
+  return `Ainda não.${hint}`;
 }
 
 const SHELL_CAP = [2, 8]; // K e L (as camadas seguintes dependem da ordem das subcamadas)
@@ -143,6 +239,7 @@ export function fundamentalsMistake(o, answer, data) {
     return o.choices?.find((c) => String(c.value) === String(answer))?.why ?? `Ainda não.${hint}`;
   }
   if (o.type === 'state') return `Ainda não.${hint}`;
+  if (o.type === 'math') return mathMistake(o, answer, data);
   const e = el(data, o.element);
   if (o.type === 'atom') {
     const x = Number(String(answer).trim().replace(',', '.'));

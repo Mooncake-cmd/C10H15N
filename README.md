@@ -10,7 +10,7 @@ curados e mais 81 gerados a partir de íons, 53 reações curadas, 17 "não-rea�
 **motor de regras** que monta e balanceia sozinho cerca de 750 reações a partir de regras gerais
 (solubilidade, ácido-base, série eletroquímica, combustão, decomposição), com explicação, fonte e
 segurança. Há também uma calculadora de estequiometria (massa, mol, litros de gás, solução em
-mol/L e rendimento), 24 níveis de progressão (os 5 primeiros são os fundamentos da Fase 4A) e um **glossário** com mais de 240 termos: nos textos, as palavras de química ficam sublinhadas e mostram a
+mol/L e rendimento), 27 níveis de progressão (os 5 primeiros são os fundamentos da Fase 4A; 3 degraus da Fase 4B suavizam a subida) e um **glossário** com mais de 240 termos: nos textos, as palavras de química ficam sublinhadas e mostram a
 definição ao toque. Na tabela periódica, cada um dos 118 elementos tem **curiosidades** (leitura
 complementar, com a página do livro da DK), e a tabela pode ser colorida por raio atômico,
 energia de ionização, afinidade eletrônica ou eletronegatividade.
@@ -28,7 +28,9 @@ contadas, montadas a partir de aulas práticas de laboratório; no 🧰 **Labora
 
 **Fase 4 (aprendizagem) em andamento.** 4A pronta: o jogo começa por 5 níveis curtos de
 **fundamentos** — matéria e misturas, partículas do átomo, distribuição dos elétrons, estados
-físicos e nomes de compostos —, com respostas calculadas e o porquê de cada erro.
+físicos e nomes de compostos —, com respostas calculadas e o porquê de cada erro. 4B pronta: três
+**degraus** antes dos níveis de conta — matemática da química (antes da estequiometria), velocidade
+sem contas (antes da cinética) e equilíbrio/pH sem contas (antes do equilíbrio).
 
 ## Como rodar
 
@@ -310,6 +312,24 @@ as camadas K–Q e o diagrama de Pauling, do Bernoulli (v. 1, p. 61–62).
   perguntas deles contam como respondidas e o jogador continua no nível em que estava. A bancada
   (H, O, Na, Cl, calor e faísca) já vem liberada no primeiro nível, e o que for feito nela durante
   os fundamentos conta quando os níveis da Fase 1 chegarem.
+
+## Fase 4B: degraus intermediários
+
+Três níveis entram antes dos saltos de dificuldade (todos com `since: 3`, então quem já passou
+deles continua onde estava):
+
+- **d1 "Contas da química"** (antes do n10, Estequiometria): expoente da notação científica,
+  algarismos significativos e número de mol (massa ÷ massa molar). Tipo de objetivo `math`
+  (`fundamentals.js`: `sciExponent`, `sigFigs`, `mathAnswer`), com o porquê dos erros comuns
+  (sinal do expoente trocado, zeros do começo contados, massa × massa molar no lugar de ÷).
+- **d2 "Rápido ou devagar"** (antes do n13, Velocidade): concentração, temperatura, superfície de
+  contato e catalisador, sem contas (Kotz p. 622–623).
+- **d3 "Ida e volta"** (antes do n14, Equilíbrio): equilíbrio dinâmico, Le Chatelier, pH como
+  −log[H₃O⁺] com potências de 10 e "cada unidade de pH vale 10 vezes" (Kotz p. 124–126, 191–192,
+  697).
+
+Os testes garantem que níveis com `since` só têm perguntas (a migração do save consegue contá-las
+como feitas) e que um save da v2 no n14 volta exatamente para o n14.
 
 ## Fase 3A: energia das reações
 
