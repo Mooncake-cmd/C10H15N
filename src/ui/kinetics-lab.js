@@ -47,7 +47,7 @@ const where = (pages) => (/^[BF]?\d/.test(pages) ? `p. ${pages}` : pages);
 export const sourceText = (data, list) => list.map((s) => `${esc(SHORT[s.ref] ?? data.sources[s.ref] ?? s.ref)} — ${esc(s.topic)}, ${esc(where(String(s.pages)))}`).join('; ');
 
 /** Curva [A] × t em SVG, com a meia-vida marcada. */
-function curveSVG(sim, A0) {
+function curveSVG(sim, A0, hideTime = false) {
   const pts = sim.curve(60);
   const tMax = pts[pts.length - 1][0];
   const W = 300;
@@ -56,16 +56,23 @@ function curveSVG(sim, A0) {
   const y = (c) => 12 + (1 - c / A0) * (H - 40);
   const path = pts.map(([t, c], i) => `${i ? 'L' : 'M'}${x(t).toFixed(1)},${y(c).toFixed(1)}`).join(' ');
   const xh = x(sim.halfLife);
-  return `<svg class="kin-svg" viewBox="0 0 ${W} ${H}" role="img" aria-label="Concentração do reagente caindo com o tempo; metade em ${esc(formatDuration(sim.halfLife))}">
+  return `<svg class="kin-svg" viewBox="0 0 ${W} ${H}" role="img" aria-label="Concentração do reagente caindo com o tempo${hideTime ? '' : `; metade em ${esc(formatDuration(sim.halfLife))}`}">
     <line class="axis" x1="36" y1="${y(0)}" x2="${W - 8}" y2="${y(0)}"/><line class="axis" x1="36" y1="${y(A0)}" x2="36" y2="${y(0)}"/>
     <text x="4" y="${y(A0) + 4}">[A]₀</text><text x="4" y="${y(A0 / 2) + 4}">½</text>
     <line class="half" x1="36" y1="${y(A0 / 2)}" x2="${xh}" y2="${y(A0 / 2)}"/><line class="half" x1="${xh}" y1="${y(A0 / 2)}" x2="${xh}" y2="${y(0)}"/>
     <text x="${xh}" y="${H - 14}" text-anchor="middle">t½</text>
-    <text x="${W - 8}" y="${H - 2}" text-anchor="end">tempo → ${esc(formatDuration(tMax))}</text>
+    <text x="${W - 8}" y="${H - 2}" text-anchor="end">tempo →${hideTime ? '' : ` ${esc(formatDuration(tMax))}`}</text>
     <path class="curve" d="${path}"/></svg>`;
 }
 
-export function mountKineticsLab(dialog, data) {
+/** Aviso de que o número escondido é uma pergunta do nível (Fase 4D). */
+export const QUESTION_NOTE = '<span class="small guard-note">🎯 É uma pergunta do seu nível: o caminho está aqui, a última conta é sua.</span>';
+
+/**
+ * @param guard (kind, params) → pergunta pendente do nível que esta configuração responderia
+ *   (Fase 4D); quando há, o número final vira o caminho da conta.
+ */
+export function mountKineticsLab(dialog, data, { guard = () => null } = {}) {
   const K = data.kinetics;
   const body = dialog.querySelector('.kin-body');
   const select = dialog.querySelector('#kin-reaction');
@@ -117,7 +124,19 @@ export function mountKineticsLab(dialog, data) {
     };
     const spec = e.pseudoFirstOrder ? formatFormulaHTML(e.reactants[0].formula) : formatFormulaHTML(e.species === 'ciclopropano' ? 'C3H6' : e.species);
     const orderTxt = sim.order === 1 ? '1ª ordem' : e.mixed ? '2ª ordem (1ª em cada reagente; o jogo supõe quantidades iguais dos dois)' : '2ª ordem';
-    const plus10 = sim.plus10 ? `<p>🌡️ <strong>+10 °C</strong> multiplica k por <strong>${formatSci(sim.plus10, 3)}</strong>${sim.Ea.how === 'reta' ? ` (Ea ≈ ${formatSci(sim.Ea.Ea, 3)} kJ/mol, pela reta)` : ` (Ea = ${formatSci(sim.Ea.Ea, 3)} kJ/mol)`}.</p>` : '<p class="small muted">Sem energia de ativação no livro para esta reação.</p>';
+    const gHalf = guard('halfLife', { kinetics: e.id, T, A0 });
+    const gPlus = guard('plus10', { kinetics: e.id, T });
+    const kTxt = `${formatSci(sim.kEff)} ${e.pseudoFirstOrder ? 's⁻¹' : e.kUnit}`;
+    const halfTxt = !gHalf
+      ? `${formatDuration(sim.halfLife)}${sim.order === 1 ? ' (não depende da concentração inicial)' : ' (depende da concentração inicial: tente mudar)'}`
+      : sim.order === 1
+        ? `t½ = ln 2 ÷ k = 0,693 ÷ (${kTxt}) = <strong>?</strong> s ${QUESTION_NOTE}`
+        : `t½ = 1 ÷ (k · [A]₀) = 1 ÷ (${kTxt} × ${formatSci(A0, 3)} mol/L) = <strong>?</strong> s ${QUESTION_NOTE}`;
+    const eaKJ = sim.Ea ? formatSci(sim.Ea.Ea, 3) : '';
+    const plus10Guarded = sim.plus10 && gPlus
+      ? `<p>🌡️ <strong>+10 °C</strong>: k₂/k₁ = e^[(Ea/R)·(1/T₁ − 1/T₂)] = e^[(${eaKJ} × 1000 ÷ 8,3145)·(1/${T} − 1/${T + 10})] = <strong>?</strong> ${QUESTION_NOTE}</p>`
+      : null;
+    const plus10 = plus10Guarded ?? (sim.plus10 ? `<p>🌡️ <strong>+10 °C</strong> multiplica k por <strong>${formatSci(sim.plus10, 3)}</strong>${sim.Ea.how === 'reta' ? ` (Ea ≈ ${formatSci(sim.Ea.Ea, 3)} kJ/mol, pela reta)` : ` (Ea = ${formatSci(sim.Ea.Ea, 3)} kJ/mol)`}.</p>` : '<p class="small muted">Sem energia de ativação no livro para esta reação.</p>');
     const pseudo = e.pseudoFirstOrder
       ? `<p class="small">O ${esc(e.pseudoFirstOrder.label)} não é consumido (é catalisador) e sua concentração fica fixa: k' = k·[H₃O⁺] = ${formatSci(sim.kEff)} s⁻¹, e a reação se comporta como de 1ª ordem na sacarose.</p>`
       : '';
@@ -127,8 +146,8 @@ export function mountKineticsLab(dialog, data) {
       <p><strong>Lei de velocidade:</strong> taxa = ${e.rateLaw} · ${orderTxt}</p>
       <p><strong>k</strong> = ${formatSci(sim.k)} ${e.kUnit} <span class="small muted">— ${HOW[sim.how]}</span></p>
       ${raw(pseudo)}
-      <div class="kin-row">${raw(curveSVG(sim, A0))}
-        <div><p><strong>Meia-vida:</strong> ${formatDuration(sim.halfLife)}${sim.order === 1 ? ' (não depende da concentração inicial)' : ' (depende da concentração inicial: tente mudar)'}</p>
+      <div class="kin-row">${raw(curveSVG(sim, A0, !!gHalf))}
+        <div><p><strong>Meia-vida:</strong> ${raw(halfTxt)}</p>
         <p><strong>Taxa inicial:</strong> ${formatSci(sim.rate0)} mol·L⁻¹·s⁻¹ de ${raw(spec)} consumido</p>
         ${raw(plus10)}</div></div>
       <p class="small muted">Fonte: ${raw(sourceText(data, e.source))}.</p>`;

@@ -14,6 +14,7 @@ import { organicAnswer } from './organic.js';
 import { newRun, runCombine, runAnswer, runLab, isMissionAvailable } from './missions.js';
 import { FUNDAMENTAL_TYPES, isFundamentalsAnswerRight } from './fundamentals.js';
 import { scheduleReview, sanitizeReviews, dueReviews } from './review.js';
+import { isResting, recordWrong, sanitizeAttempts } from './guard.js';
 
 export const STATE_VERSION = 3;
 // v1 → v2: um nível novo (metais alcalino-terrosos) entrou no meio da Fase 1, então o
@@ -38,6 +39,8 @@ export function initialState(data) {
     missionsDone: [], // missões concluídas (Fase 3F)
     missionRun: null, // missão em andamento: { id, done, got, attempts, failed }
     reviews: {}, // revisão espaçada (Fase 4C): { idDoObjetivo: { box, due, done? } }
+    reviewHits: 0, // revisões acertadas (conta como avanço para liberar perguntas em descanso)
+    attempts: {}, // erros por pergunta do nível (Fase 4D): { idDoObjetivo: { wrong, restAt? } }
   };
   return applyUnlocks(state, data.progression.levels[0]);
 }
@@ -251,7 +254,20 @@ export function answerReview(state, objectiveId, answer, data) {
   if (!objective || !isAnswerObjective(objective) || !(state.stoichSolved ?? []).includes(objectiveId)) return { state, correct: false, entry: null };
   const correct = ANSWER_CHECKS[objective.type](objective, answer, data);
   const res = scheduleReview(state, objectiveId, correct, data);
-  return { state: res.state, correct, entry: res.entry };
+  const s = correct ? { ...res.state, reviewHits: (state.reviewHits ?? 0) + 1 } : res.state;
+  return { state: s, correct, entry: res.entry };
+}
+
+/**
+ * Pergunta do nível em descanso (tentativas esgotadas, Fase 4D)? Só enquanto houver outra coisa
+ * para fazer: outro objetivo pendente fora de descanso ou uma revisão — o jogo nunca trava.
+ */
+export function questionResting(objective, state, data) {
+  if (!isResting(objective, state, data)) return false;
+  const level = data.progression.levels[state.levelIndex];
+  const others = (level?.objectives ?? []).filter((o) => o.id !== objective.id && !state.completedObjectives.includes(o.id) && !isObjectiveDone(o, state, data));
+  const canDoElse = others.some((o) => !isAnswerObjective(o) || !isResting(o, state, data)) || reviewsDue(state, data).length > 0;
+  return canDoElse;
 }
 
 /** O jogador respondeu a um objetivo de cálculo (estequiometria ou cinética). */
@@ -259,8 +275,10 @@ export function answerObjective(state, objectiveId, answer, data) {
   const events = [];
   const objective = data.progression.levels.flatMap((l) => l.objectives).find((o) => o.id === objectiveId);
   if (!objective || !ANSWER_CHECKS[objective.type]) return { state, events, correct: false };
+  if (questionResting(objective, state, data)) return { state, events, correct: false, resting: true };
   const correct = ANSWER_CHECKS[objective.type](objective, answer, data);
   let s = state;
+  if (!correct && !(s.stoichSolved ?? []).includes(objectiveId)) s = recordWrong(s, objective);
   if (correct && !(s.stoichSolved ?? []).includes(objectiveId)) {
     s = { ...s, stoichSolved: [...(s.stoichSolved ?? []), objectiveId] };
     s = advance(s, data, events);
@@ -356,6 +374,8 @@ export function restoreState(saved, data) {
     missionsDone: known(saved.missionsDone, (id) => data.missionsById.has(id)),
     missionRun: saved.missionRun && data.missionsById.has(saved.missionRun.id) ? saved.missionRun : null,
     reviews: sanitizeReviews(saved.reviews, data),
+    reviewHits: Number.isInteger(saved.reviewHits) && saved.reviewHits >= 0 ? saved.reviewHits : 0,
+    attempts: sanitizeAttempts(saved.attempts),
   };
   if (saved.version === STATE_VERSION) {
     if (saved.levelIndex >= data.progression.levels.length) return null;

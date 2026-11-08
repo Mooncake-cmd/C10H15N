@@ -26,12 +26,14 @@ fórmula mínima). No painel 🗺️ **Missões**, 16 histórias com kit limitad
 contadas, montadas a partir de aulas práticas de laboratório; no 🧰 **Laboratório**, os utensílios
 (com desenho e uso), a separação de misturas e o teste de chama.
 
-**Fase 4 (aprendizagem) em andamento.** 4A pronta: o jogo começa por 5 níveis curtos de
+**Fase 4 (aprendizagem) concluída.** 4A: o jogo começa por 5 níveis curtos de
 **fundamentos** — matéria e misturas, partículas do átomo, distribuição dos elétrons, estados
 físicos e nomes de compostos —, com respostas calculadas e o porquê de cada erro. 4B pronta: três
 **degraus** antes dos níveis de conta — matemática da química (antes da estequiometria), velocidade
-sem contas (antes da cinética) e equilíbrio/pH sem contas (antes do equilíbrio). 4C pronta:
+sem contas (antes da cinética) e equilíbrio/pH sem contas (antes do equilíbrio). 4C:
 **revisões espaçadas** — perguntas já respondidas voltam alguns níveis depois, misturando assuntos.
+4D: **tentativas contadas** nas perguntas dos níveis, e os laboratórios e a calculadora mostram o
+**caminho da conta** (não o número) quando o que está montado é uma pergunta pendente do nível.
 
 ## Como rodar
 
@@ -115,6 +117,8 @@ src/core/                   química e regras do jogo — sem DOM, testável no 
   progression.js            estado do jogador, objetivos, níveis (e as transições das missões)
   fundamentals.js           fundamentos (Fase 4A): partículas do átomo, camadas e diagrama de Pauling,
                             estado físico, nomes e fórmulas; resposta certa e o porquê de cada erro
+  guard.js                  Fase 4D: pergunta pendente que um laboratório responderia (para mostrar
+                            só o caminho) e tentativas por pergunta (descanso, sem travar o jogo)
   review.js                 revisão espaçada (Fase 4C): caixas de Leitner, relógio = nível atual,
                             até 3 perguntas por vez de níveis diferentes
   missions.js               corrida de uma missão: kit, etapas, tentativas, contas e o caminho da conta (Fase 3F)
@@ -347,6 +351,20 @@ que possível, numa caixa 🔁 acima dos objetivos.
 A revisão é opcional e nunca muda os objetivos dos níveis. O estado salvo ganhou o campo
 `reviews` (sem mudar a versão do save): uma pergunta respondida sem registro conta como caixa 0
 e vence no nível seguinte ao dela, então saves antigos entram na revisão sem migração.
+
+## Fase 4D: tentativas e laboratórios sem resposta pronta
+
+- **Tentativas** (`src/core/guard.js`): nas perguntas de escolha, menos tentativas que alternativas
+  (3 alternativas → 1 tentativa; 4 → 2), então não dá para testar todas; nas de conta, 3. Esgotadas,
+  a pergunta **descansa**: o porquê do erro e a dica ficam à vista, e ela volta (com as tentativas
+  renovadas) quando o jogador conclui outro objetivo ou acerta uma revisão. Nunca trava: se não
+  houver mais nada a fazer no nível, ela libera. Campos `attempts` e `reviewHits` no estado.
+- **Laboratórios sem resposta pronta**: quando o que está montado no laboratório de velocidade
+  (meia-vida, efeito de +10 °C), no de equilíbrio (pH, tampão, Kps, Le Chatelier) ou na calculadora
+  de estequiometria (produto, limitante, calor, rendimento) é exatamente uma pergunta pendente do
+  nível, o número final vira **?** e aparece o caminho da conta com os valores. A calculadora
+  reconhece a pergunta mesmo pela reação curada equivalente à gerada pelas regras. Fora disso, os
+  laboratórios mostram tudo, como antes.
 
 ## Fase 3A: energia das reações
 
