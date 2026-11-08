@@ -365,6 +365,8 @@ e vence no nível seguinte ao dela, então saves antigos entram na revisão sem 
   nível, o número final vira **?** e aparece o caminho da conta com os valores. A calculadora
   reconhece a pergunta mesmo pela reação curada equivalente à gerada pelas regras. Fora disso, os
   laboratórios mostram tudo, como antes.
+- Os objetivos de bancada continuam livres (dá para explorar por tentativa e erro), por decisão de
+  projeto: o jogo explica cada resultado, e aprender fica por conta do jogador.
 
 ## Fase 3A: energia das reações
 
