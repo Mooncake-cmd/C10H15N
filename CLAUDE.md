@@ -91,7 +91,7 @@ Detalhes de arquitetura, estrutura de pastas e "como adicionar conteúdo" estão
     `cell`) e nível 19 (n18, "Laboratório de verdade"); reações Fe + S → FeS, NaHCO3 + calor e
     CuSO4 + 5 H2O → CuSO4·5H2O; desenho `hydrate`. Algumas missões são liberadas logo depois do
     nível 1 (fundamentos: utensílios, medidas, separação, método científico).
-- **Fase 4 (aprendizagem) — EM ANDAMENTO**, em etapas publicadas uma a uma (recomendação aprovada
+- **Fase 4 (aprendizagem) — CONCLUÍDA**, em etapas publicadas uma a uma (recomendação aprovada
   pelo usuário):
   - **4A Fundamentos — CONCLUÍDA**: 5 níveis antes do n1 (`f1`–`f5`, `phase: 4`,
     `phaseLabel: "Fundamentos"`, `since: 3`): matéria/misturas e mudança física × química, átomo
@@ -114,8 +114,13 @@ Detalhes de arquitetura, estrutura de pastas e "como adicionar conteúdo" estão
     objetivos dos níveis. Campo `reviews` no estado (sem mudar a versão do save; pergunta sem
     registro = caixa 0, vence no nível seguinte ao dela). Ideia para depois: perguntas próprias de
     revisão no modelo das "Questões para estudo" do Kotz (respostas no Apêndice N).
-  - **4D** (próxima): limite de tentativas nos objetivos dos níveis; laboratórios mostram o caminho da conta
-    em vez da resposta pronta.
+  - **4D Tentativas e laboratórios — CONCLUÍDA**: `src/core/guard.js`. Perguntas de escolha têm menos
+    tentativas que alternativas (n/2, mínimo 1); de conta, 3. Esgotadas, a pergunta descansa até
+    outro objetivo ou uma revisão certa (`attempts`, `reviewHits`); nunca trava o nível.
+    Laboratórios de velocidade/equilíbrio e a calculadora de estequiometria escondem só o número
+    final (mostram o caminho) quando a configuração é uma pergunta pendente do nível atual
+    (`pendingQuestion`). Ideias para depois: limitar combinações nos objetivos de bancada (hoje
+    ainda dá para "combinar tudo"), perguntas próprias de revisão.
   - **Curiosidades dos elementos — CONCLUÍDA**: os 118 elementos têm descrição e curiosidades no
     painel da tabela periódica (`data/element-facts.json`), escritas com palavras próprias a partir
     do livro da DK (*The Periodic Table Book*, 2017), como leitura complementar com página. Erros do
@@ -124,7 +129,7 @@ Detalhes de arquitetura, estrutura de pastas e "como adicionar conteúdo" estão
 ## Plano combinado com o usuário (ordem)
 
 1. ~~Terminar a Fase 3~~ — feito (3A–3F). Mais missões podem entrar a qualquer momento (ideias abaixo).
-2. **Fase 4 — aprendizagem** (pedido do usuário, depois da Fase 3), para que um iniciante aprenda
+2. ~~**Fase 4 — aprendizagem**~~ — feito (4A–4D; ver acima). Pedido original do usuário, depois da Fase 3, para que um iniciante aprenda
    de verdade ao terminar os níveis:
    - **Fundamentos** no começo do jogo: átomo e distribuição eletrônica, estados da matéria,
      misturas, nomenclatura (itens "médios" das apostilas abaixo).
@@ -133,7 +138,8 @@ Detalhes de arquitetura, estrutura de pastas e "como adicionar conteúdo" estão
    - **Revisões**: perguntas que voltam depois e misturam assuntos (revisão espaçada).
    - Problemas já identificados: dá para cumprir objetivos combinando tudo por tentativa, e os
      laboratórios mostram a resposta pronta das perguntas de cálculo (mostrar o caminho da conta
-     e pedir raciocínio, com explicação do erro).
+     e pedir raciocínio, com explicação do erro). Resolvido na 4D para as perguntas; os objetivos
+     de bancada ("produza X") ainda aceitam tentativa e erro.
 3. **Guardados para depois** (o usuário pediu para não perder): as pendências da Fase 2 (acima),
    os itens "médios" das apostilas e as etapas novas possíveis — listados na seção abaixo. (Os
    itens adiados, utensílios e separação de misturas, já foram feitos.)

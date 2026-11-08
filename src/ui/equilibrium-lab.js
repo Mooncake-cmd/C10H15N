@@ -3,7 +3,7 @@
 
 import { esc } from './dom.js';
 import { formatFormulaHTML, molarMass } from '../core/formula.js';
-import { formatSci, sourceText } from './kinetics-lab.js';
+import { formatSci, sourceText, QUESTION_NOTE } from './kinetics-lab.js';
 import {
   solutionPH, bufferPH, indicatorColor, findSpecies, molarSolubility, reactionQuotient, direction, deltaNGas, leChatelier,
 } from '../core/equilibrium.js';
@@ -23,7 +23,8 @@ function phBar(pH) {
     <div class="ph-scale small muted"><span>0 ácido</span><span>7 neutro</span><span>14 básico</span></div>`;
 }
 
-export function mountEquilibriumLab(dialog, data) {
+/** @param guard ver mountKineticsLab: perguntas pendentes do nível mostram o caminho, não o número. */
+export function mountEquilibriumLab(dialog, data, { guard = () => null } = {}) {
   const E = data.equilibrium;
   const $ = (s) => dialog.querySelector(s);
 
@@ -44,6 +45,17 @@ export function mountEquilibriumLab(dialog, data) {
     const out = $('#eq-ph-out');
     if (!(c > 0)) {
       out.innerHTML = '<p class="small muted">Informe uma concentração maior que zero.</p>';
+      return;
+    }
+    if (guard('pH', { species: sp.formula, c })) {
+      const cs = formatSci(c, 3);
+      const PATH = {
+        strongAcid: `ácido forte: ioniza-se totalmente, então [H₃O⁺] = ${sp.params.n > 1 ? `${sp.params.n} × ` : ""}${cs} mol/L. pH = −log[H₃O⁺] = −log(${cs}) = <strong>?</strong>`,
+        strongBase: `base forte: [OH⁻] = ${cs} mol/L${sp.params.n > 1 ? ` × ${sp.params.n}` : ''}. pOH = −log[OH⁻]; pH = 14,00 − pOH = <strong>?</strong>`,
+        weakAcid: `Ka = x²/(c − x), com x = [H₃O⁺] e c = ${cs} mol/L; Ka = ${formatSci(sp.params.Ka)}. x = (−Ka + √(Ka² + 4·Ka·c)) ÷ 2; pH = −log x = <strong>?</strong>`,
+        weakBase: `Kb = x²/(c − x), com x = [OH⁻] e c = ${cs} mol/L; Kb = ${formatSci(sp.params.Kb)}. x = (−Kb + √(Kb² + 4·Kb·c)) ÷ 2; pOH = −log x; pH = 14,00 − pOH = <strong>?</strong>`,
+      };
+      out.innerHTML = `<p>${PATH[sp.kind] ?? 'pH = −log[H₃O⁺] = <strong>?</strong>'}</p><p>${QUESTION_NOTE}</p>`;
       return;
     }
     const r = solutionPH(sp.kind, c, sp.params);
@@ -74,6 +86,10 @@ export function mountEquilibriumLab(dialog, data) {
       out.innerHTML = '<p class="small muted">Informe as duas concentrações (maiores que zero).</p>';
       return;
     }
+    if (guard('bufferPH', { species: a.formula, cAcid: ca, cBase: cb })) {
+      out.innerHTML = `<p>pH = pKa + log([base]/[ácido]) = ${f2(-Math.log10(a.Ka))} + log(${formatSci(cb)} ÷ ${formatSci(ca)}) = <strong>?</strong></p><p>${QUESTION_NOTE}</p>`;
+      return;
+    }
     const pH = bufferPH(a.Ka, ca, cb);
     const alone = solutionPH('weakAcid', ca, { Ka: a.Ka }).pH;
     out.innerHTML = `<p><strong>pH = ${f2(pH)}</strong> (pKa = ${f2(-Math.log10(a.Ka))}; log(${formatSci(cb)}/${formatSci(ca)}) = ${f2(Math.log10(cb / ca))})</p>
@@ -95,6 +111,13 @@ export function mountEquilibriumLab(dialog, data) {
     const cls = solubility(k.cation.formula, k.anion.formula, data.ions)?.result;
     const CLS = { insoluble: 'insolúvel', slightly: 'pouco solúvel', soluble: 'solúvel' };
     $('#eq-common-label').innerHTML = which === 'cation' ? `de ${ion(k.cation)} (mol/L)` : `de ${ion(k.anion)} (mol/L)`;
+    if (guard('solubility', { salt: k.formula, common: cc })) {
+      const m = k.cation.count;
+      const n = k.anion.count;
+      $('#eq-sol-out').innerHTML = `<p>${formatFormulaHTML(k.formula)} ⇌ ${m > 1 ? m + ' ' : ''}${ion(k.cation)} + ${n > 1 ? n + ' ' : ''}${ion(k.anion)} · Kps = ${formatSci(k.Ksp)}</p>
+        <p>Se s mol/L se dissolvem: Kps = (${m > 1 ? m : ''}s)${m > 1 ? `^${m}` : ''} × (${n > 1 ? n : ''}s)${n > 1 ? `^${n}` : ''}${m === 1 && n === 1 ? ' = s², então s = √Kps' : ''} = <strong>?</strong> mol/L</p><p>${QUESTION_NOTE}</p>`;
+      return;
+    }
     $('#eq-sol-out').innerHTML = `<p>${formatFormulaHTML(k.formula)} ⇌ ${k.cation.count > 1 ? k.cation.count + ' ' : ''}${ion(k.cation)} + ${k.anion.count > 1 ? k.anion.count + ' ' : ''}${ion(k.anion)} · Kps = ${formatSci(k.Ksp)}</p>
       <p><strong>Solubilidade molar: ${formatSci(s)} mol/L</strong> = ${formatSci(s * M * 1000)} mg por litro${cc > 0 ? ` (em água pura seria ${formatSci(s0)} mol/L: o íon comum diminui a solubilidade ${formatSci(s0 / s, 3)} vezes)` : ''}.</p>
       ${cls ? `<p class="small">Pela regra simplificada de solubilidade (Tabela I.1), ele é <strong>${CLS[cls]}</strong>.${cls === 'insoluble' && s0 > 1e-3 ? ' O Kps mostra que “insolúvel” é uma simplificação: um pouco dele se dissolve.' : ''}</p>` : ''}
@@ -126,11 +149,12 @@ export function mountEquilibriumLab(dialog, data) {
     const [a, b] = [g.points[0], g.points[g.points.length - 1]];
     const dH = a[0] === b[0] ? null : ((8.3145 * Math.log(b[1] / a[1])) / (1 / a[0] - 1 / b[0])) / 1000;
     const lc = leChatelier({ dn, dH });
+    const asked = new Set((guard('shift', { gas: g.id }) ?? []).map((o) => o.stress));
     const STRESS = { compress: 'Comprimir (mais pressão)', expand: 'Expandir (menos pressão)', heat: 'Aquecer', cool: 'Resfriar', addReactant: 'Acrescentar reagente', removeProduct: 'Retirar produto' };
     $('#eq-gas-out').innerHTML = `<p>K = <strong>${formatSci(K)}</strong> a ${T} K (Kc = ${formatSci(Kc)}; K = Kc·(RT)^Δn com Δn = ${dn})</p>
       ${Q != null ? `<p>Com essas pressões, Q = ${formatSci(Q)}: ${Q < K ? 'Q < K, a reação <strong>forma produtos</strong> até Q chegar a K' : Q > K ? 'Q > K, a reação <strong>volta, formando reagentes</strong>' : 'Q = K, <strong>já está em equilíbrio</strong>'} (${SHIFT_TEXT[direction(Q, K)]}).</p>` : '<p class="small muted">Informe pressões maiores que zero.</p>'}
       <p class="small"><strong>Le Chatelier</strong>${dH != null ? ` (pela tabela, K ${dH < 0 ? 'cai' : 'sobe'} com a temperatura: a reação é ${dH < 0 ? 'exotérmica' : 'endotérmica'}, ΔH° ≈ ${formatSci(dH, 2)} kJ)` : ''}:</p>
-      <ul class="small">${Object.entries(lc).filter(([, v]) => v).map(([k, v]) => `<li>${STRESS[k]}: ${SHIFT_TEXT[v]}</li>`).join('')}</ul>
+      <ul class="small">${Object.entries(lc).filter(([, v]) => v).map(([k, v]) => `<li>${STRESS[k]}: ${asked.has(k) ? `<strong>?</strong> ${QUESTION_NOTE}` : SHIFT_TEXT[v]}</li>`).join('')}</ul>
       ${g.divergence ? `<p class="small"><strong>Nota:</strong> ${esc(g.divergence)}</p>` : ''}
       <p class="small muted">Fonte: ${sourceText(data, [{ ref: 'atkins-jones', topic: 'Tabela 10.2: constantes de equilíbrio', pages: '389' }, { ref: 'atkins-jones', topic: 'Seções 10.5 e 10.9–10.11: Q × K e Le Chatelier', pages: '396–412' }])}.</p>`;
   }

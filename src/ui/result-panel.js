@@ -14,7 +14,7 @@ import { massComposition, empiricalFormula, massRatio, sameElementsPartners, mul
 import { kFromDeltaG, interpretK, leChatelier, findSpecies, solutionPH, molarSolubility } from '../core/equilibrium.js';
 import { SHIFT_TEXT } from './equilibrium-lab.js';
 import { renderMoleculeCard, reactionMoleculeKeys } from './molecule-card.js';
-import { formatSci, formatDuration, sourceText } from './kinetics-lab.js';
+import { formatSci, formatDuration, sourceText, QUESTION_NOTE } from './kinetics-lab.js';
 
 let stopStage = () => {};
 let stopMolecule = () => {};
@@ -123,7 +123,7 @@ function calculatorHTML(data, reactants, products) {
     </details>`;
 }
 
-function mountCalculator(root, data, reaction) {
+function mountCalculator(root, data, reaction, guard = () => null) {
   const box = root.querySelector('.stoich-calc');
   if (!box) return;
   const thermo = reactionThermo(reaction, data);
@@ -154,24 +154,39 @@ function mountCalculator(root, data, reaction) {
     const res = stoichiometry(reaction, data, given);
     const q = heatFor(res.extent, thermo.dH);
     last = res;
-    const name = (id) => formatFormulaHTML(data.substancesById.get(id).formula);
-    const rows = res.products
-      .map((p) => `<tr><td>${name(p.id)}</td><td>${f(p.mol)} mol</td><td><strong>${f(p.grams)} g</strong>${p.liters !== null ? ` · ${f(p.liters)} L` : ''}</td></tr>`)
-      .join('');
-    const used = res.reactants
-      .map((r) => `<tr><td>${name(r.id)}</td><td>${f(r.used / r.molarMass)} mol</td><td>${f(r.used)} g usados${r.left ? ` · sobram ${f(r.left)} g` : r.given === null ? ' (necessários)' : ''}</td></tr>`)
-      .join('');
-    out.innerHTML =
-      (q != null ? `<p><strong>Calor:</strong> ${q < 0 ? 'libera' : 'absorve'} ${f(Math.abs(q))} kJ (ΔH° × ${f(res.extent)} mol de reação).</p>` : '') +
-      (res.limiting ? `<p><strong>Reagente limitante:</strong> ${name(res.limiting)} — ele acaba primeiro e decide quanto produto sai.</p>` : '') +
-      `<table class="calc-table"><thead><tr><th>Produto</th><th>Quantidade</th><th>Massa (e volume, se gás)</th></tr></thead><tbody>${rows}</tbody></table>` +
-      `<table class="calc-table"><thead><tr><th>Reagente</th><th>Quantidade</th><th>Massa</th></tr></thead><tbody>${used}</tbody></table>`;
     const actual = num(box.querySelector('[data-actual]'));
     const p = res.products.find((x) => x.id === box.querySelector('[data-actual-id]').value);
+    // Fase 4D: se isto é uma pergunta pendente do nível, o número pedido vira o caminho da conta.
+    const asked = guard('stoich', { reaction, given, actual: Number.isFinite(actual) && p ? { id: p.id, g: actual } : null })?.ask ?? null;
+    const name = (id) => formatFormulaHTML(data.substancesById.get(id).formula);
+    const coef = (side, id) => reaction[side].find((e) => e.id === id)?.coef ?? 1;
+    const rows = res.products
+      .map((pr) =>
+        pr.id === asked
+          ? `<tr><td>${name(pr.id)}</td><td colspan="2">${f(res.extent)} mol de reação × ${coef('products', pr.id)} = <strong>?</strong> mol; × ${fmtNum(pr.molarMass ?? molarMass(data.substancesById.get(pr.id).formula, data.atomicMasses))} g/mol = <strong>?</strong> g${pr.liters !== null ? '; × 24,47 L/mol = <strong>?</strong> L' : ''} ${QUESTION_NOTE}</td></tr>`
+          : `<tr><td>${name(pr.id)}</td><td>${f(pr.mol)} mol</td><td><strong>${f(pr.grams)} g</strong>${pr.liters !== null ? ` · ${f(pr.liters)} L` : ''}</td></tr>`,
+      )
+      .join('');
+    const used =
+      asked === 'limiting'
+        ? res.reactants.map((r) => `<tr><td>${name(r.id)}</td><td>${r.given !== null ? `${f(r.given / r.molarMass)} mol disponíveis` : '—'}</td><td>coeficiente ${coef('reactants', r.id)}: mol ÷ coeficiente = <strong>?</strong></td></tr>`).join('')
+        : res.reactants
+            .map((r) => `<tr><td>${name(r.id)}</td><td>${f(r.used / r.molarMass)} mol</td><td>${f(r.used)} g usados${r.left ? ` · sobram ${f(r.left)} g` : r.given === null ? ' (necessários)' : ''}</td></tr>`)
+            .join('');
+    const heat = q == null ? '' : asked === 'heat' ? `<p><strong>Calor:</strong> ΔH° × mol de reação = (${f(thermo.dH)} kJ) × ${f(res.extent)} mol = <strong>?</strong> ${QUESTION_NOTE}</p>` : `<p><strong>Calor:</strong> ${q < 0 ? 'libera' : 'absorve'} ${f(Math.abs(q))} kJ (ΔH° × ${f(res.extent)} mol de reação).</p>`;
+    const limiting = !res.limiting ? '' : asked === 'limiting' ? `<p><strong>Reagente limitante:</strong> o que tiver o menor "mol ÷ coeficiente" acaba primeiro — <strong>?</strong> ${QUESTION_NOTE}</p>` : `<p><strong>Reagente limitante:</strong> ${name(res.limiting)} — ele acaba primeiro e decide quanto produto sai.</p>`;
+    const hideTables = asked === 'limiting';
+    out.innerHTML =
+      heat +
+      limiting +
+      (hideTables ? '' : `<table class="calc-table"><thead><tr><th>Produto</th><th>Quantidade</th><th>Massa (e volume, se gás)</th></tr></thead><tbody>${rows}</tbody></table>`) +
+      `<table class="calc-table"><thead><tr><th>Reagente</th><th>Quantidade</th><th>Massa</th></tr></thead><tbody>${used}</tbody></table>`;
     const pct = Number.isFinite(actual) && p ? percentYield(actual, p.grams) : NaN;
-    yOut.textContent = Number.isFinite(pct)
-      ? `→ ${f(pct)}% do teórico (${f(p.grams)} g)${pct > 100 ? ' — acima de 100%: a massa medida deve conter impurezas ou água, ou a conta tem algum erro.' : ''}`
-      : '';
+    if (asked === 'yield') yOut.innerHTML = `→ rendimento = obtido ÷ teórico × 100 = ${f(actual)} g ÷ ${f(p.grams)} g × 100 = <strong>?</strong> % ${QUESTION_NOTE}`;
+    else
+      yOut.textContent = Number.isFinite(pct)
+        ? `→ ${f(pct)}% do teórico (${f(p.grams)} g)${pct > 100 ? ' — acima de 100%: a massa medida deve conter impurezas ou água, ou a conta tem algum erro.' : ''}`
+        : '';
   };
   box.addEventListener('input', update);
   box.addEventListener('change', update);
@@ -437,7 +452,7 @@ const itemLabel = (data, id) => {
   return `${it.icon} ${it.name}`;
 };
 
-export function renderResult(root, data, result, { newSubstances = [] } = {}) {
+export function renderResult(root, data, result, { newSubstances = [], guard } = {}) {
   stopStage();
   stopStage = () => {};
   stopMolecule();
@@ -486,7 +501,7 @@ export function renderResult(root, data, result, { newSubstances = [] } = {}) {
       ${raw(r.generated ? '<p class="small muted rule-note">⚙️ Esta reação não está na lista conferida uma a uma: o motor de regras escolheu os produtos por uma regra geral (fonte abaixo) e calculou os coeficientes pelo balanceamento automático. Os testes do jogo conferem átomos, cargas e estados de todas as reações que as regras podem gerar.</p>' : '')}
       ${raw(sourceHTML(data, r.source))}`;
     mountStage(root, (el) => mountReactionStage(el, data, r));
-    mountCalculator(root, data, r);
+    mountCalculator(root, data, r, guard);
     mountMolecules(root, data);
     return;
   }

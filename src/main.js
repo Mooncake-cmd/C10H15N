@@ -3,7 +3,8 @@
 
 import { loadGameData } from './loader.js';
 import { createEngine } from './core/engine.js';
-import { initialState, applyResult, inventory, restoreState, unlockLevelMap, isObjectiveDone, answerObjective, startMission, abandonMission, missionCombine, answerMission, missionLab, reviewsDue, answerReview } from './core/progression.js';
+import { initialState, applyResult, inventory, restoreState, unlockLevelMap, isObjectiveDone, answerObjective, startMission, abandonMission, missionCombine, answerMission, missionLab, reviewsDue, answerReview, isAnswerObjective, questionResting } from './core/progression.js';
+import { attemptsLeft, maxAttempts, pendingQuestion } from './core/guard.js';
 import { reviewsMastered, REVIEW_INTERVALS } from './core/review.js';
 import { missionInventory, calcWorked, isMissionAvailable } from './core/missions.js';
 import { lookupReaction } from './core/engine.js';
@@ -67,6 +68,8 @@ async function main() {
   let missionFeedback = null; // último retorno da missão: { kind, html }
   let objectiveFeedback = null; // último erro numa pergunta dos fundamentos: { id, text }
   let reviewFeedback = null; // último retorno da revisão (Fase 4C): { kind, html }
+  // Fase 4D: laboratórios e calculadora mostram o caminho, não o número, das perguntas pendentes.
+  const guard = (kind, params) => pendingQuestion(state, data, kind, params);
 
   // Durante uma missão (Fase 3F), só o kit dela (e o que foi produzido nela) vale na bancada.
   const activeMission = () => (state.missionRun ? data.missionsById.get(state.missionRun.id) : null);
@@ -184,7 +187,7 @@ async function main() {
 
     const discovered = events.filter((e) => e.type === 'discovered').map((e) => e.substance);
     lastNew = new Set(discovered.map((s) => s.id));
-    renderResult($('#result'), data, result, { newSubstances: discovered });
+    renderResult($('#result'), data, result, { newSubstances: discovered, guard });
     $('#result').scrollTop = 0;
     if (window.matchMedia('(max-width: 900px)').matches) $('#result').scrollIntoView({ behavior: 'smooth', block: 'start' });
 
@@ -232,7 +235,7 @@ async function main() {
               .map((o) => {
                 const ok = state.completedObjectives.includes(o.id) || isObjectiveDone(o, state, data);
                 return html`<li class="${ok ? 'is-done' : ''}"><span class="check" aria-hidden="true">${ok ? '✔' : '○'}</span>
-                  <div><span>${raw(chemText(o.text))}</span>${raw(!ok && o.type === 'stoich' ? stoichForm(o) : '')}${raw(!ok && o.type === 'kinetics' ? kineticsForm(o) : '')}${raw(!ok && o.type === 'equilibrium' ? equilibriumForm(o) : '')}${raw(!ok && o.type === 'molecule' ? moleculeForm(o) : '')}${raw(!ok && o.type === 'organic' ? organicForm(o) : '')}${raw(FUNDAMENTAL_TYPES.includes(o.type) ? (ok ? html`<p class="small muted objective-why">${raw(chemText(fundamentalsExplain(o, data)))}</p>` : fundamentalsForm(o)) : '')}${raw(!ok && o.type === 'mission' && state.missionRun?.id !== o.mission ? html`<div><button type="button" class="btn btn-ghost btn-small" data-mission-start="${o.mission}">🗺️ Começar esta missão</button></div>` : '')}${raw(!ok && o.hint ? `<details class="hint"><summary>Dica</summary>${esc(o.hint)}</details>` : '')}</div></li>`;
+                  <div><span>${raw(chemText(o.text))}</span>${raw(!ok && isAnswerObjective(o) ? questionBlock(o) : '')}${raw(ok && FUNDAMENTAL_TYPES.includes(o.type) ? html`<p class="small muted objective-why">${raw(chemText(fundamentalsExplain(o, data)))}</p>` : '')}${raw(!ok && o.type === 'mission' && state.missionRun?.id !== o.mission ? html`<div><button type="button" class="btn btn-ghost btn-small" data-mission-start="${o.mission}">🗺️ Começar esta missão</button></div>` : '')}${raw(!ok && o.hint ? `<details class="hint"><summary>Dica</summary>${esc(o.hint)}</details>` : '')}</div></li>`;
               })
               .join(''),
           )}
@@ -304,6 +307,19 @@ async function main() {
     return html`<form class="stoich-form" data-objective="${o.id}"><div class="stoich-row">${raw(opts)}</div>${raw(view)}</form>`;
   }
 
+  /** Pergunta do nível (Fase 4D): o formulário com as tentativas, ou o aviso de descanso. */
+  function questionBlock(o) {
+    const fb = objectiveFeedback?.id === o.id && !FUNDAMENTAL_TYPES.includes(o.type) ? html`<div class="mission-feedback is-bad" role="status">✘ ${raw(chemText(objectiveFeedback.text))}</div>` : '';
+    if (questionResting(o, state, data)) {
+      const why = objectiveFeedback?.id === o.id ? html`<div class="mission-feedback is-bad" role="status">✘ ${raw(chemText(objectiveFeedback.text))}</div>` : '';
+      return html`${raw(why)}<p class="small rest-note">⏸ As tentativas desta pergunta acabaram por agora. Releia o porquê do erro e a dica, conclua outro objetivo (ou acerte uma revisão) e ela volta, com as tentativas renovadas.</p>`;
+    }
+    const left = attemptsLeft(o, state);
+    const max = maxAttempts(o);
+    const note = html`<p class="small muted attempts-note">${left === max ? `${max} tentativa${max > 1 ? 's' : ''}` : `Resta${left > 1 ? 'm' : ''} ${left} tentativa${left > 1 ? 's' : ''}`}${max === 1 ? ' — pense antes de escolher' : ''}.</p>`;
+    return answerForm(o) + fb + note;
+  }
+
   /** Formulário de resposta de qualquer pergunta (usado nos níveis e na revisão). */
   function answerForm(o) {
     if (FUNDAMENTAL_TYPES.includes(o.type)) return fundamentalsForm(o);
@@ -365,15 +381,22 @@ async function main() {
 
   function submitStoich(objectiveId, answer) {
     const prevLevel = state.levelIndex;
-    const { state: next, events, correct } = answerObjective(state, objectiveId, answer, data);
+    const { state: next, events, correct, resting } = answerObjective(state, objectiveId, answer, data);
     const objective = data.progression.levels.flatMap((l) => l.objectives).find((o) => o.id === objectiveId);
+    if (resting) return renderObjectives();
+    if (!correct) {
+      state = next;
+      storage.save(state);
+    }
     if (objective && FUNDAMENTAL_TYPES.includes(objective.type)) {
       objectiveFeedback = correct ? null : { id: objectiveId, text: fundamentalsMistake(objective, answer, data) };
       if (!correct) return renderObjectives();
     }
+    if (correct) objectiveFeedback = null;
     if (!correct) {
       const kind = objective?.type;
-      toast(kind === 'organic' ? 'Ainda não. Abra a molécula na galeria: lá o nome e a função aparecem explicados (a dica ajuda).' : kind === 'molecule' ? 'Ainda não. Gire a molécula em 3D e conte ligações e pares isolados (a dica ajuda).' : kind === 'kinetics' || kind === 'equilibrium' ? 'Ainda não. Confira a fórmula e as unidades (a dica ajuda).' : 'Ainda não. Confira a conversão gramas → mol → gramas (a dica ajuda).');
+      objectiveFeedback = { id: objectiveId, text: kind === 'organic' ? 'Ainda não. Abra a molécula na galeria: lá o nome e a função aparecem explicados (a dica ajuda).' : kind === 'molecule' ? 'Ainda não. Gire a molécula em 3D e conte ligações e pares isolados (a dica ajuda).' : kind === 'kinetics' || kind === 'equilibrium' ? 'Ainda não. Confira a fórmula e as unidades (a dica ajuda).' : 'Ainda não. Confira a conversão gramas → mol → gramas (a dica ajuda).' };
+      renderObjectives();
       return;
     }
     state = next;
@@ -568,7 +591,7 @@ async function main() {
     else submitStoich(form.dataset.objective, b.dataset.answer);
   });
   // Laboratório de velocidade (Fase 3B): abre pelo topo, pelo painel de resultado ou pelos objetivos.
-  const kineticsLab = mountKineticsLab($('#kinetics-dialog'), data);
+  const kineticsLab = mountKineticsLab($('#kinetics-dialog'), data, { guard });
   $('#btn-kinetics').addEventListener('click', () => kineticsLab.open());
   const calculators = mountCalculators($('#calc-dialog'), data);
   // Galeria de moléculas em 3D (Fase 3D).
@@ -598,7 +621,7 @@ async function main() {
   });
 
   // Laboratório de equilíbrio (Fase 3C).
-  const eqLab = mountEquilibriumLab($('#equilibrium-dialog'), data);
+  const eqLab = mountEquilibriumLab($('#equilibrium-dialog'), data, { guard });
   $('#btn-equilibrium').addEventListener('click', () => eqLab.open());
   document.addEventListener('click', (ev) => {
     const b = ev.target.closest('[data-open-equilibrium]');
