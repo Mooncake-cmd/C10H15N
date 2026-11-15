@@ -1,6 +1,7 @@
 // Tabela periódica navegável. Mostra os 118 elementos; os jogáveis da fase atual ficam
 // destacados, os bloqueados mostram em que nível abrem.
 
+import { atomDiagramHTML } from './atom-diagram.js';
 import { html, raw, esc, FAMILY_LABEL, PHASE_LABEL } from './dom.js';
 
 // Propriedades periódicas (Bernoulli v. 2, Frente C, Módulo 06; Atkins & Jones, seções 1.15–1.18):
@@ -133,6 +134,7 @@ export function renderPeriodicTable(root, data, { getStatus, onPick }) {
         ${raw(row('Estado (0 °C, 1 atm)', PHASE_LABEL[e.phaseAtSTP]))}
         ${raw(row('Forma no jogo', elemental ? elemental.formula : null))}
       </dl>
+      ${raw(atomDiagramHTML(e, data))}
       ${raw(elemental ? `<p class="small">${esc(elemental.description)}</p>` : '')}
       ${raw(action)}
       ${raw(factsHTML(symbol))}`;

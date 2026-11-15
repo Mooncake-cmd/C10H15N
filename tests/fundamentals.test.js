@@ -15,6 +15,7 @@ import {
   fundamentalsExplain,
   fundamentalsMistake,
   sciExponent,
+  paulingPath,
   sigFigs,
 } from '../src/core/fundamentals.js';
 
@@ -29,7 +30,9 @@ test('diagrama de Pauling: bate com o dataset, fora as exceções conhecidas', (
   const exceptions = data.elements.filter((e) => sorted(aufbauConfig(e.Z)) !== sorted(expandConfig(e.symbol, data))).map((e) => e.symbol);
   // As exceções de verdade são só metais de transição, lantanídeos, actinídeos e superpesados
   // (Cr e Cu são as clássicas). Nenhum elemento representativo leve pode aparecer aqui.
-  assert.ok(exceptions.includes('Cr') && exceptions.includes('Cu'), exceptions.join(' '));
+  // Lista exata: 22 exceções reais (metais de transição, lantanídeos, actinídeos e dois superpesados
+  // com configuração só prevista). O "*" das configurações previstas não conta como exceção.
+  assert.deepEqual(exceptions, ['Cr', 'Cu', 'Nb', 'Mo', 'Ru', 'Rh', 'Pd', 'Ag', 'La', 'Ce', 'Gd', 'Pt', 'Au', 'Ac', 'Th', 'Pa', 'U', 'Np', 'Cm', 'Lr', 'Ds', 'Rg']);
   for (const s of exceptions) {
     const e = data.elementsBySymbol.get(s);
     assert.ok(e.Z > 20 && (e.group == null || (e.group >= 3 && e.group <= 12) || e.Z > 100), `${s} não deveria ser exceção`);
@@ -169,4 +172,25 @@ test('camadas: 7 (K a Q), número de camadas = período, e o potássio pelo diag
   assert.ok(!isFundamentalsAnswerRight(k, '2, 8, 9', data));
   assert.match(fundamentalsMistake(k, '2, 8, 9', data), /faltou uma camada.*4s/);
   assert.match(fundamentalsExplain(k, data), /M = 3s2 \+ 3p6 = 8; N = 4s1 = 1/);
+});
+
+test('diagrama de Pauling de cada elemento (desenho do painel)', () => {
+  const k = paulingPath('K', data);
+  assert.equal(k.predicted, '1s2 2s2 2p6 3s2 3p6 4s1');
+  assert.deepEqual(k.shells.map((x) => [x.name, x.total]), [['K', 2], ['L', 8], ['M', 8], ['N', 1]]);
+  assert.equal(k.exception, false);
+  const cr = paulingPath('Cr', data);
+  assert.equal(cr.exception, true, 'o cromo foge do diagrama');
+  assert.equal(cr.real, '1s2 2s2 2p6 3s2 3p6 3d5 4s1');
+  const og = paulingPath('Og', data);
+  assert.equal(og.exception, false, 'o * de configuração prevista não é exceção');
+  assert.equal(og.measured, false);
+  assert.equal(paulingPath('Fe', data).measured, true);
+  for (const e of data.elements) {
+    const p = paulingPath(e.symbol, data);
+    assert.equal(p.shells.reduce((a, x) => a + x.total, 0), e.Z, e.symbol);
+    assert.ok(p.subs.every((x) => x.count <= x.cap), e.symbol);
+    // Sem exceção, a soma por camada do diagrama é a distribuição do dataset.
+    if (!p.exception) assert.deepEqual(p.shells.map((x) => x.total), e.shells, e.symbol);
+  }
 });

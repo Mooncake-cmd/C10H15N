@@ -150,6 +150,7 @@ src/ui/, src/main.js        interface
   equilibrium-lab.js        laboratório de equilíbrio: pH com indicadores, tampão, Kps, K/Q/Le Chatelier
   missions-ui.js            lista de missões, quadro da missão em andamento e tela de missão concluída
   lab-ui.js                 painel 🧰 Laboratório: utensílios, separação de misturas e teste de chama
+  atom-diagram.js           modelo de camadas e diagrama de Pauling de cada elemento (SVG)
   glassware-svg.js          desenhos (traço) dos utensílios de laboratório
   chem-text.js              texto com fórmulas químicas em subscrito
 tests/                      testes (node:test)
@@ -313,8 +314,15 @@ as camadas K–Q e o diagrama de Pauling, do Bernoulli (v. 1, p. 61–62).
   carga do íon, passar do limite de uma camada ou subcamada, somar elétrons a mais. Depois do acerto,
   a explicação completa fica embaixo do objetivo.
 - **Teste do diagrama**: a ordem de Madelung bate com a configuração do dataset em todos os
-  elementos, menos as exceções reais (Cr, Cu, outros metais de transição, lantanídeos, actinídeos e
-  superpesados); nenhum elemento perguntado no jogo é exceção.
+  elementos, menos as 22 exceções reais (Cr, Cu, outros metais de transição, lantanídeos,
+  actinídeos e dois superpesados, Ds e Rg, de configuração só prevista); nenhum elemento perguntado
+  no jogo é exceção. O "*" com que o dataset marca as configurações previstas (Db–Og) não conta.
+- **Desenhos do átomo** (`src/ui/atom-diagram.js`, no painel de cada um dos 118 elementos da
+  tabela): o modelo de camadas (núcleo e círculos com os elétrons em pontos, a última camada
+  destacada, com o aviso de que é um modelo simplificado) e, ao toque, o diagrama de Pauling do
+  elemento (subcamadas preenchidas em ordem, diagonais, soma por camada). Quando o elemento foge
+  do diagrama, o painel mostra a configuração medida ao lado da prevista
+  (`paulingPath` em `fundamentals.js`).
 - **Save**: a versão passou de 2 para 3. Níveis novos levam `since: 3`; para quem já jogava, as
   perguntas deles contam como respondidas e o jogador continua no nível em que estava. A bancada
   (H, O, Na, Cl, calor e faísca) já vem liberada no primeiro nível, e o que for feito nela durante

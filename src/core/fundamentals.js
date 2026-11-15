@@ -78,9 +78,10 @@ export function aufbauConfig(Z) {
   return parts.join(' ');
 }
 
-/** Configuração do dataset expandida ("[Ne] 3s1" → "1s2 2s2 2p6 3s1"), para conferir. */
+/** Configuração do dataset expandida ("[Ne] 3s1" → "1s2 2s2 2p6 3s1"), para conferir. O "*" do
+ * dataset (configuração só prevista, nos superpesados Db–Og) é tirado; ver `isMeasuredConfig`. */
 export function expandConfig(symbol, data) {
-  const conf = el(data, symbol).electronConfiguration;
+  const conf = el(data, symbol).electronConfiguration.replace(/^\*/, '');
   return conf.replace(/\[(\w+)\]/, (m, noble) => expandConfig(noble, data)).trim().replace(/\s+/g, ' ');
 }
 
@@ -287,4 +288,27 @@ export function fundamentalsMistake(o, answer, data) {
     return `Ainda não.${hint}`;
   }
   return `Ainda não.${hint}`;
+}
+
+const SHELL_LETTERS = ['K', 'L', 'M', 'N', 'O', 'P', 'Q'];
+
+/** A configuração do dataset foi medida? (O "*" marca as só previstas, dos superpesados.) */
+export const isMeasuredConfig = (symbol, data) => !el(data, symbol).electronConfiguration.startsWith('*');
+const multiset = (conf) => conf.split(' ').sort().join(' ');
+
+/**
+ * Caminho do diagrama de Pauling de um elemento (para o desenho no painel da tabela):
+ * subcamadas na ordem de preenchimento, a soma por camada e se o elemento foge do diagrama
+ * (a configuração medida, do dataset, difere da prevista — Cr, Cu, Pd…).
+ */
+export function paulingPath(symbol, data) {
+  const e = el(data, symbol);
+  const predicted = aufbauConfig(e.Z);
+  const subs = predicted.split(' ').map((t) => ({ sub: t.slice(0, 2), n: Number(t[0]), l: t[1], count: Number(t.slice(2)), cap: CAP[t[1]] }));
+  const shells = [...new Set(subs.map((s) => s.n))].sort((a, b) => a - b).map((n) => {
+    const of = subs.filter((s) => s.n === n);
+    return { name: SHELL_LETTERS[n - 1], n, subs: of, total: of.reduce((a, s) => a + s.count, 0) };
+  });
+  const real = expandConfig(symbol, data);
+  return { Z: e.Z, name: e.name, predicted, subs, shells, real, realShells: [...e.shells], exception: multiset(predicted) !== multiset(real), measured: isMeasuredConfig(symbol, data) };
 }
