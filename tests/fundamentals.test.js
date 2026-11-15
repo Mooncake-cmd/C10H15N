@@ -145,3 +145,12 @@ test('Fase 4B: matemática da química', () => {
   ];
   for (const [id, answer, re] of cases) assert.match(fundamentalsMistake(O(id), answer, data), re, `${id} ← ${answer}`);
 });
+
+test('camadas: o caminho passo a passo e o erro de não encher a camada de dentro', () => {
+  const o = objectives.find((x) => x.id === 'f3-na-camadas');
+  assert.match(fundamentalsExplain(o, data), /K recebe 2 \(faltam 9\); L recebe 8 \(falta 1\); M recebe 1/);
+  assert.match(fundamentalsMistake(o, '2, 6, 3', data), /espaço sobrando/);
+  // O nível explica o limite de cada camada a partir das subcamadas (antes só a dica dizia).
+  const f3 = data.progression.levels.find((l) => l.id === 'f3');
+  assert.match(f3.intro, /cabem 2 \+ 6 = 8/);
+});

@@ -168,6 +168,15 @@ export function fundamentalsExplain(o, data) {
     const names = ['K', 'L', 'M', 'N', 'O', 'P', 'Q'];
     const shells = sh.map((n, i) => `${names[i]} = ${n}`).join(', ');
     if (o.ask === 'config') return `${e.name} tem ${e.Z} elétrons. Seguindo a ordem do diagrama de Pauling (1s, 2s, 2p, 3s, 3p, 4s…), enchendo cada subcamada até o máximo (s: 2, p: 6): ${aufbauConfig(e.Z)}.`;
+    if (o.ask === 'shells') {
+      // O caminho, camada por camada: quanto entra e quanto ainda falta distribuir.
+      let left = e.Z;
+      const steps = sh.map((n, i) => {
+        left -= n;
+        return `${names[i]} recebe ${n}${left ? ` (${left === 1 ? 'falta' : 'faltam'} ${left})` : ''}`;
+      });
+      return `${e.name} tem ${e.Z} elétrons. Enchendo de dentro para fora: ${steps.join('; ')}. Resultado: ${sh.join(', ')}. A última camada tem ${sh[sh.length - 1]} — são os elétrons de valência, que decidem como o elemento reage.`;
+    }
     return `${e.name} tem ${e.Z} elétrons, distribuídos nas camadas ${shells}. A última camada tem ${sh[sh.length - 1]} — são os elétrons de valência, que decidem como o elemento reage.`;
   }
   if (o.type === 'state') {
@@ -261,6 +270,7 @@ export function fundamentalsMistake(o, answer, data) {
     const sum = nums.reduce((a, b) => a + b, 0);
     if (sum !== e.Z) return `Os números somam ${sum}, e são ${e.Z} elétrons (${e.name}: Z = ${e.Z}) — todos têm de entrar, sem sobrar nenhum.`;
     if (o.ask === 'shells' && nums.some((n, i) => n > (SHELL_CAP[i] ?? Infinity))) return 'A camada K comporta no máximo 2 elétrons e a L, no máximo 8.';
+    if (o.ask === 'shells' && nums.slice(0, -1).some((n, i) => n < (SHELL_CAP[i] ?? 0))) return 'A soma está certa, mas uma camada de dentro ficou com espaço sobrando. Encha cada camada até o limite (K: 2, L: 8) antes de passar elétrons para a próxima.';
     if (o.ask === 'config') {
       const over = parseConfig(answer).find(([, l, n]) => n > CAP[l]);
       if (over) return `A subcamada ${over[1]} comporta no máximo ${CAP[over[1]]} elétrons.`;
