@@ -97,7 +97,9 @@ Detalhes de arquitetura, estrutura de pastas e "como adicionar conteúdo" estão
     `phaseLabel: "Fundamentos"`, `since: 3`): matéria/misturas e mudança física × química, átomo
     (prótons, nêutrons, isótopos, massa atômica), elétrons (as 7 camadas K–Q e seus limites deduzidos
     das subcamadas, nº de camadas = período — exceção Pd —, diagrama de Pauling com a pergunta do
-    potássio 2, 8, 8, 1, valência; o painel da tabela mostra as camadas de cada elemento),
+    potássio 2, 8, 8, 1, valência; o painel da tabela mostra as camadas de cada elemento, o desenho do
+    modelo de camadas e o diagrama de Pauling — `src/ui/atom-diagram.js`; 22 exceções reais ao
+    diagrama no dataset, o "*" das configurações previstas Db–Og não conta),
     estados físicos e mudanças de estado, nomes e fórmulas de compostos iônicos. Tipos de objetivo
     `quiz`, `atom`, `electrons`, `state`, `naming` (`src/core/fundamentals.js`; resposta calculada,
     o porquê de cada alternativa e dos erros comuns sem entregar a resposta). Save v3: níveis com
