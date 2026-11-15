@@ -154,3 +154,19 @@ test('camadas: o caminho passo a passo e o erro de não encher a camada de dentr
   const f3 = data.progression.levels.find((l) => l.id === 'f3');
   assert.match(f3.intro, /cabem 2 \+ 6 = 8/);
 });
+
+test('camadas: 7 (K a Q), número de camadas = período, e o potássio pelo diagrama de Pauling', () => {
+  // No dataset, o número de camadas ocupadas é o período em todos os elementos, menos o paládio
+  // (2, 8, 18, 18: [Kr] 4d10, sem elétron 5s) — a exceção que o texto do nível cita.
+  const off = data.elements.filter((e) => e.shells.length !== e.period).map((e) => e.symbol);
+  assert.deepEqual(off, ['Pd']);
+  assert.ok(data.elements.every((e) => e.shells.length <= 7));
+  const f3 = data.progression.levels.find((l) => l.id === 'f3');
+  assert.match(f3.intro, /São 7, de K a Q/);
+  assert.match(f3.intro, /paládio/);
+  const k = objectives.find((x) => x.id === 'f3-k-camadas');
+  assert.equal(fundamentalsAnswer(k, data), '2, 8, 8, 1');
+  assert.ok(!isFundamentalsAnswerRight(k, '2, 8, 9', data));
+  assert.match(fundamentalsMistake(k, '2, 8, 9', data), /faltou uma camada.*4s/);
+  assert.match(fundamentalsExplain(k, data), /M = 3s2 \+ 3p6 = 8; N = 4s1 = 1/);
+});

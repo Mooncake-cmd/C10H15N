@@ -169,6 +169,13 @@ export function fundamentalsExplain(o, data) {
     const shells = sh.map((n, i) => `${names[i]} = ${n}`).join(', ');
     if (o.ask === 'config') return `${e.name} tem ${e.Z} elétrons. Seguindo a ordem do diagrama de Pauling (1s, 2s, 2p, 3s, 3p, 4s…), enchendo cada subcamada até o máximo (s: 2, p: 6): ${aufbauConfig(e.Z)}.`;
     if (o.ask === 'shells') {
+      // Uma camada de dentro ficou abaixo do máximo (2n²)? Então quem decide é o diagrama de
+      // Pauling (a 4s enche antes da 3d…): o caminho passa pelas subcamadas, somadas por camada.
+      if (sh.slice(0, -1).some((n, i) => n < 2 * (i + 1) ** 2)) {
+        const conf = aufbauConfig(e.Z);
+        const byShell = sh.map((n, i) => `${names[i]} = ${conf.split(' ').filter((t) => t[0] === String(i + 1)).join(' + ')} = ${n}`);
+        return `${e.name} tem ${e.Z} elétrons. Pelo diagrama de Pauling: ${conf} — a subcamada ${sh.length}s, da camada ${names[sh.length - 1]}, recebe elétrons antes de a camada de dentro encher. Somando por camada: ${byShell.join('; ')}. Resultado: ${sh.join(', ')}. A última camada tem ${sh[sh.length - 1]} — são os elétrons de valência.`;
+      }
       // O caminho, camada por camada: quanto entra e quanto ainda falta distribuir.
       let left = e.Z;
       const steps = sh.map((n, i) => {
@@ -270,6 +277,7 @@ export function fundamentalsMistake(o, answer, data) {
     const sum = nums.reduce((a, b) => a + b, 0);
     if (sum !== e.Z) return `Os números somam ${sum}, e são ${e.Z} elétrons (${e.name}: Z = ${e.Z}) — todos têm de entrar, sem sobrar nenhum.`;
     if (o.ask === 'shells' && nums.some((n, i) => n > (SHELL_CAP[i] ?? Infinity))) return 'A camada K comporta no máximo 2 elétrons e a L, no máximo 8.';
+    if (o.ask === 'shells' && nums.length < shellsOf(o.element, data).length) return 'A soma está certa, mas faltou uma camada. Pelo diagrama de Pauling, a subcamada 4s (camada N) enche antes da 3d (camada M) — e a 5s antes da 4d: uma camada nova começa antes de a de dentro passar de 8. Escreva as subcamadas na ordem do diagrama e some os elétrons de cada camada.';
     if (o.ask === 'shells' && nums.slice(0, -1).some((n, i) => n < (SHELL_CAP[i] ?? 0))) return 'A soma está certa, mas uma camada de dentro ficou com espaço sobrando. Encha cada camada até o limite (K: 2, L: 8) antes de passar elétrons para a próxima.';
     if (o.ask === 'config') {
       const over = parseConfig(answer).find(([, l, n]) => n > CAP[l]);

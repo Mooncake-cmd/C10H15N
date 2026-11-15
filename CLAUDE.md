@@ -95,7 +95,9 @@ Detalhes de arquitetura, estrutura de pastas e "como adicionar conteúdo" estão
   pelo usuário):
   - **4A Fundamentos — CONCLUÍDA**: 5 níveis antes do n1 (`f1`–`f5`, `phase: 4`,
     `phaseLabel: "Fundamentos"`, `since: 3`): matéria/misturas e mudança física × química, átomo
-    (prótons, nêutrons, isótopos, massa atômica), elétrons (camadas, diagrama de Pauling, valência),
+    (prótons, nêutrons, isótopos, massa atômica), elétrons (as 7 camadas K–Q e seus limites deduzidos
+    das subcamadas, nº de camadas = período — exceção Pd —, diagrama de Pauling com a pergunta do
+    potássio 2, 8, 8, 1, valência; o painel da tabela mostra as camadas de cada elemento),
     estados físicos e mudanças de estado, nomes e fórmulas de compostos iônicos. Tipos de objetivo
     `quiz`, `atom`, `electrons`, `state`, `naming` (`src/core/fundamentals.js`; resposta calculada,
     o porquê de cada alternativa e dos erros comuns sem entregar a resposta). Save v3: níveis com

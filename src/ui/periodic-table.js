@@ -34,6 +34,11 @@ export const PROPERTIES = {
 
 const fmt = (v) => String(Math.round(v * 100) / 100).replace('.', ',');
 
+const SHELL_NAMES = ['K', 'L', 'M', 'N', 'O', 'P', 'Q'];
+/** Elétrons por camada: "2, 8, 8, 1 (K a N)" — o número de camadas é o número do período. */
+export const shellsText = (e) =>
+  e.shells?.length ? `${e.shells.join(', ')} (${e.shells.length === 1 ? 'K' : `K a ${SHELL_NAMES[e.shells.length - 1]}`})` : null;
+
 export function renderPeriodicTable(root, data, { getStatus, onPick }) {
   let highlightFamily = null;
   let selected = null;
@@ -118,6 +123,7 @@ export function renderPeriodicTable(root, data, { getStatus, onPick }) {
         ${raw(row('Massa atômica', `${String(e.atomicMass).replace('.', ',')} u`))}
         ${raw(row('Grupo', e.group ?? '— (bloco f)'))}
         ${raw(row('Período', e.period))}
+        ${raw(row('Camadas', shellsText(e)))}
         ${raw(row('Configuração', e.electronConfiguration))}
         ${raw(row('Elétrons de valência', (e.block === 's' || e.block === 'p') && valence ? valence : null))}
         ${raw(row('Eletronegatividade', e.electronegativity ? String(e.electronegativity).replace('.', ',') + ' (Pauling)' : null))}
